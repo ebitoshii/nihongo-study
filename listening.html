@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>聴解 Listening — 日本語学習</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;500;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:#f0e6d6;--ink-mid:#d4c4a8;--ink-soft:#b09878;--ink-faint:#7a6450;
+      --washi:#4a3728;--washi-warm:#3d2d20;--washi-deep:#2e2018;--washi-card:#56402f;
+      --teal:#4aaf9e;--teal-light:#6dcebb;--teal-pale:rgba(74,175,158,0.15);
+      --serif-jp:'Shippori Mincho','Noto Serif JP',serif;
+      --serif-en:'IM Fell English',Georgia,serif;
+      --sans-jp:'Noto Sans JP',sans-serif;
+      --radius-sm:4px;--radius-md:8px;--radius-lg:16px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:19px;scroll-behavior:smooth;}
+    body{background-color:#4a3728;color:#f0e6d6;font-family:var(--sans-jp);font-weight:300;line-height:1.8;min-height:100vh;}
+
+    /* NAV */
+    .site-nav{position:sticky;top:0;z-index:100;background:#2e2018;border-bottom:1px solid #1e1208;padding:0.75rem 0;}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;}
+    .nav-logo{display:flex;flex-direction:column;text-decoration:none;}
+    .nav-logo .jp{font-family:var(--serif-jp);font-size:1.1rem;color:#f0e6d6;letter-spacing:0.1em;line-height:1.9;}
+    .nav-logo .jp ruby rt{font-size:0.54em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-logo .en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .nav-links{display:flex;gap:0.15rem;list-style:none;}
+    .nav-links a{display:flex;flex-direction:column;align-items:center;padding:0.4rem 0.7rem;text-decoration:none;border-radius:4px;transition:background 0.2s;}
+    .nav-links a .jp{font-family:var(--serif-jp);font-size:0.85rem;color:#d4c4a8;line-height:1.9;}
+    .nav-links a .jp ruby rt{font-size:0.56em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-links a .en{font-family:var(--serif-en);font-style:italic;font-size:0.62rem;color:#7a6450;}
+    .nav-links a:hover,.nav-links a.active{background:rgba(74,175,158,0.15);}
+    .nav-links a:hover .jp,.nav-links a.active .jp{color:#4aaf9e;}
+    @media(max-width:768px){.nav-links{display:none;}}
+
+    /* LAYOUT */
+    .container{max-width:860px;margin:0 auto;padding:2rem;}
+    @media(max-width:768px){.container{padding:1rem;}}
+
+    /* HEADER */
+    .page-header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid #2e2018;}
+    .jp-title{font-family:var(--serif-jp);font-size:2.4rem;color:#f0e6d6;letter-spacing:0.05em;line-height:1.85;}
+    .jp-title ruby rt{font-size:0.58em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .en-title{font-family:var(--serif-en);font-style:italic;font-size:0.9rem;color:#7a6450;}
+    .desc{margin-top:0.4rem;color:#b09878;font-size:0.85rem;line-height:1.7;}
+
+    /* LEVEL FILTER */
+    .filter-bar{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+    .filter-btn{padding:0.35rem 0.9rem;border:1px solid #2e2018;border-radius:20px;background:transparent;color:#7a6450;font-family:var(--sans-jp);font-size:0.78rem;cursor:pointer;transition:all 0.2s;}
+    .filter-btn:hover{border-color:#4aaf9e;color:#4aaf9e;}
+    .filter-btn.active{background:rgba(74,175,158,0.15);border-color:#4aaf9e;color:#4aaf9e;}
+    .badge-n4{color:#8fd47a;}.badge-n3{color:#7ab4e8;}.badge-n2{color:#e8b47a;}.badge-n1{color:#e87a7a;}
+
+    /* LISTENING CARDS */
+    .listening-list{display:flex;flex-direction:column;gap:1rem;}
+    .listen-card{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-lg);overflow:hidden;transition:box-shadow 0.2s;}
+    .listen-card.hidden{display:none;}
+
+    .card-header{padding:1.25rem 1.5rem;cursor:pointer;display:flex;align-items:flex-start;gap:1rem;user-select:none;}
+    .card-header:hover{background:rgba(74,175,158,0.05);}
+    .card-num{font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#7a6450;flex-shrink:0;padding-top:0.15rem;}
+    .card-meta{flex:1;}
+    .card-title{font-family:var(--serif-jp);font-size:1rem;color:#f0e6d6;line-height:1.9;display:block;}
+    .card-title ruby rt{font-size:0.52em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .card-scene{font-family:var(--serif-en);font-style:italic;font-size:0.75rem;color:#7a6450;display:block;margin-top:0.1rem;}
+    .card-level{font-family:var(--serif-en);font-size:0.68rem;padding:0.15rem 0.5rem;border-radius:3px;flex-shrink:0;}
+    .level-n4{background:rgba(58,107,46,0.3);color:#8fd47a;}
+    .level-n3{background:rgba(42,82,128,0.3);color:#7ab4e8;}
+    .level-n2{background:rgba(122,74,30,0.3);color:#e8b47a;}
+    .level-n1{background:rgba(122,30,30,0.3);color:#e87a7a;}
+    .card-chevron{color:#7a6450;font-size:0.75rem;flex-shrink:0;transition:transform 0.2s;padding-top:0.2rem;}
+    .listen-card.open .card-chevron{transform:rotate(180deg);}
+
+    .card-body{display:none;padding:0 1.5rem 1.5rem;}
+    .listen-card.open .card-body{display:block;}
+
+    /* AUDIO PLAYER */
+    .audio-section{background:#3d2d20;border-radius:var(--radius-md);padding:1.25rem;margin-bottom:1.25rem;}
+    .audio-hint{font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;margin-bottom:0.85rem;line-height:1.6;}
+    .audio-controls{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;}
+    .play-btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.55rem 1.2rem;background:#4aaf9e;border:none;border-radius:var(--radius-md);color:#1a1200;font-family:var(--sans-jp);font-size:0.85rem;font-weight:500;cursor:pointer;transition:background 0.2s;}
+    .play-btn:hover{background:#6dcebb;}
+    .play-btn.playing{background:#e87a7a;color:#fff;}
+    .replay-btn{padding:0.5rem 0.9rem;background:transparent;border:1px solid #4aaf9e;border-radius:var(--radius-md);color:#4aaf9e;font-family:var(--sans-jp);font-size:0.78rem;cursor:pointer;transition:all 0.2s;}
+    .replay-btn:hover{background:rgba(74,175,158,0.15);}
+    .show-script-btn{padding:0.5rem 0.9rem;background:transparent;border:1px solid #7a6450;border-radius:var(--radius-md);color:#7a6450;font-family:var(--sans-jp);font-size:0.78rem;cursor:pointer;transition:all 0.2s;}
+    .show-script-btn:hover{border-color:#b09878;color:#b09878;}
+
+    .playing-indicator{display:none;align-items:center;gap:0.4rem;font-family:var(--serif-en);font-style:italic;font-size:0.75rem;color:#4aaf9e;}
+    .playing-indicator.visible{display:flex;}
+    .dot{width:6px;height:6px;border-radius:50%;background:#4aaf9e;animation:dotPulse 1.2s ease-in-out infinite;}
+    .dot:nth-child(2){animation-delay:0.2s;}.dot:nth-child(3){animation-delay:0.4s;}
+    @keyframes dotPulse{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1.2)}}
+
+    .script-box{display:none;margin-top:1rem;background:#2e2018;border-radius:var(--radius-sm);padding:1rem;font-family:var(--serif-jp);font-size:0.92rem;line-height:2.2;color:#d4c4a8;}
+    .script-box ruby rt{font-size:0.52em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .script-box.visible{display:block;}
+    .speaker-label{font-family:var(--serif-en);font-style:italic;font-size:0.7rem;color:#4aaf9e;display:block;margin-top:0.5rem;margin-bottom:0.15rem;}
+
+    /* QUESTIONS */
+    .questions-section{margin-top:0;}
+    .q-block{margin-bottom:1.1rem;}
+    .q-text{font-family:var(--serif-jp);font-size:0.92rem;color:#d4c4a8;line-height:1.9;margin-bottom:0.5rem;}
+    .q-text ruby rt{font-size:0.52em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .q-num{color:#4aaf9e;font-family:var(--serif-en);font-style:italic;font-size:0.78rem;margin-right:0.4rem;}
+    .opts{display:flex;flex-direction:column;gap:0.35rem;}
+    .opt-btn{padding:0.55rem 0.85rem;background:#3d2d20;border:1px solid #2e2018;border-radius:var(--radius-sm);color:#b09878;font-family:var(--serif-jp);font-size:0.88rem;text-align:left;cursor:pointer;transition:all 0.15s;line-height:1.9;}
+    .opt-btn ruby rt{font-size:0.52em;font-family:var(--sans-jp);}
+    .opt-btn:hover:not(:disabled){border-color:#4aaf9e;color:#f0e6d6;background:rgba(74,175,158,0.08);}
+    .opt-btn.correct{border-color:#8fd47a;background:rgba(143,212,122,0.12);color:#8fd47a;}
+    .opt-btn.incorrect{border-color:#e87a7a;background:rgba(232,122,122,0.1);color:#e87a7a;}
+    .opt-btn.reveal{border-color:#7ab4e8;background:rgba(122,180,232,0.1);color:#7ab4e8;}
+    .opt-btn:disabled{cursor:not-allowed;}
+    .explanation{display:none;margin-top:0.5rem;padding:0.65rem 0.85rem;background:#2e2018;border-radius:var(--radius-sm);font-size:0.78rem;color:#b09878;line-height:1.6;}
+    .explanation.visible{display:block;}
+    .exp-correct{color:#8fd47a;font-family:var(--serif-en);font-style:italic;font-size:0.75rem;margin-bottom:0.2rem;}
+    .exp-incorrect{color:#e87a7a;font-family:var(--serif-en);font-style:italic;font-size:0.75rem;margin-bottom:0.2rem;}
+
+    .reset-btn{margin-top:0.75rem;padding:0.4rem 0.9rem;background:transparent;border:1px solid #2e2018;border-radius:var(--radius-sm);color:#7a6450;font-family:var(--sans-jp);font-size:0.75rem;cursor:pointer;transition:all 0.2s;}
+    .reset-btn:hover{border-color:#4aaf9e;color:#4aaf9e;}
+
+    /* FOOTER */
+    .site-footer{border-top:1px solid #2e2018;background:#3d2d20;padding:1.25rem 0;margin-top:2rem;}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;flex-wrap:wrap;gap:1rem;}
+    .footer-jp{font-family:var(--serif-jp);font-size:0.8rem;color:#b09878;}
+    .footer-en{font-family:var(--serif-en);font-style:italic;font-size:0.7rem;color:#7a6450;}
+
+    ruby{display:inline-flex;flex-direction:column-reverse;align-items:center;vertical-align:bottom;line-height:1;}
+    ruby rt{font-family:'Noto Sans JP',sans-serif;font-size:0.55em;color:#e8d8c0;text-align:center;letter-spacing:0.04em;line-height:1.5;user-select:none;}
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="jp"><ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span>
+      <span class="en">Personal Japanese Study</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a></li>
+      <li><a href="vocabulary.html"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a></li>
+      <li><a href="kanji.html"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a></li>
+      <li><a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
+      <li><a href="listening.html" class="active"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a></li>
+      <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <div class="jp-title"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></div>
+    <div class="en-title">Listening Comprehension</div>
+    <p class="desc">Press Play to hear the script — no text shown during playback. Answer the questions, then reveal the script to review. N4 through N1, graded by difficulty.</p>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-level="all">All levels</button>
+    <button class="filter-btn badge-n4" data-level="n4">N4</button>
+    <button class="filter-btn badge-n3" data-level="n3">N3</button>
+    <button class="filter-btn badge-n2" data-level="n2">N2</button>
+    <button class="filter-btn badge-n1" data-level="n1">N1</button>
+  </div>
+
+  <div class="listening-list" id="listening-list"></div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <p class="footer-jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby> — <ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></p>
+      <p class="footer-en">Listening Comprehension · N4 → N1</p>
+    </div>
+    <a href="index.html" style="font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;text-decoration:none;">← Back to home</a>
+  </div>
+</footer>
+
+<script>
+// ── Listening Data ────────────────────────────────────────────
+const listeningData = [
+
+  // ══════════════════════════════════════════════════════════════
+  //  N4
+  // ══════════════════════════════════════════════════════════════
+
+  {
+    id:'n4-l-1', level:'n4',
+    titleJp:'<ruby>道<rt>みち</rt></ruby>の<ruby>聞<rt>き</rt></ruby>き<ruby>方<rt>かた</rt></ruby>',
+    titleEn:'Asking for Directions',
+    scene:'A tourist asks a local for directions to the post office.',
+    speakers:['Tourist (A)','Local (B)'],
+    script:[
+      {speaker:'A', text:'すみません、<ruby>郵<rt>ゆう</rt></ruby><ruby>便<rt>びん</rt></ruby><ruby>局<rt>きょく</rt></ruby>はどこですか。'},
+      {speaker:'B', text:'<ruby>郵<rt>ゆう</rt></ruby><ruby>便<rt>びん</rt></ruby><ruby>局<rt>きょく</rt></ruby>ですか。<ruby>この<rt>この</rt></ruby><ruby>道<rt>みち</rt></ruby>をまっすぐ<ruby>行<rt>い</rt></ruby>って、<ruby>二<rt>ふた</rt></ruby>つ<ruby>目<rt>め</rt></ruby>の<ruby>信<rt>しん</rt></ruby><ruby>号<rt>ごう</rt></ruby>を<ruby>左<rt>ひだり</rt></ruby>に<ruby>曲<rt>ま</rt></ruby>がってください。<ruby>右<rt>みぎ</rt></ruby><ruby>側<rt>がわ</rt></ruby>に<ruby>あります<rt>あります</rt></ruby>よ。'},
+      {speaker:'A', text:'ありがとうございます。<ruby>歩<rt>ある</rt></ruby>いてどのくらいかかりますか。'},
+      {speaker:'B', text:'そうですね、<ruby>五<rt>ご</rt></ruby><ruby>分<rt>ふん</rt></ruby>くらいです。'},
+    ],
+    scriptPlain:'すみません、郵便局はどこですか。郵便局ですか。この道をまっすぐ行って、二つ目の信号を左に曲がってください。右側にありますよ。ありがとうございます。歩いてどのくらいかかりますか。そうですね、五分くらいです。',
+    questions:[
+      {q:'郵便局はどの方向にありますか。', opts:['A. まっすぐ行って右に曲がる','B. まっすぐ行って左に曲がる','C. 一つ目の信号を右に曲がる','D. 駅の近く'], answer:'B', exp:'「二つ目の信号を左に曲がってください」と言っています。'},
+      {q:'郵便局まで歩いてどのくらいかかりますか。', opts:['A. 十分','B. 三分','C. 五分','D. 十五分'], answer:'C', exp:'「五分くらいです」と言っています。'},
+      {q:'郵便局は道のどちら側にありますか。', opts:['A. 左側','B. 右側','C. 正面','D. 後ろ'], answer:'B', exp:'「右側にありますよ」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n4-l-2', level:'n4',
+    titleJp:'<ruby>天<rt>てん</rt></ruby><ruby>気<rt>き</rt></ruby>の<ruby>話<rt>はなし</rt></ruby>',
+    titleEn:'Talking About the Weather',
+    scene:'Two colleagues chat about the weather before a meeting.',
+    speakers:['A','B'],
+    script:[
+      {speaker:'A', text:'<ruby>今<rt>きょう</rt></ruby><ruby>日<rt>う</rt></ruby>は<ruby>本<rt>ほん</rt></ruby><ruby>当<rt>とう</rt></ruby>に<ruby>暑<rt>あつ</rt></ruby>いですね。'},
+      {speaker:'B', text:'そうですね。<ruby>天<rt>てん</rt></ruby><ruby>気<rt>き</rt></ruby><ruby>予<rt>よ</rt></ruby><ruby>報<rt>ほう</rt></ruby>によると、<ruby>明<rt>あす</rt></ruby><ruby>日<rt>た</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>るそうですよ。'},
+      {speaker:'A', text:'え、<ruby>本<rt>ほん</rt></ruby><ruby>当<rt>とう</rt></ruby>ですか。じゃあ、<ruby>傘<rt>かさ</rt></ruby>を<ruby>持<rt>も</rt></ruby>って<ruby>来<rt>く</rt></ruby>なければなりませんね。'},
+      {speaker:'B', text:'<ruby>私<rt>わたし</rt></ruby>はもう<ruby>用<rt>よう</rt></ruby><ruby>意<rt>い</rt></ruby>しました。<ruby>折<rt>お</rt></ruby>り<ruby>畳<rt>たた</rt></ruby>み<ruby>傘<rt>かさ</rt></ruby>をいつも<ruby>バッグ<rt>バッグ</rt></ruby>に<ruby>入<rt>い</rt></ruby>れています。'},
+    ],
+    scriptPlain:'今日は本当に暑いですね。そうですね。天気予報によると、明日は雨が降るそうですよ。え、本当ですか。じゃあ、傘を持って来なければなりませんね。私はもう用意しました。折り畳み傘をいつもバッグに入れています。',
+    questions:[
+      {q:'明日の天気はどうですか。', opts:['A. 晴れ','B. 曇り','C. 雪','D. 雨'], answer:'D', exp:'「明日は雨が降るそうですよ」と言っています。'},
+      {q:'Bさんはなぜ心配していませんか。', opts:['A. 明日は休みだから','B. 折り畳み傘をいつも持っているから','C. 車で来るから','D. 天気予報を信じないから'], answer:'B', exp:'「折り畳み傘をいつもバッグに入れています」と言っています。'},
+      {q:'今日の天気はどうですか。', opts:['A. 寒い','B. 曇っている','C. 暑い','D. 雨が降っている'], answer:'C', exp:'「今日は本当に暑いですね」と会話が始まっています。'},
+    ]
+  },
+
+  {
+    id:'n4-l-3', level:'n4',
+    titleJp:'<ruby>レストラン<rt>レストラン</rt></ruby>の<ruby>予<rt>よ</rt></ruby><ruby>約<rt>やく</rt></ruby>',
+    titleEn:'Making a Restaurant Reservation',
+    scene:'A customer calls a restaurant to make a reservation.',
+    speakers:['Customer (A)','Restaurant staff (B)'],
+    script:[
+      {speaker:'B', text:'はい、レストラン「さくら」でございます。'},
+      {speaker:'A', text:'あの、<ruby>今<rt>こん</rt></ruby><ruby>度<rt>ど</rt></ruby>の<ruby>土<rt>ど</rt></ruby><ruby>曜<rt>よう</rt></ruby><ruby>日<rt>び</rt></ruby>の<ruby>夜<rt>よる</rt></ruby>、<ruby>予<rt>よ</rt></ruby><ruby>約<rt>やく</rt></ruby>をしたいんですが。'},
+      {speaker:'B', text:'ありがとうございます。<ruby>何<rt>なん</rt></ruby><ruby>名<rt>めい</rt></ruby><ruby>様<rt>さま</rt></ruby>でしょうか。'},
+      {speaker:'A', text:'<ruby>四<rt>よ</rt></ruby><ruby>人<rt>にん</rt></ruby>です。<ruby>七<rt>しち</rt></ruby><ruby>時<rt>じ</rt></ruby>からお<ruby>願<rt>ねが</rt></ruby>いしたいんですが、<ruby>空<rt>あ</rt></ruby>いていますか。'},
+      {speaker:'B', text:'<ruby>七<rt>しち</rt></ruby><ruby>時<rt>じ</rt></ruby>ですね。<ruby>少<rt>しょう</rt></ruby><ruby>々<rt>しょう</rt></ruby>お<ruby>待<rt>ま</rt></ruby>ちください。…はい、<ruby>大<rt>だい</rt></ruby><ruby>丈<rt>じょう</rt></ruby><ruby>夫<rt>ぶ</rt></ruby>です。お<ruby>名<rt>な</rt></ruby><ruby>前<rt>まえ</rt></ruby>をお<ruby>願<rt>ねが</rt></ruby>いします。'},
+    ],
+    scriptPlain:'はい、レストラン「さくら」でございます。あの、今度の土曜日の夜、予約をしたいんですが。ありがとうございます。何名様でしょうか。四人です。七時からお願いしたいんですが、空いていますか。七時ですね。少々お待ちください。…はい、大丈夫です。お名前をお願いします。',
+    questions:[
+      {q:'何曜日に予約をしたいですか。', opts:['A. 金曜日','B. 日曜日','C. 土曜日','D. 木曜日'], answer:'C', exp:'「今度の土曜日の夜」と言っています。'},
+      {q:'何人で行きますか。', opts:['A. 二人','B. 三人','C. 五人','D. 四人'], answer:'D', exp:'「四人です」と言っています。'},
+      {q:'何時から予約をしたいですか。', opts:['A. 六時','B. 七時','C. 八時','D. 七時半'], answer:'B', exp:'「七時からお願いしたいんですが」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n4-l-4', level:'n4',
+    titleJp:'<ruby>週<rt>しゅう</rt></ruby><ruby>末<rt>まつ</rt></ruby>の<ruby>予<rt>よ</rt></ruby><ruby>定<rt>てい</rt></ruby>',
+    titleEn:'Weekend Plans',
+    scene:'Two students discuss what they plan to do this weekend.',
+    speakers:['A','B'],
+    script:[
+      {speaker:'A', text:'<ruby>今<rt>こん</rt></ruby><ruby>週<rt>しゅう</rt></ruby><ruby>末<rt>まつ</rt></ruby>、<ruby>何<rt>なに</rt></ruby>か<ruby>予<rt>よ</rt></ruby><ruby>定<rt>てい</rt></ruby>がありますか。'},
+      {speaker:'B', text:'<ruby>土<rt>ど</rt></ruby><ruby>曜<rt>よう</rt></ruby>は<ruby>友<rt>とも</rt></ruby><ruby>達<rt>だち</rt></ruby>と<ruby>映<rt>えい</rt></ruby><ruby>画<rt>が</rt></ruby>を<ruby>見<rt>み</rt></ruby>に<ruby>行<rt>い</rt></ruby>く<ruby>つもり<rt>つもり</rt></ruby>です。<ruby>日<rt>にち</rt></ruby><ruby>曜<rt>よう</rt></ruby>は<ruby>家<rt>いえ</rt></ruby>で<ruby>勉<rt>べん</rt></ruby><ruby>強<rt>きょう</rt></ruby>しなければなりません。<ruby>来<rt>らい</rt></ruby><ruby>週<rt>しゅう</rt></ruby>に<ruby>試<rt>し</rt></ruby><ruby>験<rt>けん</rt></ruby>があるので。'},
+      {speaker:'A', text:'<ruby>大<rt>たい</rt></ruby><ruby>変<rt>へん</rt></ruby>ですね。<ruby>私<rt>わたし</rt></ruby>は<ruby>両<rt>りょう</rt></ruby><ruby>日<rt>じつ</rt></ruby>ともアルバイトです。'},
+      {speaker:'B', text:'え、<ruby>忙<rt>いそが</rt></ruby>しいですね。アルバイトはどこでしていますか。'},
+      {speaker:'A', text:'<ruby>駅<rt>えき</rt></ruby>の<ruby>近<rt>ちか</rt></ruby>くのカフェです。'},
+    ],
+    scriptPlain:'今週末、何か予定がありますか。土曜は友達と映画を見に行くつもりです。日曜は家で勉強しなければなりません。来週に試験があるので。大変ですね。私は両日ともアルバイトです。え、忙しいですね。アルバイトはどこでしていますか。駅の近くのカフェです。',
+    questions:[
+      {q:'Bさんは土曜日に何をするつもりですか。', opts:['A. 勉強する','B. アルバイトをする','C. 友達と映画を見る','D. 家で休む'], answer:'C', exp:'「土曜は友達と映画を見に行くつもりです」と言っています。'},
+      {q:'Bさんが日曜日に勉強しなければならない理由は何ですか。', opts:['A. 宿題が多いから','B. 来週試験があるから','C. 先生に言われたから','D. アルバイトがないから'], answer:'B', exp:'「来週に試験があるので」と言っています。'},
+      {q:'Aさんのアルバイト先はどこですか。', opts:['A. 図書館','B. コンビニ','C. 駅の近くのカフェ','D. スーパー'], answer:'C', exp:'「駅の近くのカフェです」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n4-l-5', level:'n4',
+    titleJp:'<ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>',
+    titleEn:'Shopping',
+    scene:'A customer is shopping for clothes at a department store.',
+    speakers:['Customer (A)','Shop staff (B)'],
+    script:[
+      {speaker:'A', text:'すみません、このシャツはMサイズはありますか。'},
+      {speaker:'B', text:'<ruby>少<rt>しょう</rt></ruby><ruby>々<rt>しょう</rt></ruby>お<ruby>待<rt>ま</rt></ruby>ちください。…<ruby>申<rt>もう</rt></ruby>し<ruby>訳<rt>わけ</rt></ruby>ございません。Mサイズは<ruby>只<rt>ただ</rt></ruby><ruby>今<rt>いま</rt></ruby><ruby>在<rt>ざい</rt></ruby><ruby>庫<rt>こ</rt></ruby>がございません。'},
+      {speaker:'A', text:'そうですか。じゃあ、Lサイズはありますか。'},
+      {speaker:'B', text:'はい、Lサイズはございます。お<ruby>色<rt>いろ</rt></ruby>は<ruby>白<rt>しろ</rt></ruby>と<ruby>青<rt>あお</rt></ruby>がございます。'},
+      {speaker:'A', text:'<ruby>青<rt>あお</rt></ruby>をいただきます。<ruby>値<rt>ね</rt></ruby><ruby>段<rt>だん</rt></ruby>はいくらですか。'},
+      {speaker:'B', text:'<ruby>三<rt>さん</rt></ruby><ruby>千<rt>ぜん</rt></ruby><ruby>円<rt>えん</rt></ruby>でございます。'},
+    ],
+    scriptPlain:'すみません、このシャツはMサイズはありますか。少々お待ちください。申し訳ございません。Mサイズは只今在庫がございません。そうですか。じゃあ、Lサイズはありますか。はい、Lサイズはございます。お色は白と青がございます。青をいただきます。値段はいくらですか。三千円でございます。',
+    questions:[
+      {q:'お客さんは最初に何サイズを探していましたか。', opts:['A. Sサイズ','B. Mサイズ','C. Lサイズ','D. XLサイズ'], answer:'B', exp:'「このシャツはMサイズはありますか」と聞いています。'},
+      {q:'お客さんは最終的に何を買いましたか。', opts:['A. 白のMサイズ','B. 青のMサイズ','C. 白のLサイズ','D. 青のLサイズ'], answer:'D', exp:'Mサイズがなかったので「青をいただきます」とLサイズの青を選びました。'},
+      {q:'シャツの値段はいくらですか。', opts:['A. 二千円','B. 三千円','C. 五千円','D. 千五百円'], answer:'B', exp:'「三千円でございます」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n4-l-6', level:'n4',
+    titleJp:'<ruby>体<rt>からだ</rt></ruby>の<ruby>具<rt>ぐ</rt></ruby><ruby>合<rt>あい</rt></ruby>',
+    titleEn:'Not Feeling Well',
+    scene:'A student tells their teacher they are feeling unwell.',
+    speakers:['Student (A)','Teacher (B)'],
+    script:[
+      {speaker:'A', text:'<ruby>先<rt>せん</rt></ruby><ruby>生<rt>せい</rt></ruby>、<ruby>頭<rt>あたま</rt></ruby>が<ruby>痛<rt>いた</rt></ruby>くて、<ruby>体<rt>からだ</rt></ruby>もだるいんですが…'},
+      {speaker:'B', text:'<ruby>大<rt>だい</rt></ruby><ruby>丈<rt>じょう</rt></ruby><ruby>夫<rt>ぶ</rt></ruby>ですか。<ruby>熱<rt>ねつ</rt></ruby>はありますか。'},
+      {speaker:'A', text:'<ruby>測<rt>はか</rt></ruby>っていないんですが、<ruby>少<rt>すこ</rt></ruby>し<ruby>寒<rt>さむ</rt></ruby>けがします。'},
+      {speaker:'B', text:'それは<ruby>辛<rt>つら</rt></ruby>いですね。<ruby>保<rt>ほ</rt></ruby><ruby>健<rt>けん</rt></ruby><ruby>室<rt>しつ</rt></ruby>で<ruby>休<rt>やす</rt></ruby>んでください。<ruby>授<rt>じゅ</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>はあとでノートを<ruby>貸<rt>か</rt></ruby>してあげます。'},
+      {speaker:'A', text:'ありがとうございます。<ruby>失<rt>しつ</rt></ruby><ruby>礼<rt>れい</rt></ruby>します。'},
+    ],
+    scriptPlain:'先生、頭が痛くて、体もだるいんですが…大丈夫ですか。熱はありますか。測っていないんですが、少し寒けがします。それは辛いですね。保健室で休んでください。授業はあとでノートを貸してあげます。ありがとうございます。失礼します。',
+    questions:[
+      {q:'生徒の症状は何ですか。（全部選んでください）', opts:['A. 頭が痛い・体がだるい・寒け','B. 咳・熱・頭痛','C. お腹が痛い','D. 足が痛い'], answer:'A', exp:'「頭が痛くて、体もだるい」「少し寒けがします」と言っています。'},
+      {q:'先生は生徒に何をするように言いましたか。', opts:['A. 家に帰る','B. 保健室で休む','C. 病院に行く','D. 薬を飲む'], answer:'B', exp:'「保健室で休んでください」と言っています。'},
+      {q:'先生は授業についてどう言いましたか。', opts:['A. 授業を録音してあげる','B. 後でノートを貸してあげる','C. 宿題を免除してあげる','D. 授業の動画を送る'], answer:'B', exp:'「授業はあとでノートを貸してあげます」と言っています。'},
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════════
+  //  N3
+  // ══════════════════════════════════════════════════════════════
+
+  {
+    id:'n3-l-1', level:'n3',
+    titleJp:'<ruby>仕<rt>し</rt></ruby><ruby>事<rt>ごと</rt></ruby>の<ruby>相<rt>そう</rt></ruby><ruby>談<rt>だん</rt></ruby>',
+    titleEn:'A Work Dilemma',
+    scene:'Two colleagues discuss a difficult situation at work.',
+    speakers:['A','B'],
+    script:[
+      {speaker:'A', text:'<ruby>実<rt>じつ</rt></ruby>は、<ruby>上<rt>じょう</rt></ruby><ruby>司<rt>し</rt></ruby>から<ruby>新<rt>あたら</rt></ruby>しいプロジェクトを<ruby>任<rt>まか</rt></ruby>されたんだけど、<ruby>正<rt>しょう</rt></ruby><ruby>直<rt>じき</rt></ruby>に<ruby>言<rt>い</rt></ruby>って<ruby>自<rt>じ</rt></ruby><ruby>信<rt>しん</rt></ruby>がなくて。'},
+      {speaker:'B', text:'どんなプロジェクトなの？'},
+      {speaker:'A', text:'<ruby>海<rt>かい</rt></ruby><ruby>外<rt>がい</rt></ruby><ruby>クライアント<rt>クライアント</rt></ruby>との<ruby>交<rt>こう</rt></ruby><ruby>渉<rt>しょう</rt></ruby>なんだけど、<ruby>英<rt>えい</rt></ruby><ruby>語<rt>ご</rt></ruby>があまり<ruby>得<rt>とく</rt></ruby><ruby>意<rt>い</rt></ruby>じゃなくて…'},
+      {speaker:'B', text:'そうか。でも、<ruby>上<rt>じょう</rt></ruby><ruby>司<rt>し</rt></ruby>があなたを<ruby>選<rt>えら</rt></ruby>んだのは<ruby>理<rt>り</rt></ruby><ruby>由<rt>ゆう</rt></ruby>があるはずだよ。まず<ruby>挑<rt>ちょう</rt></ruby><ruby>戦<rt>せん</rt></ruby>してみたら？<ruby>困<rt>こま</rt></ruby>ったら<ruby>相<rt>そう</rt></ruby><ruby>談<rt>だん</rt></ruby>に<ruby>乗<rt>の</rt></ruby>るよ。'},
+      {speaker:'A', text:'<ruby>そっか<rt>そっか</rt></ruby>、ありがとう。<ruby>頑<rt>がん</rt></ruby><ruby>張<rt>ば</rt></ruby>ってみる。'},
+    ],
+    scriptPlain:'実は、上司から新しいプロジェクトを任されたんだけど、正直に言って自信がなくて。どんなプロジェクトなの？海外クライアントとの交渉なんだけど、英語があまり得意じゃなくて…そうか。でも、上司があなたを選んだのは理由があるはずだよ。まず挑戦してみたら？困ったら相談に乗るよ。そっか、ありがとう。頑張ってみる。',
+    questions:[
+      {q:'Aさんはなぜ自信がないのですか。', opts:['A. プロジェクトの経験がないから','B. 英語が得意ではないから','C. 上司が嫌いだから','D. 仕事が多すぎるから'], answer:'B', exp:'「英語があまり得意じゃなくて」と言っています。'},
+      {q:'Bさんはどんなアドバイスをしましたか。', opts:['A. プロジェクトを断るべきだ','B. 英語を勉強してから始める','C. まず挑戦してみて、困ったら相談する','D. 上司に相談する'], answer:'C', exp:'「まず挑戦してみたら？困ったら相談に乗るよ」と言っています。'},
+      {q:'このプロジェクトはどんな内容ですか。', opts:['A. 国内の新商品開発','B. 社内システムの改善','C. 海外クライアントとの交渉','D. 新しい社員の研修'], answer:'C', exp:'「海外クライアントとの交渉なんだけど」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n3-l-2', level:'n3',
+    titleJp:'<ruby>ニュース<rt>ニュース</rt></ruby><ruby>報<rt>ほう</rt></ruby><ruby>道<rt>どう</rt></ruby>',
+    titleEn:'A News Report',
+    scene:'A news announcer reports on a local environmental issue.',
+    speakers:['Announcer'],
+    script:[
+      {speaker:'Announcer', text:'<ruby>今<rt>こん</rt></ruby><ruby>日<rt>にち</rt></ruby>のニュースです。<ruby>市<rt>し</rt></ruby><ruby>内<rt>ない</rt></ruby>の<ruby>河<rt>か</rt></ruby><ruby>川<rt>せん</rt></ruby>で<ruby>水<rt>すい</rt></ruby><ruby>質<rt>しつ</rt></ruby><ruby>汚<rt>お</rt></ruby><ruby>染<rt>せん</rt></ruby>が<ruby>確<rt>かく</rt></ruby><ruby>認<rt>にん</rt></ruby>されました。<ruby>原<rt>げん</rt></ruby><ruby>因<rt>いん</rt></ruby>は<ruby>近<rt>きん</rt></ruby><ruby>くの<rt>くの</rt></ruby><ruby>工<rt>こう</rt></ruby><ruby>場<rt>じょう</rt></ruby>から<ruby>排<rt>はい</rt></ruby><ruby>水<rt>すい</rt></ruby>が<ruby>流<rt>なが</rt></ruby>れ<ruby>込<rt>こ</rt></ruby>んだためとみられています。市<ruby>は<rt>は</rt></ruby><ruby>直<rt>ただ</rt></ruby><ruby>ちに<rt>ちに</rt></ruby><ruby>工<rt>こう</rt></ruby><ruby>場<rt>じょう</rt></ruby>に<ruby>操<rt>そう</rt></ruby><ruby>業<rt>ぎょう</rt></ruby><ruby>停<rt>てい</rt></ruby><ruby>止<rt>し</rt></ruby>を<ruby>命<rt>めい</rt></ruby>じ、<ruby>調<rt>ちょう</rt></ruby><ruby>査<rt>さ</rt></ruby>を<ruby>進<rt>すす</rt></ruby>めています。<ruby>住<rt>じゅう</rt></ruby><ruby>民<rt>みん</rt></ruby>の<ruby>方<rt>かた</rt></ruby>は<ruby>当<rt>とう</rt></ruby><ruby>分<rt>ぶん</rt></ruby>の<ruby>間<rt>あいだ</rt></ruby>、この<ruby>川<rt>かわ</rt></ruby>の<ruby>水<rt>みず</rt></ruby>を<ruby>使<rt>し</rt></ruby><ruby>用<rt>よう</rt></ruby>しないようにとのことです。'},
+    ],
+    scriptPlain:'今日のニュースです。市内の河川で水質汚染が確認されました。原因は近くの工場から排水が流れ込んだためとみられています。市は直ちに工場に操業停止を命じ、調査を進めています。住民の方は当分の間、この川の水を使用しないようにとのことです。',
+    questions:[
+      {q:'何が起きましたか。', opts:['A. 洪水','B. 河川の水質汚染','C. 工場の爆発','D. 魚が大量に死んだ'], answer:'B', exp:'「市内の河川で水質汚染が確認されました」と報道されています。'},
+      {q:'汚染の原因は何だと考えられていますか。', opts:['A. 農薬','B. 家庭の排水','C. 近くの工場からの排水','D. 大雨による土砂流入'], answer:'C', exp:'「近くの工場から排水が流れ込んだためとみられています」と言っています。'},
+      {q:'市はどのような対応をしましたか。', opts:['A. 住民を避難させた','B. 工場に操業停止を命じた','C. 川を閉鎖した','D. 国に支援を求めた'], answer:'B', exp:'「直ちに工場に操業停止を命じ」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n3-l-3', level:'n3',
+    titleJp:'<ruby>意<rt>い</rt></ruby><ruby>見<rt>けん</rt></ruby>の<ruby>違<rt>ちが</rt></ruby>い',
+    titleEn:'A Difference of Opinion',
+    scene:'Two friends disagree about whether social media is good or bad.',
+    speakers:['A','B'],
+    script:[
+      {speaker:'A', text:'SNSって<ruby>本<rt>ほん</rt></ruby><ruby>当<rt>とう</rt></ruby>に<ruby>便<rt>べん</rt></ruby><ruby>利<rt>り</rt></ruby>だよね。<ruby>遠<rt>とお</rt></ruby>くの<ruby>友<rt>とも</rt></ruby><ruby>達<rt>だち</rt></ruby>とも<ruby>簡<rt>かん</rt></ruby><ruby>単<rt>たん</rt></ruby>につながれるし。'},
+      {speaker:'B', text:'まあね。でも、<ruby>個<rt>こ</rt></ruby><ruby>人<rt>じん</rt></ruby><ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby>が<ruby>漏<rt>も</rt></ruby>れるリスクもあるし、<ruby>人<rt>ひと</rt></ruby>と<ruby>比<rt>くら</rt></ruby>べて<ruby>自<rt>じ</rt></ruby><ruby>己<rt>こ</rt></ruby><ruby>肯<rt>こう</rt></ruby><ruby>定<rt>てい</rt></ruby><ruby>感<rt>かん</rt></ruby>が<ruby>下<rt>さ</rt></ruby>がることも<ruby>多<rt>おお</rt></ruby>いよ。'},
+      {speaker:'A', text:'それは<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>の<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>じゃないかな。ちゃんと<ruby>管<rt>かん</rt></ruby><ruby>理<rt>り</rt></ruby>すれば<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>ないと<ruby>思<rt>おも</rt></ruby>う。'},
+      {speaker:'B', text:'<ruby>理<rt>り</rt></ruby><ruby>想<rt>そう</rt></ruby>はそうだけど、<ruby>実<rt>じっ</rt></ruby><ruby>際<rt>さい</rt></ruby>は<ruby>難<rt>むずか</rt></ruby>しいよ。<ruby>若<rt>わか</rt></ruby>い<ruby>人<rt>ひと</rt></ruby>は<ruby>特<rt>とく</rt></ruby>に<ruby>影<rt>えい</rt></ruby><ruby>響<rt>きょう</rt></ruby>を<ruby>受<rt>う</rt></ruby>けやすいから。'},
+    ],
+    scriptPlain:'SNSって本当に便利だよね。遠くの友達とも簡単につながれるし。まあね。でも、個人情報が漏れるリスクもあるし、人と比べて自己肯定感が下がることも多いよ。それは使い方の問題じゃないかな。ちゃんと管理すれば問題ないと思う。理想はそうだけど、実際は難しいよ。若い人は特に影響を受けやすいから。',
+    questions:[
+      {q:'AさんのSNSに対する意見はどれですか。', opts:['A. SNSは危険で使うべきではない','B. SNSは便利で、使い方を管理すれば問題ない','C. SNSは若者に悪影響を与える','D. SNSは個人情報を守れない'], answer:'B', exp:'「便利だよね」「ちゃんと管理すれば問題ないと思う」と言っています。'},
+      {q:'BさんがSNSの問題点として挙げているものはどれですか。', opts:['A. 情報が古い','B. 使い方が難しい','C. 個人情報漏洩のリスクと自己肯定感の低下','D. 速度が遅い'], answer:'C', exp:'「個人情報が漏れるリスク」と「自己肯定感が下がる」を問題点として挙げています。'},
+      {q:'二人の意見の違いは何ですか。', opts:['A. SNSを使うかどうか','B. SNSの便利さについて','C. SNSのリスクを管理できるかどうか','D. どのSNSが一番いいか'], answer:'C', exp:'AさんはSNSを管理すれば問題ないと思い、Bさんは実際には難しいと反論しています。'},
+    ]
+  },
+
+  {
+    id:'n3-l-4', level:'n3',
+    titleJp:'<ruby>アナウンス<rt>アナウンス</rt></ruby>',
+    titleEn:'A Station Announcement',
+    scene:'A train station makes an announcement about a delay.',
+    speakers:['Announcer'],
+    script:[
+      {speaker:'Announcer', text:'<ruby>お<rt>お</rt></ruby><ruby>客<rt>きゃく</rt></ruby><ruby>様<rt>さま</rt></ruby>にお<ruby>知<rt>し</rt></ruby>らせします。ただいま、<ruby>中<rt>ちゅう</rt></ruby><ruby>央<rt>おう</rt></ruby><ruby>線<rt>せん</rt></ruby>は<ruby>人<rt>じん</rt></ruby><ruby>身<rt>しん</rt></ruby><ruby>事<rt>じ</rt></ruby><ruby>故<rt>こ</rt></ruby>の<ruby>影<rt>えい</rt></ruby><ruby>響<rt>きょう</rt></ruby>により、<ruby>上<rt>かみ</rt></ruby>り<ruby>下<rt>くだ</rt></ruby>り<ruby>共<rt>とも</rt></ruby>に<ruby>運<rt>うん</rt></ruby><ruby>転<rt>てん</rt></ruby>を<ruby>見<rt>み</rt></ruby><ruby>合<rt>あわ</rt></ruby>せています。<ruby>再<rt>さい</rt></ruby><ruby>開<rt>かい</rt></ruby>の<ruby>見<rt>み</rt></ruby><ruby>込<rt>こ</rt></ruby>みは<ruby>約<rt>やく</rt></ruby><ruby>三<rt>さん</rt></ruby><ruby>十<rt>じゅっ</rt></ruby><ruby>分<rt>ぷん</rt></ruby><ruby>後<rt>ご</rt></ruby>となっております。<ruby>お<rt>お</rt></ruby><ruby>急<rt>いそ</rt></ruby>ぎのお<ruby>客<rt>きゃく</rt></ruby><ruby>様<rt>さま</rt></ruby>は、<ruby>振<rt>ふ</rt></ruby>り<ruby>替<rt>か</rt></ruby>え<ruby>輸<rt>ゆ</rt></ruby><ruby>送<rt>そう</rt></ruby>をご<ruby>利<rt>り</rt></ruby><ruby>用<rt>よう</rt></ruby>いただけます。<ruby>大<rt>たい</rt></ruby><ruby>変<rt>へん</rt></ruby>ご<ruby>迷<rt>めい</rt></ruby><ruby>惑<rt>わく</rt></ruby>をおかけし、<ruby>申<rt>もう</rt></ruby>し<ruby>訳<rt>わけ</rt></ruby>ございません。'},
+    ],
+    scriptPlain:'お客様にお知らせします。ただいま、中央線は人身事故の影響により、上り下り共に運転を見合わせています。再開の見込みは約三十分後となっております。お急ぎのお客様は、振り替え輸送をご利用いただけます。大変ご迷惑をおかけし、申し訳ございません。',
+    questions:[
+      {q:'なぜ電車が止まっていますか。', opts:['A. 台風のため','B. 工事のため','C. 人身事故のため','D. 機械の故障のため'], answer:'C', exp:'「人身事故の影響により」と言っています。'},
+      {q:'電車が再開するのはいつ頃ですか。', opts:['A. 約十分後','B. 約三十分後','C. 一時間後','D. 不明'], answer:'B', exp:'「再開の見込みは約三十分後」と言っています。'},
+      {q:'急いでいる人はどうすればいいですか。', opts:['A. タクシーを使う','B. 次の電車を待つ','C. 振り替え輸送を利用する','D. 駅員に相談する'], answer:'C', exp:'「振り替え輸送をご利用いただけます」と案内しています。'},
+    ]
+  },
+
+  {
+    id:'n3-l-5', level:'n3',
+    titleJp:'<ruby>就<rt>しゅう</rt></ruby><ruby>職<rt>しょく</rt></ruby><ruby>活<rt>かつ</rt></ruby><ruby>動<rt>どう</rt></ruby>',
+    titleEn:'Job Hunting',
+    scene:'A university student discusses job hunting with their adviser.',
+    speakers:['Student (A)','Adviser (B)'],
+    script:[
+      {speaker:'A', text:'<ruby>就<rt>しゅう</rt></ruby><ruby>活<rt>かつ</rt></ruby>がなかなかうまくいかなくて、<ruby>正<rt>しょう</rt></ruby><ruby>直<rt>じき</rt></ruby>かなり<ruby>落<rt>お</rt></ruby>ち<ruby>込<rt>こ</rt></ruby>んでいます。'},
+      {speaker:'B', text:'<ruby>何<rt>なん</rt></ruby><ruby>社<rt>しゃ</rt></ruby>くらい<ruby>受<rt>う</rt></ruby>けましたか。'},
+      {speaker:'A', text:'<ruby>十<rt>じゅっ</rt></ruby><ruby>社<rt>しゃ</rt></ruby>受けて、<ruby>全<rt>ぜん</rt></ruby><ruby>部<rt>ぶ</rt></ruby><ruby>書<rt>しょ</rt></ruby><ruby>類<rt>るい</rt></ruby><ruby>選<rt>せん</rt></ruby><ruby>考<rt>こう</rt></ruby>で<ruby>落<rt>お</rt></ruby>ちてしまって。'},
+      {speaker:'B', text:'エントリーシートを<ruby>見<rt>み</rt></ruby>せてもらえますか？<ruby>一<rt>いっ</rt></ruby><ruby>緒<rt>しょ</rt></ruby>に<ruby>見<rt>み</rt></ruby>直<ruby>しましょう<rt>しましょう</rt></ruby>。<ruby>志<rt>し</rt></ruby><ruby>望<rt>ぼう</rt></ruby><ruby>動<rt>どう</rt></ruby><ruby>機<rt>き</rt></ruby>をもっと<ruby>具<rt>ぐ</rt></ruby><ruby>体<rt>たい</rt></ruby><ruby>的<rt>てき</rt></ruby>に<ruby>書<rt>か</rt></ruby>けるといいかもしれません。'},
+      {speaker:'A', text:'そうなんですか。<ruby>何<rt>なに</rt></ruby>を<ruby>書<rt>か</rt></ruby>けばいいか、なかなか<ruby>分<rt>わ</rt></ruby>からなくて。'},
+      {speaker:'B', text:'あなたのこれまでの<ruby>経<rt>けい</rt></ruby><ruby>験<rt>けん</rt></ruby>と、<ruby>会<rt>かい</rt></ruby><ruby>社<rt>しゃ</rt></ruby>への<ruby>貢<rt>こう</rt></ruby><ruby>献<rt>けん</rt></ruby>を<ruby>結<rt>むす</rt></ruby>びつけることが<ruby>大<rt>たい</rt></ruby><ruby>切<rt>せつ</rt></ruby>ですよ。'},
+    ],
+    scriptPlain:'就活がなかなかうまくいかなくて、正直かなり落ち込んでいます。何社くらい受けましたか。十社受けて、全部書類選考で落ちてしまって。エントリーシートを見せてもらえますか？一緒に見直しましょう。志望動機をもっと具体的に書けるといいかもしれません。そうなんですか。何を書けばいいか、なかなか分からなくて。あなたのこれまでの経験と、会社への貢献を結びつけることが大切ですよ。',
+    questions:[
+      {q:'学生はどのような問題を抱えていますか。', opts:['A. 面接で緊張する','B. 十社全部書類選考で落ちた','C. 会社が見つからない','D. 卒業できるか心配'], answer:'B', exp:'「十社受けて、全部書類選考で落ちてしまって」と言っています。'},
+      {q:'アドバイザーはまず何をしようと言いましたか。', opts:['A. もっと多くの会社を受ける','B. 面接の練習をする','C. エントリーシートを一緒に見直す','D. 違う業界を探す'], answer:'C', exp:'「エントリーシートを見せてもらえますか？一緒に見直しましょう」と言っています。'},
+      {q:'エントリーシートで大切なことは何だとアドバイザーは言いましたか。', opts:['A. 長く書くこと','B. 経験と会社への貢献を結びつけること','C. 趣味を詳しく書くこと','D. 給料の希望を明確にすること'], answer:'B', exp:'「あなたのこれまでの経験と、会社への貢献を結びつけることが大切」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n3-l-6', level:'n3',
+    titleJp:'<ruby>環<rt>かん</rt></ruby><ruby>境<rt>きょう</rt></ruby>について',
+    titleEn:'About the Environment',
+    scene:'A radio host interviews a local environmental activist.',
+    speakers:['Host (A)','Activist (B)'],
+    script:[
+      {speaker:'A', text:'<ruby>最<rt>さい</rt></ruby><ruby>近<rt>きん</rt></ruby>、プラスチックごみの<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>が<ruby>注<rt>ちゅう</rt></ruby><ruby>目<rt>もく</rt></ruby>されていますね。'},
+      {speaker:'B', text:'そうです。<ruby>特<rt>とく</rt></ruby>に<ruby>海<rt>かい</rt></ruby><ruby>洋<rt>よう</rt></ruby>プラスチックは<ruby>深<rt>しん</rt></ruby><ruby>刻<rt>こく</rt></ruby>で、<ruby>このまま<rt>このまま</rt></ruby>では<ruby>二<rt>に</rt></ruby><ruby>〇<rt>ぜろ</rt></ruby><ruby>五<rt>ご</rt></ruby><ruby>〇<rt>ぜろ</rt></ruby><ruby>年<rt>ねん</rt></ruby>には<ruby>海<rt>うみ</rt></ruby>の<ruby>魚<rt>さかな</rt></ruby>よりプラスチックの<ruby>量<rt>りょう</rt></ruby>の<ruby>方<rt>ほう</rt></ruby>が<ruby>多<rt>おお</rt></ruby>くなると<ruby>言<rt>い</rt></ruby>われています。'},
+      {speaker:'A', text:'それは<ruby>恐<rt>おそ</rt></ruby>ろしいですね。<ruby>個<rt>こ</rt></ruby><ruby>人<rt>じん</rt></ruby>でできることはありますか。'},
+      {speaker:'B', text:'マイバッグやマイボトルを<ruby>使<rt>つか</rt></ruby>うこと、<ruby>使<rt>つか</rt></ruby>い<ruby>捨<rt>す</rt></ruby>てプラスチックを<ruby>なるべく<rt>なるべく</rt></ruby><ruby>避<rt>さ</rt></ruby>けることです。<ruby>小<rt>ちい</rt></ruby>さなことでも、<ruby>積<rt>つ</rt></ruby>み<ruby>重<rt>かさ</rt></ruby>なれば<ruby>大<rt>おお</rt></ruby>きな<ruby>変<rt>へん</rt></ruby><ruby>化<rt>か</rt></ruby>になります。'},
+    ],
+    scriptPlain:'最近、プラスチックごみの問題が注目されていますね。そうです。特に海洋プラスチックは深刻で、このままでは二〇五〇年には海の魚よりプラスチックの量の方が多くなると言われています。それは恐ろしいですね。個人でできることはありますか。マイバッグやマイボトルを使うこと、使い捨てプラスチックをなるべく避けることです。小さなことでも、積み重なれば大きな変化になります。',
+    questions:[
+      {q:'海洋プラスチック問題について、どんな予測が述べられていますか。', opts:['A. 2030年までに問題が解決される','B. 2050年には海の魚よりプラスチックの量が多くなる','C. 海の生物がすべて絶滅する','D. プラスチックの生産が禁止される'], answer:'B', exp:'「二〇五〇年には海の魚よりプラスチックの量の方が多くなる」と言っています。'},
+      {q:'個人でできる対策として挙げられていないものはどれですか。', opts:['A. マイバッグを使う','B. マイボトルを使う','C. 使い捨てプラスチックを避ける','D. プラスチックをリサイクルする'], answer:'D', exp:'リサイクルについては言及されていません。'},
+      {q:'「小さなことでも、積み重なれば大きな変化になります」はどういう意味ですか。', opts:['A. 小さな問題は無視していい','B. 個人の小さな行動が集まれば大きな効果がある','C. 大きな政策だけが効果的だ','D. 変化には長い時間がかかる'], answer:'B', exp:'個人の小さな取り組みでも、多くの人が実践すれば大きな変化につながるという意味です。'},
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════════
+  //  N2
+  // ══════════════════════════════════════════════════════════════
+
+  {
+    id:'n2-l-1', level:'n2',
+    titleJp:'<ruby>会<rt>かい</rt></ruby><ruby>議<rt>ぎ</rt></ruby>での<ruby>議<rt>ぎ</rt></ruby><ruby>論<rt>ろん</rt></ruby>',
+    titleEn:'A Business Meeting Discussion',
+    scene:'Colleagues debate whether to expand into a new overseas market.',
+    speakers:['Manager (A)','Colleague B','Colleague C'],
+    script:[
+      {speaker:'A', text:'<ruby>今<rt>こん</rt></ruby><ruby>回<rt>かい</rt></ruby>の<ruby>議<rt>ぎ</rt></ruby><ruby>題<rt>だい</rt></ruby>は<ruby>東<rt>とう</rt></ruby><ruby>南<rt>なん</rt></ruby>アジア<ruby>市<rt>し</rt></ruby><ruby>場<rt>じょう</rt></ruby>への<ruby>参<rt>さん</rt></ruby><ruby>入<rt>にゅう</rt></ruby>についてです。<ruby>皆<rt>みな</rt></ruby>さんの<ruby>意<rt>い</rt></ruby><ruby>見<rt>けん</rt></ruby>を<ruby>聞<rt>き</rt></ruby>かせてください。'},
+      {speaker:'B', text:'<ruby>市<rt>し</rt></ruby><ruby>場<rt>じょう</rt></ruby>の<ruby>成<rt>せい</rt></ruby><ruby>長<rt>ちょう</rt></ruby><ruby>率<rt>りつ</rt></ruby>は<ruby>非<rt>ひ</rt></ruby><ruby>常<rt>じょう</rt></ruby>に<ruby>高<rt>たか</rt></ruby>く、<ruby>参<rt>さん</rt></ruby><ruby>入<rt>にゅう</rt></ruby>のタイミングとしては<ruby>今<rt>いま</rt></ruby>が<ruby>最<rt>さい</rt></ruby><ruby>適<rt>てき</rt></ruby>だと<ruby>思<rt>おも</rt></ruby>います。<ruby>競<rt>きょう</rt></ruby><ruby>合<rt>ごう</rt></ruby>他<ruby>社<rt>しゃ</rt></ruby>もまだ<ruby>少<rt>すく</rt></ruby>ない<ruby>状<rt>じょう</rt></ruby><ruby>況<rt>きょう</rt></ruby>です。'},
+      {speaker:'C', text:'<ruby>ただ<rt>ただ</rt></ruby>、<ruby>規<rt>き</rt></ruby><ruby>制<rt>せい</rt></ruby>の<ruby>複<rt>ふく</rt></ruby><ruby>雑<rt>ざつ</rt></ruby>さや<ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>違<rt>ちが</rt></ruby>いも<ruby>考<rt>こう</rt></ruby><ruby>慮<rt>りょ</rt></ruby>すべきです。<ruby>初<rt>しょ</rt></ruby><ruby>期<rt>き</rt></ruby><ruby>投<rt>とう</rt></ruby><ruby>資<rt>し</rt></ruby>がかなり<ruby>必<rt>ひつ</rt></ruby><ruby>要<rt>よう</rt></ruby>になるリスクもあります。'},
+      {speaker:'A', text:'<ruby>両<rt>りょう</rt></ruby><ruby>方<rt>ほう</rt></ruby>の<ruby>意<rt>い</rt></ruby><ruby>見<rt>けん</rt></ruby>とも<ruby>重<rt>じゅう</rt></ruby><ruby>要<rt>よう</rt></ruby>ですね。まずは<ruby>小<rt>しょう</rt></ruby><ruby>規<rt>き</rt></ruby><ruby>模<rt>ぼ</rt></ruby>な<ruby>パイロット<rt>パイロット</rt></ruby>プロジェクトを<ruby>試<rt>こころ</rt></ruby>みるのはどうでしょうか。'},
+    ],
+    scriptPlain:'今回の議題は東南アジア市場への参入についてです。皆さんの意見を聞かせてください。市場の成長率は非常に高く、参入のタイミングとしては今が最適だと思います。競合他社もまだ少ない状況です。ただ、規制の複雑さや文化的な違いも考慮すべきです。初期投資がかなり必要になるリスクもあります。両方の意見とも重要ですね。まずは小規模なパイロットプロジェクトを試みるのはどうでしょうか。',
+    questions:[
+      {q:'Bさんが市場参入を支持する理由はどれですか。', opts:['A. 政府の支援があるから','B. 成長率が高く競合が少ないから','C. コストが低いから','D. 文化的に似ているから'], answer:'B', exp:'「市場の成長率は非常に高く」「競合他社もまだ少ない」と言っています。'},
+      {q:'Cさんが懸念していることは何ですか。', opts:['A. 為替リスク','B. 規制の複雑さ・文化的違い・初期投資','C. 現地スタッフの採用','D. 輸送コスト'], answer:'B', exp:'「規制の複雑さや文化的な違い」と「初期投資がかなり必要になるリスク」を懸念しています。'},
+      {q:'マネージャーはどのような結論を提案しましたか。', opts:['A. すぐに大規模参入する','B. 参入をやめる','C. 小規模なパイロットプロジェクトを試みる','D. 来年まで様子を見る'], answer:'C', exp:'「まずは小規模なパイロットプロジェクトを試みるのはどうでしょうか」と提案しています。'},
+    ]
+  },
+
+  {
+    id:'n2-l-2', level:'n2',
+    titleJp:'<ruby>専<rt>せん</rt></ruby><ruby>門<rt>もん</rt></ruby>家へのインタビュー',
+    titleEn:'Expert Interview',
+    scene:'A journalist interviews an economist about inflation.',
+    speakers:['Journalist (A)','Economist (B)'],
+    script:[
+      {speaker:'A', text:'<ruby>最<rt>さい</rt></ruby><ruby>近<rt>きん</rt></ruby>の<ruby>物<rt>ぶっ</rt></ruby><ruby>価<rt>か</rt></ruby><ruby>上<rt>じょう</rt></ruby><ruby>昇<rt>しょう</rt></ruby>について、<ruby>どのように<rt>どのように</rt></ruby><ruby>見<rt>み</rt></ruby>ていらっしゃいますか。'},
+      {speaker:'B', text:'<ruby>今<rt>こん</rt></ruby><ruby>回<rt>かい</rt></ruby>のインフレは、<ruby>主<rt>おも</rt></ruby>にエネルギー<ruby>価<rt>か</rt></ruby><ruby>格<rt>かく</rt></ruby>の<ruby>高<rt>こう</rt></ruby><ruby>騰<rt>とう</rt></ruby>と<ruby>円<rt>えん</rt></ruby><ruby>安<rt>やす</rt></ruby>の<ruby>影<rt>えい</rt></ruby><ruby>響<rt>きょう</rt></ruby>が<ruby>大<rt>おお</rt></ruby>きいですね。<ruby>国<rt>こく</rt></ruby><ruby>内<rt>ない</rt></ruby><ruby>要<rt>よう</rt></ruby><ruby>因<rt>いん</rt></ruby>よりも<ruby>外<rt>がい</rt></ruby><ruby>部<rt>ぶ</rt></ruby><ruby>要<rt>よう</rt></ruby><ruby>因<rt>いん</rt></ruby>が<ruby>強<rt>つよ</rt></ruby>く<ruby>働<rt>はたら</rt></ruby>いている。'},
+      {speaker:'A', text:'<ruby>消<rt>しょう</rt></ruby><ruby>費<rt>ひ</rt></ruby><ruby>者<rt>しゃ</rt></ruby>への<ruby>影<rt>えい</rt></ruby><ruby>響<rt>きょう</rt></ruby>はどうでしょうか。'},
+      {speaker:'B', text:'<ruby>実<rt>じっ</rt></ruby><ruby>質<rt>しつ</rt></ruby><ruby>賃<rt>ちん</rt></ruby><ruby>金<rt>ぎん</rt></ruby>が<ruby>下<rt>さ</rt></ruby>がっているため、<ruby>生<rt>せい</rt></ruby><ruby>活<rt>かつ</rt></ruby><ruby>水<rt>すい</rt></ruby><ruby>準<rt>じゅん</rt></ruby>の<ruby>低<rt>てい</rt></ruby><ruby>下<rt>か</rt></ruby>が<ruby>懸<rt>けん</rt></ruby><ruby>念<rt>ねん</rt></ruby>されます。<ruby>特<rt>とく</rt></ruby>に<ruby>低<rt>てい</rt></ruby><ruby>所<rt>しょ</rt></ruby><ruby>得<rt>とく</rt></ruby><ruby>層<rt>そう</rt></ruby>への<ruby>影<rt>えい</rt></ruby><ruby>響<rt>きょう</rt></ruby>が<ruby>深<rt>しん</rt></ruby><ruby>刻<rt>こく</rt></ruby>です。'},
+    ],
+    scriptPlain:'最近の物価上昇について、どのように見ていらっしゃいますか。今回のインフレは、主にエネルギー価格の高騰と円安の影響が大きいですね。国内要因よりも外部要因が強く働いている。消費者への影響はどうでしょうか。実質賃金が下がっているため、生活水準の低下が懸念されます。特に低所得層への影響が深刻です。',
+    questions:[
+      {q:'今回のインフレの主な原因として挙げられているものはどれですか。', opts:['A. 国内需要の増加と賃金上昇','B. エネルギー価格の高騰と円安','C. 政府の財政政策','D. 人口増加'], answer:'B', exp:'「エネルギー価格の高騰と円安の影響が大きい」と述べています。'},
+      {q:'エコノミストは今回のインフレを何と特徴づけていますか。', opts:['A. 国内要因が主な原因','B. 外部要因が強く働いている','C. 政策の失敗による','D. 一時的なもの'], answer:'B', exp:'「国内要因よりも外部要因が強く働いている」と言っています。'},
+      {q:'消費者への影響として最も深刻と述べられているのは誰ですか。', opts:['A. 高所得層','B. 中間層','C. 低所得層','D. 若者'], answer:'C', exp:'「特に低所得層への影響が深刻です」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n2-l-3', level:'n2',
+    titleJp:'<ruby>大<rt>だい</rt></ruby><ruby>学<rt>がく</rt></ruby>の<ruby>講<rt>こう</rt></ruby><ruby>義<rt>ぎ</rt></ruby>',
+    titleEn:'A University Lecture',
+    scene:'A professor introduces the topic of globalisation and its effects.',
+    speakers:['Professor'],
+    script:[
+      {speaker:'Professor', text:'<ruby>今<rt>きょう</rt></ruby><ruby>日<rt>う</rt></ruby>はグローバル化の<ruby>功<rt>こう</rt></ruby><ruby>罪<rt>ざい</rt></ruby>について<ruby>考<rt>かんが</rt></ruby>えてみましょう。グローバル化により、<ruby>国<rt>こく</rt></ruby><ruby>際<rt>さい</rt></ruby><ruby>貿<rt>ぼう</rt></ruby><ruby>易<rt>えき</rt></ruby>が<ruby>活<rt>かっ</rt></ruby><ruby>発<rt>ぱつ</rt></ruby>化し、<ruby>経<rt>けい</rt></ruby><ruby>済<rt>ざい</rt></ruby><ruby>成<rt>せい</rt></ruby><ruby>長<rt>ちょう</rt></ruby>が<ruby>促<rt>そく</rt></ruby><ruby>進<rt>しん</rt></ruby>された<ruby>一<rt>いっ</rt></ruby><ruby>方<rt>ぽう</rt></ruby>で、<ruby>格<rt>かく</rt></ruby><ruby>差<rt>さ</rt></ruby>の<ruby>拡<rt>かく</rt></ruby><ruby>大<rt>だい</rt></ruby>や<ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby>の<ruby>均<rt>きん</rt></ruby><ruby>質<rt>しつ</rt></ruby>化という<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>も<ruby>生<rt>う</rt></ruby>じています。<ruby>皆<rt>みな</rt></ruby>さんは、グローバル化のメリットとデメリット、どちらが<ruby>大<rt>おお</rt></ruby>きいと<ruby>思<rt>おも</rt></ruby>いますか。<ruby>次<rt>つぎ</rt></ruby><ruby>回<rt>かい</rt></ruby>までに<ruby>自<rt>じ</rt></ruby><ruby>分<rt>ぶん</rt></ruby>の<ruby>意<rt>い</rt></ruby><ruby>見<rt>けん</rt></ruby>をまとめてきてください。'},
+    ],
+    scriptPlain:'今日はグローバル化の功罪について考えてみましょう。グローバル化により、国際貿易が活発化し、経済成長が促進された一方で、格差の拡大や文化の均質化という問題も生じています。皆さんは、グローバル化のメリットとデメリット、どちらが大きいと思いますか。次回までに自分の意見をまとめてきてください。',
+    questions:[
+      {q:'「功罪」とはどういう意味ですか。', opts:['A. 良い点のみ','B. 悪い点のみ','C. 良い点と悪い点の両方','D. 原因と結果'], answer:'C', exp:'「功」はメリット、「罪」はデメリットを指し、「功罪」はその両方を意味します。'},
+      {q:'グローバル化の問題点として挙げられていないものはどれですか。', opts:['A. 格差の拡大','B. 文化の均質化','C. 環境破壊','D. どちらも挙げられている'], answer:'C', exp:'格差の拡大と文化の均質化は挙げられていますが、環境破壊は言及されていません。'},
+      {q:'教授が学生に次回までに求めていることは何ですか。', opts:['A. レポートを書く','B. 本を読む','C. グローバル化についての自分の意見をまとめる','D. グループ発表を準備する'], answer:'C', exp:'「次回までに自分の意見をまとめてきてください」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n2-l-4', level:'n2',
+    titleJp:'<ruby>討<rt>とう</rt></ruby><ruby>論<rt>ろん</rt></ruby>',
+    titleEn:'A Debate',
+    scene:'Two people debate whether working from home should become the norm.',
+    speakers:['A','B'],
+    script:[
+      {speaker:'A', text:'テレワークが<ruby>普<rt>ふ</rt></ruby><ruby>及<rt>きゅう</rt></ruby>したことで、<ruby>通<rt>つう</rt></ruby><ruby>勤<rt>きん</rt></ruby><ruby>時<rt>じ</rt></ruby><ruby>間<rt>かん</rt></ruby>が<ruby>省<rt>はぶ</rt></ruby>け、<ruby>生<rt>せい</rt></ruby><ruby>産<rt>さん</rt></ruby><ruby>性<rt>せい</rt></ruby>も<ruby>向<rt>こう</rt></ruby><ruby>上<rt>じょう</rt></ruby>したというデータがあります。今後も<ruby>推<rt>すい</rt></ruby><ruby>進<rt>しん</rt></ruby>すべきだと<ruby>思<rt>おも</rt></ruby>います。'},
+      {speaker:'B', text:'でも、テレワークでは<ruby>チーム<rt>チーム</rt></ruby>の<ruby>一<rt>いっ</rt></ruby><ruby>体<rt>たい</rt></ruby><ruby>感<rt>かん</rt></ruby>が<ruby>失<rt>うしな</rt></ruby>われやすいし、<ruby>若<rt>わか</rt></ruby>い<ruby>社<rt>しゃ</rt></ruby><ruby>員<rt>いん</rt></ruby>が<ruby>先<rt>せん</rt></ruby><ruby>輩<rt>ぱい</rt></ruby>から<ruby>学<rt>まな</rt></ruby>ぶ<ruby>機<rt>き</rt></ruby><ruby>会<rt>かい</rt></ruby>も<ruby>減<rt>へ</rt></ruby>ります。<ruby>対<rt>たい</rt></ruby><ruby>面<rt>めん</rt></ruby>でないとできないことも<ruby>多<rt>おお</rt></ruby>い。'},
+      {speaker:'A', text:'それはハイブリッド<ruby>勤<rt>きん</rt></ruby><ruby>務<rt>む</rt></ruby>で<ruby>対<rt>たい</rt></ruby><ruby>応<rt>おう</rt></ruby>できるんじゃないでしょうか。<ruby>週<rt>しゅう</rt></ruby>に<ruby>何<rt>なん</rt></ruby><ruby>日<rt>にち</rt></ruby>かは<ruby>出<rt>しゅっ</rt></ruby><ruby>社<rt>しゃ</rt></ruby>して、<ruby>残<rt>のこ</rt></ruby>りはテレワークという<ruby>形<rt>かたち</rt></ruby>です。'},
+      {speaker:'B', text:'それであれば、<ruby>柔<rt>じゅう</rt></ruby><ruby>軟<rt>なん</rt></ruby>性があって<ruby>良<rt>よ</rt></ruby>いかもしれませんね。<ruby>ただ<rt>ただ</rt></ruby>、<ruby>業<rt>ぎょう</rt></ruby><ruby>種<rt>しゅ</rt></ruby>によっては<ruby>難<rt>むずか</rt></ruby>しいケースもありますが。'},
+    ],
+    scriptPlain:'テレワークが普及したことで、通勤時間が省け、生産性も向上したというデータがあります。今後も推進すべきだと思います。でも、テレワークではチームの一体感が失われやすいし、若い社員が先輩から学ぶ機会も減ります。対面でないとできないことも多い。それはハイブリッド勤務で対応できるんじゃないでしょうか。週に何日かは出社して、残りはテレワークという形です。それであれば、柔軟性があって良いかもしれませんね。ただ、業種によっては難しいケースもありますが。',
+    questions:[
+      {q:'Aさんがテレワーク推進を支持する根拠はどれですか。', opts:['A. 部屋代が安くなる','B. 通勤時間の削減と生産性向上のデータがある','C. 社員が幸せになる','D. 会社の経費が減る'], answer:'B', exp:'「通勤時間が省け、生産性も向上したというデータがあります」と言っています。'},
+      {q:'Bさんのテレワークへの懸念はどれですか。', opts:['A. インターネット環境が悪い','B. 仕事量が増える','C. チームの一体感低下と若手の学習機会の減少','D. 給料が下がる'], answer:'C', exp:'「チームの一体感が失われやすい」「若い社員が先輩から学ぶ機会も減る」と言っています。'},
+      {q:'Aさんが提案した妥協案は何ですか。', opts:['A. 完全テレワーク','B. 完全出社','C. ハイブリッド勤務（一部出社、一部テレワーク）','D. 勤務時間の短縮'], answer:'C', exp:'「ハイブリッド勤務で対応できる」「週に何日かは出社して、残りはテレワーク」と提案しています。'},
+    ]
+  },
+
+  {
+    id:'n2-l-5', level:'n2',
+    titleJp:'<ruby>正<rt>せい</rt></ruby><ruby>式<rt>しき</rt></ruby>なスピーチ',
+    titleEn:'A Formal Speech',
+    scene:'A company president addresses employees at the annual meeting.',
+    speakers:['President'],
+    script:[
+      {speaker:'President', text:'<ruby>本<rt>ほん</rt></ruby><ruby>日<rt>じつ</rt></ruby>は<ruby>お<rt>お</rt></ruby><ruby>集<rt>あつ</rt></ruby>まりいただき、ありがとうございます。<ruby>今<rt>こん</rt></ruby><ruby>期<rt>き</rt></ruby>は<ruby>厳<rt>きび</rt></ruby>しい<ruby>経<rt>けい</rt></ruby><ruby>済<rt>ざい</rt></ruby><ruby>環<rt>かん</rt></ruby><ruby>境<rt>きょう</rt></ruby>の<ruby>中<rt>なか</rt></ruby>にもかかわらず、<ruby>皆<rt>みな</rt></ruby>さんの<ruby>努<rt>どり</rt></ruby><ruby>力<rt>ょく</rt></ruby>により、<ruby>前<rt>ぜん</rt></ruby><ruby>年<rt>ねん</rt></ruby><ruby>比<rt>ひ</rt></ruby><ruby>十<rt>じゅう</rt></ruby><ruby>五<rt>ご</rt></ruby>パーセントの<ruby>増<rt>ぞう</rt></ruby><ruby>収<rt>しゅう</rt></ruby>を<ruby>達<rt>たっ</rt></ruby><ruby>成<rt>せい</rt></ruby>することができました。<ruby>来<rt>らい</rt></ruby><ruby>期<rt>き</rt></ruby>は<ruby>新<rt>しん</rt></ruby><ruby>規<rt>き</rt></ruby><ruby>事<rt>じ</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>の<ruby>立<rt>た</rt></ruby>ち<ruby>上<rt>あ</rt></ruby>げと、<ruby>既<rt>き</rt></ruby><ruby>存<rt>そん</rt></ruby><ruby>事<rt>じ</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>のさらなる<ruby>強<rt>きょう</rt></ruby><ruby>化<rt>か</rt></ruby>を<ruby>両<rt>りょう</rt></ruby><ruby>立<rt>りつ</rt></ruby>させてまいります。引き続きご支援をよろしくお願いいたします。'},
+    ],
+    scriptPlain:'本日はお集まりいただき、ありがとうございます。今期は厳しい経済環境の中にもかかわらず、皆さんの努力により、前年比十五パーセントの増収を達成することができました。来期は新規事業の立ち上げと、既存事業のさらなる強化を両立させてまいります。引き続きご支援をよろしくお願いいたします。',
+    questions:[
+      {q:'今期の業績はどうでしたか。', opts:['A. 前年比で減収','B. 前年比十五パーセント増収','C. 目標を達成できなかった','D. 変化なし'], answer:'B', exp:'「前年比十五パーセントの増収を達成することができました」と言っています。'},
+      {q:'この結果は何によって達成されたと社長は言っていますか。', opts:['A. 新しい技術の導入','B. コスト削減','C. 社員の努力','D. 市場の拡大'], answer:'C', exp:'「皆さんの努力により」と言っています。'},
+      {q:'来期の方針として述べられていることはどれですか。', opts:['A. 人員削減と経費削減','B. 新規事業の立ち上げと既存事業の強化','C. 海外市場からの撤退','D. 製品ラインの絞り込み'], answer:'B', exp:'「新規事業の立ち上げと、既存事業のさらなる強化を両立させてまいります」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n2-l-6', level:'n2',
+    titleJp:'<ruby>科<rt>か</rt></ruby><ruby>学<rt>がく</rt></ruby>ニュース',
+    titleEn:'Science News',
+    scene:'A science journalist reports on a new AI research finding.',
+    speakers:['Journalist'],
+    script:[
+      {speaker:'Journalist', text:'<ruby>最<rt>さい</rt></ruby><ruby>新<rt>しん</rt></ruby>の<ruby>研<rt>けん</rt></ruby><ruby>究<rt>きゅう</rt></ruby>によると、AIは<ruby>医<rt>い</rt></ruby><ruby>療<rt>りょう</rt></ruby><ruby>診<rt>しん</rt></ruby><ruby>断<rt>だん</rt></ruby>の<ruby>分<rt>ぶん</rt></ruby><ruby>野<rt>や</rt></ruby>で<ruby>医<rt>い</rt></ruby><ruby>師<rt>し</rt></ruby>と<ruby>同<rt>どう</rt></ruby><ruby>等<rt>とう</rt></ruby>以<ruby>上<rt>じょう</rt></ruby>の<ruby>精<rt>せい</rt></ruby><ruby>度<rt>ど</rt></ruby>を<ruby>示<rt>しめ</rt></ruby>すことが<ruby>分<rt>わ</rt></ruby>かりました。<ruby>特<rt>とく</rt></ruby>に<ruby>画<rt>が</rt></ruby><ruby>像<rt>ぞう</rt></ruby><ruby>診<rt>しん</rt></ruby><ruby>断<rt>だん</rt></ruby>においては、<ruby>早<rt>はや</rt></ruby>期<ruby>がんの<rt>がんの</rt></ruby><ruby>発<rt>はっ</rt></ruby><ruby>見<rt>けん</rt></ruby><ruby>率<rt>りつ</rt></ruby>が<ruby>従<rt>じゅう</rt></ruby><ruby>来<rt>らい</rt></ruby>の<ruby>方<rt>ほう</rt></ruby><ruby>法<rt>ほう</rt></ruby>より<ruby>二<rt>に</rt></ruby><ruby>十<rt>じゅっ</rt></ruby>パーセント<ruby>高<rt>たか</rt></ruby>かったと<ruby>報<rt>ほう</rt></ruby><ruby>告<rt>こく</rt></ruby>されています。<ruby>ただし<rt>ただし</rt></ruby>、AIはあくまでも<ruby>医<rt>い</rt></ruby><ruby>師<rt>し</rt></ruby>の<ruby>補<rt>ほ</rt></ruby><ruby>助<rt>じょ</rt></ruby><ruby>ツール<rt>ツール</rt></ruby>であり、<ruby>最<rt>さい</rt></ruby><ruby>終<rt>しゅう</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>判<rt>はん</rt></ruby><ruby>断<rt>だん</rt></ruby>は<ruby>医<rt>い</rt></ruby><ruby>師<rt>し</rt></ruby>が<ruby>行<rt>おこな</rt></ruby>うべきだという<ruby>見<rt>けん</rt></ruby><ruby>解<rt>かい</rt></ruby>も<ruby>示<rt>しめ</rt></ruby>されています。'},
+    ],
+    scriptPlain:'最新の研究によると、AIは医療診断の分野で医師と同等以上の精度を示すことが分かりました。特に画像診断においては、早期がんの発見率が従来の方法より二十パーセント高かったと報告されています。ただし、AIはあくまでも医師の補助ツールであり、最終的な判断は医師が行うべきだという見解も示されています。',
+    questions:[
+      {q:'AIの医療診断での精度はどうでしたか。', opts:['A. 医師より低かった','B. 医師と同等以上','C. 平均的だった','D. 測定できなかった'], answer:'B', exp:'「医師と同等以上の精度を示す」と報告されています。'},
+      {q:'画像診断での早期がん発見率はどうでしたか。', opts:['A. 従来の方法と同じ','B. 従来より十パーセント低い','C. 従来より二十パーセント高い','D. 従来より五十パーセント高い'], answer:'C', exp:'「従来の方法より二十パーセント高かった」と報告されています。'},
+      {q:'AIの役割についての見解は何ですか。', opts:['A. AIが医師に取って代わるべき','B. AIは使わない方がいい','C. AIは医師の補助ツールであり、最終判断は医師が行うべき','D. AIと医師は対等なパートナー'], answer:'C', exp:'「AIはあくまでも医師の補助ツールであり、最終的な判断は医師が行うべき」という見解が示されています。'},
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════════
+  //  N1
+  // ══════════════════════════════════════════════════════════════
+
+  {
+    id:'n1-l-1', level:'n1',
+    titleJp:'<ruby>哲<rt>てつ</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>講<rt>こう</rt></ruby><ruby>義<rt>ぎ</rt></ruby>：<ruby>自<rt>じ</rt></ruby><ruby>由<rt>ゆう</rt></ruby>と<ruby>責<rt>せき</rt></ruby><ruby>任<rt>にん</rt></ruby>',
+    titleEn:'Philosophy Lecture: Freedom and Responsibility',
+    scene:'A philosophy professor discusses the tension between freedom and responsibility.',
+    speakers:['Professor'],
+    script:[
+      {speaker:'Professor', text:'<ruby>自<rt>じ</rt></ruby><ruby>由<rt>ゆう</rt></ruby>とは<ruby>何<rt>なに</rt></ruby>か、という<ruby>問<rt>もん</rt></ruby><ruby>い<rt>い</rt></ruby>は<ruby>哲<rt>てつ</rt></ruby><ruby>学<rt>がく</rt></ruby>の<ruby>根<rt>こん</rt></ruby><ruby>本<rt>ぽん</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>です。<ruby>サルトル<rt>サルトル</rt></ruby>は「<ruby>人<rt>にん</rt></ruby><ruby>間<rt>げん</rt></ruby>は<ruby>自<rt>じ</rt></ruby><ruby>由<rt>ゆう</rt></ruby>の<ruby>刑<rt>けい</rt></ruby>に<ruby>処<rt>しょ</rt></ruby>されている」と<ruby>述<rt>の</rt></ruby>べましたが、これは<ruby>自<rt>じ</rt></ruby><ruby>由<rt>ゆう</rt></ruby>が<ruby>必<rt>かなら</rt></ruby>ずしも<ruby>喜<rt>よろこ</rt></ruby>ばしいものではなく、<ruby>選<rt>えら</rt></ruby>ぶという<ruby>行<rt>こう</rt></ruby><ruby>為<rt>い</rt></ruby>そのものが<ruby>重<rt>おも</rt></ruby>い<ruby>責<rt>せき</rt></ruby><ruby>任<rt>にん</rt></ruby>を<ruby>伴<rt>ともな</rt></ruby>うことを<ruby>意<rt>い</rt></ruby><ruby>味<rt>み</rt></ruby>します。<ruby>私<rt>わたし</rt></ruby>たちは<ruby>選<rt>えら</rt></ruby>ばないという<ruby>選<rt>えら</rt></ruby><ruby>択<rt>たく</rt></ruby>さえ、<ruby>一<rt>ひと</rt></ruby>つの<ruby>選<rt>えら</rt></ruby><ruby>択<rt>たく</rt></ruby>に<ruby>他<rt>ほか</rt></ruby>なりません。<ruby>つまり<rt>つまり</rt></ruby>、<ruby>存<rt>そん</rt></ruby><ruby>在<rt>ざい</rt></ruby>する<ruby>限<rt>かぎ</rt></ruby>り、<ruby>逃<rt>のが</rt></ruby>れることのできない<ruby>責<rt>せき</rt></ruby><ruby>任<rt>にん</rt></ruby>があるということです。'},
+    ],
+    scriptPlain:'自由とは何か、という問いは哲学の根本的な問題です。サルトルは「人間は自由の刑に処されている」と述べましたが、これは自由が必ずしも喜ばしいものではなく、選ぶという行為そのものが重い責任を伴うことを意味します。私たちは選ばないという選択さえ、一つの選択に他なりません。つまり、存在する限り、逃れることのできない責任があるということです。',
+    questions:[
+      {q:'「人間は自由の刑に処されている」というサルトルの言葉はどういう意味ですか。', opts:['A. 人間は自由を楽しんでいる','B. 自由とは束縛である','C. 自由には必ず重い責任が伴い、それから逃れられない','D. 人間は刑務所に入れられるべきだ'], answer:'C', exp:'選ぶ行為には責任が伴い、「選ばない」という選択も一つの選択であり、存在する限り責任から逃れられないと述べています。'},
+      {q:'「選ばないという選択は一つの選択に他ならない」とはどういう意味ですか。', opts:['A. 選択しないことは許されない','B. 何もしないことも、それ自体が責任を持った選択だ','C. 選択肢は一つしかない','D. 選択は無意味だ'], answer:'B', exp:'何もしない・選ばないという行動も、責任を伴う選択の一つだということを意味します。'},
+      {q:'この講義の主な主張はどれですか。', opts:['A. 自由は常に良いものだ','B. 責任を避けるためには選択を減らすべきだ','C. 人間は存在する限り責任から逃れられない','D. 哲学は現実と関係ない'], answer:'C', exp:'「存在する限り、逃れることのできない責任がある」が結論として述べられています。'},
+    ]
+  },
+
+  {
+    id:'n1-l-2', level:'n1',
+    titleJp:'<ruby>経<rt>けい</rt></ruby><ruby>済<rt>ざい</rt></ruby><ruby>政<rt>せい</rt></ruby><ruby>策<rt>さく</rt></ruby>の<ruby>議<rt>ぎ</rt></ruby><ruby>論<rt>ろん</rt></ruby>',
+    titleEn:'Economic Policy Discussion',
+    scene:'Two economists debate the merits of degrowth economics.',
+    speakers:['Economist A','Economist B'],
+    script:[
+      {speaker:'Economist A', text:'<ruby>脱<rt>だつ</rt></ruby><ruby>成<rt>せい</rt></ruby><ruby>長<rt>ちょう</rt></ruby>論<ruby>は<rt>は</rt></ruby>、GDPの<ruby>拡<rt>かく</rt></ruby><ruby>大<rt>だい</rt></ruby>を<ruby>目<rt>もく</rt></ruby><ruby>指<rt>し</rt></ruby>すのではなく、<ruby>人<rt>じん</rt></ruby><ruby>間<rt>げん</rt></ruby>の<ruby>福<rt>ふく</rt></ruby><ruby>祉<rt>し</rt></ruby>と<ruby>地<rt>ち</rt></ruby><ruby>球<rt>きゅう</rt></ruby>の<ruby>持<rt>じ</rt></ruby><ruby>続<rt>ぞく</rt></ruby><ruby>可<rt>か</rt></ruby><ruby>能<rt>のう</rt></ruby><ruby>性<rt>せい</rt></ruby>を<ruby>優<rt>ゆう</rt></ruby><ruby>先<rt>せん</rt></ruby>する<ruby>経<rt>けい</rt></ruby><ruby>済<rt>ざい</rt></ruby>モデルを<ruby>提<rt>てい</rt></ruby><ruby>唱<rt>しょう</rt></ruby>しています。<ruby>現<rt>げん</rt></ruby><ruby>行<rt>こう</rt></ruby>の<ruby>資<rt>し</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>主<rt>しゅ</rt></ruby><ruby>義<rt>ぎ</rt></ruby>は<ruby>地<rt>ち</rt></ruby><ruby>球<rt>きゅう</rt></ruby>の<ruby>限<rt>かぎ</rt></ruby>りある<ruby>資<rt>し</rt></ruby><ruby>源<rt>げん</rt></ruby>を<ruby>前<rt>ぜん</rt></ruby><ruby>提<rt>てい</rt></ruby>としておらず、<ruby>根<rt>こん</rt></ruby><ruby>本<rt>ぽん</rt></ruby>的<ruby>な<rt>な</rt></ruby><ruby>変<rt>へん</rt></ruby><ruby>革<rt>かく</rt></ruby>が<ruby>必<rt>ひつ</rt></ruby><ruby>要<rt>よう</rt></ruby>です。'},
+      {speaker:'Economist B', text:'<ruby>理<rt>り</rt></ruby><ruby>念<rt>ねん</rt></ruby>は<ruby>理<rt>り</rt></ruby><ruby>解<rt>かい</rt></ruby>できますが、<ruby>現<rt>げん</rt></ruby><ruby>実<rt>じつ</rt></ruby>には<ruby>経<rt>けい</rt></ruby><ruby>済<rt>ざい</rt></ruby><ruby>成<rt>せい</rt></ruby><ruby>長<rt>ちょう</rt></ruby>なしに<ruby>雇<rt>こ</rt></ruby><ruby>用<rt>よう</rt></ruby>を<ruby>維<rt>い</rt></ruby><ruby>持<rt>じ</rt></ruby>し、<ruby>貧<rt>ひん</rt></ruby><ruby>困<rt>こん</rt></ruby>を<ruby>削<rt>さく</rt></ruby><ruby>減<rt>げん</rt></ruby>することは<ruby>極<rt>きわ</rt></ruby>めて<ruby>困<rt>こん</rt></ruby><ruby>難<rt>なん</rt></ruby>です。<ruby>成<rt>せい</rt></ruby><ruby>長<rt>ちょう</rt></ruby>の<ruby>質<rt>しつ</rt></ruby>を<ruby>変<rt>か</rt></ruby>えることが<ruby>現<rt>げん</rt></ruby><ruby>実<rt>じつ</rt></ruby>的<ruby>な<rt>な</rt></ruby><ruby>解<rt>かい</rt></ruby><ruby>決<rt>けつ</rt></ruby><ruby>策<rt>さく</rt></ruby>だと<ruby>考<rt>かんが</rt></ruby>えます。'},
+    ],
+    scriptPlain:'脱成長論は、GDPの拡大を目指すのではなく、人間の福祉と地球の持続可能性を優先する経済モデルを提唱しています。現行の資本主義は地球の限りある資源を前提としておらず、根本的な変革が必要です。理念は理解できますが、現実には経済成長なしに雇用を維持し、貧困を削減することは極めて困難です。成長の質を変えることが現実的な解決策だと考えます。',
+    questions:[
+      {q:'脱成長論が批判していることは何ですか。', opts:['A. 環境政策が厳しすぎること','B. 現行の資本主義が限りある資源を前提としていないこと','C. 政府の財政政策','D. 国際貿易の不均衡'], answer:'B', explanation:'「現行の資本主義は地球の限りある資源を前提としておらず、根本的な変革が必要」と述べています。'},
+      {q:'Economist Bの立場はどれですか。', opts:['A. 脱成長論に完全に賛成','B. 経済成長は全く必要ない','C. 成長の質を変えることが現実的な解決策','D. 環境問題は重要ではない'], answer:'C', explanation:'「成長の質を変えることが現実的な解決策だと考えます」と述べています。'},
+      {q:'Economist Bが経済成長が必要だと考える理由は何ですか。', opts:['A. 軍事費を増やすため','B. 企業の利益を守るため','C. 雇用の維持と貧困削減のため','D. 国際競争力を高めるため'], answer:'C', explanation:'「経済成長なしに雇用を維持し、貧困を削減することは極めて困難」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n1-l-3', level:'n1',
+    titleJp:'<ruby>言<rt>げん</rt></ruby><ruby>語<rt>ご</rt></ruby>と<ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby>のアイデンティティ',
+    titleEn:'Language and Cultural Identity',
+    scene:'A sociolinguist discusses the relationship between language loss and identity.',
+    speakers:['Sociolinguist'],
+    script:[
+      {speaker:'Sociolinguist', text:'<ruby>言<rt>げん</rt></ruby><ruby>語<rt>ご</rt></ruby>の<ruby>消<rt>しょう</rt></ruby><ruby>滅<rt>めつ</rt></ruby>は、<ruby>単<rt>たん</rt></ruby>に<ruby>コミュニケーション<rt>コミュニケーション</rt></ruby>の<ruby>手<rt>て</rt></ruby><ruby>段<rt>だん</rt></ruby>が<ruby>失<rt>うしな</rt></ruby>われるだけではありません。<ruby>その<rt>その</rt></ruby><ruby>言<rt>げん</rt></ruby><ruby>語<rt>ご</rt></ruby>に<ruby>固<rt>こ</rt></ruby><ruby>有<rt>ゆう</rt></ruby>の<ruby>世<rt>せ</rt></ruby><ruby>界<rt>かい</rt></ruby><ruby>観<rt>かん</rt></ruby>、<ruby>知<rt>ち</rt></ruby><ruby>識<rt>しき</rt></ruby><ruby>体<rt>たい</rt></ruby><ruby>系<rt>けい</rt></ruby>、<ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby>的<ruby>記<rt>き</rt></ruby><ruby>憶<rt>おく</rt></ruby>が<ruby>永<rt>えい</rt></ruby><ruby>遠<rt>えん</rt></ruby>に<ruby>失<rt>うしな</rt></ruby>われることを<ruby>意<rt>い</rt></ruby><ruby>味<rt>み</rt></ruby>します。<ruby>現<rt>げん</rt></ruby><ruby>在<rt>ざい</rt></ruby>、<ruby>世<rt>せ</rt></ruby><ruby>界<rt>かい</rt></ruby>では<ruby>二<rt>に</rt></ruby><ruby>週<rt>しゅう</rt></ruby><ruby>間<rt>かん</rt></ruby>に<ruby>一<rt>ひと</rt></ruby>つの<ruby>言<rt>げん</rt></ruby><ruby>語<rt>ご</rt></ruby>が<ruby>消<rt>し</rt></ruby><ruby>え<rt>え</rt></ruby>ていると<ruby>言<rt>い</rt></ruby>われています。<ruby>多<rt>た</rt></ruby><ruby>様<rt>よう</rt></ruby>な<ruby>言<rt>げん</rt></ruby><ruby>語<rt>ご</rt></ruby>を<ruby>守<rt>まも</rt></ruby>ることは、<ruby>人<rt>じん</rt></ruby><ruby>類<rt>るい</rt></ruby>の<ruby>知<rt>ち</rt></ruby><ruby>的<rt>てき</rt></ruby><ruby>遺<rt>い</rt></ruby><ruby>産<rt>さん</rt></ruby>を<ruby>守<rt>まも</rt></ruby>ることにほかなりません。'},
+    ],
+    scriptPlain:'言語の消滅は、単にコミュニケーションの手段が失われるだけではありません。その言語に固有の世界観、知識体系、文化的記憶が永遠に失われることを意味します。現在、世界では二週間に一つの言語が消えていると言われています。多様な言語を守ることは、人類の知的遺産を守ることにほかなりません。',
+    questions:[
+      {q:'言語が消滅すると何が失われると述べていますか。', opts:['A. 通信手段のみ','B. 固有の世界観・知識体系・文化的記憶','C. 経済的な利益','D. 政治的な影響力'], answer:'B', explanation:'「その言語に固有の世界観、知識体系、文化的記憶が永遠に失われる」と述べています。'},
+      {q:'世界ではどのくらいの頻度で言語が消滅していますか。', opts:['A. 毎日一つ','B. 一週間に一つ','C. 二週間に一つ','D. 一ヶ月に一つ'], answer:'C', explanation:'「二週間に一つの言語が消えている」と言われています。'},
+      {q:'「多様な言語を守ることは人類の知的遺産を守ることにほかならない」とはどういう意味ですか。', opts:['A. 言語の多様性は不要だ','B. 言語を守ることと人類の知的遺産を守ることは、まさに同じことだ','C. 知的遺産は言語とは無関係だ','D. 一部の言語だけを守ればいい'], answer:'B', explanation:'「にほかならない」は「まさに〜だ」という強調表現で、言語の多様性を守ることが人類の知的遺産を守ることそのものだと述べています。'},
+    ]
+  },
+
+  {
+    id:'n1-l-4', level:'n1',
+    titleJp:'<ruby>暗<rt>あん</rt></ruby><ruby>黙<rt>もく</rt></ruby>の<ruby>了<rt>りょう</rt></ruby><ruby>解<rt>かい</rt></ruby>',
+    titleEn:'Reading Between the Lines',
+    scene:'Two colleagues have a conversation with significant implied meaning.',
+    speakers:['Manager (A)','Employee (B)'],
+    script:[
+      {speaker:'A', text:'<ruby>田<rt>た</rt></ruby><ruby>中<rt>なか</rt></ruby>さん、<ruby>先<rt>せん</rt></ruby><ruby>日<rt>じつ</rt></ruby>のプレゼン、お<ruby>疲<rt>つか</rt></ruby>れ<ruby>様<rt>さま</rt></ruby>でした。ご<ruby>自<rt>じ</rt></ruby><ruby>身<rt>しん</rt></ruby>ではどう<ruby>評<rt>ひょう</rt></ruby><ruby>価<rt>か</rt></ruby>されていますか。'},
+      {speaker:'B', text:'あ、<ruby>正<rt>せい</rt></ruby><ruby>直<rt>じき</rt></ruby>、<ruby>準<rt>じゅん</rt></ruby><ruby>備<rt>び</rt></ruby>が<ruby>十<rt>じゅう</rt></ruby><ruby>分<rt>ぶん</rt></ruby>ではなかったと<ruby>思<rt>おも</rt></ruby>っています。<ruby>次<rt>つぎ</rt></ruby>は<ruby>もっと<rt>もっと</rt></ruby><ruby>しっかり<rt>しっかり</rt></ruby>取<ruby>り<rt>り</rt></ruby><ruby>組<rt>く</rt></ruby>みます。'},
+      {speaker:'A', text:'そうですね。<ruby>クライアント<rt>クライアント</rt></ruby>からも<ruby>いくつか<rt>いくつか</rt></ruby><ruby>質<rt>しつ</rt></ruby><ruby>問<rt>もん</rt></ruby>が<ruby>あった<rt>あった</rt></ruby>ようですし。<ruby>次<rt>つぎ</rt></ruby><ruby>回<rt>かい</rt></ruby>は<ruby>デー<rt>デー</rt></ruby><ruby>タ<rt>タ</rt></ruby>の<ruby>裏<rt>うら</rt></ruby><ruby>付<rt>づ</rt></ruby>けをしっかり<ruby>準<rt>じゅん</rt></ruby><ruby>備<rt>び</rt></ruby>されると<ruby>良<rt>よ</rt></ruby>いかと。<ruby>今<rt>こん</rt></ruby><ruby>後<rt>ご</rt></ruby>に<ruby>期<rt>き</rt></ruby><ruby>待<rt>たい</rt></ruby>していますよ。'},
+      {speaker:'B', text:'ありがとうございます。<ruby>肝<rt>かん</rt></ruby>に<ruby>銘<rt>めい</rt></ruby>じます。'},
+    ],
+    scriptPlain:'田中さん、先日のプレゼン、お疲れ様でした。ご自身ではどう評価されていますか。あ、正直、準備が十分ではなかったと思っています。次はもっとしっかり取り組みます。そうですね。クライアントからもいくつか質問があったようですし。次回はデータの裏付けをしっかり準備されると良いかと。今後に期待していますよ。肝に銘じます。',
+    questions:[
+      {q:'マネージャーが本当に伝えたいことは何ですか。', opts:['A. プレゼンは完璧だった','B. 次回は準備不足を改善してほしい','C. クライアントは満足していた','D. 田中さんを昇進させる'], answer:'B', explanation:'「クライアントからも質問があった」「データの裏付けをしっかり準備すると良い」という婉曲な表現で、準備不足を指摘し改善を求めています。'},
+      {q:'「今後に期待していますよ」という言葉の裏にある意味はどれですか。', opts:['A. 今回は完全に満足している','B. 今回は不十分だったが、次回の改善を求めている','C. 田中さんを信頼していない','D. 次のプロジェクトを与えたい'], answer:'B', explanation:'これは日本語における婉曲な批判・励ましの表現で、今回の不足を認めつつ、次回の改善への期待を示しています。'},
+      {q:'「肝に銘じます」とはどういう意味ですか。', opts:['A. 忘れます','B. 反論します','C. 深く心に刻み、決して忘れません','D. すぐに直します'], answer:'C', explanation:'「肝に銘じる」は「深く心に刻んで絶対に忘れない」という意味の慣用句です。'},
+    ]
+  },
+
+  {
+    id:'n1-l-5', level:'n1',
+    titleJp:'<ruby>民<rt>みん</rt></ruby><ruby>主<rt>しゅ</rt></ruby><ruby>主<rt>しゅ</rt></ruby><ruby>義<rt>ぎ</rt></ruby>と<ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby>',
+    titleEn:'Democracy and Information',
+    scene:'A political scientist gives a lecture on the role of media literacy in democracy.',
+    speakers:['Political Scientist'],
+    script:[
+      {speaker:'Political Scientist', text:'<ruby>民<rt>みん</rt></ruby><ruby>主<rt>しゅ</rt></ruby><ruby>主<rt>しゅ</rt></ruby><ruby>義<rt>ぎ</rt></ruby>が<ruby>機<rt>き</rt></ruby><ruby>能<rt>のう</rt></ruby>するためには、<ruby>市<rt>し</rt></ruby><ruby>民<rt>みん</rt></ruby>が<ruby>正<rt>せい</rt></ruby><ruby>確<rt>かく</rt></ruby>な<ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby>に<ruby>基<rt>もと</rt></ruby>づいて<ruby>判<rt>はん</rt></ruby><ruby>断<rt>だん</rt></ruby>を<ruby>下<rt>くだ</rt></ruby>すことが<ruby>不<rt>ふ</rt></ruby><ruby>可<rt>か</rt></ruby><ruby>欠<rt>けつ</rt></ruby>です。しかし<ruby>今<rt>こん</rt></ruby><ruby>日<rt>にち</rt></ruby>、フェイクニュースや<ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby>の<ruby>操<rt>そう</rt></ruby><ruby>作<rt>さ</rt></ruby>が<ruby>蔓<rt>まん</rt></ruby><ruby>延<rt>えん</rt></ruby>し、<ruby>民<rt>みん</rt></ruby><ruby>主<rt>しゅ</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>意<rt>い</rt></ruby><ruby>思<rt>し</rt></ruby><ruby>決<rt>けっ</rt></ruby><ruby>定<rt>てい</rt></ruby><ruby>プロセス<rt>プロセス</rt></ruby>が<ruby>脅<rt>おびや</rt></ruby>かされています。<ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby>リテラシーの<ruby>育<rt>いく</rt></ruby><ruby>成<rt>せい</rt></ruby>は<ruby>も<rt>も</rt></ruby>はや<ruby>個<rt>こ</rt></ruby><ruby>人<rt>じん</rt></ruby>の<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>にとどまらず、<ruby>民<rt>みん</rt></ruby><ruby>主<rt>しゅ</rt></ruby><ruby>主<rt>しゅ</rt></ruby><ruby>義<rt>ぎ</rt></ruby><ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby>の<ruby>存<rt>そん</rt></ruby><ruby>続<rt>ぞく</rt></ruby>に<ruby>関<rt>かん</rt></ruby>わる<ruby>政<rt>せい</rt></ruby><ruby>治<rt>じ</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>課<rt>か</rt></ruby><ruby>題<rt>だい</rt></ruby>となっています。'},
+    ],
+    scriptPlain:'民主主義が機能するためには、市民が正確な情報に基づいて判断を下すことが不可欠です。しかし今日、フェイクニュースや情報の操作が蔓延し、民主的な意思決定プロセスが脅かされています。情報リテラシーの育成はもはや個人の問題にとどまらず、民主主義社会の存続に関わる政治的な課題となっています。',
+    questions:[
+      {q:'民主主義が機能するために不可欠なことは何ですか。', opts:['A. 強力なリーダーの存在','B. 経済の成長','C. 市民が正確な情報に基づいて判断を下すこと','D. 軍事力の強化'], answer:'C', explanation:'「市民が正確な情報に基づいて判断を下すことが不可欠」と述べています。'},
+      {q:'今日の民主主義が直面している問題として述べられているものはどれですか。', opts:['A. 投票率の低下','B. フェイクニュースや情報操作による意思決定プロセスの脅威','C. 政党の数が多すぎること','D. 選挙制度の問題'], answer:'B', explanation:'「フェイクニュースや情報の操作が蔓延し、民主的な意思決定プロセスが脅かされている」と述べています。'},
+      {q:'情報リテラシーについて、この講師はどのように位置づけていますか。', opts:['A. 個人の趣味の問題','B. 教育機関だけが取り組む問題','C. 民主主義社会の存続に関わる政治的課題','D. IT企業が解決すべき問題'], answer:'C', explanation:'「もはや個人の問題にとどまらず、民主主義社会の存続に関わる政治的な課題」と述べています。'},
+    ]
+  },
+
+  {
+    id:'n1-l-6', level:'n1',
+    titleJp:'<ruby>無<rt>む</rt></ruby><ruby>常<rt>じょう</rt></ruby>と<ruby>創<rt>そう</rt></ruby><ruby>造<rt>ぞう</rt></ruby>',
+    titleEn:'Impermanence and Creativity',
+    scene:'An art critic discusses how Japanese aesthetics of impermanence influence modern art.',
+    speakers:['Art Critic'],
+    script:[
+      {speaker:'Art Critic', text:'<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>の<ruby>美<rt>び</rt></ruby><ruby>意<rt>い</rt></ruby><ruby>識<rt>しき</rt></ruby>において、<ruby>無<rt>む</rt></ruby><ruby>常<rt>じょう</rt></ruby>は<ruby>単<rt>たん</rt></ruby>なる<ruby>喪<rt>そう</rt></ruby><ruby>失<rt>しつ</rt></ruby>ではなく、<ruby>美<rt>うつく</rt></ruby>しさの<ruby>源<rt>みなもと</rt></ruby>です。<ruby>桜<rt>さくら</rt></ruby>が<ruby>散<rt>ち</rt></ruby>るからこそ<ruby>美<rt>うつく</rt></ruby>しい、というように、<ruby>終<rt>お</rt></ruby>わりがあるからこそ<ruby>価<rt>か</rt></ruby><ruby>値<rt>ち</rt></ruby>が<ruby>生<rt>う</rt></ruby>まれる。この<ruby>思<rt>し</rt></ruby><ruby>想<rt>そう</rt></ruby>は<ruby>現<rt>げん</rt></ruby><ruby>代<rt>だい</rt></ruby><ruby>アート<rt>アート</rt></ruby>にも<ruby>深<rt>ふか</rt></ruby>く<ruby>影<rt>えい</rt></ruby><ruby>響<rt>きょう</rt></ruby>を<ruby>与<rt>あた</rt></ruby>えており、<ruby>砂<rt>すな</rt></ruby>で<ruby>作<rt>つく</rt></ruby>られたマンダラを<ruby>崩<rt>くず</rt></ruby>す<ruby>チベット<rt>チベット</rt></ruby><ruby>僧<rt>そう</rt></ruby>の<ruby>儀<rt>ぎ</rt></ruby><ruby>式<rt>しき</rt></ruby>のように、<ruby>創<rt>そう</rt></ruby><ruby>造<rt>ぞう</rt></ruby>と<ruby>破<rt>は</rt></ruby><ruby>壊<rt>かい</rt></ruby>を<ruby>循<rt>じゅん</rt></ruby><ruby>環<rt>かん</rt></ruby>として<ruby>捉<rt>とら</rt></ruby>える<ruby>作<rt>さく</rt></ruby><ruby>品<rt>ひん</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えています。'},
+    ],
+    scriptPlain:'日本の美意識において、無常は単なる喪失ではなく、美しさの源です。桜が散るからこそ美しい、というように、終わりがあるからこそ価値が生まれる。この思想は現代アートにも深く影響を与えており、砂で作られたマンダラを崩すチベット僧の儀式のように、創造と破壊を循環として捉える作品が増えています。',
+    questions:[
+      {q:'日本の美意識における「無常」の捉え方として正しいものはどれですか。', opts:['A. 無常は悲劇であり避けるべきもの','B. 無常は美しさの源であり、終わりがあるからこそ価値が生まれる','C. 無常は仏教だけの概念','D. 無常は現代アートとは無関係'], answer:'B', explanation:'「無常は単なる喪失ではなく、美しさの源」「終わりがあるからこそ価値が生まれる」と述べています。'},
+      {q:'チベット僧の砂のマンダラの例は何を示すために使われていますか。', opts:['A. 仏教の儀式の重要性','B. 砂で作られた芸術の美しさ','C. 創造と破壊を循環として捉える思想が現代アートにも現れていること','D. チベット文化と日本文化の類似性'], answer:'C', explanation:'「創造と破壊を循環として捉える作品が増えている」ことの具体例として挙げられています。'},
+      {q:'「桜が散るからこそ美しい」とはどういう意味ですか。', opts:['A. 桜は風が吹かないと美しくない','B. 永続するものに美しさはない','C. はかなさや終わりがあることで、その存在の価値と美しさが際立つ','D. 桜は日本だけに咲く花だから美しい'], answer:'C', explanation:'無常の概念を体現する表現で、終わりがあることが美しさを際立たせるという日本の美意識を示しています。'},
+    ]
+  },
+
+
+// ══════════════════════════════════════════════════════════════
+  //  N4 — NEW SCRIPTS (7–12)
+  // ══════════════════════════════════════════════════════════════
+
+  {
+    id:'n4-l-7', level:'n4',
+    titleJp:'<ruby>図<rt>と</rt></ruby><ruby>書<rt>しょ</rt></ruby><ruby>館<rt>かん</rt></ruby>で',
+    titleEn:'At the Library',
+    scene:'A student asks a librarian for help finding a book.',
+    speakers:['Student (A)','Librarian (B)'],
+    script:[
+      {speaker:'A', text:'すみません、「<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>の<ruby>歴<rt>れき</rt></ruby><ruby>史<rt>し</rt></ruby>」という<ruby>本<rt>ほん</rt></ruby>を<ruby>探<rt>さが</rt></ruby>しているんですが。'},
+      {speaker:'B', text:'<ruby>著<rt>ちょ</rt></ruby><ruby>者<rt>しゃ</rt></ruby>のお<ruby>名<rt>な</rt></ruby><ruby>前<rt>まえ</rt></ruby>は<ruby>分<rt>わ</rt></ruby>かりますか。'},
+      {speaker:'A', text:'<ruby>田<rt>た</rt></ruby><ruby>中<rt>なか</rt></ruby><ruby>一<rt>かず</rt></ruby><ruby>郎<rt>ろう</rt></ruby>という<ruby>方<rt>かた</rt></ruby>だと<ruby>思<rt>おも</rt></ruby>います。'},
+      {speaker:'B', text:'<ruby>少<rt>しょう</rt></ruby><ruby>々<rt>しょう</rt></ruby>お<ruby>待<rt>ま</rt></ruby>ちください。…<ruby>見<rt>み</rt></ruby>つかりました。<ruby>三<rt>さん</rt></ruby><ruby>階<rt>かい</rt></ruby>の<ruby>歴<rt>れき</rt></ruby><ruby>史<rt>し</rt></ruby><ruby>コーナー<rt>コーナー</rt></ruby>、<ruby>棚<rt>たな</rt></ruby><ruby>番号<rt>ばんごう</rt></ruby>はH－<ruby>二<rt>に</rt></ruby><ruby>十<rt>じゅっ</rt></ruby><ruby>三<rt>さん</rt></ruby>です。'},
+      {speaker:'A', text:'ありがとうございます。<ruby>貸<rt>か</rt></ruby>し<ruby>出<rt>だ</rt></ruby>し<ruby>期<rt>き</rt></ruby><ruby>間<rt>かん</rt></ruby>はどのくらいですか。'},
+      {speaker:'B', text:'<ruby>二<rt>に</rt></ruby><ruby>週<rt>しゅう</rt></ruby><ruby>間<rt>かん</rt></ruby>です。<ruby>延<rt>えん</rt></ruby><ruby>長<rt>ちょう</rt></ruby>も<ruby>一<rt>いっ</rt></ruby><ruby>回<rt>かい</rt></ruby>できます。'},
+    ],
+    scriptPlain:'すみません、「日本の歴史」という本を探しているんですが。著者のお名前は分かりますか。田中一郎という方だと思います。少々お待ちください。…見つかりました。三階の歴史コーナー、棚番号はH－二十三です。ありがとうございます。貸し出し期間はどのくらいですか。二週間です。延長も一回できます。',
+    questions:[
+      {q:'本はどこにありますか。', opts:['A. 一階の歴史コーナー','B. 二階の歴史コーナー','C. 三階の歴史コーナー','D. 四階の歴史コーナー'], answer:'C', exp:'「三階の歴史コーナー」と案内されています。'},
+      {q:'貸し出し期間はどのくらいですか。', opts:['A. 一週間','B. 二週間','C. 三週間','D. 一ヶ月'], answer:'B', exp:'「二週間です」と言っています。'},
+      {q:'延長は何回できますか。', opts:['A. できない','B. 一回','C. 二回','D. 何回でも'], answer:'B', exp:'「延長も一回できます」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n4-l-8', level:'n4',
+    titleJp:'<ruby>電<rt>でん</rt></ruby><ruby>話<rt>わ</rt></ruby>での<ruby>連<rt>れん</rt></ruby><ruby>絡<rt>らく</rt></ruby>',
+    titleEn:'A Phone Call',
+    scene:'An employee calls to say they will be late to work.',
+    speakers:['Employee (A)','Colleague (B)'],
+    script:[
+      {speaker:'A', text:'もしもし、<ruby>田<rt>た</rt></ruby><ruby>中<rt>なか</rt></ruby>です。<ruby>今<rt>いま</rt></ruby>、<ruby>電<rt>でん</rt></ruby><ruby>車<rt>しゃ</rt></ruby>が<ruby>遅<rt>おく</rt></ruby>れていて、<ruby>少<rt>すこ</rt></ruby>し<ruby>遅<rt>おく</rt></ruby>れそうです。'},
+      {speaker:'B', text:'<ruby>分<rt>わ</rt></ruby>かりました。どのくらい<ruby>遅<rt>おく</rt></ruby>れますか。'},
+      {speaker:'A', text:'<ruby>三<rt>さん</rt></ruby><ruby>十<rt>じゅっ</rt></ruby><ruby>分<rt>ぷん</rt></ruby>くらいだと<ruby>思<rt>おも</rt></ruby>います。<ruby>九<rt>く</rt></ruby><ruby>時<rt>じ</rt></ruby><ruby>半<rt>はん</rt></ruby>には<ruby>着<rt>つ</rt></ruby>けると<ruby>思<rt>おも</rt></ruby>います。'},
+      {speaker:'B', text:'<ruby>分<rt>わ</rt></ruby>かりました。<ruby>課<rt>か</rt></ruby><ruby>長<rt>ちょう</rt></ruby>には<ruby>私<rt>わたし</rt></ruby>から<ruby>伝<rt>つた</rt></ruby>えておきます。<ruby>気<rt>き</rt></ruby>をつけてきてください。'},
+      {speaker:'A', text:'ありがとうございます。<ruby>失<rt>しつ</rt></ruby><ruby>礼<rt>れい</rt></ruby>します。'},
+    ],
+    scriptPlain:'もしもし、田中です。今、電車が遅れていて、少し遅れそうです。分かりました。どのくらい遅れますか。三十分くらいだと思います。九時半には着けると思います。分かりました。課長には私から伝えておきます。気をつけてきてください。ありがとうございます。失礼します。',
+    questions:[
+      {q:'田中さんはなぜ遅れますか。', opts:['A. 道に迷ったから','B. 電車が遅れているから','C. 体調が悪いから','D. 忘れ物をしたから'], answer:'B', exp:'「電車が遅れていて」と言っています。'},
+      {q:'田中さんは何時頃に着く予定ですか。', opts:['A. 九時','B. 九時十五分','C. 九時半','D. 十時'], answer:'C', exp:'「九時半には着けると思います」と言っています。'},
+      {q:'Bさんは何をしてくれますか。', opts:['A. 迎えに来る','B. 課長に伝える','C. 仕事を代わりにする','D. 電車の情報を調べる'], answer:'B', exp:'「課長には私から伝えておきます」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n4-l-9', level:'n4',
+    titleJp:'<ruby>料<rt>りょう</rt></ruby><ruby>理<rt>り</rt></ruby>の<ruby>作<rt>つく</rt></ruby>り<ruby>方<rt>かた</rt></ruby>',
+    titleEn:'How to Cook',
+    scene:'A parent teaches their child how to make miso soup.',
+    speakers:['Parent (A)','Child (B)'],
+    script:[
+      {speaker:'A', text:'みそ<ruby>汁<rt>しる</rt></ruby>の<ruby>作<rt>つく</rt></ruby>り<ruby>方<rt>かた</rt></ruby>を<ruby>教<rt>おし</rt></ruby>えてあげるね。まず、お<ruby>鍋<rt>なべ</rt></ruby>に<ruby>水<rt>みず</rt></ruby>を<ruby>入<rt>い</rt></ruby>れて、<ruby>火<rt>ひ</rt></ruby>にかけます。'},
+      {speaker:'B', text:'<ruby>水<rt>みず</rt></ruby>はどのくらい<ruby>入<rt>い</rt></ruby>れるの？'},
+      {speaker:'A', text:'<ruby>四<rt>よ</rt></ruby><ruby>人<rt>にん</rt></ruby><ruby>分<rt>ぶん</rt></ruby>なら<ruby>六<rt>ろっ</rt></ruby><ruby>百<rt>ぴゃく</rt></ruby>ミリリットルくらい。<ruby>沸<rt>わ</rt></ruby>いたらだしを<ruby>入<rt>い</rt></ruby>れて、<ruby>次<rt>つぎ</rt></ruby>に<ruby>豆<rt>とう</rt></ruby><ruby>腐<rt>ふ</rt></ruby>を<ruby>切<rt>き</rt></ruby>って<ruby>入<rt>い</rt></ruby>れます。'},
+      {speaker:'B', text:'みそはいつ<ruby>入<rt>い</rt></ruby>れるの？'},
+      {speaker:'A', text:'<ruby>最<rt>さい</rt></ruby><ruby>後<rt>ご</rt></ruby>です。<ruby>火<rt>ひ</rt></ruby>を<ruby>弱<rt>よわ</rt></ruby>くしてからみそを<ruby>溶<rt>と</rt></ruby>かして、<ruby>沸<rt>わ</rt></ruby><ruby>騰<rt>とう</rt></ruby>させないようにしてください。'},
+    ],
+    scriptPlain:'みそ汁の作り方を教えてあげるね。まず、お鍋に水を入れて、火にかけます。水はどのくらい入れるの？四人分なら六百ミリリットルくらい。沸いたらだしを入れて、次に豆腐を切って入れます。みそはいつ入れるの？最後です。火を弱くしてからみそを溶かして、沸騰させないようにしてください。',
+    questions:[
+      {q:'四人分のみそ汁に必要な水の量はどのくらいですか。', opts:['A. 二百ミリリットル','B. 四百ミリリットル','C. 六百ミリリットル','D. 八百ミリリットル'], answer:'C', exp:'「四人分なら六百ミリリットルくらい」と言っています。'},
+      {q:'みそはいつ入れますか。', opts:['A. 最初','B. 豆腐の前','C. だしの前','D. 最後'], answer:'D', exp:'「最後です。火を弱くしてからみそを溶かして」と言っています。'},
+      {q:'みそを入れた後、何をしてはいけませんか。', opts:['A. かき混ぜること','B. 豆腐を入れること','C. 沸騰させること','D. 火を弱くすること'], answer:'C', exp:'「沸騰させないようにしてください」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n4-l-10', level:'n4',
+    titleJp:'<ruby>誕<rt>たん</rt></ruby><ruby>生<rt>じょう</rt></ruby><ruby>日<rt>び</rt></ruby>パーティーの<ruby>計<rt>けい</rt></ruby><ruby>画<rt>かく</rt></ruby>',
+    titleEn:'Planning a Birthday Party',
+    scene:'Two friends plan a surprise birthday party for a classmate.',
+    speakers:['A','B'],
+    script:[
+      {speaker:'A', text:'<ruby>来<rt>らい</rt></ruby><ruby>週<rt>しゅう</rt></ruby>、<ruby>山<rt>やま</rt></ruby><ruby>田<rt>だ</rt></ruby>さんの<ruby>誕<rt>たん</rt></ruby><ruby>生<rt>じょう</rt></ruby><ruby>日<rt>び</rt></ruby>だよね。サプライズパーティーしない？'},
+      {speaker:'B', text:'いいね！<ruby>場<rt>ば</rt></ruby><ruby>所<rt>しょ</rt></ruby>はどこにする？'},
+      {speaker:'A', text:'<ruby>私<rt>わたし</rt></ruby>の<ruby>家<rt>いえ</rt></ruby>はどう？<ruby>両<rt>りょう</rt></ruby><ruby>親<rt>しん</rt></ruby>が<ruby>週<rt>しゅう</rt></ruby><ruby>末<rt>まつ</rt></ruby>に<ruby>出<rt>で</rt></ruby><ruby>かけるから</rt>。'},
+      {speaker:'B', text:'<ruby>完<rt>かん</rt></ruby><ruby>璧<rt>ぺき</rt></ruby>だね。ケーキは<ruby>私<rt>わたし</rt></ruby>が<ruby>用<rt>よう</rt></ruby><ruby>意<rt>い</rt></ruby>するよ。<ruby>飾<rt>かざ</rt></ruby>り<ruby>付<rt>つ</rt></ruby>けは<ruby>一<rt>いっ</rt></ruby><ruby>緒<rt>しょ</rt></ruby>にやろう。'},
+      {speaker:'A', text:'じゃあ、<ruby>他<rt>ほか</rt></ruby>のみんなにも<ruby>連<rt>れん</rt></ruby><ruby>絡<rt>らく</rt></ruby>しておくね。<ruby>山<rt>やま</rt></ruby><ruby>田<rt>だ</rt></ruby>さんには<ruby>内<rt>ない</rt></ruby><ruby>緒<rt>しょ</rt></ruby>にしてね。'},
+    ],
+    scriptPlain:'来週、山田さんの誕生日だよね。サプライズパーティーしない？いいね！場所はどこにする？私の家はどう？両親が週末に出かけるから。完璧だね。ケーキは私が用意するよ。飾り付けは一緒にやろう。じゃあ、他のみんなにも連絡しておくね。山田さんには内緒にしてね。',
+    questions:[
+      {q:'パーティーはどこで開きますか。', opts:['A. Bさんの家','B. Aさんの家','C. 学校','D. レストラン'], answer:'B', exp:'「私の家はどう？両親が週末に出かけるから」とAさんが提案しています。'},
+      {q:'ケーキは誰が用意しますか。', opts:['A. Aさん','B. 山田さん','C. Bさん','D. みんなで'], answer:'C', exp:'「ケーキは私が用意するよ」とBさんが言っています。'},
+      {q:'Aさんは次に何をしますか。', opts:['A. ケーキを買う','B. 他のみんなに連絡する','C. 飾り付けをする','D. 山田さんに話す'], answer:'B', exp:'「他のみんなにも連絡しておくね」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n4-l-11', level:'n4',
+    titleJp:'<ruby>病<rt>びょう</rt></ruby><ruby>院<rt>いん</rt></ruby>の<ruby>受<rt>う</rt></ruby><ruby>付<rt>けつ</rt></ruby>',
+    titleEn:'At the Hospital Reception',
+    scene:'A patient registers at a clinic for the first time.',
+    speakers:['Patient (A)','Receptionist (B)'],
+    script:[
+      {speaker:'A', text:'あの、<ruby>初<rt>はじ</rt></ruby>めて<ruby>来<rt>き</rt></ruby>たんですが。'},
+      {speaker:'B', text:'ありがとうございます。こちらの<ruby>問<rt>もん</rt></ruby><ruby>診<rt>しん</rt></ruby><ruby>票<rt>ひょう</rt></ruby>にご<ruby>記<rt>き</rt></ruby><ruby>入<rt>にゅう</rt></ruby>ください。<ruby>今<rt>きょう</rt></ruby><ruby>日<rt>う</rt></ruby>はどのような<ruby>症<rt>しょう</rt></ruby><ruby>状<rt>じょう</rt></ruby>ですか。'},
+      {speaker:'A', text:'<ruby>三<rt>みっ</rt></ruby><ruby>日<rt>か</rt></ruby>くらい<ruby>前<rt>まえ</rt></ruby>から<ruby>のど<rt>のど</rt></ruby>が<ruby>痛<rt>いた</rt></ruby>くて、<ruby>昨<rt>きの</rt></ruby><ruby>日<rt>う</rt></ruby>から<ruby>熱<rt>ねつ</rt></ruby>も<ruby>出<rt>で</rt></ruby>ています。'},
+      {speaker:'B', text:'<ruby>熱<rt>ねつ</rt></ruby>は<ruby>何<rt>なん</rt></ruby><ruby>度<rt>ど</rt></ruby>くらいありますか。'},
+      {speaker:'A', text:'<ruby>朝<rt>あさ</rt></ruby><ruby>測<rt>はか</rt></ruby>ったら、<ruby>三<rt>さん</rt></ruby><ruby>十<rt>じゅう</rt></ruby><ruby>八<rt>はち</rt></ruby><ruby>度<rt>ど</rt></ruby>でした。'},
+      {speaker:'B', text:'<ruby>分<rt>わ</rt></ruby>かりました。では、しばらくお<ruby>待<rt>ま</rt></ruby>ちください。'},
+    ],
+    scriptPlain:'あの、初めて来たんですが。ありがとうございます。こちらの問診票にご記入ください。今日はどのような症状ですか。三日くらい前からのどが痛くて、昨日から熱も出ています。熱は何度くらいありますか。朝測ったら、三十八度でした。分かりました。では、しばらくお待ちください。',
+    questions:[
+      {q:'患者はいつからのどが痛いですか。', opts:['A. 今日から','B. 昨日から','C. 三日くらい前から','D. 一週間前から'], answer:'C', exp:'「三日くらい前からのどが痛くて」と言っています。'},
+      {q:'熱はいつから出ていますか。', opts:['A. 三日前から','B. 昨日から','C. 今朝から','D. 二日前から'], answer:'B', exp:'「昨日から熱も出ています」と言っています。'},
+      {q:'患者の体温は何度ですか。', opts:['A. 三十七度','B. 三十七度五分','C. 三十八度','D. 三十九度'], answer:'C', exp:'「朝測ったら、三十八度でした」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n4-l-12', level:'n4',
+    titleJp:'<ruby>趣<rt>しゅ</rt></ruby><ruby>味<rt>み</rt></ruby>の<ruby>話<rt>はなし</rt></ruby>',
+    titleEn:'Talking About Hobbies',
+    scene:'Two new colleagues get to know each other during lunch break.',
+    speakers:['A','B'],
+    script:[
+      {speaker:'A', text:'<ruby>田<rt>た</rt></ruby><ruby>中<rt>なか</rt></ruby>さんは<ruby>休<rt>きゅう</rt></ruby><ruby>日<rt>じつ</rt></ruby>、<ruby>何<rt>なに</rt></ruby>をしていますか。'},
+      {speaker:'B', text:'<ruby>最<rt>さい</rt></ruby><ruby>近<rt>きん</rt></ruby>はハイキングにはまっています。<ruby>月<rt>つき</rt></ruby>に<ruby>一<rt>いっ</rt></ruby><ruby>度<rt>ど</rt></ruby>くらい<ruby>山<rt>やま</rt></ruby>に<ruby>行<rt>い</rt></ruby>くんです。<ruby>鈴<rt>すず</rt></ruby><ruby>木<rt>き</rt></ruby>さんは？'},
+      {speaker:'A', text:'<ruby>私<rt>わたし</rt></ruby>は<ruby>料<rt>りょう</rt></ruby><ruby>理<rt>り</rt></ruby>が<ruby>好<rt>す</rt></ruby>きで、<ruby>週<rt>しゅう</rt></ruby><ruby>末<rt>まつ</rt></ruby>はよく<ruby>新<rt>あたら</rt></ruby>しいレシピを<ruby>試<rt>ため</rt></ruby>しています。'},
+      {speaker:'B', text:'いいですね。<ruby>手<rt>て</rt></ruby><ruby>作<rt>づく</rt></ruby>り<ruby>料<rt>りょう</rt></ruby><ruby>理<rt>り</rt></ruby>は<ruby>健<rt>けん</rt></ruby><ruby>康<rt>こう</rt></ruby>的<ruby>ですし<rt>ですし</rt></ruby>。<ruby>得<rt>とく</rt></ruby><ruby>意<rt>い</rt></ruby>な<ruby>料<rt>りょう</rt></ruby><ruby>理<rt>り</rt></ruby>は<ruby>何<rt>なに</rt></ruby>ですか？'},
+      {speaker:'A', text:'<ruby>イタリアン<rt>イタリアン</rt></ruby>が<ruby>好<rt>す</rt></ruby>きで、パスタをよく<ruby>作<rt>つく</rt></ruby>ります。<ruby>今<rt>こん</rt></ruby><ruby>度<rt>ど</rt></ruby>ぜひ<ruby>食<rt>た</rt></ruby>べに<ruby>来<rt>き</rt></ruby>てください。'},
+    ],
+    scriptPlain:'田中さんは休日、何をしていますか。最近はハイキングにはまっています。月に一度くらい山に行くんです。鈴木さんは？私は料理が好きで、週末はよく新しいレシピを試しています。いいですね。手作り料理は健康的ですし。得意な料理は何ですか？イタリアンが好きで、パスタをよく作ります。今度ぜひ食べに来てください。',
+    questions:[
+      {q:'田中さんの趣味は何ですか。', opts:['A. 料理','B. 釣り','C. ハイキング','D. 読書'], answer:'C', exp:'「最近はハイキングにはまっています」と言っています。'},
+      {q:'田中さんはどのくらいの頻度で山に行きますか。', opts:['A. 週に一度','B. 月に一度','C. 年に一度','D. 毎週末'], answer:'B', exp:'「月に一度くらい山に行くんです」と言っています。'},
+      {q:'鈴木さんが得意な料理は何ですか。', opts:['A. 和食','B. 中華料理','C. フランス料理','D. イタリアン（パスタ）'], answer:'D', exp:'「イタリアンが好きで、パスタをよく作ります」と言っています。'},
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════════
+  //  N3 — NEW SCRIPTS (7–12)
+  // ══════════════════════════════════════════════════════════════
+
+  {
+    id:'n3-l-7', level:'n3',
+    titleJp:'<ruby>職<rt>しょく</rt></ruby><ruby>場<rt>ば</rt></ruby>での<ruby>ハラスメント<rt>ハラスメント</rt></ruby>',
+    titleEn:'Workplace Harassment',
+    scene:'Two colleagues discuss a workplace problem and what to do about it.',
+    speakers:['A','B'],
+    script:[
+      {speaker:'A', text:'<ruby>実<rt>じつ</rt></ruby>は、<ruby>上<rt>じょう</rt></ruby><ruby>司<rt>し</rt></ruby>から<ruby>毎<rt>まい</rt></ruby><ruby>日<rt>にち</rt></ruby><ruby>きつ<rt>きつ</rt></ruby>く<ruby>叱<rt>しか</rt></ruby>られて、<ruby>精<rt>せい</rt></ruby><ruby>神<rt>しん</rt></ruby><ruby>的<rt>てき</rt></ruby>にしんどくなってきて。'},
+      {speaker:'B', text:'それは<ruby>辛<rt>つら</rt></ruby>いね。どんなことを<ruby>言<rt>い</rt></ruby>われるの？'},
+      {speaker:'A', text:'<ruby>仕<rt>し</rt></ruby><ruby>事<rt>ごと</rt></ruby>のミスを<ruby>みんな<rt>みんな</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>で<ruby>大<rt>おお</rt></ruby>きな<ruby>声<rt>こえ</rt></ruby>で<ruby>怒<rt>ど</rt></ruby><ruby>鳴<rt>な</rt></ruby>られることが<ruby>多<rt>おお</rt></ruby>くて。<ruby>他<rt>ほか</rt></ruby>のことでは<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>ないんだけど。'},
+      {speaker:'B', text:'それはパワーハラスメントになる<ruby>可<rt>か</rt></ruby><ruby>能<rt>のう</rt></ruby><ruby>性<rt>せい</rt></ruby>があるよ。<ruby>記<rt>き</rt></ruby><ruby>録<rt>ろく</rt></ruby>をつけておいて、<ruby>人<rt>じん</rt></ruby><ruby>事<rt>じ</rt></ruby>部<ruby>門<rt>もん</rt></ruby>や<ruby>相<rt>そう</rt></ruby><ruby>談<rt>だん</rt></ruby><ruby>窓<rt>まど</rt></ruby><ruby>口<rt>ぐち</rt></ruby>に<ruby>相<rt>そう</rt></ruby><ruby>談<rt>だん</rt></ruby>してみたら？'},
+      {speaker:'A', text:'そうだね。<ruby>一人<rt>ひとり</rt></ruby>で<ruby>抱<rt>かか</rt></ruby>え<ruby>込<rt>こ</rt></ruby>まないようにします。'},
+    ],
+    scriptPlain:'実は、上司から毎日きつく叱られて、精神的にしんどくなってきて。それは辛いね。どんなことを言われるの？仕事のミスをみんなの前で大きな声で怒鳴られることが多くて。他のことでは問題ないんだけど。それはパワーハラスメントになる可能性があるよ。記録をつけておいて、人事部門や相談窓口に相談してみたら？そうだね。一人で抱え込まないようにします。',
+    questions:[
+      {q:'Aさんが上司から受けていることはどれですか。', opts:['A. 残業を強制される','B. みんなの前で大きな声で怒鳴られる','C. 給料を下げられる','D. 仕事を与えられない'], answer:'B', exp:'「仕事のミスをみんなの前で大きな声で怒鳴られることが多くて」と言っています。'},
+      {q:'Bさんはどのようなアドバイスをしましたか。', opts:['A. 上司に直接抗議する','B. 会社を辞める','C. 記録をつけて相談窓口に相談する','D. 我慢して続ける'], answer:'C', exp:'「記録をつけておいて、人事部門や相談窓口に相談してみたら？」と言っています。'},
+      {q:'最後にAさんはどうしようと言いましたか。', opts:['A. 一人で解決する','B. 一人で抱え込まないようにする','C. 会社を辞める','D. 上司と話し合う'], answer:'B', exp:'「一人で抱え込まないようにします」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n3-l-8', level:'n3',
+    titleJp:'<ruby>地<rt>ち</rt></ruby><ruby>域<rt>いき</rt></ruby>の<ruby>行<rt>ぎょう</rt></ruby><ruby>事<rt>じ</rt></ruby>',
+    titleEn:'A Local Community Event',
+    scene:'A community organiser announces a neighbourhood clean-up event.',
+    speakers:['Organiser'],
+    script:[
+      {speaker:'Organiser', text:'<ruby>皆<rt>みな</rt></ruby>さん、<ruby>来<rt>らい</rt></ruby><ruby>月<rt>げつ</rt></ruby>の<ruby>十<rt>じゅう</rt></ruby><ruby>五<rt>ご</rt></ruby><ruby>日<rt>にち</rt></ruby>、<ruby>日<rt>にち</rt></ruby><ruby>曜<rt>よう</rt></ruby><ruby>日<rt>び</rt></ruby>に<ruby>地<rt>ち</rt></ruby><ruby>域<rt>いき</rt></ruby>の<ruby>清<rt>せい</rt></ruby><ruby>掃<rt>そう</rt></ruby><ruby>活<rt>かつ</rt></ruby><ruby>動<rt>どう</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>います。<ruby>午<rt>ご</rt></ruby><ruby>前<rt>ぜん</rt></ruby><ruby>九<rt>く</rt></ruby><ruby>時<rt>じ</rt></ruby>に<ruby>公<rt>こう</rt></ruby><ruby>園<rt>えん</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>に<ruby>集<rt>あつ</rt></ruby>まってください。<ruby>軍<rt>ぐん</rt></ruby><ruby>手<rt>て</rt></ruby>とゴミ<ruby>袋<rt>ぶくろ</rt></ruby>は<ruby>こちら<rt>こちら</rt></ruby>で<ruby>用<rt>よう</rt></ruby><ruby>意<rt>い</rt></ruby>します。<ruby>動<rt>うご</rt></ruby>きやすい<ruby>服<rt>ふく</rt></ruby>を<ruby>着<rt>き</rt></ruby>てきてください。<ruby>参<rt>さん</rt></ruby><ruby>加<rt>か</rt></ruby>ご<ruby>希<rt>き</rt></ruby><ruby>望<rt>ぼう</rt></ruby>の<ruby>方<rt>かた</rt></ruby>は<ruby>今<rt>こん</rt></ruby><ruby>週<rt>しゅう</rt></ruby><ruby>中<rt>じゅう</rt></ruby>に<ruby>町<rt>ちょう</rt></ruby><ruby>内<rt>ない</rt></ruby><ruby>会<rt>かい</rt></ruby>まで<ruby>ご<rt>ご</rt></ruby><ruby>連<rt>れん</rt></ruby><ruby>絡<rt>らく</rt></ruby>ください。'},
+    ],
+    scriptPlain:'皆さん、来月の十五日、日曜日に地域の清掃活動を行います。午前九時に公園の前に集まってください。軍手とゴミ袋はこちらで用意します。動きやすい服を着てきてください。参加ご希望の方は今週中に町内会までご連絡ください。',
+    questions:[
+      {q:'清掃活動はいつ行われますか。', opts:['A. 来月の十日、土曜日','B. 来月の十五日、日曜日','C. 今月の十五日、日曜日','D. 来月の二十日、日曜日'], answer:'B', exp:'「来月の十五日、日曜日に地域の清掃活動を行います」と言っています。'},
+      {q:'参加者が自分で用意する必要があるものは何ですか。', opts:['A. 軍手とゴミ袋','B. 動きやすい服','C. お弁当','D. 清掃道具'], answer:'B', exp:'「軍手とゴミ袋はこちらで用意します」と言っているので、自分で必要なのは「動きやすい服」です。'},
+      {q:'参加を希望する人はいつまでに連絡する必要がありますか。', opts:['A. 来週中','B. 今月中','C. 今週中','D. 活動当日'], answer:'C', exp:'「今週中に町内会までご連絡ください」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n3-l-9', level:'n3',
+    titleJp:'<ruby>健<rt>けん</rt></ruby><ruby>康<rt>こう</rt></ruby><ruby>診<rt>しん</rt></ruby><ruby>断<rt>だん</rt></ruby>の<ruby>結<rt>けっ</rt></ruby><ruby>果<rt>か</rt></ruby>',
+    titleEn:'Health Check Results',
+    scene:'A doctor explains the results of a health check-up.',
+    speakers:['Doctor (A)','Patient (B)'],
+    script:[
+      {speaker:'A', text:'<ruby>検<rt>けん</rt></ruby><ruby>査<rt>さ</rt></ruby>の<ruby>結<rt>けっ</rt></ruby><ruby>果<rt>か</rt></ruby>が<ruby>出<rt>で</rt></ruby>ました。<ruby>全<rt>ぜん</rt></ruby><ruby>体<rt>たい</rt></ruby>的<ruby>には<rt>には</rt></ruby><ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>ありませんが、<ruby>コレステロール<rt>コレステロール</rt></ruby>の<ruby>値<rt>ち</rt></ruby>が<ruby>少<rt>すこ</rt></ruby>し<ruby>高<rt>たか</rt></ruby>めです。'},
+      {speaker:'B', text:'<ruby>そうですか<rt>そうですか</rt></ruby>。<ruby>何<rt>なに</rt></ruby>か<ruby>気<rt>き</rt></ruby>をつけることはありますか。'},
+      {speaker:'A', text:'<ruby>食<rt>しょく</rt></ruby><ruby>事<rt>じ</rt></ruby>で<ruby>油<rt>あぶら</rt></ruby>っこいものや<ruby>甘<rt>あま</rt></ruby>いものを<ruby>控<rt>ひか</rt></ruby>えてください。それから<ruby>週<rt>しゅう</rt></ruby>に<ruby>三<rt>さん</rt></ruby><ruby>回<rt>かい</rt></ruby>以<ruby>上<rt>じょう</rt></ruby>、<ruby>三<rt>さん</rt></ruby><ruby>十<rt>じゅっ</rt></ruby><ruby>分<rt>ぷん</rt></ruby>くらいの<ruby>有<rt>ゆう</rt></ruby><ruby>酸<rt>さん</rt></ruby><ruby>素<rt>そ</rt></ruby><ruby>運<rt>うん</rt></ruby><ruby>動<rt>どう</rt></ruby>を<ruby>お<rt>お</rt></ruby><ruby>勧<rt>すす</rt></ruby>めします。'},
+      {speaker:'B', text:'<ruby>分<rt>わ</rt></ruby>かりました。<ruby>薬<rt>くすり</rt></ruby>は<ruby>必<rt>ひつ</rt></ruby><ruby>要<rt>よう</rt></ruby>ですか。'},
+      {speaker:'A', text:'<ruby>今<rt>いま</rt></ruby>のところは<ruby>必<rt>ひつ</rt></ruby><ruby>要<rt>よう</rt></ruby>ありません。<ruby>三<rt>さん</rt></ruby><ruby>ヶ<rt>か</rt></ruby><ruby>月<rt>げつ</rt></ruby><ruby>後<rt>ご</rt></ruby>にもう<ruby>一<rt>いち</rt></ruby><ruby>度<rt>ど</rt></ruby><ruby>検<rt>けん</rt></ruby><ruby>査<rt>さ</rt></ruby>しましょう。'},
+    ],
+    scriptPlain:'検査の結果が出ました。全体的には問題ありませんが、コレステロールの値が少し高めです。そうですか。何か気をつけることはありますか。食事で油っこいものや甘いものを控えてください。それから週に三回以上、三十分くらいの有酸素運動をお勧めします。分かりました。薬は必要ですか。今のところは必要ありません。三ヶ月後にもう一度検査しましょう。',
+    questions:[
+      {q:'検査で問題があった点はどれですか。', opts:['A. 血圧が高い','B. 血糖値が高い','C. コレステロールの値が高め','D. 体重が多い'], answer:'C', exp:'「コレステロールの値が少し高めです」と言っています。'},
+      {q:'医者が勧めた運動はどれですか。', opts:['A. 週一回、一時間の筋トレ','B. 週三回以上、三十分くらいの有酸素運動','C. 毎日十分の散歩','D. 週五回の水泳'], answer:'B', exp:'「週に三回以上、三十分くらいの有酸素運動をお勧めします」と言っています。'},
+      {q:'今後の方針として述べられているものはどれですか。', opts:['A. すぐに薬を飲み始める','B. 手術が必要','C. 三ヶ月後にもう一度検査する','D. 毎月検査に来る'], answer:'C', exp:'「三ヶ月後にもう一度検査しましょう」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n3-l-10', level:'n3',
+    titleJp:'<ruby>賃<rt>ちん</rt></ruby><ruby>貸<rt>たい</rt></ruby><ruby>物<rt>ぶっ</rt></ruby><ruby>件<rt>けん</rt></ruby>の<ruby>相<rt>そう</rt></ruby><ruby>談<rt>だん</rt></ruby>',
+    titleEn:'Enquiring About a Rental Property',
+    scene:'A young professional enquires about renting an apartment.',
+    speakers:['Agent (A)','Customer (B)'],
+    script:[
+      {speaker:'B', text:'<ruby>駅<rt>えき</rt></ruby>から<ruby>歩<rt>ある</rt></ruby>いて<ruby>十<rt>じゅっ</rt></ruby><ruby>分<rt>ぷん</rt></ruby>以<ruby>内<rt>ない</rt></ruby>で、<ruby>一<rt>ひと</rt></ruby>LDK<ruby>くらい<rt>くらい</rt></ruby>の<ruby>部<rt>へ</rt></ruby><ruby>屋<rt>や</rt></ruby>を<ruby>探<rt>さが</rt></ruby>しています。<ruby>予<rt>よ</rt></ruby><ruby>算<rt>さん</rt></ruby>は<ruby>月<rt>つき</rt></ruby><ruby>八<rt>はち</rt></ruby><ruby>万<rt>まん</rt></ruby><ruby>円<rt>えん</rt></ruby>くらいまでです。'},
+      {speaker:'A', text:'<ruby>ご<rt>ご</rt></ruby><ruby>希<rt>き</rt></ruby><ruby>望<rt>ぼう</rt></ruby>の<ruby>エリア<rt>エリア</rt></ruby>はございますか。'},
+      {speaker:'B', text:'<ruby>渋<rt>しぶ</rt></ruby><ruby>谷<rt>や</rt></ruby>か<ruby>新<rt>しん</rt></ruby><ruby>宿<rt>じゅく</rt></ruby>の<ruby>近<rt>ちか</rt></ruby>くがいいんですが。'},
+      {speaker:'A', text:'<ruby>その<rt>その</rt></ruby><ruby>エリア<rt>エリア</rt></ruby>でしたら、<ruby>八<rt>はち</rt></ruby><ruby>万<rt>まん</rt></ruby><ruby>円<rt>えん</rt></ruby>では<ruby>少<rt>すこ</rt></ruby>し<ruby>難<rt>むずか</rt></ruby>しいかもしれません。<ruby>少<rt>すこ</rt></ruby>し<ruby>離<rt>はな</rt></ruby>れたエリアか、<ruby>予<rt>よ</rt></ruby><ruby>算<rt>さん</rt></ruby>を<ruby>上<rt>あ</rt></ruby>げていただくかになりますが。'},
+      {speaker:'B', text:'<ruby>最<rt>さい</rt></ruby><ruby>大<rt>だい</rt></ruby><ruby>九<rt>く</rt></ruby><ruby>万<rt>まん</rt></ruby><ruby>五<rt>ご</rt></ruby><ruby>千<rt>せん</rt></ruby><ruby>円<rt>えん</rt></ruby>まで<ruby>なら<rt>なら</rt></ruby><ruby>出<rt>だ</rt></ruby>せます。<ruby>いくつか<rt>いくつか</rt></ruby><ruby>紹<rt>しょう</rt></ruby><ruby>介<rt>かい</rt></ruby>してもらえますか。'},
+    ],
+    scriptPlain:'駅から歩いて十分以内で、一LDKくらいの部屋を探しています。予算は月八万円くらいまでです。ご希望のエリアはございますか。渋谷か新宿の近くがいいんですが。そのエリアでしたら、八万円では少し難しいかもしれません。少し離れたエリアか、予算を上げていただくかになりますが。最大九万五千円までなら出せます。いくつか紹介してもらえますか。',
+    questions:[
+      {q:'客はどのような部屋を探していますか。', opts:['A. 駅から徒歩十分以内の一LDK','B. 駅から徒歩五分以内の2DK','C. 郊外の広い一軒家','D. 新宿駅直結のマンション'], answer:'A', exp:'「駅から歩いて十分以内で、一LDKくらいの部屋」と言っています。'},
+      {q:'希望エリアの八万円での物件について、エージェントはどう言いましたか。', opts:['A. 簡単に見つかる','B. 少し難しいかもしれない','C. 不可能だ','D. 問題ない'], answer:'B', exp:'「八万円では少し難しいかもしれません」と言っています。'},
+      {q:'客が出せる最大の予算はいくらですか。', opts:['A. 八万円','B. 八万五千円','C. 九万円','D. 九万五千円'], answer:'D', exp:'「最大九万五千円までなら出せます」と言っています。'},
+    ]
+  },
+
+  {
+    id:'n3-l-11', level:'n3',
+    titleJp:'<ruby>食<rt>しょく</rt></ruby><ruby>料<rt>りょう</rt></ruby><ruby>品<rt>ひん</rt></ruby><ruby>ロス<rt>ロス</rt></ruby>',
+    titleEn:'Food Waste',
+    scene:'A radio host discusses food waste with a nutritionist.',
+    speakers:['Host (A)','Nutritionist (B)'],
+    script:[
+      {speaker:'A', text:'<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>では<ruby>毎<rt>まい</rt></ruby><ruby>年<rt>とし</rt></ruby>、<ruby>大<rt>おお</rt></ruby>量<ruby>の<rt>の</rt></ruby><ruby>食<rt>しょく</rt></ruby><ruby>料<rt>りょう</rt></ruby>が<ruby>捨<rt>す</rt></ruby>てられているそうですね。'},
+      {speaker:'B', text:'そうです。<ruby>年<rt>ねん</rt></ruby><ruby>間<rt>かん</rt></ruby>で<ruby>約<rt>やく</rt></ruby><ruby>六<rt>ろく</rt></ruby><ruby>百<rt>ひゃく</rt></ruby><ruby>万<rt>まん</rt></ruby>トン<ruby>以<rt>い</rt></ruby><ruby>上<rt>じょう</rt></ruby>の<ruby>食<rt>しょく</rt></ruby><ruby>品<rt>ひん</rt></ruby>が<ruby>廃<rt>はい</rt></ruby><ruby>棄<rt>き</rt></ruby>されています。<ruby>一<rt>いち</rt></ruby><ruby>人<rt>にん</rt></ruby>あたり、<ruby>毎<rt>まい</rt></ruby><ruby>日<rt>にち</rt></ruby><ruby>ご<rt>ご</rt></ruby><ruby>飯<rt>はん</rt></ruby><ruby>一<rt>ひと</rt></ruby><ruby>杯<rt>はい</rt></ruby>くらいに<ruby>相<rt>そう</rt></ruby><ruby>当<rt>とう</rt></ruby>します。'},
+      {speaker:'A', text:'<ruby>家<rt>か</rt></ruby><ruby>庭<rt>てい</rt></ruby>でできることはありますか。'},
+      {speaker:'B', text:'<ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>リストを<ruby>作<rt>つく</rt></ruby>って<ruby>必<rt>ひつ</rt></ruby><ruby>要<rt>よう</rt></ruby>なものだけ<ruby>買<rt>か</rt></ruby>うこと、<ruby>冷<rt>れい</rt></ruby><ruby>蔵<rt>ぞう</rt></ruby><ruby>庫<rt>こ</rt></ruby>の<ruby>中<rt>なか</rt></ruby>身<ruby>を<rt>を</rt></ruby><ruby>定<rt>てい</rt></ruby><ruby>期<rt>き</rt></ruby><ruby>的<rt>てき</rt></ruby>に<ruby>確<rt>かく</rt></ruby><ruby>認<rt>にん</rt></ruby>すること、<ruby>そして<rt>そして</rt></ruby><ruby>消<rt>しょう</rt></ruby><ruby>費<rt>ひ</rt></ruby><ruby>期<rt>き</rt></ruby><ruby>限<rt>げん</rt></ruby>と<ruby>賞<rt>しょう</rt></ruby><ruby>味<rt>み</rt></ruby><ruby>期<rt>き</rt></ruby><ruby>限<rt>げん</rt></ruby>の<ruby>違<rt>ちが</rt></ruby>いを<ruby>理<rt>り</rt></ruby><ruby>解<rt>かい</rt></ruby>することが<ruby>大<rt>たい</rt></ruby><ruby>切<rt>せつ</rt></ruby>です。'},
+    ],
+    scriptPlain:'日本では毎年、大量の食料が捨てられているそうですね。そうです。年間で約六百万トン以上の食品が廃棄されています。一人あたり、毎日ご飯一杯くらいに相当します。家庭でできることはありますか。買い物リストを作って必要なものだけ買うこと、冷蔵庫の中身を定期的に確認すること、そして消費期限と賞味期限の違いを理解することが大切です。',
+    questions:[
+      {q:'日本では年間どのくらいの食品が廃棄されていますか。', opts:['A. 約百万トン','B. 約三百万トン','C. 約六百万トン以上','D. 約一千万トン'], answer:'C', exp:'「年間で約六百万トン以上の食品が廃棄されています」と言っています。'},
+      {q:'一人あたりの食品廃棄量はどのくらいに相当しますか。', opts:['A. 毎日ご飯一杯','B. 毎週ご飯一杯','C. 毎月ご飯一杯','D. 毎日パン一枚'], answer:'A', exp:'「一人あたり、毎日ご飯一杯くらいに相当します」と言っています。'},
+      {q:'家庭でできる対策として挙げられていないものはどれですか。', opts:['A. 買い物リストを作る','B. 冷蔵庫の中身を確認する','C. 外食を減らす','D. 消費期限と賞味期限の違いを理解する'], answer:'C', exp:'外食を減らすことは述べられていません。'},
+    ]
+  },
+
+  {
+    id:'n3-l-12', level:'n3',
+    titleJp:'<ruby>スポーツ<rt>スポーツ</rt></ruby>と<ruby>メンタル<rt>メンタル</rt></ruby>ヘルス',
+    titleEn:'Sport and Mental Health',
+    scene:'A sports psychologist is interviewed about exercise and wellbeing.',
+    speakers:['Interviewer (A)','Psychologist (B)'],
+    script:[
+      {speaker:'A', text:'<ruby>運<rt>うん</rt></ruby><ruby>動<rt>どう</rt></ruby>がメンタルヘルスに<ruby>与<rt>あた</rt></ruby>える<ruby>影<rt>えい</rt></ruby><ruby>響<rt>きょう</rt></ruby>について、<ruby>教<rt>おし</rt></ruby>えていただけますか。'},
+      {speaker:'B', text:'<ruby>運<rt>うん</rt></ruby><ruby>動<rt>どう</rt></ruby>をすると<ruby>脳<rt>のう</rt></ruby>内<ruby>で<rt>で</rt></ruby>セロトニンやエンドルフィンという<ruby>物<rt>ぶっ</rt></ruby><ruby>質<rt>しつ</rt></ruby>が<ruby>分<rt>ぶん</rt></ruby><ruby>泌<rt>ぴつ</rt></ruby>されて、<ruby>気<rt>き</rt></ruby><ruby>分<rt>ぶん</rt></ruby>が<ruby>向<rt>こう</rt></ruby><ruby>上<rt>じょう</rt></ruby>します。<ruby>特<rt>とく</rt></ruby>に<ruby>鬱<rt>うつ</rt></ruby>や<ruby>不<rt>ふ</rt></ruby><ruby>安<rt>あん</rt></ruby><ruby>障<rt>しょう</rt></ruby><ruby>害<rt>がい</rt></ruby>の<ruby>症<rt>しょう</rt></ruby><ruby>状<rt>じょう</rt></ruby>を<ruby>軽<rt>かる</rt></ruby>くする<ruby>効<rt>こう</rt></ruby><ruby>果<rt>か</rt></ruby>があると<ruby>言<rt>い</rt></ruby>われています。'},
+      {speaker:'A', text:'どのくらい<ruby>運<rt>うん</rt></ruby><ruby>動<rt>どう</rt></ruby>すれば<ruby>効<rt>こう</rt></ruby><ruby>果<rt>か</rt></ruby>がありますか。'},
+      {speaker:'B', text:'<ruby>週<rt>しゅう</rt></ruby>に<ruby>百<rt>ひゃく</rt></ruby><ruby>五<rt>ご</rt></ruby><ruby>十<rt>じゅっ</rt></ruby><ruby>分<rt>ぷん</rt></ruby>の<ruby>中<rt>ちゅう</rt></ruby><ruby>程<rt>てい</rt></ruby><ruby>度<rt>ど</rt></ruby>の<ruby>運<rt>うん</rt></ruby><ruby>動<rt>どう</rt></ruby>が<ruby>目<rt>め</rt></ruby><ruby>安<rt>やす</rt></ruby>です。<ruby>激<rt>はげ</rt></ruby>しい<ruby>運<rt>うん</rt></ruby><ruby>動<rt>どう</rt></ruby>でなくても、<ruby>散<rt>さん</rt></ruby><ruby>歩<rt>ぽ</rt></ruby>でも<ruby>十<rt>じゅう</rt></ruby><ruby>分<rt>ぶん</rt></ruby>な<ruby>効<rt>こう</rt></ruby><ruby>果<rt>か</rt></ruby>があります。<ruby>継<rt>けい</rt></ruby><ruby>続<rt>ぞく</rt></ruby>することが<ruby>一<rt>いち</rt></ruby><ruby>番<rt>ばん</rt></ruby><ruby>大<rt>たい</rt></ruby><ruby>切<rt>せつ</rt></ruby>です。'},
+    ],
+    scriptPlain:'運動がメンタルヘルスに与える影響について、教えていただけますか。運動をすると脳内でセロトニンやエンドルフィンという物質が分泌されて、気分が向上します。特に鬱や不安障害の症状を軽くする効果があると言われています。どのくらい運動すれば効果がありますか。週に百五十分の中程度の運動が目安です。激しい運動でなくても、散歩でも十分な効果があります。継続することが一番大切です。',
+    questions:[
+      {q:'運動がメンタルヘルスに良い理由はどれですか。', opts:['A. 体重が減るから','B. セロトニンやエンドルフィンが分泌されるから','C. 友達ができるから','D. 時間が有効に使えるから'], answer:'B', exp:'「脳内でセロトニンやエンドルフィンという物質が分泌されて、気分が向上します」と言っています。'},
+      {q:'週にどのくらい運動することが勧められていますか。', opts:['A. 三十分','B. 六十分','C. 百五十分','D. 三百分'], answer:'C', exp:'「週に百五十分の中程度の運動が目安です」と言っています。'},
+      {q:'運動について最も大切なこととして述べられているものはどれですか。', opts:['A. 激しく運動すること','B. ジムに通うこと','C. 毎日やること','D. 継続すること'], answer:'D', exp:'「継続することが一番大切です」と言っています。'},
+    ]
+  },
+];
+
+// ── State ─────────────────────────────────────────────────────
+let currentUtterance = null;
+let currentPlayId    = null;
+
+// ── TTS ───────────────────────────────────────────────────────
+function getJapaneseVoice() {
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = [
+    'Microsoft Ichiro - Japanese (Japan)',
+    'Google 日本語',
+    'Microsoft Haruka - Japanese (Japan)',
+    'Microsoft Ayumi - Japanese (Japan)',
+    'Microsoft Sayaka - Japanese (Japan)',
+  ];
+  for (const name of preferred) {
+    const v = voices.find(v => v.name === name);
+    if (v) return v;
+  }
+  return voices.find(v => v.lang.startsWith('ja')) || null;
+}
+
+function playScript(id, btnEl) {
+  const p = listeningData.find(x => x.id === id);
+  if (!p) return;
+
+  // Stop if already playing this one
+  if (currentPlayId === id && currentUtterance) {
+    window.speechSynthesis.cancel();
+    currentUtterance = null;
+    currentPlayId = null;
+    resetPlayButton(id);
+    return;
+  }
+
+  // Stop any other audio
+  if (currentUtterance) {
+    window.speechSynthesis.cancel();
+    if (currentPlayId) resetPlayButton(currentPlayId);
+  }
+
+  const indicator = document.getElementById(`indicator-${id}`);
+  if (btnEl) { btnEl.textContent = '⏹ Stop'; btnEl.classList.add('playing'); }
+  if (indicator) indicator.classList.add('visible');
+
+  const utt = new SpeechSynthesisUtterance(p.scriptPlain);
+  utt.lang  = 'ja-JP';
+  utt.rate  = 1.0;
+  utt.pitch = 1.0;
+  const voice = getJapaneseVoice();
+  if (voice) utt.voice = voice;
+
+  utt.onend = () => {
+    currentUtterance = null;
+    currentPlayId = null;
+    resetPlayButton(id);
+  };
+  utt.onerror = (e) => {
+    if (e.error !== 'interrupted') {
+      currentUtterance = null;
+      currentPlayId = null;
+      resetPlayButton(id);
+    }
+  };
+
+  currentUtterance = utt;
+  currentPlayId = id;
+
+  if (window.speechSynthesis.getVoices().length > 0) {
+    window.speechSynthesis.speak(utt);
+  } else {
+    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.speak(utt);
+  }
+}
+
+function resetPlayButton(id) {
+  const btn = document.getElementById(`play-btn-${id}`);
+  const indicator = document.getElementById(`indicator-${id}`);
+  if (btn) { btn.textContent = '▶ Play'; btn.classList.remove('playing'); }
+  if (indicator) indicator.classList.remove('visible');
+}
+
+function replayScript(id) {
+  if (currentUtterance) {
+    window.speechSynthesis.cancel();
+    currentUtterance = null;
+    currentPlayId = null;
+  }
+  const btn = document.getElementById(`play-btn-${id}`);
+  playScript(id, btn);
+}
+
+// ── Script reveal ─────────────────────────────────────────────
+function toggleScript(id) {
+  const box = document.getElementById(`script-${id}`);
+  const btn = document.getElementById(`script-btn-${id}`);
+  if (!box) return;
+  const vis = box.classList.toggle('visible');
+  if (btn) btn.textContent = vis ? 'Hide Script' : 'Show Script';
+}
+
+// ── Answer checking ───────────────────────────────────────────
+function checkAnswer(el, id, qi, correct) {
+  const card = document.getElementById(`q-${id}-${qi}`);
+  if (!card) return;
+  const opts = card.querySelectorAll('.opt-btn');
+  opts.forEach(o => {
+    o.disabled = true;
+    if (o.dataset.letter === correct) o.classList.add('correct');
+  });
+  if (el.dataset.letter !== correct) el.classList.add('incorrect');
+
+  const exp = document.getElementById(`exp-${id}-${qi}`);
+  if (exp) {
+    exp.classList.add('visible');
+    const status = exp.querySelector('.exp-status');
+    if (status) {
+      status.className = el.dataset.letter === correct ? 'exp-correct' : 'exp-incorrect';
+      status.textContent = el.dataset.letter === correct ? '✓ Correct!' : `✗ Incorrect — the answer is ${correct}`;
+    }
+  }
+}
+
+function resetQuestions(id) {
+  const p = listeningData.find(x => x.id === id);
+  if (!p) return;
+  p.questions.forEach((q, qi) => {
+    const card = document.getElementById(`q-${id}-${qi}`);
+    if (!card) return;
+    card.querySelectorAll('.opt-btn').forEach(o => {
+      o.disabled = false;
+      o.className = 'opt-btn';
+    });
+    const exp = document.getElementById(`exp-${id}-${qi}`);
+    if (exp) exp.classList.remove('visible');
+  });
+}
+
+// ── Toggle card open/closed ───────────────────────────────────
+function toggleCard(id) {
+  const card = document.getElementById(`card-${id}`);
+  if (!card) return;
+  const isOpen = card.classList.toggle('open');
+  // Stop audio when closing
+  if (!isOpen && currentPlayId === id) {
+    window.speechSynthesis.cancel();
+    currentUtterance = null;
+    currentPlayId = null;
+    resetPlayButton(id);
+  }
+}
+
+// ── Filter ────────────────────────────────────────────────────
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const level = btn.dataset.level;
+    document.querySelectorAll('.listen-card').forEach(card => {
+      card.classList.toggle('hidden', level !== 'all' && card.dataset.level !== level);
+    });
+  });
+});
+
+// ── Render ────────────────────────────────────────────────────
+function render() {
+  const list = document.getElementById('listening-list');
+  list.innerHTML = '';
+
+  listeningData.forEach((p, pi) => {
+    const card = document.createElement('div');
+    card.className = 'listen-card';
+    card.id = `card-${p.id}`;
+    card.dataset.level = p.level;
+
+    // Questions HTML
+    const qHtml = p.questions.map((q, qi) => `
+      <div class="q-block" id="q-${p.id}-${qi}">
+        <div class="q-text"><span class="q-num">Q${qi+1}.</span>${q.q}</div>
+        <div class="opts">
+          ${q.opts.map(o => {
+            const letter = o.charAt(0);
+            return `<button class="opt-btn" data-letter="${letter}" onclick="checkAnswer(this,'${p.id}',${qi},'${q.answer}')">${o}</button>`;
+          }).join('')}
+        </div>
+        <div class="explanation" id="exp-${p.id}-${qi}">
+          <div class="exp-status"></div>
+          <div>${q.exp}</div>
+        </div>
+      </div>
+    `).join('');
+
+    // Script HTML
+    const scriptHtml = p.script.map(s => `
+      <span class="speaker-label">${s.speaker}</span>
+      <span>${s.text}</span>
+    `).join('');
+
+    card.innerHTML = `
+      <div class="card-header" onclick="toggleCard('${p.id}')">
+        <span class="card-num">${String(pi+1).padStart(2,'0')}</span>
+        <div class="card-meta">
+          <span class="card-title">${p.titleJp}</span>
+          <span class="card-scene">${p.scene}</span>
+        </div>
+        <span class="card-level level-${p.level}">${p.level.toUpperCase()}</span>
+        <span class="card-chevron">▼</span>
+      </div>
+      <div class="card-body">
+        <div class="audio-section">
+          <div class="audio-hint">🎧 Listen without the script. You may replay as many times as needed before answering.</div>
+          <div class="audio-controls">
+            <button class="play-btn" id="play-btn-${p.id}" onclick="playScript('${p.id}', this)">▶ Play</button>
+            <button class="replay-btn" onclick="replayScript('${p.id}')">↺ Replay</button>
+            <button class="show-script-btn" id="script-btn-${p.id}" onclick="toggleScript('${p.id}')">Show Script</button>
+            <div class="playing-indicator" id="indicator-${p.id}">
+              <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+              <span>Playing…</span>
+            </div>
+          </div>
+          <div class="script-box" id="script-${p.id}">${scriptHtml}</div>
+        </div>
+        <div class="questions-section">
+          ${qHtml}
+          <button class="reset-btn" onclick="resetQuestions('${p.id}')">↺ Reset answers</button>
+        </div>
+      </div>
+    `;
+
+    list.appendChild(card);
+  });
+}
+
+// Load voices
+if ('speechSynthesis' in window) window.speechSynthesis.getVoices();
+
+render();
+</script>
+<script src="voicevox.js"></script>
+</body>
+</html>
