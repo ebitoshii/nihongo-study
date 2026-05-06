@@ -1,20 +1,19 @@
 // ── Web Speech API Engine ─────────────────────────────────────
 // Drop-in replacement for voicevox.js — identical API surface.
-// Uses the browser's built-in SpeechSynthesis (works offline, no local server).
-// Best voice quality on Chrome/Edge desktop (uses Google/Microsoft neural voices).
-// Falls back gracefully on all browsers that support Web Speech API.
+// Uses the browser's built-in SpeechSynthesis (works online, no local server).
+// Prefers male Japanese voices on Chrome/Edge.
 
 let currentUtterance = null;
-let ttsReady = false;
-
-// Preferred Japanese voice — chosen on first play
 let preferredVoice = null;
 
 function getJapaneseVoice() {
   if (preferredVoice) return preferredVoice;
   const voices = window.speechSynthesis.getVoices();
-  // Priority order: Google JP > Microsoft JP > any ja-JP voice
   const priority = [
+    v => v.name.includes('Keita'),
+    v => v.name.includes('Ichiro'),
+    v => v.name.includes('Microsoft') && v.lang.startsWith('ja') && v.name.includes('Male'),
+    v => v.name.toLowerCase().includes('male') && v.lang.startsWith('ja'),
     v => v.name.includes('Google') && v.lang.startsWith('ja'),
     v => v.name.includes('Microsoft') && v.lang.startsWith('ja'),
     v => v.lang.startsWith('ja-JP'),
@@ -47,7 +46,6 @@ function playJapanese(text, btnEl) {
   const plain = cleanJapanese(text);
   if (!plain) return;
 
-  // Stop any current speech
   if (currentUtterance) {
     window.speechSynthesis.cancel();
     currentUtterance = null;
@@ -55,7 +53,6 @@ function playJapanese(text, btnEl) {
       b.classList.remove('playing');
       b.textContent = '🔊';
     });
-    // If same button clicked again, just stop
     return;
   }
 
@@ -66,36 +63,27 @@ function playJapanese(text, btnEl) {
 
   const utt = new SpeechSynthesisUtterance(plain);
   utt.lang  = 'ja-JP';
-  utt.rate  = 0.85;
-  utt.pitch = 1.0;
+  utt.rate  = 1.0;   // natural speed
+  utt.pitch = 0.9;   // slightly lower = more male-sounding
 
   const voice = getJapaneseVoice();
   if (voice) utt.voice = voice;
 
   utt.onend = () => {
-    if (btnEl) {
-      btnEl.classList.remove('playing');
-      btnEl.textContent = '🔊';
-    }
+    if (btnEl) { btnEl.classList.remove('playing'); btnEl.textContent = '🔊'; }
     currentUtterance = null;
   };
 
   utt.onerror = (e) => {
-    if (btnEl) {
-      btnEl.classList.remove('playing');
-      btnEl.textContent = '🔊';
-    }
+    if (btnEl) { btnEl.classList.remove('playing'); btnEl.textContent = '🔊'; }
     currentUtterance = null;
-    if (e.error !== 'interrupted') {
-      showVvError('音声の再生に失敗しました。');
-    }
+    if (e.error !== 'interrupted') showVvError('音声の再生に失敗しました。');
   };
 
   currentUtterance = utt;
   window.speechSynthesis.speak(utt);
 }
 
-// Also expose playJP as an alias (used by reading.html and quiz.html)
 function playJP(text, btn) {
   playJapanese(text, btn);
 }
@@ -113,16 +101,14 @@ function showVvError(msg) {
   setTimeout(() => { if (el) el.style.display = 'none'; }, 4000);
 }
 
-// Load voices asynchronously (Chrome requires this)
 if ('speechSynthesis' in window) {
-  window.speechSynthesis.getVoices(); // trigger load
+  window.speechSynthesis.getVoices();
   window.speechSynthesis.onvoiceschanged = () => {
-    preferredVoice = null; // reset so next call re-selects
+    preferredVoice = null;
     getJapaneseVoice();
   };
 }
 
-// Inject button styles (identical to voicevox.js)
 (function injectVvStyles() {
   const s = document.createElement('style');
   s.textContent = `
