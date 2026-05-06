@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>進捗 Progress — 日本語学習</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;500;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:#f0e6d6;--ink-mid:#d4c4a8;--ink-soft:#b09878;--ink-faint:#7a6450;
+      --washi:#4a3728;--washi-warm:#3d2d20;--washi-deep:#2e2018;--washi-card:#56402f;
+      --teal:#4aaf9e;--teal-light:#6dcebb;--teal-pale:rgba(74,175,158,0.15);
+      --serif-jp:'Shippori Mincho','Noto Serif JP',serif;
+      --serif-en:'IM Fell English',Georgia,serif;
+      --sans-jp:'Noto Sans JP',sans-serif;
+      --radius-sm:4px;--radius-md:8px;--radius-lg:16px;
+      --shadow-soft:0 2px 16px rgba(0,0,0,0.3);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:19px;scroll-behavior:smooth;}
+    body{background-color:#4a3728;color:#f0e6d6;font-family:'Noto Sans JP',sans-serif;font-weight:300;line-height:1.8;min-height:100vh;overflow-x:hidden;}
+
+    .site-nav{position:sticky;top:0;z-index:100;background:#2e2018;border-bottom:1px solid #1e1208;padding:0.75rem 0;}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;}
+    .nav-logo{display:flex;flex-direction:column;text-decoration:none;}
+    .nav-logo .jp{font-family:var(--serif-jp);font-size:1.1rem;color:#f0e6d6;letter-spacing:0.1em;line-height:1.9;}
+    .nav-logo .jp ruby rt{font-size:0.54em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-logo .en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .nav-links{display:flex;gap:0.15rem;list-style:none;}
+    .nav-links a{display:flex;flex-direction:column;align-items:center;padding:0.4rem 0.7rem;text-decoration:none;border-radius:4px;transition:background 0.2s;}
+    .nav-links a .jp{font-family:var(--serif-jp);font-size:0.85rem;color:#d4c4a8;line-height:1.9;}
+    .nav-links a .jp ruby rt{font-size:0.56em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-links a .en{font-family:var(--serif-en);font-style:italic;font-size:0.62rem;color:#7a6450;}
+    .nav-links a:hover,.nav-links a.active{background:rgba(74,175,158,0.15);}
+    .nav-links a:hover .jp,.nav-links a.active .jp{color:#4aaf9e;}
+
+    .container{max-width:900px;margin:0 auto;padding:2rem;}
+    @media(max-width:768px){.nav-links{display:none;}.container{padding:1rem;}}
+
+    .page-header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid #2e2018;}
+    .page-header .jp-title{font-family:var(--serif-jp);font-size:2.4rem;color:#f0e6d6;letter-spacing:0.05em;line-height:1.85;}
+    .page-header .jp-title ruby rt{font-size:0.58em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .page-header .en-title{font-family:var(--serif-en);font-style:italic;font-size:0.9rem;color:#7a6450;}
+    .page-header .desc{margin-top:0.5rem;color:#b09878;font-size:0.88rem;}
+
+    /* STAT CARDS */
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;margin-bottom:2rem;}
+    .stat-card{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-lg);padding:1.25rem;text-align:center;box-shadow:var(--shadow-soft);}
+    .stat-number{font-family:var(--serif-jp);font-size:2.6rem;color:#4aaf9e;line-height:1;margin-bottom:0.3rem;}
+    .stat-label-jp{font-family:var(--serif-jp);font-size:0.78rem;color:#b09878;display:block;line-height:1.9;}
+    .stat-label-jp ruby rt{font-size:0.5em;font-family:var(--sans-jp);}
+    .stat-label-en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;display:block;}
+
+    /* SECTION */
+    .section{margin-bottom:2.5rem;}
+    .section-title{font-family:var(--serif-en);font-style:italic;font-size:0.8rem;color:#4aaf9e;letter-spacing:0.12em;margin-bottom:1rem;}
+    .section-jp{font-family:var(--serif-jp);font-size:1.2rem;color:#f0e6d6;margin-bottom:0.25rem;line-height:1.85;}
+    .section-jp ruby rt{font-size:0.52em;font-family:var(--sans-jp);}
+
+    /* ACCURACY BY LEVEL */
+    .level-bars{display:flex;flex-direction:column;gap:0.85rem;}
+    .level-bar-row{display:grid;grid-template-columns:60px 1fr 60px;align-items:center;gap:0.75rem;}
+    .level-label{font-family:var(--serif-en);font-size:0.78rem;color:#b09878;}
+    .bar-track{height:8px;background:#2e2018;border-radius:4px;overflow:hidden;}
+    .bar-fill{height:100%;border-radius:4px;transition:width 1s ease 0.2s;}
+    .fill-n4{background:linear-gradient(to right,#3a6b2e,#8fd47a);}
+    .fill-n3{background:linear-gradient(to right,#2a5280,#7ab4e8);}
+    .fill-n2{background:linear-gradient(to right,#7a4a1e,#e8b47a);}
+    .fill-n1{background:linear-gradient(to right,#7a1e1e,#e87a7a);}
+    .bar-pct{font-family:var(--serif-en);font-size:0.75rem;color:#7a6450;text-align:right;}
+
+    /* ACTIVITY CHART */
+    .activity-chart{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-lg);padding:1.5rem;}
+    .chart-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:0.5rem;}
+    .chart-day{width:100%;aspect-ratio:1;border-radius:2px;background:#2e2018;transition:background 0.2s;}
+    .chart-day.d1{background:rgba(74,175,158,0.2);}
+    .chart-day.d2{background:rgba(74,175,158,0.45);}
+    .chart-day.d3{background:rgba(74,175,158,0.7);}
+    .chart-day.d4{background:#4aaf9e;}
+    .chart-labels{display:flex;justify-content:space-between;font-family:var(--serif-en);font-size:0.65rem;color:#7a6450;font-style:italic;}
+    .chart-legend{display:flex;align-items:center;gap:0.4rem;margin-top:0.75rem;flex-wrap:wrap;}
+    .legend-item{display:flex;align-items:center;gap:0.3rem;font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .legend-dot{width:10px;height:10px;border-radius:2px;}
+
+    /* HISTORY TABLE */
+    .history-table{width:100%;border-collapse:collapse;}
+    .history-table th{font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#4aaf9e;letter-spacing:0.08em;padding:0.5rem 0.75rem;border-bottom:1px solid #2e2018;text-align:left;}
+    .history-table td{padding:0.6rem 0.75rem;border-bottom:1px solid rgba(46,32,24,0.5);font-size:0.82rem;color:#b09878;vertical-align:middle;}
+    .history-table tr:last-child td{border-bottom:none;}
+    .history-table tr:hover td{background:rgba(74,175,158,0.04);}
+    .pct-pill{display:inline-block;padding:0.1rem 0.5rem;border-radius:3px;font-family:var(--serif-en);font-size:0.72rem;}
+    .pct-high{background:rgba(143,212,122,0.2);color:#8fd47a;}
+    .pct-mid{background:rgba(232,180,122,0.2);color:#e8b47a;}
+    .pct-low{background:rgba(232,122,122,0.2);color:#e87a7a;}
+
+    /* EMPTY STATE */
+    .empty-state{text-align:center;padding:3rem;color:#7a6450;font-family:var(--serif-en);font-style:italic;font-size:0.88rem;background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-lg);}
+    .empty-state a{color:#4aaf9e;text-decoration:none;}
+    .empty-state a:hover{text-decoration:underline;}
+
+    /* TYPE BREAKDOWN */
+    .type-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.85rem;margin-bottom:2rem;}
+    .type-card{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-lg);padding:1.1rem;text-align:center;}
+    .type-icon{font-size:1.1rem;margin-bottom:0.3rem;}
+    .type-pct{font-family:var(--serif-jp);font-size:1.75rem;color:#f0e6d6;line-height:1;margin-bottom:0.2rem;}
+    .type-name-jp{font-family:var(--serif-jp);font-size:0.72rem;color:#b09878;display:block;line-height:1.9;}
+    .type-name-jp ruby rt{font-size:0.5em;font-family:var(--sans-jp);}
+    .type-name-en{font-family:var(--serif-en);font-style:italic;font-size:0.65rem;color:#7a6450;}
+    .type-mini-bar{height:3px;background:#2e2018;border-radius:2px;margin-top:0.5rem;overflow:hidden;}
+    .type-mini-fill{height:100%;background:linear-gradient(to right,#4aaf9e,#6dcebb);border-radius:2px;transition:width 0.9s ease 0.3s;}
+
+    /* CLEAR BTN */
+    .clear-btn{padding:0.35rem 0.9rem;background:transparent;border:1px solid rgba(232,122,122,0.3);border-radius:4px;color:#e87a7a;font-family:var(--sans-jp);font-size:0.75rem;cursor:pointer;transition:all 0.2s;float:right;}
+    .clear-btn:hover{background:rgba(232,122,122,0.1);border-color:#e87a7a;}
+
+    /* RUBY */
+    ruby{display:inline-flex;flex-direction:column-reverse;align-items:center;vertical-align:bottom;line-height:1;}
+    ruby rt{font-family:'Noto Sans JP',sans-serif;font-size:0.55em;color:#e8d8c0;text-align:center;letter-spacing:0.04em;line-height:1.5;user-select:none;}
+
+    .site-footer{border-top:1px solid #2e2018;background:#3d2d20;padding:1.25rem 0;margin-top:2rem;}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;flex-wrap:wrap;gap:1rem;}
+    .footer-jp{font-family:var(--serif-jp);font-size:0.8rem;color:#b09878;}
+    .footer-en{font-family:var(--serif-en);font-style:italic;font-size:0.7rem;color:#7a6450;}
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="jp"><ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span>
+      <span class="en">Personal Japanese Study</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a></li>
+      <li><a href="vocabulary.html"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a></li>
+      <li><a href="kanji.html"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a></li>
+      <li><a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
+      <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="progress.html" class="active"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <div class="jp-title"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby><ruby>状<rt>じょう</rt></ruby><ruby>況<rt>きょう</rt></ruby></div>
+    <div class="en-title">Study Progress</div>
+    <p class="desc">Your quiz history, accuracy by level, and study activity — all stored locally in your browser.</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-grid" id="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number" id="stat-total">0</div>
+      <span class="stat-label-jp"><ruby>総<rt>そう</rt></ruby><ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby><ruby>数<rt>すう</rt></ruby></span>
+      <span class="stat-label-en">Total questions</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="stat-correct">—</div>
+      <span class="stat-label-jp"><ruby>正<rt>せい</rt></ruby><ruby>解<rt>かい</rt></ruby><ruby>率<rt>りつ</rt></ruby></span>
+      <span class="stat-label-en">Overall accuracy</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="stat-sessions">0</div>
+      <span class="stat-label-jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby><ruby>回<rt>かい</rt></ruby><ruby>数<rt>すう</rt></ruby></span>
+      <span class="stat-label-en">Sessions completed</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="stat-streak">0</div>
+      <span class="stat-label-jp"><ruby>連<rt>れん</rt></ruby><ruby>続<rt>ぞく</rt></ruby><ruby>日<rt>にっ</rt></ruby><ruby>数<rt>すう</rt></ruby></span>
+      <span class="stat-label-en">Day streak</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="stat-best">—</div>
+      <span class="stat-label-jp"><ruby>最<rt>さい</rt></ruby><ruby>高<rt>こう</rt></ruby><ruby>得<rt>とく</rt></ruby><ruby>点<rt>てん</rt></ruby></span>
+      <span class="stat-label-en">Best score</span>
+    </div>
+  </div>
+
+  <!-- TYPE BREAKDOWN -->
+  <div id="type-breakdown-section" style="margin-bottom:2rem;">
+    <div class="section-title">Accuracy by Question Type</div>
+    <div class="section-jp" style="margin-bottom:0.85rem;"><ruby>種<rt>しゅ</rt></ruby><ruby>別<rt>べつ</rt></ruby><ruby>正<rt>せい</rt></ruby><ruby>解<rt>かい</rt></ruby><ruby>率<rt>りつ</rt></ruby></div>
+    <div class="type-grid" id="type-grid"></div>
+  </div>
+
+  <!-- ACCURACY BY LEVEL -->
+  <div class="section" id="section-levels">
+    <div class="section-title">Accuracy by Level</div>
+    <div class="section-jp"><ruby>レベル<rt>れべる</rt></ruby>別<ruby>正<rt>せい</rt></ruby><ruby>解<rt>かい</rt></ruby><ruby>率<rt>りつ</rt></ruby></div>
+    <div class="level-bars" id="level-bars" style="margin-top:1rem;"></div>
+  </div>
+
+  <!-- ACTIVITY CHART -->
+  <div class="section">
+    <div class="section-title">Study Activity — Last 28 Days</div>
+    <div class="section-jp"><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby><ruby>活<rt>かつ</rt></ruby><ruby>動<rt>どう</rt></ruby></div>
+    <div class="activity-chart" style="margin-top:1rem;">
+      <div class="chart-grid" id="activity-chart"></div>
+      <div class="chart-labels">
+        <span>4 weeks ago</span>
+        <span>3 weeks ago</span>
+        <span>2 weeks ago</span>
+        <span>Last week</span>
+      </div>
+      <div class="chart-legend">
+        <span class="legend-item"><span class="legend-dot" style="background:#2e2018;border:1px solid #3d2d20;"></span>No activity</span>
+        <span class="legend-item"><span class="legend-dot" style="background:rgba(74,175,158,0.2);"></span>1 session</span>
+        <span class="legend-item"><span class="legend-dot" style="background:rgba(74,175,158,0.45);"></span>2 sessions</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#4aaf9e;"></span>3+ sessions</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORY -->
+  <div class="section">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.25rem;">
+      <div>
+        <div class="section-title">Session History</div>
+        <div class="section-jp"><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby><ruby>履<rt>り</rt></ruby><ruby>歴<rt>れき</rt></ruby></div>
+      </div>
+      <button class="clear-btn" onclick="clearHistory()">Clear History</button>
+    </div>
+    <div id="history-container" style="margin-top:1rem;"></div>
+  </div>
+
+  <!-- QUICK LINKS -->
+  <div class="section">
+    <div class="section-title">Continue Studying</div>
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:0.5rem;">
+      <a href="quiz.html" style="padding:0.6rem 1.25rem;background:#4aaf9e;border-radius:4px;color:#1a1200;font-family:var(--sans-jp);font-size:0.85rem;font-weight:500;text-decoration:none;">Start Quiz →</a>
+      <a href="grammar.html" style="padding:0.6rem 1.25rem;background:transparent;border:1px solid #4aaf9e;border-radius:4px;color:#4aaf9e;font-family:var(--sans-jp);font-size:0.85rem;text-decoration:none;">Review Grammar</a>
+      <a href="reading.html" style="padding:0.6rem 1.25rem;background:transparent;border:1px solid #4aaf9e;border-radius:4px;color:#4aaf9e;font-family:var(--sans-jp);font-size:0.85rem;text-decoration:none;">Reading Practice</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <p class="footer-jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby> — <ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></p>
+      <p class="footer-en">Progress Dashboard · Stored locally in your browser</p>
+    </div>
+    <a href="index.html" style="font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;text-decoration:none;">← Back to home</a>
+  </div>
+</footer>
+
+<script>
+// ── Load data ─────────────────────────────────────────────────
+const history = JSON.parse(localStorage.getItem('quizHistory') || '[]');
+const streak  = parseInt(localStorage.getItem('studyStreak') || '0');
+
+// ── Summary stats ─────────────────────────────────────────────
+function loadStats() {
+  const totalQ   = history.reduce((a,b) => a + (b.total   || 0), 0);
+  const totalC   = history.reduce((a,b) => a + (b.correct || 0), 0);
+  const sessions = history.length;
+  const bestPct  = history.length
+    ? Math.max(...history.map(h => h.total > 0 ? Math.round((h.correct/h.total)*100) : 0))
+    : null;
+
+  document.getElementById('stat-total').textContent   = totalQ;
+  document.getElementById('stat-sessions').textContent= sessions;
+  document.getElementById('stat-streak').textContent  = streak;
+  document.getElementById('stat-best').textContent    = bestPct !== null ? bestPct + '%' : '—';
+  document.getElementById('stat-correct').textContent = totalQ > 0
+    ? Math.round((totalC / totalQ) * 100) + '%' : '—';
+}
+
+// ── Accuracy by level ─────────────────────────────────────────
+function loadLevelBars() {
+  const container = document.getElementById('level-bars');
+  const levels    = ['n4','n3','n2','n1'];
+  const labels    = {n4:'N4',n3:'N3',n2:'N2',n1:'N1'};
+  const classes   = {n4:'fill-n4',n3:'fill-n3',n2:'fill-n2',n1:'fill-n1'};
+
+  let anyData = false;
+  levels.forEach(lvl => {
+    const lvlHistory = history.filter(h => h.level === lvl || h.level === lvl.toUpperCase());
+    if (!lvlHistory.length) return;
+    anyData = true;
+
+    const tQ  = lvlHistory.reduce((a,b) => a + (b.total   || 0), 0);
+    const tC  = lvlHistory.reduce((a,b) => a + (b.correct || 0), 0);
+    const pct = tQ > 0 ? Math.round((tC/tQ)*100) : 0;
+
+    const row = document.createElement('div');
+    row.className = 'level-bar-row';
+    row.innerHTML = `
+      <span class="level-label">${labels[lvl]}</span>
+      <div class="bar-track"><div class="bar-fill ${classes[lvl]}" style="width:0%" data-pct="${pct}"></div></div>
+      <span class="bar-pct">${pct}% <span style="font-size:0.65rem;color:#56402f;">(${lvlHistory.length})</span></span>
+    `;
+    container.appendChild(row);
+  });
+
+  if (!anyData) {
+    container.innerHTML = `<div class="empty-state">No data yet. <a href="quiz.html">Take a quiz</a> to see your accuracy by level.</div>`;
+    return;
+  }
+
+  // Animate bars after paint
+  setTimeout(() => {
+    document.querySelectorAll('.bar-fill[data-pct]').forEach(el => {
+      el.style.width = el.dataset.pct + '%';
+    });
+  }, 100);
+}
+
+// ── Activity chart (28 days) ──────────────────────────────────
+function loadActivityChart() {
+  const chart = document.getElementById('activity-chart');
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  // Count sessions per day
+  const dayCounts = {};
+  history.forEach(h => {
+    if (!h.date) return;
+    const d = new Date(h.date);
+    d.setHours(0,0,0,0);
+    const key = d.toDateString();
+    dayCounts[key] = (dayCounts[key] || 0) + 1;
+  });
+
+  // Build 28 cells (4 weeks × 7 days)
+  for (let i = 27; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    const key   = d.toDateString();
+    const count = dayCounts[key] || 0;
+    const cls   = count === 0 ? '' : count === 1 ? 'd1' : count === 2 ? 'd2' : count === 3 ? 'd3' : 'd4';
+
+    const cell = document.createElement('div');
+    cell.className = `chart-day ${cls}`;
+    cell.title     = `${d.toLocaleDateString()} — ${count} session${count !== 1 ? 's' : ''}`;
+    chart.appendChild(cell);
+  }
+}
+
+// ── Session history table ─────────────────────────────────────
+function loadHistory() {
+  const container = document.getElementById('history-container');
+
+  if (!history.length) {
+    container.innerHTML = `<div class="empty-state">No sessions recorded yet. <a href="quiz.html">Start your first quiz</a> to track your progress.</div>`;
+    return;
+  }
+
+  const sorted  = [...history].reverse().slice(0, 30);
+  const table   = document.createElement('table');
+  table.className = 'history-table';
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Level</th>
+        <th>Score</th>
+        <th>Accuracy</th>
+      </tr>
+    </thead>
+    <tbody id="history-body"></tbody>
+  `;
+
+  const tbody = table.querySelector('#history-body');
+  sorted.forEach(h => {
+    const pct     = h.total > 0 ? Math.round((h.correct / h.total) * 100) : 0;
+    const pctCls  = pct >= 80 ? 'pct-high' : pct >= 60 ? 'pct-mid' : 'pct-low';
+    const date    = h.date ? new Date(h.date).toLocaleDateString('en-SG', {day:'numeric',month:'short',year:'numeric'}) : '—';
+    const typeStr = h.type === 'reading' ? 'Reading' : `Quiz (${h.qtype || 'mixed'})`;
+    const lvlStr  = (h.level || '—').toUpperCase();
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${date}</td>
+      <td style="color:#d4c4a8;">${typeStr}</td>
+      <td><span style="font-family:var(--serif-en);font-size:0.75rem;">${lvlStr}</span></td>
+      <td style="color:#d4c4a8;">${h.correct} / ${h.total}</td>
+      <td><span class="pct-pill ${pctCls}">${pct}%</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  container.appendChild(table);
+  if (history.length > 30) {
+    container.insertAdjacentHTML('beforeend', `<p style="font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#7a6450;margin-top:0.75rem;text-align:center;">Showing most recent 30 sessions of ${history.length} total.</p>`);
+  }
+}
+
+// ── Clear history ─────────────────────────────────────────────
+function clearHistory() {
+  if (!confirm('Clear all quiz history? This cannot be undone.')) return;
+  localStorage.removeItem('quizHistory');
+  localStorage.removeItem('studyStreak');
+  localStorage.removeItem('lastStudyDate');
+  location.reload();
+}
+
+// ── Accuracy by question type ─────────────────────────────────
+function loadTypeBars() {
+  const grid = document.getElementById('type-grid');
+  const types = [
+    { key:'grammar',  icon:'文',  jp:'文法',  rt:'ぶんぽう',  en:'Grammar' },
+    { key:'vocabulary', icon:'語', jp:'語彙', rt:'ごい',      en:'Vocabulary' },
+    { key:'kanji',    icon:'字',  jp:'漢字',  rt:'かんじ',    en:'Kanji' },
+    { key:'reading',  icon:'読',  jp:'読解',  rt:'どっかい',  en:'Reading' },
+  ];
+
+  // quiz.html stores type per session as h.qtype; but for per-question type accuracy
+  // we can only use session-level data keyed by qtype (e.g. h.qtype === 'grammar')
+  // For mixed sessions we approximate by distributing evenly
+  let anyData = false;
+
+  types.forEach(t => {
+    // Sessions where this type was specifically selected
+    const exactSessions = history.filter(h => h.qtype === t.key);
+    if (!exactSessions.length) {
+      // Show placeholder
+      const card = document.createElement('div');
+      card.className = 'type-card';
+      card.innerHTML = `
+        <div class="type-icon">${t.icon}</div>
+        <div class="type-pct" style="color:#7a6450;">—</div>
+        <span class="type-name-jp"><ruby>${t.jp}<rt>${t.rt}</rt></ruby></span>
+        <span class="type-name-en">${t.en}</span>
+        <div class="type-mini-bar"><div class="type-mini-fill" style="width:0%"></div></div>
+      `;
+      grid.appendChild(card);
+      return;
+    }
+    anyData = true;
+    const tQ  = exactSessions.reduce((a,b) => a + (b.total   || 0), 0);
+    const tC  = exactSessions.reduce((a,b) => a + (b.correct || 0), 0);
+    const pct = tQ > 0 ? Math.round((tC/tQ)*100) : 0;
+    const pctColor = pct >= 80 ? '#8fd47a' : pct >= 60 ? '#e8b47a' : '#e87a7a';
+
+    const card = document.createElement('div');
+    card.className = 'type-card';
+    card.innerHTML = `
+      <div class="type-icon">${t.icon}</div>
+      <div class="type-pct" style="color:${pctColor};">${pct}%</div>
+      <span class="type-name-jp"><ruby>${t.jp}<rt>${t.rt}</rt></ruby></span>
+      <span class="type-name-en">${t.en} · ${tQ}q</span>
+      <div class="type-mini-bar"><div class="type-mini-fill" data-pct="${pct}" style="width:0%"></div></div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Animate mini bars
+  setTimeout(() => {
+    document.querySelectorAll('.type-mini-fill[data-pct]').forEach(el => {
+      el.style.width = el.dataset.pct + '%';
+    });
+  }, 150);
+}
+
+// ── Init ──────────────────────────────────────────────────────
+loadStats();
+loadTypeBars();
+loadLevelBars();
+loadActivityChart();
+loadHistory();
+</script>
+  <script src="voicevox.js"></script>
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>練習問題 Quiz — 日本語学習</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;500;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:#f0e6d6;--ink-mid:#d4c4a8;--ink-soft:#b09878;--ink-faint:#7a6450;
+      --washi:#4a3728;--washi-warm:#3d2d20;--washi-deep:#2e2018;--washi-card:#56402f;
+      --teal:#4aaf9e;--teal-light:#6dcebb;--teal-pale:rgba(74,175,158,0.15);
+      --serif-jp:'Shippori Mincho','Noto Serif JP',serif;
+      --serif-en:'IM Fell English',Georgia,serif;
+      --sans-jp:'Noto Sans JP',sans-serif;
+      --radius-sm:4px;--radius-md:8px;--radius-lg:16px;
+      --shadow-soft:0 2px 16px rgba(0,0,0,0.3);
+      --shadow-card:0 6px 32px rgba(0,0,0,0.4);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:19px;scroll-behavior:smooth;}
+    body{background-color:#4a3728;color:#f0e6d6;font-family:'Noto Sans JP',sans-serif;font-weight:300;line-height:1.8;min-height:100vh;overflow-x:hidden;}
+
+    /* NAV */
+    .site-nav{position:sticky;top:0;z-index:100;background:#2e2018;border-bottom:1px solid #1e1208;padding:0.75rem 0;}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;}
+    .nav-logo{display:flex;flex-direction:column;text-decoration:none;}
+    .nav-logo .jp{font-family:var(--serif-jp);font-size:1.1rem;color:#f0e6d6;letter-spacing:0.1em;line-height:1.9;}
+    .nav-logo .jp ruby rt{font-size:0.54em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-logo .en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .nav-links{display:flex;gap:0.15rem;list-style:none;}
+    .nav-links a{display:flex;flex-direction:column;align-items:center;padding:0.4rem 0.7rem;text-decoration:none;border-radius:4px;transition:background 0.2s;}
+    .nav-links a .jp{font-family:var(--serif-jp);font-size:0.85rem;color:#d4c4a8;line-height:1.9;}
+    .nav-links a .jp ruby rt{font-size:0.56em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-links a .en{font-family:var(--serif-en);font-style:italic;font-size:0.62rem;color:#7a6450;}
+    .nav-links a:hover,.nav-links a.active{background:rgba(74,175,158,0.15);}
+    .nav-links a:hover .jp,.nav-links a.active .jp{color:#4aaf9e;}
+
+    .container{max-width:760px;margin:0 auto;padding:2rem;}
+    @media(max-width:768px){.nav-links{display:none;}.container{padding:1rem;}}
+
+    /* SETUP SCREEN */
+    .setup-screen{animation:fadeUp 0.4s ease both;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+    .page-header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid #2e2018;}
+    .page-header .jp-title{font-family:var(--serif-jp);font-size:2.4rem;color:#f0e6d6;letter-spacing:0.05em;line-height:1.85;}
+    .page-header .jp-title ruby rt{font-size:0.58em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .page-header .en-title{font-family:var(--serif-en);font-style:italic;font-size:0.9rem;color:#7a6450;}
+    .page-header .desc{margin-top:0.5rem;color:#b09878;font-size:0.88rem;}
+
+    .setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:2rem;}
+    @media(max-width:600px){.setup-grid{grid-template-columns:1fr;}}
+
+    .setup-card{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-lg);padding:1.5rem;}
+    .setup-card-title{font-family:var(--serif-en);font-style:italic;font-size:0.8rem;color:#4aaf9e;letter-spacing:0.1em;margin-bottom:0.75rem;}
+
+    .option-group{display:flex;flex-direction:column;gap:0.4rem;}
+    .option-btn{display:flex;align-items:center;gap:0.65rem;padding:0.5rem 0.75rem;background:transparent;border:1px solid #2e2018;border-radius:4px;color:#b09878;font-family:var(--sans-jp);font-size:0.82rem;cursor:pointer;transition:all 0.2s;text-align:left;}
+    .option-btn:hover{background:rgba(74,175,158,0.1);border-color:#4aaf9e;color:#f0e6d6;}
+    .option-btn.selected{background:rgba(74,175,158,0.18);border-color:#4aaf9e;color:#4aaf9e;}
+    .opt-dot{width:8px;height:8px;border-radius:50%;background:#2e2018;border:2px solid currentColor;flex-shrink:0;transition:background 0.2s;}
+    .option-btn.selected .opt-dot{background:#4aaf9e;}
+
+    .count-slider{width:100%;accent-color:#4aaf9e;margin:0.5rem 0;}
+    .count-display{font-family:var(--serif-en);font-style:italic;font-size:0.85rem;color:#4aaf9e;text-align:center;}
+
+    .start-btn{width:100%;padding:0.9rem;background:#4aaf9e;border:none;border-radius:var(--radius-md);color:#1a1200;font-family:var(--sans-jp);font-size:1rem;font-weight:500;cursor:pointer;transition:background 0.2s;letter-spacing:0.05em;}
+    .start-btn:hover{background:#6dcebb;}
+    .start-btn:disabled{background:#3d2d20;color:#7a6450;cursor:not-allowed;}
+
+    /* QUIZ SCREEN */
+    .quiz-screen{display:none;animation:fadeUp 0.4s ease both;}
+
+    .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:0.5rem;}
+    .progress-text{font-family:var(--serif-en);font-style:italic;font-size:0.82rem;color:#7a6450;}
+    .progress-teal{color:#4aaf9e;}
+    .quit-btn{padding:0.3rem 0.8rem;background:transparent;border:1px solid #2e2018;border-radius:4px;color:#7a6450;font-family:var(--sans-jp);font-size:0.75rem;cursor:pointer;transition:all 0.2s;}
+    .quit-btn:hover{border-color:#e87a7a;color:#e87a7a;}
+
+    .progress-bar{height:3px;background:#2e2018;border-radius:2px;margin-bottom:2rem;overflow:hidden;}
+    .progress-fill{height:100%;background:linear-gradient(to right,#4aaf9e,#6dcebb);border-radius:2px;transition:width 0.4s ease;}
+
+    .q-card{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-lg);padding:2rem;margin-bottom:1.25rem;min-height:220px;}
+    .q-type-label{font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#4aaf9e;letter-spacing:0.1em;margin-bottom:0.75rem;}
+    .q-level-badge{display:inline-flex;align-items:center;justify-content:center;padding:0.15rem 0.55rem;border-radius:3px;font-family:var(--serif-en);font-size:0.68rem;margin-left:0.5rem;}
+    .badge-n4{background:rgba(58,107,46,0.3);color:#8fd47a;}.badge-n3{background:rgba(42,82,128,0.3);color:#7ab4e8;}.badge-n2{background:rgba(122,74,30,0.3);color:#e8b47a;}.badge-n1{background:rgba(122,30,30,0.3);color:#e87a7a;}
+
+    .q-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;min-height:180px;color:#7a6450;}
+    .spinner-lg{width:32px;height:32px;border:3px solid #2e2018;border-top-color:#4aaf9e;border-radius:50%;animation:spin 0.8s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loading-text{font-family:var(--serif-en);font-style:italic;font-size:0.85rem;}
+
+    .q-stem{font-family:var(--serif-jp);font-size:1.15rem;color:#f0e6d6;line-height:2.2;margin-bottom:1.25rem;}
+    .q-stem ruby rt{font-size:0.58em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .q-stem .blank{display:inline-block;min-width:80px;border-bottom:2px solid #4aaf9e;text-align:center;color:#4aaf9e;font-family:var(--sans-jp);font-size:0.85rem;}
+
+    .options-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;}
+    @media(max-width:500px){.options-grid{grid-template-columns:1fr;}}
+    .opt{padding:0.7rem 1rem;background:#3d2d20;border:1px solid #2e2018;border-radius:var(--radius-md);font-family:var(--serif-jp);font-size:0.95rem;color:#d4c4a8;cursor:pointer;transition:all 0.15s;text-align:left;line-height:1.9;}
+    .opt ruby rt{font-size:0.52em;font-family:var(--sans-jp);}
+    .opt:hover:not(:disabled){border-color:#4aaf9e;background:rgba(74,175,158,0.1);color:#f0e6d6;}
+    .opt.correct{border-color:#8fd47a;background:rgba(143,212,122,0.15);color:#8fd47a;}
+    .opt.incorrect{border-color:#e87a7a;background:rgba(232,122,122,0.12);color:#e87a7a;}
+    .opt.reveal{border-color:#7ab4e8;background:rgba(122,180,232,0.1);color:#7ab4e8;}
+    .opt:disabled{cursor:not-allowed;}
+
+    .feedback-box{background:#3d2d20;border:1px solid #2e2018;border-radius:var(--radius-md);padding:1rem 1.25rem;margin-top:1rem;display:none;}
+    .feedback-box.visible{display:block;}
+    .feedback-correct{color:#8fd47a;font-family:var(--serif-en);font-style:italic;font-size:0.82rem;margin-bottom:0.4rem;}
+    .feedback-incorrect{color:#e87a7a;font-family:var(--serif-en);font-style:italic;font-size:0.82rem;margin-bottom:0.4rem;}
+    .feedback-exp{font-size:0.82rem;color:#b09878;line-height:1.7;}
+
+    .next-btn{width:100%;padding:0.75rem;background:#4aaf9e;border:none;border-radius:var(--radius-md);color:#1a1200;font-family:var(--sans-jp);font-size:0.92rem;font-weight:500;cursor:pointer;transition:background 0.2s;display:none;margin-top:0.75rem;}
+    .next-btn:hover{background:#6dcebb;}
+    .next-btn.visible{display:block;}
+
+    /* RESULTS SCREEN */
+    .results-screen{display:none;animation:fadeUp 0.4s ease both;}
+    .results-card{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-lg);padding:2.5rem;text-align:center;margin-bottom:1.5rem;}
+    .results-score{font-family:var(--serif-jp);font-size:4rem;color:#4aaf9e;line-height:1;margin-bottom:0.5rem;}
+    .results-label{font-family:var(--serif-en);font-style:italic;font-size:1rem;color:#b09878;margin-bottom:1.5rem;}
+    .results-pct{font-family:var(--serif-jp);font-size:1.5rem;color:#f0e6d6;}
+    .results-msg{font-family:var(--serif-en);font-style:italic;font-size:0.92rem;color:#7a6450;margin-top:0.5rem;}
+    .results-bar{height:6px;background:#2e2018;border-radius:3px;margin:1.5rem 0;overflow:hidden;}
+    .results-fill{height:100%;background:linear-gradient(to right,#4aaf9e,#6dcebb);border-radius:3px;transition:width 1s ease 0.3s;}
+
+    .review-list{margin-bottom:1.5rem;}
+    .review-item{display:flex;align-items:flex-start;gap:0.75rem;padding:0.75rem 1rem;background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-sm);margin-bottom:0.4rem;}
+    .review-icon{font-size:0.9rem;flex-shrink:0;margin-top:0.2rem;}
+    .review-q{font-size:0.82rem;color:#d4c4a8;line-height:1.6;flex:1;}
+    .review-ans{font-size:0.78rem;color:#7a6450;font-family:var(--serif-en);font-style:italic;}
+
+    .action-btns{display:flex;gap:0.75rem;flex-wrap:wrap;}
+    .btn-primary{flex:1;padding:0.75rem;background:#4aaf9e;border:none;border-radius:var(--radius-md);color:#1a1200;font-family:var(--sans-jp);font-size:0.9rem;font-weight:500;cursor:pointer;transition:background 0.2s;}
+    .btn-primary:hover{background:#6dcebb;}
+    .btn-outline{flex:1;padding:0.75rem;background:transparent;border:1px solid #4aaf9e;border-radius:var(--radius-md);color:#4aaf9e;font-family:var(--sans-jp);font-size:0.9rem;cursor:pointer;transition:all 0.2s;}
+    .btn-outline:hover{background:rgba(74,175,158,0.15);}
+
+    /* RUBY */
+    ruby{display:inline-flex;flex-direction:column-reverse;align-items:center;vertical-align:bottom;line-height:1;}
+    ruby rt{font-family:'Noto Sans JP',sans-serif;font-size:0.55em;color:#e8d8c0;text-align:center;letter-spacing:0.04em;line-height:1.5;user-select:none;}
+
+    /* FOOTER */
+    .site-footer{border-top:1px solid #2e2018;background:#3d2d20;padding:1.25rem 0;margin-top:2rem;}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;flex-wrap:wrap;gap:1rem;}
+    .footer-jp{font-family:var(--serif-jp);font-size:0.8rem;color:#b09878;}
+    .footer-en{font-family:var(--serif-en);font-style:italic;font-size:0.7rem;color:#7a6450;}
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="jp"><ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span>
+      <span class="en">Personal Japanese Study</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a></li>
+      <li><a href="vocabulary.html"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a></li>
+      <li><a href="kanji.html"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a></li>
+      <li><a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
+      <li><a href="quiz.html" class="active"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- ── SETUP SCREEN ──────────────────────────────────────── -->
+  <div class="setup-screen" id="setup-screen">
+    <div class="page-header">
+      <div class="jp-title"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby><ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby></div>
+      <div class="en-title">Quiz & Practice</div>
+      <p class="desc">AI-generated questions across grammar, vocabulary, and kanji. Every session is unique — questions are freshly created by Claude each time.</p>
+    </div>
+
+    <div class="setup-grid">
+      <div class="setup-card">
+        <div class="setup-card-title">JLPT Level</div>
+        <div class="option-group" id="level-opts">
+          <button class="option-btn selected" data-val="n4"><span class="opt-dot"></span>N4 <ruby>初<rt>しょ</rt></ruby><ruby>級<rt>きゅう</rt></ruby></button>
+          <button class="option-btn" data-val="n3"><span class="opt-dot"></span>N3 <ruby>中<rt>ちゅう</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>下<rt>か</rt></ruby></button>
+          <button class="option-btn" data-val="n2"><span class="opt-dot"></span>N2 <ruby>中<rt>ちゅう</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>上<rt>じょう</rt></ruby></button>
+          <button class="option-btn" data-val="n1"><span class="opt-dot"></span>N1 <ruby>上<rt>じょう</rt></ruby><ruby>級<rt>きゅう</rt></ruby></button>
+          <button class="option-btn" data-val="mixed"><span class="opt-dot"></span>Mixed (N4–N1)</button>
+        </div>
+      </div>
+
+      <div class="setup-card">
+        <div class="setup-card-title">Question Type</div>
+        <div class="option-group" id="type-opts">
+          <button class="option-btn selected" data-val="mixed"><span class="opt-dot"></span>Mixed (all types)</button>
+          <button class="option-btn" data-val="grammar"><span class="opt-dot"></span><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby> Grammar</button>
+          <button class="option-btn" data-val="vocabulary"><span class="opt-dot"></span><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby> Vocabulary</button>
+          <button class="option-btn" data-val="kanji"><span class="opt-dot"></span><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby> Kanji Reading</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="setup-card" style="margin-bottom:1.25rem;">
+      <div class="setup-card-title">Number of Questions</div>
+      <input type="range" class="count-slider" id="count-slider" min="5" max="20" value="10" step="5">
+      <div class="count-display" id="count-display">10 questions</div>
+    </div>
+
+    <button class="start-btn" id="start-btn" onclick="startQuiz()">
+      <ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby>を<ruby>始<rt>はじ</rt></ruby>める — Start Quiz
+    </button>
+  </div>
+
+  <!-- ── QUIZ SCREEN ───────────────────────────────────────── -->
+  <div class="quiz-screen" id="quiz-screen">
+    <div class="progress-header">
+      <span class="progress-text">Question <span class="progress-teal" id="q-current">1</span> of <span id="q-total">10</span></span>
+      <button class="quit-btn" onclick="quitQuiz()">✕ Quit</button>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+
+    <div class="q-card" id="q-card">
+      <div class="q-loading">
+        <div class="spinner-lg"></div>
+        <div class="loading-text">Generating questions...</div>
+      </div>
+    </div>
+
+    <div class="feedback-box" id="feedback-box">
+      <div id="feedback-status"></div>
+      <div class="feedback-exp" id="feedback-exp"></div>
+    </div>
+
+    <button class="next-btn" id="next-btn" onclick="nextQuestion()">
+      Next Question →
+    </button>
+  </div>
+
+  <!-- ── RESULTS SCREEN ────────────────────────────────────── -->
+  <div class="results-screen" id="results-screen">
+    <div class="results-card">
+      <div class="results-score" id="res-score">0</div>
+      <div class="results-label">correct answers</div>
+      <div class="results-pct" id="res-pct">0%</div>
+      <div class="results-msg" id="res-msg"></div>
+      <div class="results-bar"><div class="results-fill" id="res-fill" style="width:0%"></div></div>
+    </div>
+
+    <div class="review-list" id="review-list"></div>
+
+    <div class="action-btns">
+      <button class="btn-primary" onclick="showSetup()">New Quiz</button>
+      <button class="btn-outline" onclick="window.location.href='progress.html'">View Progress →</button>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <p class="footer-jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby><ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby> — <ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></p>
+      <p class="footer-en">AI-Powered Quiz · N4 → N1</p>
+    </div>
+    <a href="index.html" style="font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;text-decoration:none;">← Back to home</a>
+  </div>
+</footer>
+
+<script>
+// ── Setup state ───────────────────────────────────────────────
+let selectedLevel = 'n4';
+let selectedType  = 'mixed';
+let questionCount = 10;
+
+// Level selector
+document.getElementById('level-opts').querySelectorAll('.option-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('level-opts').querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedLevel = btn.dataset.val;
+    localStorage.setItem('currentLevel', selectedLevel.toUpperCase());
+  });
+});
+
+// Type selector
+document.getElementById('type-opts').querySelectorAll('.option-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('type-opts').querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedType = btn.dataset.val;
+  });
+});
+
+// Count slider
+document.getElementById('count-slider').addEventListener('input', e => {
+  questionCount = parseInt(e.target.value);
+  document.getElementById('count-display').textContent = `${questionCount} questions`;
+});
+
+// ── Quiz state ────────────────────────────────────────────────
+let questions    = [];
+let currentIndex = 0;
+let correct      = 0;
+let answered     = false;
+let results      = [];
+
+// ── Screen management ─────────────────────────────────────────
+function showSetup() {
+  document.getElementById('setup-screen').style.display  = 'block';
+  document.getElementById('quiz-screen').style.display   = 'none';
+  document.getElementById('results-screen').style.display= 'none';
+}
+
+function showQuiz() {
+  document.getElementById('setup-screen').style.display  = 'none';
+  document.getElementById('quiz-screen').style.display   = 'block';
+  document.getElementById('results-screen').style.display= 'none';
+}
+
+function showResults() {
+  document.getElementById('setup-screen').style.display  = 'none';
+  document.getElementById('quiz-screen').style.display   = 'none';
+  document.getElementById('results-screen').style.display= 'block';
+  renderResults();
+}
+
+// ── Start quiz ────────────────────────────────────────────────
+function startQuiz() {
+  questions    = [];
+  currentIndex = 0;
+  correct      = 0;
+  answered     = false;
+  results      = [];
+
+  showQuiz();
+  document.getElementById('q-total').textContent = questionCount;
+  document.getElementById('q-current').textContent = 1;
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('feedback-box').classList.remove('visible');
+  document.getElementById('next-btn').classList.remove('visible');
+
+  // Generate all questions up front
+  generateAllQuestions();
+  renderQuestion(0);
+}
+
+// ── Draw questions from local bank ───────────────────────
+function generateAllQuestions() {
+  // Filter by level
+  let pool = selectedLevel === 'mixed'
+    ? quizBank
+    : quizBank.filter(q => q.level === selectedLevel);
+
+  // Filter by type
+  if (selectedType !== 'mixed') {
+    const typeKey = selectedType; // 'grammar', 'vocabulary', 'kanji'
+    pool = pool.filter(q => q.type === typeKey);
+  }
+
+  if (pool.length === 0) {
+    document.getElementById('q-card').innerHTML = '<div style="text-align:center;padding:2rem;color:#e87a7a;"><div>No questions found for this combination.</div><button onclick="showSetup()" style="margin-top:1rem;padding:0.5rem 1rem;background:transparent;border:1px solid #7a6450;border-radius:4px;color:#7a6450;cursor:pointer;">← Back</button></div>';
+    return;
+  }
+
+  // Shuffle pool
+  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+
+  // For mixed type, balance across question types
+  if (selectedType === 'mixed') {
+    const types = ['grammar','vocabulary','kanji','reading'];
+    const picked = [];
+    const buckets = {};
+    types.forEach(t => { buckets[t] = shuffled.filter(q => q.type === t); });
+    const perType = Math.floor(questionCount / types.length);
+    const remainder = questionCount % types.length;
+    types.forEach((t, i) => {
+      const take = perType + (i < remainder ? 1 : 0);
+      picked.push(...buckets[t].slice(0, take));
+    });
+    // Fill any shortfall from remaining pool
+    if (picked.length < questionCount) {
+      const pickedIds = new Set(picked.map(q => q.id));
+      const extras = shuffled.filter(q => !pickedIds.has(q.id));
+      picked.push(...extras.slice(0, questionCount - picked.length));
+    }
+    questions = picked.sort(() => Math.random() - 0.5).slice(0, questionCount);
+  } else {
+    questions = shuffled.slice(0, questionCount);
+  }
+}
+
+// ── Render single question ─────────────────────────────────────
+function renderQuestion(idx) {
+  if (idx >= questions.length) { showResults(); return; }
+
+  answered = false;
+  const q  = questions[idx];
+  const card = document.getElementById('q-card');
+  const fb   = document.getElementById('feedback-box');
+  const next = document.getElementById('next-btn');
+
+  fb.classList.remove('visible');
+  next.classList.remove('visible');
+
+  // Progress
+  document.getElementById('q-current').textContent = idx + 1;
+  document.getElementById('progress-fill').style.width = `${((idx) / questionCount) * 100}%`;
+
+  const levelBadge = q.level ? `<span class="q-level-badge badge-${q.level}">${q.level.toUpperCase()}</span>` : '';
+  const typeLabel  = { grammar:'文法 Grammar', vocabulary:'語彙 Vocabulary', kanji:'漢字 Kanji', reading:'読解 Reading' }[q.type] || q.type;
+
+  const optHtml = q.options.map((opt, oi) => {
+    const letter = ['A','B','C','D'][oi];
+    return `<button class="opt" data-letter="${letter}" onclick="checkAnswer(this, '${q.answer}', ${idx})">${opt}</button>`;
+  }).join('');
+
+  // For reading type, split passage from question at \n
+  let stemHtml = '';
+  const ttsText = q.question.replace(/___/g, '　');
+  if (q.type === 'reading' && q.passage) {
+    const passage = q.passage;
+    const question = q.question;
+    stemHtml = `
+      <div style="background:#3d2d20;border-left:3px solid #4aaf9e;padding:0.85rem 1rem;border-radius:4px;margin-bottom:1rem;font-family:var(--serif-jp);font-size:1rem;line-height:2.1;color:#d4c4a8;">
+        ${passage}
+        <button class="vv-btn" style="margin-left:0.5rem;" onclick="playJP('${passage.replace(/'/g,"\'")}', this)" title="Play passage">🔊</button>
+      </div>
+      <div class="q-stem">${question}</div>`;
+  } else {
+    stemHtml = `<div class="q-stem">${formatStem(q.question)} <button class="vv-btn" onclick="playJP('${ttsText.replace(/'/g,"\'")}', this)" title="Play question">🔊</button></div>`;
+  }
+
+  card.innerHTML = `
+    <div class="q-type-label">${typeLabel} ${levelBadge}</div>
+    ${stemHtml}
+    <div class="options-grid">${optHtml}</div>
+  `;
+}
+
+// ── Format question stem ──────────────────────────────────────
+function formatStem(text) {
+  return text.replace(/___/g, '<span class="blank">　　　</span>');
+}
+
+// ── Check answer ──────────────────────────────────────────────
+function checkAnswer(btn, correctLetter, idx) {
+  if (answered) return;
+  answered = true;
+
+  const q    = questions[idx];
+  const opts = document.querySelectorAll('.opt');
+  const fb   = document.getElementById('feedback-box');
+  const next = document.getElementById('next-btn');
+  const isCorrect = btn.dataset.letter === correctLetter;
+
+  opts.forEach(o => {
+    o.disabled = true;
+    if (o.dataset.letter === correctLetter) o.classList.add('correct');
+  });
+
+  if (!isCorrect) {
+    btn.classList.add('incorrect');
+  }
+
+  if (isCorrect) correct++;
+
+  // Record result
+  results.push({
+    question: q.question,
+    type:     q.type,
+    level:    q.level,
+    correct:  isCorrect,
+    selected: btn.textContent,
+    answer:   q.options[['A','B','C','D'].indexOf(correctLetter)],
+    explanation: q.explanation
+  });
+
+  // Feedback
+  fb.classList.add('visible');
+  document.getElementById('feedback-status').innerHTML = isCorrect
+    ? `<div class="feedback-correct">✓ Correct!</div>`
+    : `<div class="feedback-incorrect">✗ Incorrect — the answer was ${correctLetter}</div>`;
+  document.getElementById('feedback-exp').textContent = q.explanation || '';
+
+  // Show next / finish
+  next.classList.add('visible');
+  next.textContent = (idx + 1 >= questionCount) ? 'See Results →' : 'Next Question →';
+}
+
+// ── Next question ─────────────────────────────────────────────
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex >= questionCount || currentIndex >= questions.length) {
+    showResults();
+  } else {
+    renderQuestion(currentIndex);
+    document.getElementById('feedback-box').classList.remove('visible');
+    document.getElementById('next-btn').classList.remove('visible');
+  }
+}
+
+// ── Quit ──────────────────────────────────────────────────────
+function quitQuiz() {
+  if (confirm('Quit this quiz? Progress will be lost.')) showSetup();
+}
+
+// ── Render results ────────────────────────────────────────────
+function renderResults() {
+  const total = results.length;
+  const pct   = total > 0 ? Math.round((correct / total) * 100) : 0;
+
+  document.getElementById('res-score').textContent = correct;
+  document.getElementById('res-pct').textContent   = `${pct}%`;
+  document.getElementById('res-msg').textContent   = getMessage(pct);
+
+  setTimeout(() => {
+    document.getElementById('res-fill').style.width = pct + '%';
+  }, 100);
+
+  // Review list
+  const list = document.getElementById('review-list');
+  list.innerHTML = '';
+  results.forEach((r, i) => {
+    const item = document.createElement('div');
+    item.className = 'review-item';
+    item.innerHTML = `
+      <span class="review-icon">${r.correct ? '✓' : '✗'}</span>
+      <div>
+        <div class="review-q">${r.question.replace(/___/g,'＿')}</div>
+        ${!r.correct ? `<div class="review-ans">Correct: ${r.answer}</div>` : ''}
+      </div>
+    `;
+    list.appendChild(item);
+  });
+
+  // Save to localStorage
+  const history = JSON.parse(localStorage.getItem('quizHistory') || '[]');
+  history.push({
+    date:    new Date().toISOString(),
+    type:    'quiz',
+    level:   selectedLevel,
+    qtype:   selectedType,
+    correct,
+    total:   questionCount
+  });
+  localStorage.setItem('quizHistory', JSON.stringify(history));
+  updateStreak();
+}
+
+function getMessage(pct) {
+  if (pct >= 90) return '素晴らしい！Outstanding performance.';
+  if (pct >= 80) return 'よくできました。Well done — keep it up!';
+  if (pct >= 60) return 'なかなかいいです。Good effort, room to grow.';
+  if (pct >= 40) return 'もう少しです。Keep studying — you\'ll get there.';
+  return '頑張りましょう。Don\'t give up — every attempt builds knowledge.';
+}
+
+function updateStreak() {
+  const today = new Date().toDateString();
+  const last  = localStorage.getItem('lastStudyDate');
+  let streak  = parseInt(localStorage.getItem('studyStreak') || '0');
+
+  if (last === today) return;
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  streak = (last === yesterday) ? streak + 1 : 1;
+  localStorage.setItem('studyStreak', streak);
+  localStorage.setItem('lastStudyDate', today);
+}
+
+// ── TTS fallback ─────────────────────────────────────────────
+// Use voicevox.js's playJapanese if available, else Web Speech API
+function playJP(text, btn) {
+  if (typeof playJapanese === 'function') {
+    playJapanese(text, btn);
+  } else if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.lang = 'ja-JP';
+    utt.rate = 0.85;
+    window.speechSynthesis.speak(utt);
+  }
+}
+
+// ── Init ──────────────────────────────────────────────────────
+showSetup();
+</script>
+  <script src="quiz-bank.js"></script>
+  <script src="voicevox.js"></script>
+</body>
+</html>

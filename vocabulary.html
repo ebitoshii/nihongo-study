@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>語彙 Vocabulary — 日本語学習</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;500;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:#f0e6d6;--ink-mid:#d4c4a8;--ink-soft:#b09878;--ink-faint:#7a6450;
+      --washi:#4a3728;--washi-warm:#3d2d20;--washi-deep:#2e2018;--washi-card:#56402f;
+      --teal:#4aaf9e;--teal-light:#6dcebb;--teal-pale:rgba(74,175,158,0.15);
+      --serif-jp:'Shippori Mincho','Noto Serif JP',serif;
+      --serif-en:'IM Fell English',Georgia,serif;
+      --sans-jp:'Noto Sans JP',sans-serif;
+      --radius-sm:4px;--radius-md:8px;--radius-lg:16px;
+      --shadow-soft:0 2px 16px rgba(0,0,0,0.3);
+      --shadow-card:0 6px 32px rgba(0,0,0,0.4);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:19px;scroll-behavior:smooth;}
+    body{background-color:#4a3728;color:#f0e6d6;font-family:'Noto Sans JP',sans-serif;font-weight:300;line-height:1.8;min-height:100vh;overflow-x:hidden;}
+
+    /* NAV */
+    .site-nav{position:sticky;top:0;z-index:100;background:#2e2018;border-bottom:1px solid #1e1208;padding:0.75rem 0;}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;}
+    .nav-logo{display:flex;flex-direction:column;text-decoration:none;}
+    .nav-logo .jp{font-family:var(--serif-jp);font-size:1.1rem;color:#f0e6d6;letter-spacing:0.1em;line-height:1.9;}
+    .nav-logo .jp ruby rt{font-size:0.54em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-logo .en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .nav-links{display:flex;gap:0.15rem;list-style:none;}
+    .nav-links a{display:flex;flex-direction:column;align-items:center;padding:0.4rem 0.7rem;text-decoration:none;border-radius:4px;transition:background 0.2s;}
+    .nav-links a .jp{font-family:var(--serif-jp);font-size:0.85rem;color:#d4c4a8;line-height:1.9;}
+    .nav-links a .jp ruby rt{font-size:0.56em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-links a .en{font-family:var(--serif-en);font-style:italic;font-size:0.62rem;color:#7a6450;}
+    .nav-links a:hover,.nav-links a.active{background:rgba(74,175,158,0.15);}
+    .nav-links a:hover .jp,.nav-links a.active .jp{color:#4aaf9e;}
+
+    /* LAYOUT */
+    .page-wrap{display:grid;grid-template-columns:220px 1fr;max-width:1100px;margin:0 auto;padding:2rem;gap:2rem;}
+    @media(max-width:900px){.page-wrap{grid-template-columns:1fr;}.sidebar{display:none;}}
+
+    /* SIDEBAR */
+    .sidebar{position:sticky;top:80px;height:fit-content;}
+    .sidebar-section{margin-bottom:1.5rem;}
+    .sidebar-title{font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#4aaf9e;letter-spacing:0.12em;margin-bottom:0.6rem;}
+    .filter-btn{display:flex;align-items:center;gap:0.6rem;width:100%;padding:0.45rem 0.75rem;background:transparent;border:1px solid #2e2018;border-radius:4px;color:#b09878;font-family:var(--sans-jp);font-size:0.82rem;cursor:pointer;transition:all 0.2s;margin-bottom:0.3rem;text-align:left;}
+    .filter-btn:hover{background:rgba(74,175,158,0.12);border-color:#4aaf9e;color:#f0e6d6;}
+    .filter-btn.active{background:rgba(74,175,158,0.18);border-color:#4aaf9e;color:#4aaf9e;}
+    .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+    .dot-n4{background:#8fd47a;}.dot-n3{background:#7ab4e8;}.dot-n2{background:#e8b47a;}.dot-n1{background:#e87a7a;}.dot-all{background:#4aaf9e;}
+    .search-box{width:100%;padding:0.5rem 0.75rem;background:#3d2d20;border:1px solid #2e2018;border-radius:4px;color:#f0e6d6;font-family:var(--sans-jp);font-size:0.82rem;outline:none;transition:border-color 0.2s;margin-bottom:0.4rem;}
+    .search-box::placeholder{color:#7a6450;}
+    .search-box:focus{border-color:#4aaf9e;}
+    .count-label{font-family:var(--serif-en);font-style:italic;font-size:0.7rem;color:#7a6450;}
+
+    /* THEME CHIPS */
+    .theme-chips{display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:0.25rem;}
+    .theme-chip{padding:0.2rem 0.55rem;background:#3d2d20;border:1px solid #2e2018;border-radius:12px;font-family:var(--sans-jp);font-size:0.7rem;color:#7a6450;cursor:pointer;transition:all 0.2s;}
+    .theme-chip:hover{border-color:#4aaf9e;color:#4aaf9e;}
+    .theme-chip.active{background:rgba(74,175,158,0.18);border-color:#4aaf9e;color:#4aaf9e;}
+
+    /* PAGE HEADER */
+    .main-content{min-width:0;}
+    .page-header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid #2e2018;}
+    .page-header .jp-title{font-family:var(--serif-jp);font-size:2.4rem;color:#f0e6d6;letter-spacing:0.05em;line-height:1.85;}
+    .page-header .jp-title ruby rt{font-size:0.58em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .page-header .en-title{font-family:var(--serif-en);font-style:italic;font-size:0.9rem;color:#7a6450;}
+    .page-header .desc{margin-top:0.5rem;color:#b09878;font-size:0.88rem;}
+
+    /* VIEW TOGGLE */
+    .view-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:0.5rem;}
+    .view-toggle{display:flex;gap:0.25rem;}
+    .view-btn{padding:0.3rem 0.7rem;background:transparent;border:1px solid #2e2018;border-radius:4px;color:#7a6450;font-family:var(--sans-jp);font-size:0.75rem;cursor:pointer;transition:all 0.2s;}
+    .view-btn.active{background:rgba(74,175,158,0.18);border-color:#4aaf9e;color:#4aaf9e;}
+    .results-count{font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;}
+
+    /* LEVEL SECTION HEADING */
+    .level-section{margin-bottom:2.5rem;}
+    .level-heading{display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;padding-bottom:0.6rem;border-bottom:1px solid #2e2018;}
+    .level-badge{display:inline-flex;align-items:center;justify-content:center;width:2.2rem;height:2.2rem;border-radius:50%;font-family:var(--serif-en);font-size:0.72rem;font-weight:500;flex-shrink:0;}
+    .level-n4{background:rgba(58,107,46,0.3);color:#8fd47a;border:1px solid rgba(143,212,122,0.3);}
+    .level-n3{background:rgba(42,82,128,0.3);color:#7ab4e8;border:1px solid rgba(122,180,232,0.3);}
+    .level-n2{background:rgba(122,74,30,0.3);color:#e8b47a;border:1px solid rgba(232,180,122,0.3);}
+    .level-n1{background:rgba(122,30,30,0.3);color:#e87a7a;border:1px solid rgba(232,122,122,0.3);}
+    .level-heading-text{font-family:var(--serif-jp);font-size:1rem;color:#d4c4a8;line-height:1.9;}
+    .level-heading-text ruby rt{font-size:0.56em;font-family:var(--sans-jp);}
+    .level-heading-en{font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;}
+
+    /* CARD GRID VIEW */
+    .vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:0.85rem;}
+
+    .vocab-card{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-md);padding:1rem 1.1rem;position:relative;overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;}
+    .vocab-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--card-accent,#4aaf9e);}
+    .vocab-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-card);}
+    .vocab-card.n4{--card-accent:#8fd47a;}.vocab-card.n3{--card-accent:#7ab4e8;}.vocab-card.n2{--card-accent:#e8b47a;}.vocab-card.n1{--card-accent:#e87a7a;}
+
+    .card-word{font-family:var(--serif-jp);font-size:1.5rem;color:#f0e6d6;line-height:1.9;letter-spacing:0.03em;}
+    .card-word ruby rt{font-size:0.58em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .card-reading{font-family:var(--sans-jp);font-size:0.75rem;color:#7a6450;margin-bottom:0.1rem;}
+    .card-meaning{font-family:var(--serif-en);font-style:italic;font-size:0.88rem;color:#4aaf9e;margin-bottom:0.4rem;}
+    .card-pos{font-family:var(--sans-jp);font-size:0.68rem;color:#7a6450;background:#3d2d20;border:1px solid #2e2018;border-radius:3px;padding:0.1rem 0.4rem;display:inline-block;}
+    .card-example{margin-top:0.6rem;padding-top:0.6rem;border-top:1px solid #2e2018;font-size:0.78rem;color:#b09878;line-height:1.7;display:none;}
+    .card-example.visible{display:block;}
+    .card-example .ex-jp{font-family:var(--serif-jp);line-height:2;margin-bottom:0.1rem;}
+    .card-example .ex-jp ruby rt{font-size:0.52em;font-family:var(--sans-jp);}
+    .card-example .ex-en{font-family:var(--serif-en);font-style:italic;color:#7a6450;font-size:0.8rem;}
+    .card-tags{display:flex;flex-wrap:wrap;gap:0.25rem;margin-top:0.5rem;}
+    .tag{padding:0.1rem 0.4rem;background:#3d2d20;border:1px solid #2e2018;border-radius:3px;font-size:0.65rem;color:#7a6450;font-family:var(--sans-jp);}
+
+    /* LIST VIEW */
+    .vocab-list{display:none;}
+    .vocab-list.active{display:block;}
+    .vocab-grid.active{display:grid;}
+    .vocab-grid.hidden{display:none;}
+
+    .list-item{display:grid;grid-template-columns:160px 1fr 1fr auto;gap:1rem;align-items:center;padding:0.7rem 1rem;background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-sm);margin-bottom:0.4rem;transition:background 0.2s;}
+    .list-item:hover{background:#5e4835;}
+    .list-word{font-family:var(--serif-jp);font-size:1.1rem;color:#f0e6d6;line-height:1.9;}
+    .list-word ruby rt{font-size:0.52em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .list-reading{font-family:var(--sans-jp);font-size:0.75rem;color:#7a6450;}
+    .list-meaning{font-family:var(--serif-en);font-style:italic;font-size:0.88rem;color:#4aaf9e;}
+    .list-pos{font-family:var(--sans-jp);font-size:0.68rem;color:#7a6450;background:#3d2d20;border:1px solid #2e2018;border-radius:3px;padding:0.1rem 0.4rem;white-space:nowrap;}
+    @media(max-width:700px){.list-item{grid-template-columns:1fr 1fr;}.list-reading,.list-pos{display:none;}}
+
+    /* RUBY */
+    ruby{display:inline-flex;flex-direction:column-reverse;align-items:center;vertical-align:bottom;line-height:1;}
+    ruby rt{font-family:'Noto Sans JP',sans-serif;font-size:0.55em;color:#e8d8c0;text-align:center;letter-spacing:0.04em;line-height:1.5;user-select:none;}
+
+    /* FOOTER */
+    .site-footer{border-top:1px solid #2e2018;background:#3d2d20;padding:1.25rem 0;margin-top:2rem;}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;flex-wrap:wrap;gap:1rem;}
+    .footer-jp{font-family:var(--serif-jp);font-size:0.8rem;color:#b09878;}
+    .footer-en{font-family:var(--serif-en);font-style:italic;font-size:0.7rem;color:#7a6450;}
+
+    @media(max-width:768px){.nav-links{display:none;}.page-wrap{padding:1rem;}}
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="jp"><ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span>
+      <span class="en">Personal Japanese Study</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a></li>
+      <li><a href="vocabulary.html" class="active"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a></li>
+      <li><a href="kanji.html"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a></li>
+      <li><a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
+      <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <p class="sidebar-title">Search</p>
+      <input class="search-box" id="search-input" type="text" placeholder="Search words...">
+      <p class="count-label" id="count-label">Loading...</p>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-title">Level</p>
+      <button class="filter-btn active" data-level="all"><span class="dot dot-all"></span>All Levels</button>
+      <button class="filter-btn" data-level="n4"><span class="dot dot-n4"></span>N4 <ruby>初<rt>しょ</rt></ruby><ruby>級<rt>きゅう</rt></ruby></button>
+      <button class="filter-btn" data-level="n3"><span class="dot dot-n3"></span>N3 <ruby>中<rt>ちゅう</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>下<rt>か</rt></ruby></button>
+      <button class="filter-btn" data-level="n2"><span class="dot dot-n2"></span>N2 <ruby>中<rt>ちゅう</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>上<rt>じょう</rt></ruby></button>
+      <button class="filter-btn" data-level="n1"><span class="dot dot-n1"></span>N1 <ruby>上<rt>じょう</rt></ruby><ruby>級<rt>きゅう</rt></ruby></button>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-title">Theme</p>
+      <div class="theme-chips" id="theme-chips"></div>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-title">Jump to</p>
+      <button class="filter-btn" onclick="scrollTo('n4')"><span class="dot dot-n4"></span>N4 words</button>
+      <button class="filter-btn" onclick="scrollTo('n3')"><span class="dot dot-n3"></span>N3 words</button>
+      <button class="filter-btn" onclick="scrollTo('n2')"><span class="dot dot-n2"></span>N2 words</button>
+      <button class="filter-btn" onclick="scrollTo('n1')"><span class="dot dot-n1"></span>N1 words</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <div class="page-header">
+      <div class="jp-title"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></div>
+      <div class="en-title">Vocabulary</div>
+      <p class="desc">Key vocabulary from N4 through N1, organized by level and theme. Click any card to reveal an example sentence. Words are grouped by theme for contextual learning.</p>
+    </div>
+
+    <div class="view-bar">
+      <span class="results-count" id="results-count"></span>
+      <div class="view-toggle">
+        <button class="view-btn active" id="btn-grid" onclick="setView('grid')">⊞ Cards</button>
+        <button class="view-btn" id="btn-list" onclick="setView('list')">☰ List</button>
+      </div>
+    </div>
+
+    <div id="vocab-container"></div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <p class="footer-jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby> — <ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></p>
+      <p class="footer-en">Vocabulary Reference · N4 → N1</p>
+    </div>
+    <a href="index.html" style="font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;text-decoration:none;">← Back to home</a>
+  </div>
+</footer>
+
+<script>
+// ── Vocabulary Data ───────────────────────────────────────────
+const vocab = [
+
+  // ═══════════════════════════════════════════════════════════
+  //  N4 — VERBS (u-verbs)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n4',theme:'verbs',word:'歩く',reading:'あるく',meaning:'to walk',pos:'verb (u)',example_jp:'公園を歩くのが好きです。',example_en:'I like walking in the park.'},
+  {level:'n4',theme:'verbs',word:'急ぐ',reading:'いそぐ',meaning:'to hurry, to rush',pos:'verb (u)',example_jp:'遅刻しそうだから急いでください。',example_en:'Please hurry as we might be late.'},
+  {level:'n4',theme:'verbs',word:'動く',reading:'うごく',meaning:'to move, to operate',pos:'verb (u)',example_jp:'このエレベーターは動いていない。',example_en:'This elevator is not working.'},
+  {level:'n4',theme:'verbs',word:'驚く',reading:'おどろく',meaning:'to be surprised, to be astonished',pos:'verb (u)',example_jp:'その知らせに驚きました。',example_en:'I was surprised by the news.'},
+  {level:'n4',theme:'verbs',word:'落とす',reading:'おとす',meaning:'to drop, to lose (something)',pos:'verb (u)',example_jp:'財布を落としてしまった。',example_en:'I dropped my wallet.'},
+  {level:'n4',theme:'verbs',word:'思い出す',reading:'おもいだす',meaning:'to recall, to remember',pos:'verb (u)',example_jp:'昔のことを思い出した。',example_en:'I recalled things from the past.'},
+  {level:'n4',theme:'verbs',word:'泳ぐ',reading:'およぐ',meaning:'to swim',pos:'verb (u)',example_jp:'夏はよく海で泳ぎます。',example_en:'I often swim in the sea in summer.'},
+  {level:'n4',theme:'verbs',word:'返す',reading:'かえす',meaning:'to return (something), to give back',pos:'verb (u)',example_jp:'借りた本を返しました。',example_en:'I returned the book I borrowed.'},
+  {level:'n4',theme:'verbs',word:'書く',reading:'かく',meaning:'to write',pos:'verb (u)',example_jp:'日記を毎日書いています。',example_en:'I write a diary every day.'},
+  {level:'n4',theme:'verbs',word:'かける',reading:'かける',meaning:'to call (phone), to hang, to wear (glasses)',pos:'verb (u)',example_jp:'電話をかけましたが出なかった。',example_en:'I called but there was no answer.'},
+  {level:'n4',theme:'verbs',word:'貸す',reading:'かす',meaning:'to lend',pos:'verb (u)',example_jp:'傘を貸してもらえますか。',example_en:'Could you lend me an umbrella?'},
+  {level:'n4',theme:'verbs',word:'噛む',reading:'かむ',meaning:'to bite, to chew',pos:'verb (u)',example_jp:'よく噛んで食べてください。',example_en:'Please chew your food well.'},
+  {level:'n4',theme:'verbs',word:'乾く',reading:'かわく',meaning:'to dry (intransitive)',pos:'verb (u)',example_jp:'洗濯物がまだ乾いていない。',example_en:'The laundry is not dry yet.'},
+  {level:'n4',theme:'verbs',word:'聞こえる',reading:'きこえる',meaning:'to be audible, to be heard',pos:'verb (ru)',example_jp:'音楽が聞こえますか。',example_en:'Can you hear the music?'},
+  {level:'n4',theme:'verbs',word:'決まる',reading:'きまる',meaning:'to be decided, to be settled',pos:'verb (u)',example_jp:'旅行の日程が決まりました。',example_en:'The travel schedule has been decided.'},
+  {level:'n4',theme:'verbs',word:'曇る',reading:'くもる',meaning:'to become cloudy',pos:'verb (u)',example_jp:'午後から曇ってきた。',example_en:'It became cloudy from the afternoon.'},
+  {level:'n4',theme:'verbs',word:'比べる',reading:'くらべる',meaning:'to compare',pos:'verb (ru)',example_jp:'値段を比べてから買います。',example_en:'I will compare prices before buying.'},
+  {level:'n4',theme:'verbs',word:'壊れる',reading:'こわれる',meaning:'to break, to be broken (intransitive)',pos:'verb (ru)',example_jp:'パソコンが壊れてしまった。',example_en:'My computer broke.'},
+  {level:'n4',theme:'verbs',word:'探す',reading:'さがす',meaning:'to search for, to look for',pos:'verb (u)',example_jp:'鍵を探しています。',example_en:'I am looking for my keys.'},
+  {level:'n4',theme:'verbs',word:'騒ぐ',reading:'さわぐ',meaning:'to make noise, to be rowdy',pos:'verb (u)',example_jp:'図書館では騒がないでください。',example_en:'Please do not make noise in the library.'},
+  {level:'n4',theme:'verbs',word:'知らせる',reading:'しらせる',meaning:'to inform, to notify',pos:'verb (ru)',example_jp:'結果が出たら知らせてください。',example_en:'Please let me know when the results are out.'},
+  {level:'n4',theme:'verbs',word:'調べる',reading:'しらべる',meaning:'to investigate, to look up, to check',pos:'verb (ru)',example_jp:'辞書でその言葉を調べた。',example_en:'I looked up the word in a dictionary.'},
+  {level:'n4',theme:'verbs',word:'過ぎる',reading:'すぎる',meaning:'to pass by, to exceed',pos:'verb (ru)',example_jp:'バス停を過ぎてしまった。',example_en:'I passed the bus stop.'},
+  {level:'n4',theme:'verbs',word:'座る',reading:'すわる',meaning:'to sit down',pos:'verb (u)',example_jp:'どうぞお座りください。',example_en:'Please have a seat.'},
+  {level:'n4',theme:'verbs',word:'育てる',reading:'そだてる',meaning:'to raise, to bring up, to cultivate',pos:'verb (ru)',example_jp:'子供を大切に育てています。',example_en:'I am raising my child with care.'},
+  {level:'n4',theme:'verbs',word:'続く',reading:'つづく',meaning:'to continue, to go on (intransitive)',pos:'verb (u)',example_jp:'雨が三日間続いた。',example_en:'The rain continued for three days.'},
+  {level:'n4',theme:'verbs',word:'続ける',reading:'つづける',meaning:'to continue (something), to keep doing',pos:'verb (ru)',example_jp:'毎日練習を続けています。',example_en:'I keep practising every day.'},
+  {level:'n4',theme:'verbs',word:'伝える',reading:'つたえる',meaning:'to convey, to tell, to pass on',pos:'verb (ru)',example_jp:'気持ちを言葉で伝えた。',example_en:'I conveyed my feelings in words.'},
+  {level:'n4',theme:'verbs',word:'包む',reading:'つつむ',meaning:'to wrap, to envelop',pos:'verb (u)',example_jp:'プレゼントを包んでもらいました。',example_en:'I had the present wrapped.'},
+  {level:'n4',theme:'verbs',word:'連れる',reading:'つれる',meaning:'to bring (a person), to accompany',pos:'verb (ru)',example_jp:'子供を公園に連れていった。',example_en:'I took my child to the park.'},
+  {level:'n4',theme:'verbs',word:'通る',reading:'とおる',meaning:'to pass through, to go along',pos:'verb (u)',example_jp:'この道を通ってください。',example_en:'Please go along this road.'},
+  {level:'n4',theme:'verbs',word:'届く',reading:'とどく',meaning:'to reach, to arrive (of things)',pos:'verb (u)',example_jp:'荷物が届きました。',example_en:'The package has arrived.'},
+  {level:'n4',theme:'verbs',word:'泊まる',reading:'とまる',meaning:'to stay overnight',pos:'verb (u)',example_jp:'ホテルに泊まりました。',example_en:'I stayed at a hotel.'},
+  {level:'n4',theme:'verbs',word:'直す',reading:'なおす',meaning:'to fix, to correct, to repair',pos:'verb (u)',example_jp:'作文を直してください。',example_en:'Please correct the essay.'},
+  {level:'n4',theme:'verbs',word:'泣く',reading:'なく',meaning:'to cry, to weep',pos:'verb (u)',example_jp:'悲しくて泣いてしまった。',example_en:'I ended up crying because I was sad.'},
+  {level:'n4',theme:'verbs',word:'盗む',reading:'ぬすむ',meaning:'to steal',pos:'verb (u)',example_jp:'財布を盗まれた。',example_en:'My wallet was stolen.'},
+  {level:'n4',theme:'verbs',word:'乗り換える',reading:'のりかえる',meaning:'to transfer, to change (trains/buses)',pos:'verb (ru)',example_jp:'新宿で電車を乗り換えます。',example_en:'I will transfer trains at Shinjuku.'},
+  {level:'n4',theme:'verbs',word:'運ぶ',reading:'はこぶ',meaning:'to carry, to transport',pos:'verb (u)',example_jp:'重い荷物を運んでくれた。',example_en:'They carried the heavy luggage for me.'},
+  {level:'n4',theme:'verbs',word:'払う',reading:'はらう',meaning:'to pay',pos:'verb (u)',example_jp:'カードで払えますか。',example_en:'Can I pay by card?'},
+  {level:'n4',theme:'verbs',word:'引っ越す',reading:'ひっこす',meaning:'to move house',pos:'verb (u)',example_jp:'来月新しいアパートに引っ越します。',example_en:'I am moving to a new apartment next month.'},
+  {level:'n4',theme:'verbs',word:'広がる',reading:'ひろがる',meaning:'to spread, to expand (intransitive)',pos:'verb (u)',example_jp:'ニュースが全国に広がった。',example_en:'The news spread throughout the country.'},
+  {level:'n4',theme:'verbs',word:'増える',reading:'ふえる',meaning:'to increase, to grow in number',pos:'verb (ru)',example_jp:'観光客が増えています。',example_en:'The number of tourists is increasing.'},
+  {level:'n4',theme:'verbs',word:'踏む',reading:'ふむ',meaning:'to step on, to tread on',pos:'verb (u)',example_jp:'足を踏まないでください。',example_en:'Please do not step on my foot.'},
+  {level:'n4',theme:'verbs',word:'変わる',reading:'かわる',meaning:'to change, to be different (intransitive)',pos:'verb (u)',example_jp:'天気が変わりやすい季節だ。',example_en:'It is a season when the weather changes easily.'},
+  {level:'n4',theme:'verbs',word:'迷う',reading:'まよう',meaning:'to get lost, to be undecided',pos:'verb (u)',example_jp:'駅の近くで迷ってしまった。',example_en:'I got lost near the station.'},
+  {level:'n4',theme:'verbs',word:'見える',reading:'みえる',meaning:'to be visible, can see',pos:'verb (ru)',example_jp:'窓から富士山が見えます。',example_en:'Mt. Fuji can be seen from the window.'},
+  {level:'n4',theme:'verbs',word:'迎える',reading:'むかえる',meaning:'to welcome, to go to meet',pos:'verb (ru)',example_jp:'空港まで迎えに行きます。',example_en:'I will go to meet you at the airport.'},
+  {level:'n4',theme:'verbs',word:'申し込む',reading:'もうしこむ',meaning:'to apply, to register',pos:'verb (u)',example_jp:'コースに申し込みました。',example_en:'I applied for the course.'},
+  {level:'n4',theme:'verbs',word:'戻る',reading:'もどる',meaning:'to return, to go back',pos:'verb (u)',example_jp:'５時までに戻ってください。',example_en:'Please return by 5 o\'clock.'},
+  {level:'n4',theme:'verbs',word:'焼く',reading:'やく',meaning:'to grill, to bake, to burn',pos:'verb (u)',example_jp:'パンを焼いて食べた。',example_en:'I toasted bread and ate it.'},
+  {level:'n4',theme:'verbs',word:'破る',reading:'やぶる',meaning:'to tear, to break (a rule/record)',pos:'verb (u)',example_jp:'紙を破らないように。',example_en:'Be careful not to tear the paper.'},
+  {level:'n4',theme:'verbs',word:'読み終わる',reading:'よみおわる',meaning:'to finish reading',pos:'verb (u)',example_jp:'この本を読み終わったら貸します。',example_en:'I will lend you this book when I finish reading it.'},
+  {level:'n4',theme:'verbs',word:'喜ぶ',reading:'よろこぶ',meaning:'to be pleased, to rejoice',pos:'verb (u)',example_jp:'合格を聞いて喜んだ。',example_en:'I was pleased to hear about the success.'},
+  {level:'n4',theme:'verbs',word:'渡る',reading:'わたる',meaning:'to cross (a road, bridge)',pos:'verb (u)',example_jp:'横断歩道を渡ってください。',example_en:'Please cross at the pedestrian crossing.'},
+  {level:'n4',theme:'verbs',word:'笑う',reading:'わらう',meaning:'to laugh, to smile',pos:'verb (u)',example_jp:'面白い話を聞いて笑った。',example_en:'I laughed hearing a funny story.'},
+  {level:'n4',theme:'verbs',word:'起こす',reading:'おこす',meaning:'to wake (someone) up; to cause (an incident)',pos:'verb (u)',example_jp:'朝６時に起こしてください。',example_en:'Please wake me up at 6am.'},
+  {level:'n4',theme:'verbs',word:'怒る',reading:'おこる',meaning:'to get angry',pos:'verb (u)',example_jp:'遅刻して先生に怒られた。',example_en:'I was scolded by the teacher for being late.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N4 — VERBS (ru-verbs & irregular)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n4',theme:'verbs',word:'上げる',reading:'あげる',meaning:'to raise, to give (upward); to do a favour',pos:'verb (ru)',example_jp:'手を上げてください。',example_en:'Please raise your hand.'},
+  {level:'n4',theme:'verbs',word:'預ける',reading:'あずける',meaning:'to entrust, to deposit, to check (luggage)',pos:'verb (ru)',example_jp:'荷物をフロントに預けた。',example_en:'I left my luggage at the front desk.'},
+  {level:'n4',theme:'verbs',word:'与える',reading:'あたえる',meaning:'to give, to provide, to grant',pos:'verb (ru)',example_jp:'子供に自由を与えることが大切だ。',example_en:'It is important to give children freedom.'},
+  {level:'n4',theme:'verbs',word:'生きる',reading:'いきる',meaning:'to live, to be alive',pos:'verb (ru)',example_jp:'今を精一杯生きたい。',example_en:'I want to live the present moment to the fullest.'},
+  {level:'n4',theme:'verbs',word:'受ける',reading:'うける',meaning:'to receive, to take (an exam), to undergo',pos:'verb (ru)',example_jp:'来月JLPT試験を受けます。',example_en:'I am taking the JLPT exam next month.'},
+  {level:'n4',theme:'verbs',word:'起きる',reading:'おきる',meaning:'to wake up, to get up; to occur',pos:'verb (ru)',example_jp:'毎朝６時に起きます。',example_en:'I wake up at 6am every morning.'},
+  {level:'n4',theme:'verbs',word:'教える',reading:'おしえる',meaning:'to teach, to tell, to inform',pos:'verb (ru)',example_jp:'道を教えてくれませんか。',example_en:'Could you tell me the way?'},
+  {level:'n4',theme:'verbs',word:'覚える',reading:'おぼえる',meaning:'to memorise, to remember, to learn',pos:'verb (ru)',example_jp:'新しい単語を覚えるのが好きです。',example_en:'I like memorising new vocabulary.'},
+  {level:'n4',theme:'verbs',word:'着替える',reading:'きがえる',meaning:'to change clothes',pos:'verb (ru)',example_jp:'着替えてから出かけましょう。',example_en:'Let\'s go out after getting changed.'},
+  {level:'n4',theme:'verbs',word:'決める',reading:'きめる',meaning:'to decide, to determine',pos:'verb (ru)',example_jp:'旅行の日程を決めました。',example_en:'I decided on the travel schedule.'},
+  {level:'n4',theme:'verbs',word:'答える',reading:'こたえる',meaning:'to answer, to respond',pos:'verb (ru)',example_jp:'質問に答えてください。',example_en:'Please answer the question.'},
+  {level:'n4',theme:'verbs',word:'倒れる',reading:'たおれる',meaning:'to fall over, to collapse',pos:'verb (ru)',example_jp:'疲れて倒れそうだ。',example_en:'I\'m so tired I feel like I\'m about to collapse.'},
+  {level:'n4',theme:'verbs',word:'助ける',reading:'たすける',meaning:'to help, to save, to rescue',pos:'verb (ru)',example_jp:'溺れている人を助けた。',example_en:'I rescued a drowning person.'},
+  {level:'n4',theme:'verbs',word:'建てる',reading:'たてる',meaning:'to build, to construct',pos:'verb (ru)',example_jp:'新しい家を建てました。',example_en:'I built a new house.'},
+  {level:'n4',theme:'verbs',word:'足りる',reading:'たりる',meaning:'to be enough, to be sufficient',pos:'verb (ru)',example_jp:'お金が足りない。',example_en:'There is not enough money.'},
+  {level:'n4',theme:'verbs',word:'捨てる',reading:'すてる',meaning:'to throw away, to discard',pos:'verb (ru)',example_jp:'ゴミは決められた場所に捨てましょう。',example_en:'Let\'s throw away rubbish in the designated place.'},
+  {level:'n4',theme:'verbs',word:'寝る',reading:'ねる',meaning:'to sleep, to go to bed',pos:'verb (ru)',example_jp:'昨夜は早く寝ました。',example_en:'I went to bed early last night.'},
+  {level:'n4',theme:'verbs',word:'乗り越える',reading:'のりこえる',meaning:'to overcome, to get over',pos:'verb (ru)',example_jp:'困難を乗り越えることができた。',example_en:'I was able to overcome the difficulty.'},
+  {level:'n4',theme:'verbs',word:'始める',reading:'はじめる',meaning:'to begin, to start (something)',pos:'verb (ru)',example_jp:'日本語の勉強を始めました。',example_en:'I started studying Japanese.'},
+  {level:'n4',theme:'verbs',word:'見せる',reading:'みせる',meaning:'to show',pos:'verb (ru)',example_jp:'パスポートを見せてください。',example_en:'Please show me your passport.'},
+  {level:'n4',theme:'verbs',word:'見つける',reading:'みつける',meaning:'to find, to discover',pos:'verb (ru)',example_jp:'なくした財布を見つけた。',example_en:'I found the wallet I had lost.'},
+  {level:'n4',theme:'verbs',word:'止める',reading:'やめる',meaning:'to stop, to quit, to give up',pos:'verb (ru)',example_jp:'タバコをやめることにした。',example_en:'I decided to quit smoking.'},
+  {level:'n4',theme:'verbs',word:'忘れる',reading:'わすれる',meaning:'to forget',pos:'verb (ru)',example_jp:'名前を忘れてしまいました。',example_en:'I forgot the name.'},
+  {level:'n4',theme:'verbs',word:'連絡する',reading:'れんらくする',meaning:'to contact, to get in touch',pos:'verb (irr)',example_jp:'着いたら連絡してください。',example_en:'Please contact me when you arrive.'},
+  {level:'n4',theme:'verbs',word:'心配する',reading:'しんぱいする',meaning:'to worry, to be concerned',pos:'verb (irr)',example_jp:'試験のことが心配です。',example_en:'I am worried about the exam.'},
+  {level:'n4',theme:'verbs',word:'説明する',reading:'せつめいする',meaning:'to explain',pos:'verb (irr)',example_jp:'もう一度説明してもらえますか。',example_en:'Could you explain it once more?'},
+  {level:'n4',theme:'verbs',word:'紹介する',reading:'しょうかいする',meaning:'to introduce',pos:'verb (irr)',example_jp:'友達を紹介してください。',example_en:'Please introduce your friend.'},
+  {level:'n4',theme:'verbs',word:'予約する',reading:'よやくする',meaning:'to reserve, to book',pos:'verb (irr)',example_jp:'レストランを予約しました。',example_en:'I made a restaurant reservation.'},
+  {level:'n4',theme:'verbs',word:'練習する',reading:'れんしゅうする',meaning:'to practise',pos:'verb (irr)',example_jp:'毎日ピアノを練習しています。',example_en:'I practise piano every day.'},
+  {level:'n4',theme:'verbs',word:'参加する',reading:'さんかする',meaning:'to participate, to join',pos:'verb (irr)',example_jp:'イベントに参加しましょう。',example_en:'Let\'s participate in the event.'},
+  {level:'n4',theme:'verbs',word:'利用する',reading:'りようする',meaning:'to use, to make use of',pos:'verb (irr)',example_jp:'公共交通機関を利用します。',example_en:'I use public transport.'},
+  {level:'n4',theme:'verbs',word:'確認する',reading:'かくにんする',meaning:'to confirm, to check',pos:'verb (irr)',example_jp:'予約を確認してください。',example_en:'Please confirm the reservation.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N4 — NOUNS (people & relationships)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n4',theme:'people',word:'親',reading:'おや',meaning:'parent',pos:'noun',example_jp:'親に感謝しています。',example_en:'I am grateful to my parents.'},
+  {level:'n4',theme:'people',word:'息子',reading:'むすこ',meaning:'son',pos:'noun',example_jp:'息子は来年大学に入ります。',example_en:'My son will enter university next year.'},
+  {level:'n4',theme:'people',word:'娘',reading:'むすめ',meaning:'daughter',pos:'noun',example_jp:'娘はピアノが上手です。',example_en:'My daughter is good at piano.'},
+  {level:'n4',theme:'people',word:'夫',reading:'おっと',meaning:'husband',pos:'noun',example_jp:'夫は料理が得意です。',example_en:'My husband is good at cooking.'},
+  {level:'n4',theme:'people',word:'妻',reading:'つま',meaning:'wife',pos:'noun',example_jp:'妻と一緒に旅行しました。',example_en:'I travelled with my wife.'},
+  {level:'n4',theme:'people',word:'友達',reading:'ともだち',meaning:'friend',pos:'noun',example_jp:'友達と映画を見ました。',example_en:'I watched a film with my friend.'},
+  {level:'n4',theme:'people',word:'同僚',reading:'どうりょう',meaning:'colleague, coworker',pos:'noun',example_jp:'同僚と昼食を食べました。',example_en:'I had lunch with my colleague.'},
+  {level:'n4',theme:'people',word:'客',reading:'きゃく',meaning:'guest, customer, visitor',pos:'noun',example_jp:'お客様を丁寧にご案内します。',example_en:'I will guide the customer politely.'},
+  {level:'n4',theme:'people',word:'選手',reading:'せんしゅ',meaning:'player, athlete',pos:'noun',example_jp:'あの選手はとても有名だ。',example_en:'That athlete is very famous.'},
+  {level:'n4',theme:'people',word:'市民',reading:'しみん',meaning:'citizen, resident',pos:'noun',example_jp:'市民が公園の清掃に参加した。',example_en:'Citizens participated in the park clean-up.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N4 — NOUNS (places)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n4',theme:'places',word:'空港',reading:'くうこう',meaning:'airport',pos:'noun',example_jp:'空港まで迎えに行きます。',example_en:'I will go to meet you at the airport.'},
+  {level:'n4',theme:'places',word:'駐車場',reading:'ちゅうしゃじょう',meaning:'car park, parking lot',pos:'noun',example_jp:'駐車場はビルの地下にあります。',example_en:'The car park is underground in the building.'},
+  {level:'n4',theme:'places',word:'入り口',reading:'いりぐち',meaning:'entrance',pos:'noun',example_jp:'入り口でチケットを見せてください。',example_en:'Please show your ticket at the entrance.'},
+  {level:'n4',theme:'places',word:'出口',reading:'でぐち',meaning:'exit',pos:'noun',example_jp:'出口はどこですか。',example_en:'Where is the exit?'},
+  {level:'n4',theme:'places',word:'温泉',reading:'おんせん',meaning:'hot spring',pos:'noun',example_jp:'箱根の温泉に入りたい。',example_en:'I want to bathe in a Hakone hot spring.'},
+  {level:'n4',theme:'places',word:'工場',reading:'こうじょう',meaning:'factory',pos:'noun',example_jp:'工場を見学しました。',example_en:'I visited the factory.'},
+  {level:'n4',theme:'places',word:'神社',reading:'じんじゃ',meaning:'Shinto shrine',pos:'noun',example_jp:'お正月に神社に行きました。',example_en:'I went to a Shinto shrine at New Year.'},
+  {level:'n4',theme:'places',word:'お寺',reading:'おてら',meaning:'Buddhist temple',pos:'noun',example_jp:'古いお寺を見学した。',example_en:'I visited an old Buddhist temple.'},
+  {level:'n4',theme:'places',word:'美術館',reading:'びじゅつかん',meaning:'art museum, art gallery',pos:'noun',example_jp:'美術館で絵を鑑賞しました。',example_en:'I appreciated paintings at the art museum.'},
+  {level:'n4',theme:'places',word:'動物園',reading:'どうぶつえん',meaning:'zoo',pos:'noun',example_jp:'子供を動物園に連れていった。',example_en:'I took the children to the zoo.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N4 — NOUNS (time)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n4',theme:'time',word:'先週',reading:'せんしゅう',meaning:'last week',pos:'noun',example_jp:'先週の会議はどうでしたか。',example_en:'How was last week\'s meeting?'},
+  {level:'n4',theme:'time',word:'来週',reading:'らいしゅう',meaning:'next week',pos:'noun',example_jp:'来週また来ます。',example_en:'I will come again next week.'},
+  {level:'n4',theme:'time',word:'先月',reading:'せんげつ',meaning:'last month',pos:'noun',example_jp:'先月から日本語を勉強しています。',example_en:'I have been studying Japanese since last month.'},
+  {level:'n4',theme:'time',word:'来月',reading:'らいげつ',meaning:'next month',pos:'noun',example_jp:'来月に試験があります。',example_en:'There is an exam next month.'},
+  {level:'n4',theme:'time',word:'去年',reading:'きょねん',meaning:'last year',pos:'noun',example_jp:'去年日本に行きました。',example_en:'I went to Japan last year.'},
+  {level:'n4',theme:'time',word:'将来',reading:'しょうらい',meaning:'future, the future',pos:'noun',example_jp:'将来は医者になりたい。',example_en:'I want to become a doctor in the future.'},
+  {level:'n4',theme:'time',word:'最近',reading:'さいきん',meaning:'recently, lately',pos:'noun/adv',example_jp:'最近あまり眠れていない。',example_en:'Lately I haven\'t been sleeping well.'},
+  {level:'n4',theme:'time',word:'以前',reading:'いぜん',meaning:'before, previously, formerly',pos:'noun/adv',example_jp:'以前はここに住んでいました。',example_en:'I used to live here before.'},
+  {level:'n4',theme:'time',word:'以来',reading:'いらい',meaning:'since, ever since',pos:'noun/adv',example_jp:'卒業以来会っていない。',example_en:'We haven\'t met since graduation.'},
+  {level:'n4',theme:'time',word:'途中',reading:'とちゅう',meaning:'on the way, midway, partway through',pos:'noun',example_jp:'途中で迷ってしまった。',example_en:'I got lost on the way.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N4 — NOUNS (body & health)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n4',theme:'health',word:'体',reading:'からだ',meaning:'body',pos:'noun',example_jp:'体に気をつけてください。',example_en:'Please take care of your body.'},
+  {level:'n4',theme:'health',word:'熱',reading:'ねつ',meaning:'fever, heat',pos:'noun',example_jp:'熱が出てしまった。',example_en:'I developed a fever.'},
+  {level:'n4',theme:'health',word:'咳',reading:'せき',meaning:'cough',pos:'noun',example_jp:'咳が止まらない。',example_en:'I can\'t stop coughing.'},
+  {level:'n4',theme:'health',word:'薬',reading:'くすり',meaning:'medicine, drug',pos:'noun',example_jp:'食後に薬を飲んでください。',example_en:'Please take the medicine after meals.'},
+  {level:'n4',theme:'health',word:'病院',reading:'びょういん',meaning:'hospital',pos:'noun',example_jp:'病院に行ったほうがいい。',example_en:'You should go to the hospital.'},
+  {level:'n4',theme:'health',word:'怪我',reading:'けが',meaning:'injury, wound',pos:'noun',example_jp:'転んで怪我をしてしまった。',example_en:'I fell and got injured.'},
+  {level:'n4',theme:'health',word:'健康',reading:'けんこう',meaning:'health, healthy',pos:'noun/na-adj',example_jp:'健康のために運動しています。',example_en:'I exercise for my health.'},
+  {level:'n4',theme:'health',word:'運動',reading:'うんどう',meaning:'exercise, physical activity',pos:'noun/verb',example_jp:'毎日30分運動しています。',example_en:'I exercise for 30 minutes every day.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N4 — NOUNS (daily life)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n4',theme:'daily life',word:'生活',reading:'せいかつ',meaning:'daily life, living, lifestyle',pos:'noun/verb',example_jp:'シンガポールでの生活は便利です。',example_en:'Life in Singapore is convenient.'},
+  {level:'n4',theme:'daily life',word:'習慣',reading:'しゅうかん',meaning:'habit, custom',pos:'noun',example_jp:'毎日運動する習慣をつけたい。',example_en:'I want to develop the habit of exercising every day.'},
+  {level:'n4',theme:'daily life',word:'準備',reading:'じゅんび',meaning:'preparation, getting ready',pos:'noun/verb',example_jp:'出発の準備をしています。',example_en:'I am getting ready for departure.'},
+  {level:'n4',theme:'daily life',word:'経験',reading:'けいけん',meaning:'experience',pos:'noun/verb',example_jp:'貴重な経験をしました。',example_en:'I had a valuable experience.'},
+  {level:'n4',theme:'daily life',word:'機会',reading:'きかい',meaning:'opportunity, chance',pos:'noun',example_jp:'いい機会なので挑戦してみます。',example_en:'Since it\'s a good opportunity I will try it.'},
+  {level:'n4',theme:'daily life',word:'理由',reading:'りゆう',meaning:'reason, grounds',pos:'noun',example_jp:'遅れた理由を説明します。',example_en:'I will explain the reason for being late.'},
+  {level:'n4',theme:'daily life',word:'方法',reading:'ほうほう',meaning:'method, way, means',pos:'noun',example_jp:'いい方法が見つかりました。',example_en:'I found a good method.'},
+  {level:'n4',theme:'daily life',word:'問題',reading:'もんだい',meaning:'problem, issue, question',pos:'noun',example_jp:'この問題を一緒に考えましょう。',example_en:'Let\'s think about this problem together.'},
+  {level:'n4',theme:'daily life',word:'結果',reading:'けっか',meaning:'result, outcome',pos:'noun',example_jp:'試験の結果はどうでしたか。',example_en:'How were your exam results?'},
+  {level:'n4',theme:'daily life',word:'場合',reading:'ばあい',meaning:'case, situation, occasion',pos:'noun',example_jp:'緊急の場合はこちらに電話してください。',example_en:'In an emergency please call here.'},
+  {level:'n4',theme:'daily life',word:'以上',reading:'いじょう',meaning:'more than, above, the above',pos:'noun/adv',example_jp:'18歳以上でなければなりません。',example_en:'You must be 18 or older.'},
+  {level:'n4',theme:'daily life',word:'以下',reading:'いか',meaning:'less than, below, the following',pos:'noun/adv',example_jp:'10人以下の場合は割引なし。',example_en:'No discount for fewer than 10 people.'},
+  {level:'n4',theme:'daily life',word:'お知らせ',reading:'おしらせ',meaning:'notice, announcement',pos:'noun',example_jp:'重要なお知らせをお読みください。',example_en:'Please read the important notice.'},
+  {level:'n4',theme:'daily life',word:'注意',reading:'ちゅうい',meaning:'attention, caution, warning',pos:'noun/verb',example_jp:'段差に注意してください。',example_en:'Please watch your step.'},
+  {level:'n4',theme:'daily life',word:'安全',reading:'あんぜん',meaning:'safety, safe',pos:'noun/na-adj',example_jp:'交通安全に気をつけましょう。',example_en:'Let\'s be careful about traffic safety.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N4 — NOUNS (travel & transport)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n4',theme:'travel',word:'切符',reading:'きっぷ',meaning:'ticket (train/bus)',pos:'noun',example_jp:'新幹線の切符を買いました。',example_en:'I bought a shinkansen ticket.'},
+  {level:'n4',theme:'travel',word:'出発',reading:'しゅっぱつ',meaning:'departure',pos:'noun/verb',example_jp:'出発は何時ですか。',example_en:'What time is the departure?'},
+  {level:'n4',theme:'travel',word:'到着',reading:'とうちゃく',meaning:'arrival',pos:'noun/verb',example_jp:'大阪到着は３時です。',example_en:'Arrival in Osaka is at 3pm.'},
+  {level:'n4',theme:'travel',word:'乗り換え',reading:'のりかえ',meaning:'transfer, change of trains/buses',pos:'noun/verb',example_jp:'東京駅で乗り換えてください。',example_en:'Please transfer at Tokyo Station.'},
+  {level:'n4',theme:'travel',word:'道',reading:'みち',meaning:'road, way, path',pos:'noun',example_jp:'駅への道を教えてください。',example_en:'Please tell me the way to the station.'},
+  {level:'n4',theme:'travel',word:'地図',reading:'ちず',meaning:'map',pos:'noun',example_jp:'地図を見ながら歩いた。',example_en:'I walked while looking at a map.'},
+  {level:'n4',theme:'travel',word:'荷物',reading:'にもつ',meaning:'luggage, baggage, parcel',pos:'noun',example_jp:'荷物を預けましょう。',example_en:'Let\'s check in the luggage.'},
+  {level:'n4',theme:'travel',word:'パスポート',reading:'ぱすぽーと',meaning:'passport',pos:'noun',example_jp:'パスポートを忘れずに。',example_en:'Don\'t forget your passport.'},
+  {level:'n4',theme:'travel',word:'ガイド',reading:'がいど',meaning:'guide, guidebook',pos:'noun',example_jp:'ガイドさんが案内してくれました。',example_en:'The guide showed us around.'},
+  {level:'n4',theme:'travel',word:'泊まる',reading:'とまる',meaning:'to stay overnight',pos:'verb (u)',example_jp:'旅館に泊まりました。',example_en:'I stayed at a Japanese inn.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N4 — NOUNS (work & study)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n4',theme:'work & study',word:'授業',reading:'じゅぎょう',meaning:'class, lesson',pos:'noun',example_jp:'授業は何時から始まりますか。',example_en:'What time does the class start?'},
+  {level:'n4',theme:'work & study',word:'宿題',reading:'しゅくだい',meaning:'homework',pos:'noun',example_jp:'宿題を忘れてしまった。',example_en:'I forgot to do my homework.'},
+  {level:'n4',theme:'work & study',word:'試験',reading:'しけん',meaning:'examination, test',pos:'noun',example_jp:'来週試験があります。',example_en:'There is an exam next week.'},
+  {level:'n4',theme:'work & study',word:'合格',reading:'ごうかく',meaning:'passing (an exam)',pos:'noun/verb',example_jp:'試験に合格しました！',example_en:'I passed the exam!'},
+  {level:'n4',theme:'work & study',word:'失敗',reading:'しっぱい',meaning:'failure, mistake',pos:'noun/verb',example_jp:'失敗から学ぶことが大切だ。',example_en:'It is important to learn from failure.'},
+  {level:'n4',theme:'work & study',word:'成功',reading:'せいこう',meaning:'success',pos:'noun/verb',example_jp:'計画が成功した。',example_en:'The plan succeeded.'},
+  {level:'n4',theme:'work & study',word:'会社',reading:'かいしゃ',meaning:'company, firm',pos:'noun',example_jp:'会社に入って３年になります。',example_en:'It has been 3 years since I joined the company.'},
+  {level:'n4',theme:'work & study',word:'仕事',reading:'しごと',meaning:'work, job',pos:'noun/verb',example_jp:'今日は仕事が多い。',example_en:'I have a lot of work today.'},
+  {level:'n4',theme:'work & study',word:'給料',reading:'きゅうりょう',meaning:'salary, wages',pos:'noun',example_jp:'給料日は25日です。',example_en:'Payday is the 25th.'},
+  {level:'n4',theme:'work & study',word:'残業',reading:'ざんぎょう',meaning:'overtime work',pos:'noun/verb',example_jp:'毎日残業が続いています。',example_en:'Overtime is continuing every day.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N4 — ADJECTIVES (i-adjectives)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n4',theme:'adjectives',word:'嬉しい',reading:'うれしい',meaning:'happy, glad, pleased',pos:'i-adj',example_jp:'合格して嬉しいです。',example_en:'I am glad to have passed.'},
+  {level:'n4',theme:'adjectives',word:'悲しい',reading:'かなしい',meaning:'sad',pos:'i-adj',example_jp:'別れが悲しかった。',example_en:'The farewell was sad.'},
+  {level:'n4',theme:'adjectives',word:'辛い',reading:'つらい',meaning:'hard, painful, tough (emotionally)',pos:'i-adj',example_jp:'一人暮らしは辛いときもある。',example_en:'Living alone is tough sometimes.'},
+  {level:'n4',theme:'adjectives',word:'恥ずかしい',reading:'はずかしい',meaning:'embarrassing, shy, ashamed',pos:'i-adj',example_jp:'人前で間違えて恥ずかしかった。',example_en:'I was embarrassed to make a mistake in front of people.'},
+  {level:'n4',theme:'adjectives',word:'眠い',reading:'ねむい',meaning:'sleepy, drowsy',pos:'i-adj',example_jp:'昨夜あまり眠れなくて眠い。',example_en:'I didn\'t sleep much last night and I\'m sleepy.'},
+  {level:'n4',theme:'adjectives',word:'痛い',reading:'いたい',meaning:'painful, hurts',pos:'i-adj',example_jp:'頭が痛い。',example_en:'My head hurts.'},
+  {level:'n4',theme:'adjectives',word:'重い',reading:'おもい',meaning:'heavy, serious',pos:'i-adj',example_jp:'このカバンはとても重い。',example_en:'This bag is very heavy.'},
+  {level:'n4',theme:'adjectives',word:'軽い',reading:'かるい',meaning:'light (not heavy), minor, casual',pos:'i-adj',example_jp:'荷物が軽くなった。',example_en:'The luggage became lighter.'},
+  {level:'n4',theme:'adjectives',word:'柔らかい',reading:'やわらかい',meaning:'soft, tender, gentle',pos:'i-adj',example_jp:'このパンはとても柔らかい。',example_en:'This bread is very soft.'},
+  {level:'n4',theme:'adjectives',word:'硬い',reading:'かたい',meaning:'hard, stiff, rigid',pos:'i-adj',example_jp:'この肉は硬くて食べにくい。',example_en:'This meat is hard and difficult to eat.'},
+  {level:'n4',theme:'adjectives',word:'珍しい',reading:'めずらしい',meaning:'rare, unusual, uncommon',pos:'i-adj',example_jp:'珍しい鳥を見かけた。',example_en:'I spotted a rare bird.'},
+  {level:'n4',theme:'adjectives',word:'正しい',reading:'ただしい',meaning:'correct, right',pos:'i-adj',example_jp:'正しい答えを教えてください。',example_en:'Please tell me the correct answer.'},
+  {level:'n4',theme:'adjectives',word:'厳しい',reading:'きびしい',meaning:'strict, severe, harsh',pos:'i-adj',example_jp:'先生はとても厳しいです。',example_en:'The teacher is very strict.'},
+  {level:'n4',theme:'adjectives',word:'優しい',reading:'やさしい',meaning:'kind, gentle',pos:'i-adj',example_jp:'彼女はとても優しい人だ。',example_en:'She is a very kind person.'},
+  {level:'n4',theme:'adjectives',word:'美しい',reading:'うつくしい',meaning:'beautiful',pos:'i-adj',example_jp:'夕焼けが美しかった。',example_en:'The sunset was beautiful.'},
+  {level:'n4',theme:'adjectives',word:'悔しい',reading:'くやしい',meaning:'frustrating, vexing (from losing)',pos:'i-adj',example_jp:'試合に負けて悔しかった。',example_en:'It was frustrating to lose the match.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N4 — ADJECTIVES (na-adjectives)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n4',theme:'adjectives',word:'大切',reading:'たいせつ',meaning:'important, precious, valued',pos:'na-adj',example_jp:'健康が一番大切です。',example_en:'Health is the most important thing.'},
+  {level:'n4',theme:'adjectives',word:'丁寧',reading:'ていねい',meaning:'polite, careful, thorough',pos:'na-adj',example_jp:'丁寧に説明してくれた。',example_en:'They explained it carefully.'},
+  {level:'n4',theme:'adjectives',word:'複雑',reading:'ふくざつ',meaning:'complicated, complex',pos:'na-adj',example_jp:'この問題は複雑です。',example_en:'This problem is complicated.'},
+  {level:'n4',theme:'adjectives',word:'安心',reading:'あんしん',meaning:'relief, peace of mind',pos:'na-adj/noun',example_jp:'無事に着いて安心しました。',example_en:'I was relieved to arrive safely.'},
+  {level:'n4',theme:'adjectives',word:'不安',reading:'ふあん',meaning:'uneasy, anxious',pos:'na-adj/noun',example_jp:'将来のことが不安です。',example_en:'I am anxious about the future.'},
+  {level:'n4',theme:'adjectives',word:'必要',reading:'ひつよう',meaning:'necessary, needed',pos:'na-adj/noun',example_jp:'ビザが必要ですか。',example_en:'Is a visa necessary?'},
+  {level:'n4',theme:'adjectives',word:'自由',reading:'じゆう',meaning:'freedom, free (of restriction)',pos:'na-adj/noun',example_jp:'自由な時間が欲しいです。',example_en:'I want some free time.'},
+  {level:'n4',theme:'adjectives',word:'丈夫',reading:'じょうぶ',meaning:'durable, sturdy, healthy',pos:'na-adj',example_jp:'丈夫な靴を買いました。',example_en:'I bought sturdy shoes.'},
+  {level:'n4',theme:'adjectives',word:'得意',reading:'とくい',meaning:'good at, one\'s strong point',pos:'na-adj',example_jp:'料理が得意です。',example_en:'I am good at cooking.'},
+  {level:'n4',theme:'adjectives',word:'苦手',reading:'にがて',meaning:'bad at, not good at, weak point',pos:'na-adj',example_jp:'数学が苦手です。',example_en:'I am not good at maths.'},
+  {level:'n4',theme:'adjectives',word:'親切',reading:'しんせつ',meaning:'kind, kindness',pos:'na-adj',example_jp:'親切にしてくれてありがとう。',example_en:'Thank you for being kind.'},
+  {level:'n4',theme:'adjectives',word:'正直',reading:'しょうじき',meaning:'honest, honesty',pos:'na-adj',example_jp:'正直に話してください。',example_en:'Please speak honestly.'},
+  {level:'n4',theme:'adjectives',word:'真剣',reading:'しんけん',meaning:'serious, earnest',pos:'na-adj',example_jp:'真剣に考えています。',example_en:'I am thinking about it seriously.'},
+  {level:'n4',theme:'adjectives',word:'素直',reading:'すなお',meaning:'obedient, honest, straightforward',pos:'na-adj',example_jp:'素直な子供は育てやすい。',example_en:'An obedient child is easy to raise.'},
+  {level:'n4',theme:'adjectives',word:'便利',reading:'べんり',meaning:'convenient, handy',pos:'na-adj',example_jp:'スマホはとても便利です。',example_en:'Smartphones are very convenient.'},
+  {level:'n4',theme:'adjectives',word:'不便',reading:'ふべん',meaning:'inconvenient',pos:'na-adj',example_jp:'電車がないと不便です。',example_en:'It is inconvenient without a train.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N4 — ADVERBS & EXPRESSIONS
+  // ═══════════════════════════════════════════════════════════
+  {level:'n4',theme:'adverbs',word:'ずっと',reading:'ずっと',meaning:'all along, the whole time, continuously',pos:'adverb',example_jp:'ずっと待っていました。',example_en:'I was waiting all along.'},
+  {level:'n4',theme:'adverbs',word:'もっと',reading:'もっと',meaning:'more, even more',pos:'adverb',example_jp:'もっとゆっくり話してください。',example_en:'Please speak more slowly.'},
+  {level:'n4',theme:'adverbs',word:'やっと',reading:'やっと',meaning:'finally, at last, barely',pos:'adverb',example_jp:'やっと終わった。',example_en:'It is finally over.'},
+  {level:'n4',theme:'adverbs',word:'だいたい',reading:'だいたい',meaning:'generally, roughly, approximately',pos:'adverb',example_jp:'だいたい30分かかります。',example_en:'It takes approximately 30 minutes.'},
+  {level:'n4',theme:'adverbs',word:'はっきり',reading:'はっきり',meaning:'clearly, distinctly',pos:'adverb',example_jp:'はっきり言ってください。',example_en:'Please say it clearly.'},
+  {level:'n4',theme:'adverbs',word:'きっと',reading:'きっと',meaning:'surely, certainly, no doubt',pos:'adverb',example_jp:'きっと上手くいきます。',example_en:'It will surely go well.'},
+  {level:'n4',theme:'adverbs',word:'なかなか',reading:'なかなか',meaning:'quite, rather; (with neg) not easily',pos:'adverb',example_jp:'なかなか難しい問題だ。',example_en:'It is quite a difficult problem.'},
+  {level:'n4',theme:'adverbs',word:'特に',reading:'とくに',meaning:'especially, particularly',pos:'adverb',example_jp:'特に問題はありません。',example_en:'There is no particular problem.'},
+  {level:'n4',theme:'adverbs',word:'ほとんど',reading:'ほとんど',meaning:'mostly, almost, nearly; (neg) hardly',pos:'adverb',example_jp:'宿題はほとんど終わった。',example_en:'I have almost finished the homework.'},
+  {level:'n4',theme:'adverbs',word:'もちろん',reading:'もちろん',meaning:'of course, naturally',pos:'adverb',example_jp:'もちろん参加します。',example_en:'Of course I will participate.'},
+  {level:'n4',theme:'adverbs',word:'また',reading:'また',meaning:'again, also, and',pos:'adverb',example_jp:'またお会いしましょう。',example_en:'Let\'s meet again.'},
+  {level:'n4',theme:'adverbs',word:'もう',reading:'もう',meaning:'already; any more (with neg)',pos:'adverb',example_jp:'もう終わりましたか。',example_en:'Are you already finished?'},
+  {level:'n4',theme:'adverbs',word:'まだ',reading:'まだ',meaning:'still, yet, not yet',pos:'adverb',example_jp:'まだ食べていません。',example_en:'I haven\'t eaten yet.'},
+  {level:'n4',theme:'adverbs',word:'すぐ',reading:'すぐ',meaning:'immediately, right away, soon',pos:'adverb',example_jp:'すぐ戻ります。',example_en:'I will be back right away.'},
+  {level:'n4',theme:'adverbs',word:'いつも',reading:'いつも',meaning:'always, usually',pos:'adverb',example_jp:'いつも早起きしています。',example_en:'I always wake up early.'},
+  {level:'n4',theme:'adverbs',word:'全然',reading:'ぜんぜん',meaning:'not at all (with negative)',pos:'adverb',example_jp:'全然わかりません。',example_en:'I don\'t understand at all.'},
+  {level:'n4',theme:'adverbs',word:'だんだん',reading:'だんだん',meaning:'gradually, little by little',pos:'adverb',example_jp:'だんだん上手になってきた。',example_en:'I have gradually been getting better.'},
+  {level:'n4',theme:'adverbs',word:'どんどん',reading:'どんどん',meaning:'rapidly, one after another, steadily',pos:'adverb',example_jp:'日本語がどんどん上手になっています。',example_en:'My Japanese is steadily improving.'},
+  {level:'n4',theme:'adverbs',word:'ちゃんと',reading:'ちゃんと',meaning:'properly, correctly, neatly',pos:'adverb',example_jp:'ちゃんと連絡してください。',example_en:'Please contact me properly.'},
+  {level:'n4',theme:'adverbs',word:'必ず',reading:'かならず',meaning:'without fail, certainly, always',pos:'adverb',example_jp:'必ず時間を守ってください。',example_en:'Please be punctual without fail.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N4 — EXPRESSIONS & CONJUNCTIONS
+  // ═══════════════════════════════════════════════════════════
+  {level:'n4',theme:'expressions',word:'それでも',reading:'それでも',meaning:'even so, nevertheless, still',pos:'conj',example_jp:'雨が降った。それでも試合は続いた。',example_en:'It rained. Even so, the game continued.'},
+  {level:'n4',theme:'expressions',word:'それなのに',reading:'それなのに',meaning:'and yet, despite that',pos:'conj',example_jp:'頑張った。それなのに失敗した。',example_en:'I worked hard. And yet I failed.'},
+  {level:'n4',theme:'expressions',word:'そのため',reading:'そのため',meaning:'therefore, for that reason',pos:'conj',example_jp:'道が混んでいた。そのため遅れた。',example_en:'The road was congested. Therefore I was late.'},
+  {level:'n4',theme:'expressions',word:'たとえば',reading:'たとえば',meaning:'for example',pos:'conj',example_jp:'果物、たとえばリンゴが好きです。',example_en:'I like fruit, for example apples.'},
+  {level:'n4',theme:'expressions',word:'つまり',reading:'つまり',meaning:'in other words, that is to say',pos:'conj',example_jp:'合格した。つまり夢が叶ったんだ。',example_en:'I passed. In other words, my dream came true.'},
+  {level:'n4',theme:'expressions',word:'ところで',reading:'ところで',meaning:'by the way',pos:'conj',example_jp:'ところで、明日は暇ですか。',example_en:'By the way, are you free tomorrow?'},
+  {level:'n4',theme:'expressions',word:'かわりに',reading:'かわりに',meaning:'instead of, in place of',pos:'phrase',example_jp:'バスのかわりに電車で行きます。',example_en:'I will go by train instead of bus.'},
+  {level:'n4',theme:'expressions',word:'だから',reading:'だから',meaning:'therefore, that\'s why, so',pos:'conj',example_jp:'遅れた。だから謝った。',example_en:'I was late. That\'s why I apologised.'},
+  {level:'n4',theme:'expressions',word:'しかし',reading:'しかし',meaning:'however, but',pos:'conj',example_jp:'頑張った。しかし失敗してしまった。',example_en:'I tried hard. However, I failed.'},
+  {level:'n4',theme:'expressions',word:'また',reading:'また',meaning:'also, and, moreover',pos:'conj',example_jp:'彼は医者で、また画家でもある。',example_en:'He is a doctor, and also a painter.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N4 — NOUNS (nature & weather)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n4',theme:'nature',word:'天気',reading:'てんき',meaning:'weather',pos:'noun',example_jp:'天気予報によると、明日は晴れです。',example_en:'According to the forecast, it will be sunny tomorrow.'},
+  {level:'n4',theme:'nature',word:'台風',reading:'たいふう',meaning:'typhoon',pos:'noun',example_jp:'台風が近づいています。',example_en:'A typhoon is approaching.'},
+  {level:'n4',theme:'nature',word:'地震',reading:'じしん',meaning:'earthquake',pos:'noun',example_jp:'昨夜地震がありました。',example_en:'There was an earthquake last night.'},
+  {level:'n4',theme:'nature',word:'空',reading:'そら',meaning:'sky',pos:'noun',example_jp:'空が青くてきれいです。',example_en:'The sky is blue and beautiful.'},
+  {level:'n4',theme:'nature',word:'海',reading:'うみ',meaning:'sea, ocean',pos:'noun',example_jp:'夏は海に泳ぎに行きたい。',example_en:'In summer I want to go swimming in the sea.'},
+  {level:'n4',theme:'nature',word:'山',reading:'やま',meaning:'mountain',pos:'noun',example_jp:'富士山は日本一高い山です。',example_en:'Mt. Fuji is the highest mountain in Japan.'},
+  {level:'n4',theme:'nature',word:'川',reading:'かわ',meaning:'river',pos:'noun',example_jp:'川沿いを散歩しました。',example_en:'I took a walk along the river.'},
+  {level:'n4',theme:'nature',word:'森',reading:'もり',meaning:'forest, woods',pos:'noun',example_jp:'森の中を歩くのが好きです。',example_en:'I like walking in the forest.'},
+
+
+// ═══════════════════════════════════════════════════════════
+  //  N3 — VERBS (u-verbs)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n3',theme:'verbs',word:'諦める',reading:'あきらめる',meaning:'to give up, to abandon hope',pos:'verb (ru)',example_jp:'最後まで諦めないでください。',example_en:'Please don\'t give up until the end.'},
+  {level:'n3',theme:'verbs',word:'扱う',reading:'あつかう',meaning:'to handle, to treat, to deal with',pos:'verb (u)',example_jp:'お客様を丁寧に扱ってください。',example_en:'Please handle customers politely.'},
+  {level:'n3',theme:'verbs',word:'争う',reading:'あらそう',meaning:'to compete, to dispute, to fight',pos:'verb (u)',example_jp:'二人は一位を争っている。',example_en:'The two are competing for first place.'},
+  {level:'n3',theme:'verbs',word:'言い訳する',reading:'いいわけする',meaning:'to make an excuse',pos:'verb (irr)',example_jp:'言い訳せずに謝りなさい。',example_en:'Apologise without making excuses.'},
+  {level:'n3',theme:'verbs',word:'祈る',reading:'いのる',meaning:'to pray, to wish',pos:'verb (u)',example_jp:'合格を祈っています。',example_en:'I am praying for your success.'},
+  {level:'n3',theme:'verbs',word:'浮かぶ',reading:'うかぶ',meaning:'to float; to come to mind',pos:'verb (u)',example_jp:'良いアイデアが浮かんだ。',example_en:'A good idea came to mind.'},
+  {level:'n3',theme:'verbs',word:'疑う',reading:'うたがう',meaning:'to doubt, to suspect',pos:'verb (u)',example_jp:'彼の言葉を疑わざるを得ない。',example_en:'I cannot help but doubt his words.'},
+  {level:'n3',theme:'verbs',word:'奪う',reading:'うばう',meaning:'to snatch, to rob, to deprive of',pos:'verb (u)',example_jp:'事故が彼の未来を奪った。',example_en:'The accident robbed him of his future.'},
+  {level:'n3',theme:'verbs',word:'生まれる',reading:'うまれる',meaning:'to be born',pos:'verb (ru)',example_jp:'私はシンガポールで生まれました。',example_en:'I was born in Singapore.'},
+  {level:'n3',theme:'verbs',word:'占める',reading:'しめる',meaning:'to occupy, to account for',pos:'verb (ru)',example_jp:'観光業がGDPの20%を占める。',example_en:'Tourism accounts for 20% of GDP.'},
+  {level:'n3',theme:'verbs',word:'選ぶ',reading:'えらぶ',meaning:'to choose, to select',pos:'verb (u)',example_jp:'どちらを選びますか。',example_en:'Which will you choose?'},
+  {level:'n3',theme:'verbs',word:'追う',reading:'おう',meaning:'to chase, to follow, to pursue',pos:'verb (u)',example_jp:'夢を追いかけている。',example_en:'I am chasing my dream.'},
+  {level:'n3',theme:'verbs',word:'起こる',reading:'おこる',meaning:'to occur, to happen (event)',pos:'verb (u)',example_jp:'何が起こったのですか。',example_en:'What happened?'},
+  {level:'n3',theme:'verbs',word:'落ち込む',reading:'おちこむ',meaning:'to feel depressed, to be down',pos:'verb (u)',example_jp:'失敗して落ち込んでいます。',example_en:'I am feeling down after the failure.'},
+  {level:'n3',theme:'verbs',word:'思いつく',reading:'おもいつく',meaning:'to think of, to come up with (an idea)',pos:'verb (u)',example_jp:'良い方法を思いついた。',example_en:'I thought of a good method.'},
+  {level:'n3',theme:'verbs',word:'驚かす',reading:'おどろかす',meaning:'to surprise, to astonish',pos:'verb (u)',example_jp:'サプライズで彼女を驚かせた。',example_en:'I surprised her with a surprise party.'},
+  {level:'n3',theme:'verbs',word:'変える',reading:'かえる',meaning:'to change, to alter (something)',pos:'verb (ru)',example_jp:'計画を変える必要がある。',example_en:'It is necessary to change the plan.'},
+  {level:'n3',theme:'verbs',word:'欠く',reading:'かく',meaning:'to lack, to be missing',pos:'verb (u)',example_jp:'常識を欠く発言だ。',example_en:'It is a statement lacking common sense.'},
+  {level:'n3',theme:'verbs',word:'勝つ',reading:'かつ',meaning:'to win, to beat',pos:'verb (u)',example_jp:'試合に勝ちたい。',example_en:'I want to win the match.'},
+  {level:'n3',theme:'verbs',word:'構う',reading:'かまう',meaning:'to mind, to care; to bother',pos:'verb (u)',example_jp:'時間が遅くても構いません。',example_en:'It doesn\'t matter if it\'s late.'},
+  {level:'n3',theme:'verbs',word:'絡む',reading:'からむ',meaning:'to be involved with, to get tangled up with',pos:'verb (u)',example_jp:'政治が絡む問題は複雑だ。',example_en:'Issues involving politics are complicated.'},
+  {level:'n3',theme:'verbs',word:'傷つく',reading:'きずつく',meaning:'to get hurt, to be wounded (physically or emotionally)',pos:'verb (u)',example_jp:'その言葉で心が傷ついた。',example_en:'I was hurt by those words.'},
+  {level:'n3',theme:'verbs',word:'気づく',reading:'きづく',meaning:'to notice, to realise',pos:'verb (u)',example_jp:'間違いに気づかなかった。',example_en:'I didn\'t notice the mistake.'},
+  {level:'n3',theme:'verbs',word:'断る',reading:'ことわる',meaning:'to refuse, to decline, to turn down',pos:'verb (u)',example_jp:'その申し出を断りました。',example_en:'I declined the offer.'},
+  {level:'n3',theme:'verbs',word:'困る',reading:'こまる',meaning:'to be troubled, to have difficulty',pos:'verb (u)',example_jp:'お金がなくて困っています。',example_en:'I am having difficulty because I have no money.'},
+  {level:'n3',theme:'verbs',word:'こわす',reading:'こわす',meaning:'to break, to damage (something)',pos:'verb (u)',example_jp:'テレビをこわしてしまった。',example_en:'I broke the TV.'},
+  {level:'n3',theme:'verbs',word:'転ぶ',reading:'ころぶ',meaning:'to fall down, to tumble',pos:'verb (u)',example_jp:'階段で転んで怪我をした。',example_en:'I fell on the stairs and got hurt.'},
+  {level:'n3',theme:'verbs',word:'叫ぶ',reading:'さけぶ',meaning:'to shout, to scream',pos:'verb (u)',example_jp:'助けを求めて叫んだ。',example_en:'I shouted for help.'},
+  {level:'n3',theme:'verbs',word:'触る',reading:'さわる',meaning:'to touch',pos:'verb (u)',example_jp:'展示品には触らないでください。',example_en:'Please do not touch the exhibits.'},
+  {level:'n3',theme:'verbs',word:'失う',reading:'うしなう',meaning:'to lose (something precious)',pos:'verb (u)',example_jp:'仕事を失ってしまった。',example_en:'I lost my job.'},
+  {level:'n3',theme:'verbs',word:'知らせる',reading:'しらせる',meaning:'to inform, to notify',pos:'verb (ru)',example_jp:'結果が出たら知らせてください。',example_en:'Please let me know when the results are out.'},
+  {level:'n3',theme:'verbs',word:'過ごす',reading:'すごす',meaning:'to spend (time), to pass time',pos:'verb (u)',example_jp:'家族と楽しく過ごしました。',example_en:'I spent a good time with my family.'},
+  {level:'n3',theme:'verbs',word:'勧める',reading:'すすめる',meaning:'to recommend, to advise',pos:'verb (ru)',example_jp:'この本をぜひ勧めます。',example_en:'I highly recommend this book.'},
+  {level:'n3',theme:'verbs',word:'育つ',reading:'そだつ',meaning:'to grow up, to be raised',pos:'verb (u)',example_jp:'田舎で育ちました。',example_en:'I grew up in the countryside.'},
+  {level:'n3',theme:'verbs',word:'倒す',reading:'たおす',meaning:'to knock down, to defeat',pos:'verb (u)',example_jp:'強い相手を倒した。',example_en:'I defeated a strong opponent.'},
+  {level:'n3',theme:'verbs',word:'確かめる',reading:'たしかめる',meaning:'to make sure, to confirm, to verify',pos:'verb (ru)',example_jp:'予約を確かめてから行きます。',example_en:'I will go after confirming the reservation.'},
+  {level:'n3',theme:'verbs',word:'頼む',reading:'たのむ',meaning:'to ask (a favour), to request',pos:'verb (u)',example_jp:'友達に手伝いを頼んだ。',example_en:'I asked my friend for help.'},
+  {level:'n3',theme:'verbs',word:'試す',reading:'ためす',meaning:'to try (out), to test',pos:'verb (u)',example_jp:'新しいレシピを試してみた。',example_en:'I tried out a new recipe.'},
+  {level:'n3',theme:'verbs',word:'違う',reading:'ちがう',meaning:'to differ, to be wrong, to be different',pos:'verb (u)',example_jp:'その答えは違います。',example_en:'That answer is wrong.'},
+  {level:'n3',theme:'verbs',word:'通じる',reading:'つうじる',meaning:'to be understood; to connect through',pos:'verb (ru)',example_jp:'英語が通じる国に行きたい。',example_en:'I want to go to a country where English is understood.'},
+  {level:'n3',theme:'verbs',word:'疲れる',reading:'つかれる',meaning:'to get tired, to be exhausted',pos:'verb (ru)',example_jp:'今日はとても疲れた。',example_en:'I am very tired today.'},
+  {level:'n3',theme:'verbs',word:'つながる',reading:'つながる',meaning:'to be connected, to link',pos:'verb (u)',example_jp:'Wi-Fiにつながらない。',example_en:'It won\'t connect to Wi-Fi.'},
+  {level:'n3',theme:'verbs',word:'努める',reading:'つとめる',meaning:'to strive, to make an effort',pos:'verb (ru)',example_jp:'サービス向上に努めます。',example_en:'We will strive to improve our service.'},
+  {level:'n3',theme:'verbs',word:'積む',reading:'つむ',meaning:'to pile up, to accumulate, to stack',pos:'verb (u)',example_jp:'経験を積むことが大切だ。',example_en:'It is important to accumulate experience.'},
+  {level:'n3',theme:'verbs',word:'取り組む',reading:'とりくむ',meaning:'to tackle, to work on, to address',pos:'verb (u)',example_jp:'問題に真剣に取り組んでいる。',example_en:'I am seriously tackling the problem.'},
+  {level:'n3',theme:'verbs',word:'流れる',reading:'ながれる',meaning:'to flow, to stream',pos:'verb (ru)',example_jp:'川がゆっくり流れている。',example_en:'The river flows slowly.'},
+  {level:'n3',theme:'verbs',word:'悩む',reading:'なやむ',meaning:'to worry, to be troubled, to agonise',pos:'verb (u)',example_jp:'進路について悩んでいます。',example_en:'I am agonising over my career path.'},
+  {level:'n3',theme:'verbs',word:'似る',reading:'にる',meaning:'to resemble, to be similar',pos:'verb (ru)',example_jp:'彼は父親によく似ている。',example_en:'He resembles his father closely.'},
+  {level:'n3',theme:'verbs',word:'逃げる',reading:'にげる',meaning:'to run away, to escape, to flee',pos:'verb (ru)',example_jp:'困難から逃げてはいけない。',example_en:'You must not run away from difficulties.'},
+  {level:'n3',theme:'verbs',word:'望む',reading:'のぞむ',meaning:'to wish for, to hope, to desire',pos:'verb (u)',example_jp:'平和を望んでいます。',example_en:'I hope for peace.'},
+  {level:'n3',theme:'verbs',word:'乗り越える',reading:'のりこえる',meaning:'to overcome, to get over',pos:'verb (ru)',example_jp:'困難を乗り越えることができた。',example_en:'I was able to overcome the difficulty.'},
+  {level:'n3',theme:'verbs',word:'生やす',reading:'はやす',meaning:'to grow (hair/beard), to cultivate',pos:'verb (u)',example_jp:'ひげを生やしてみた。',example_en:'I tried growing a beard.'},
+  {level:'n3',theme:'verbs',word:'反省する',reading:'はんせいする',meaning:'to reflect on, to regret, to reconsider',pos:'verb (irr)',example_jp:'自分の行動を反省している。',example_en:'I am reflecting on my actions.'},
+  {level:'n3',theme:'verbs',word:'引き受ける',reading:'ひきうける',meaning:'to take on, to accept (responsibility/task)',pos:'verb (ru)',example_jp:'その仕事を引き受けます。',example_en:'I will take on that job.'},
+  {level:'n3',theme:'verbs',word:'広める',reading:'ひろめる',meaning:'to spread, to publicise, to promote',pos:'verb (ru)',example_jp:'日本文化を世界に広めたい。',example_en:'I want to spread Japanese culture around the world.'},
+  {level:'n3',theme:'verbs',word:'振る',reading:'ふる',meaning:'to shake, to wave; to reject (a person)',pos:'verb (u)',example_jp:'手を振って別れを告げた。',example_en:'I waved goodbye.'},
+  {level:'n3',theme:'verbs',word:'褒める',reading:'ほめる',meaning:'to praise, to compliment',pos:'verb (ru)',example_jp:'上手だと褒めてくれた。',example_en:'They praised me saying I was good.'},
+  {level:'n3',theme:'verbs',word:'守る',reading:'まもる',meaning:'to protect, to keep (a promise/rule)',pos:'verb (u)',example_jp:'約束を必ず守ります。',example_en:'I will always keep my promise.'},
+  {level:'n3',theme:'verbs',word:'認める',reading:'みとめる',meaning:'to acknowledge, to recognise, to admit',pos:'verb (ru)',example_jp:'失敗を素直に認めた。',example_en:'I honestly acknowledged the failure.'},
+  {level:'n3',theme:'verbs',word:'向かう',reading:'むかう',meaning:'to head toward, to face',pos:'verb (u)',example_jp:'駅に向かっています。',example_en:'I am heading toward the station.'},
+  {level:'n3',theme:'verbs',word:'申し上げる',reading:'もうしあげる',meaning:'to say (humble form)',pos:'verb (ru)',example_jp:'一言申し上げます。',example_en:'Allow me to say a word.'},
+  {level:'n3',theme:'verbs',word:'求める',reading:'もとめる',meaning:'to seek, to demand, to require',pos:'verb (ru)',example_jp:'助けを求めています。',example_en:'I am seeking help.'},
+  {level:'n3',theme:'verbs',word:'役立つ',reading:'やくだつ',meaning:'to be useful, to be helpful',pos:'verb (u)',example_jp:'この知識は将来役立つだろう。',example_en:'This knowledge will be useful in the future.'},
+  {level:'n3',theme:'verbs',word:'呼ぶ',reading:'よぶ',meaning:'to call, to summon, to invite',pos:'verb (u)',example_jp:'タクシーを呼んでください。',example_en:'Please call a taxi.'},
+  {level:'n3',theme:'verbs',word:'我慢する',reading:'がまんする',meaning:'to endure, to put up with, to hold back',pos:'verb (irr)',example_jp:'痛くても我慢しています。',example_en:'I am enduring it even though it hurts.'},
+  {level:'n3',theme:'verbs',word:'感動する',reading:'かんどうする',meaning:'to be moved (emotionally), to be touched',pos:'verb (irr)',example_jp:'その映画に感動しました。',example_en:'I was moved by that film.'},
+  {level:'n3',theme:'verbs',word:'工夫する',reading:'くふうする',meaning:'to devise, to come up with an idea, to make efforts',pos:'verb (irr)',example_jp:'教え方を工夫しています。',example_en:'I am devising ways to teach.'},
+  {level:'n3',theme:'verbs',word:'失望する',reading:'しつぼうする',meaning:'to be disappointed',pos:'verb (irr)',example_jp:'結果に失望してしまった。',example_en:'I was disappointed by the result.'},
+  {level:'n3',theme:'verbs',word:'信頼する',reading:'しんらいする',meaning:'to trust, to rely on',pos:'verb (irr)',example_jp:'彼を信頼しています。',example_en:'I trust him.'},
+  {level:'n3',theme:'verbs',word:'成長する',reading:'せいちょうする',meaning:'to grow, to develop',pos:'verb (irr)',example_jp:'子供がどんどん成長している。',example_en:'The child is growing rapidly.'},
+  {level:'n3',theme:'verbs',word:'尊敬する',reading:'そんけいする',meaning:'to respect, to look up to',pos:'verb (irr)',example_jp:'父をとても尊敬しています。',example_en:'I deeply respect my father.'},
+  {level:'n3',theme:'verbs',word:'注目する',reading:'ちゅうもくする',meaning:'to pay attention to, to focus on',pos:'verb (irr)',example_jp:'世界中が注目している問題だ。',example_en:'It is a problem that the whole world is paying attention to.'},
+  {level:'n3',theme:'verbs',word:'比較する',reading:'ひかくする',meaning:'to compare',pos:'verb (irr)',example_jp:'二つの案を比較してみましょう。',example_en:'Let\'s compare the two proposals.'},
+  {level:'n3',theme:'verbs',word:'批判する',reading:'ひはんする',meaning:'to criticise',pos:'verb (irr)',example_jp:'むやみに人を批判してはいけない。',example_en:'You should not criticise people carelessly.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N3 — NOUNS (abstract & general)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n3',theme:'abstract',word:'意見',reading:'いけん',meaning:'opinion, view',pos:'noun',example_jp:'あなたの意見を聞かせてください。',example_en:'Please let me hear your opinion.'},
+  {level:'n3',theme:'abstract',word:'印象',reading:'いんしょう',meaning:'impression',pos:'noun',example_jp:'第一印象がとても大切です。',example_en:'First impressions are very important.'},
+  {level:'n3',theme:'abstract',word:'可能性',reading:'かのうせい',meaning:'possibility, potential',pos:'noun',example_jp:'成功の可能性は十分ある。',example_en:'There is plenty of possibility for success.'},
+  {level:'n3',theme:'abstract',word:'関係',reading:'かんけい',meaning:'relationship, connection, involvement',pos:'noun',example_jp:'二人の関係はどうですか。',example_en:'How is the relationship between the two of them?'},
+  {level:'n3',theme:'abstract',word:'機能',reading:'きのう',meaning:'function, feature, capability',pos:'noun/verb',example_jp:'このアプリの機能を説明します。',example_en:'I will explain the features of this app.'},
+  {level:'n3',theme:'abstract',word:'基本',reading:'きほん',meaning:'basics, fundamentals, standard',pos:'noun',example_jp:'まず基本から学びましょう。',example_en:'Let\'s first learn the basics.'},
+  {level:'n3',theme:'abstract',word:'疑問',reading:'ぎもん',meaning:'doubt, question, query',pos:'noun',example_jp:'疑問があれば何でも聞いてください。',example_en:'If you have any questions please ask anything.'},
+  {level:'n3',theme:'abstract',word:'共通',reading:'きょうつう',meaning:'common, shared, mutual',pos:'noun/na-adj',example_jp:'二人には共通の趣味がある。',example_en:'The two of them have a common hobby.'},
+  {level:'n3',theme:'abstract',word:'記録',reading:'きろく',meaning:'record, note, documentation',pos:'noun/verb',example_jp:'世界記録を更新した。',example_en:'The world record was broken.'},
+  {level:'n3',theme:'abstract',word:'規則',reading:'きそく',meaning:'rule, regulation',pos:'noun',example_jp:'規則を守ってください。',example_en:'Please follow the rules.'},
+  {level:'n3',theme:'abstract',word:'工夫',reading:'くふう',meaning:'devise, ingenuity, creative effort',pos:'noun',example_jp:'教え方に工夫が必要だ。',example_en:'Creative effort is needed in teaching methods.'},
+  {level:'n3',theme:'abstract',word:'原因',reading:'げんいん',meaning:'cause, origin (of a problem)',pos:'noun',example_jp:'事故の原因を調査しています。',example_en:'We are investigating the cause of the accident.'},
+  {level:'n3',theme:'abstract',word:'効果',reading:'こうか',meaning:'effect, result, efficacy',pos:'noun',example_jp:'この薬は効果がありますか。',example_en:'Is this medicine effective?'},
+  {level:'n3',theme:'abstract',word:'個人',reading:'こじん',meaning:'individual, personal',pos:'noun',example_jp:'これは個人の意見です。',example_en:'This is a personal opinion.'},
+  {level:'n3',theme:'abstract',word:'才能',reading:'さいのう',meaning:'talent, gift',pos:'noun',example_jp:'彼女は音楽の才能がある。',example_en:'She has a talent for music.'},
+  {level:'n3',theme:'abstract',word:'差',reading:'さ',meaning:'difference, gap, variation',pos:'noun',example_jp:'実力に大きな差がある。',example_en:'There is a large gap in ability.'},
+  {level:'n3',theme:'abstract',word:'支持',reading:'しじ',meaning:'support, backing',pos:'noun/verb',example_jp:'市民の支持を得ています。',example_en:'I have the support of the citizens.'},
+  {level:'n3',theme:'abstract',word:'事実',reading:'じじつ',meaning:'fact, truth, reality',pos:'noun',example_jp:'事実を正直に話してください。',example_en:'Please speak the facts honestly.'},
+  {level:'n3',theme:'abstract',word:'自信',reading:'じしん',meaning:'confidence, self-confidence',pos:'noun',example_jp:'自信を持って発表してください。',example_en:'Please give your presentation with confidence.'},
+  {level:'n3',theme:'abstract',word:'自然',reading:'しぜん',meaning:'nature; natural',pos:'noun/na-adj',example_jp:'自然を大切にしましょう。',example_en:'Let\'s take care of nature.'},
+  {level:'n3',theme:'abstract',word:'条件',reading:'じょうけん',meaning:'condition, requirement, terms',pos:'noun',example_jp:'この条件で合意できますか。',example_en:'Can you agree to these conditions?'},
+  {level:'n3',theme:'abstract',word:'状況',reading:'じょうきょう',meaning:'situation, circumstances',pos:'noun',example_jp:'状況を説明してください。',example_en:'Please explain the situation.'},
+  {level:'n3',theme:'abstract',word:'情報',reading:'じょうほう',meaning:'information, data',pos:'noun',example_jp:'正確な情報が必要です。',example_en:'Accurate information is needed.'},
+  {level:'n3',theme:'abstract',word:'証明',reading:'しょうめい',meaning:'proof, certification',pos:'noun/verb',example_jp:'身元を証明してください。',example_en:'Please prove your identity.'},
+  {level:'n3',theme:'abstract',word:'責任',reading:'せきにん',meaning:'responsibility, obligation',pos:'noun',example_jp:'責任を持って取り組みます。',example_en:'I will tackle it responsibly.'},
+  {level:'n3',theme:'abstract',word:'選択',reading:'せんたく',meaning:'choice, selection',pos:'noun/verb',example_jp:'難しい選択を迫られた。',example_en:'I was forced into a difficult choice.'},
+  {level:'n3',theme:'abstract',word:'存在',reading:'そんざい',meaning:'existence, presence, being',pos:'noun/verb',example_jp:'彼の存在が大きかった。',example_en:'His presence was significant.'},
+  {level:'n3',theme:'abstract',word:'態度',reading:'たいど',meaning:'attitude, manner, behaviour',pos:'noun',example_jp:'彼の態度が気になります。',example_en:'His attitude bothers me.'},
+  {level:'n3',theme:'abstract',word:'注意',reading:'ちゅうい',meaning:'caution, attention, warning',pos:'noun/verb',example_jp:'危険なので注意してください。',example_en:'Please be careful as it is dangerous.'},
+  {level:'n3',theme:'abstract',word:'特徴',reading:'とくちょう',meaning:'characteristic, feature, trait',pos:'noun',example_jp:'この製品の特徴を教えてください。',example_en:'Please tell me the features of this product.'},
+  {level:'n3',theme:'abstract',word:'努力',reading:'どりょく',meaning:'effort, endeavour',pos:'noun/verb',example_jp:'努力すれば必ず報われる。',example_en:'If you make efforts you will surely be rewarded.'},
+  {level:'n3',theme:'abstract',word:'内容',reading:'ないよう',meaning:'content, substance, details',pos:'noun',example_jp:'メールの内容を確認した。',example_en:'I confirmed the content of the email.'},
+  {level:'n3',theme:'abstract',word:'能力',reading:'のうりょく',meaning:'ability, capability, capacity',pos:'noun',example_jp:'能力を発揮してください。',example_en:'Please demonstrate your ability.'},
+  {level:'n3',theme:'abstract',word:'判断',reading:'はんだん',meaning:'judgement, decision',pos:'noun/verb',example_jp:'自分で判断してください。',example_en:'Please make the judgement yourself.'},
+  {level:'n3',theme:'abstract',word:'必要',reading:'ひつよう',meaning:'necessity, need',pos:'noun/na-adj',example_jp:'練習が必要です。',example_en:'Practice is necessary.'},
+  {level:'n3',theme:'abstract',word:'表現',reading:'ひょうげん',meaning:'expression, representation',pos:'noun/verb',example_jp:'気持ちをうまく表現できません。',example_en:'I cannot express my feelings well.'},
+  {level:'n3',theme:'abstract',word:'目的',reading:'もくてき',meaning:'purpose, objective, goal',pos:'noun',example_jp:'旅行の目的は観光です。',example_en:'The purpose of the trip is sightseeing.'},
+  {level:'n3',theme:'abstract',word:'役割',reading:'やくわり',meaning:'role, function, part',pos:'noun',example_jp:'自分の役割を果たしなさい。',example_en:'Fulfil your role.'},
+  {level:'n3',theme:'abstract',word:'利益',reading:'りえき',meaning:'profit, benefit, advantage',pos:'noun',example_jp:'会社の利益が増えた。',example_en:'The company\'s profits increased.'},
+  {level:'n3',theme:'abstract',word:'論理',reading:'ろんり',meaning:'logic, reasoning',pos:'noun',example_jp:'論理的に考えてください。',example_en:'Please think logically.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N3 — NOUNS (society & institutions)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n3',theme:'society',word:'社会',reading:'しゃかい',meaning:'society',pos:'noun',example_jp:'社会の問題を考えています。',example_en:'I am thinking about social issues.'},
+  {level:'n3',theme:'society',word:'政治',reading:'せいじ',meaning:'politics, government',pos:'noun',example_jp:'政治に関心がありますか。',example_en:'Are you interested in politics?'},
+  {level:'n3',theme:'society',word:'経済',reading:'けいざい',meaning:'economy, economics',pos:'noun',example_jp:'経済が回復してきた。',example_en:'The economy has been recovering.'},
+  {level:'n3',theme:'society',word:'文化',reading:'ぶんか',meaning:'culture',pos:'noun',example_jp:'日本の文化に興味があります。',example_en:'I am interested in Japanese culture.'},
+  {level:'n3',theme:'society',word:'伝統',reading:'でんとう',meaning:'tradition',pos:'noun',example_jp:'伝統を守ることが大切だ。',example_en:'It is important to preserve tradition.'},
+  {level:'n3',theme:'society',word:'法律',reading:'ほうりつ',meaning:'law, legislation',pos:'noun',example_jp:'法律を守らなければならない。',example_en:'One must obey the law.'},
+  {level:'n3',theme:'society',word:'制度',reading:'せいど',meaning:'system, institution',pos:'noun',example_jp:'日本の教育制度は複雑だ。',example_en:'Japan\'s education system is complex.'},
+  {level:'n3',theme:'society',word:'政府',reading:'せいふ',meaning:'government',pos:'noun',example_jp:'政府が新しい政策を発表した。',example_en:'The government announced a new policy.'},
+  {level:'n3',theme:'society',word:'国際',reading:'こくさい',meaning:'international',pos:'noun/adj',example_jp:'国際会議に出席しました。',example_en:'I attended an international conference.'},
+  {level:'n3',theme:'society',word:'環境',reading:'かんきょう',meaning:'environment, surroundings',pos:'noun',example_jp:'環境問題が深刻です。',example_en:'Environmental problems are serious.'},
+  {level:'n3',theme:'society',word:'地域',reading:'ちいき',meaning:'region, area, community',pos:'noun',example_jp:'地域の人たちと仲良くしています。',example_en:'I get along with the people in the community.'},
+  {level:'n3',theme:'society',word:'人口',reading:'じんこう',meaning:'population',pos:'noun',example_jp:'日本の人口は減っている。',example_en:'Japan\'s population is declining.'},
+  {level:'n3',theme:'society',word:'平和',reading:'へいわ',meaning:'peace',pos:'noun/na-adj',example_jp:'世界の平和を願っています。',example_en:'I wish for world peace.'},
+  {level:'n3',theme:'society',word:'問題',reading:'もんだい',meaning:'problem, issue',pos:'noun',example_jp:'社会問題について話し合いましょう。',example_en:'Let\'s discuss social issues.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N3 — NOUNS (work & business)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n3',theme:'business',word:'会議',reading:'かいぎ',meaning:'meeting, conference',pos:'noun',example_jp:'午後２時から会議があります。',example_en:'There is a meeting from 2pm.'},
+  {level:'n3',theme:'business',word:'計画',reading:'けいかく',meaning:'plan, project, schedule',pos:'noun/verb',example_jp:'計画を立てましょう。',example_en:'Let\'s make a plan.'},
+  {level:'n3',theme:'business',word:'締め切り',reading:'しめきり',meaning:'deadline',pos:'noun',example_jp:'締め切りは今週金曜日です。',example_en:'The deadline is this Friday.'},
+  {level:'n3',theme:'business',word:'担当',reading:'たんとう',meaning:'being in charge of',pos:'noun/verb',example_jp:'この案件の担当は山田さんです。',example_en:'Yamada-san is in charge of this matter.'},
+  {level:'n3',theme:'business',word:'報告',reading:'ほうこく',meaning:'report, reporting',pos:'noun/verb',example_jp:'上司に結果を報告しました。',example_en:'I reported the results to my supervisor.'},
+  {level:'n3',theme:'business',word:'目標',reading:'もくひょう',meaning:'goal, target, objective',pos:'noun',example_jp:'今年の目標は語学力を上げることです。',example_en:'My goal this year is to improve my language ability.'},
+  {level:'n3',theme:'business',word:'期間',reading:'きかん',meaning:'period, duration, term',pos:'noun',example_jp:'研修期間は３ヶ月です。',example_en:'The training period is 3 months.'},
+  {level:'n3',theme:'business',word:'費用',reading:'ひよう',meaning:'cost, expense',pos:'noun',example_jp:'費用はどのくらいかかりますか。',example_en:'How much does it cost?'},
+  {level:'n3',theme:'business',word:'予算',reading:'よさん',meaning:'budget',pos:'noun',example_jp:'予算内で解決しましょう。',example_en:'Let\'s resolve it within the budget.'},
+  {level:'n3',theme:'business',word:'担保',reading:'たんぽ',meaning:'guarantee, collateral',pos:'noun',example_jp:'ローンには担保が必要です。',example_en:'Collateral is required for a loan.'},
+  {level:'n3',theme:'business',word:'取引',reading:'とりひき',meaning:'transaction, deal, trade',pos:'noun/verb',example_jp:'新しい取引先を開拓した。',example_en:'I developed a new business partner.'},
+  {level:'n3',theme:'business',word:'商品',reading:'しょうひん',meaning:'product, goods, merchandise',pos:'noun',example_jp:'新商品を紹介します。',example_en:'I will introduce the new product.'},
+  {level:'n3',theme:'business',word:'品質',reading:'ひんしつ',meaning:'quality',pos:'noun',example_jp:'品質を向上させる必要がある。',example_en:'It is necessary to improve quality.'},
+  {level:'n3',theme:'business',word:'需要',reading:'じゅよう',meaning:'demand',pos:'noun',example_jp:'この製品への需要が高まっている。',example_en:'Demand for this product is increasing.'},
+  {level:'n3',theme:'business',word:'供給',reading:'きょうきゅう',meaning:'supply',pos:'noun/verb',example_jp:'需要に応じて供給します。',example_en:'We will supply in accordance with demand.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N3 — NOUNS (human & emotions)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n3',theme:'emotions',word:'悩み',reading:'なやみ',meaning:'worry, trouble, concern',pos:'noun',example_jp:'最近悩みがあります。',example_en:'I have been worried lately.'},
+  {level:'n3',theme:'emotions',word:'感情',reading:'かんじょう',meaning:'emotion, feeling',pos:'noun',example_jp:'感情をコントロールするのは難しい。',example_en:'It is difficult to control one\'s emotions.'},
+  {level:'n3',theme:'emotions',word:'羨ましい',reading:'うらやましい',meaning:'envious, jealous',pos:'i-adj',example_jp:'旅行に行けて羨ましいです。',example_en:'I envy you for being able to travel.'},
+  {level:'n3',theme:'emotions',word:'恥ずかしい',reading:'はずかしい',meaning:'embarrassing, ashamed',pos:'i-adj',example_jp:'人前で間違えて恥ずかしかった。',example_en:'I was embarrassed to make a mistake in front of people.'},
+  {level:'n3',theme:'emotions',word:'後悔',reading:'こうかい',meaning:'regret, remorse',pos:'noun/verb',example_jp:'あのとき諦めたことを後悔している。',example_en:'I regret giving up at that time.'},
+  {level:'n3',theme:'emotions',word:'満足',reading:'まんぞく',meaning:'satisfaction, contentment',pos:'noun/verb/na-adj',example_jp:'結果に満足しています。',example_en:'I am satisfied with the result.'},
+  {level:'n3',theme:'emotions',word:'希望',reading:'きぼう',meaning:'hope, wish, aspiration',pos:'noun/verb',example_jp:'将来に希望を持っています。',example_en:'I have hope for the future.'},
+  {level:'n3',theme:'emotions',word:'感謝',reading:'かんしゃ',meaning:'gratitude, appreciation',pos:'noun/verb',example_jp:'いつもの助けに感謝します。',example_en:'I am grateful for your constant support.'},
+  {level:'n3',theme:'emotions',word:'喜び',reading:'よろこび',meaning:'joy, delight, pleasure',pos:'noun',example_jp:'子供の成長を喜びとしています。',example_en:'I take joy in my child\'s growth.'},
+  {level:'n3',theme:'emotions',word:'悲しみ',reading:'かなしみ',meaning:'sadness, grief, sorrow',pos:'noun',example_jp:'深い悲しみに沈んでいた。',example_en:'I was sunk in deep sadness.'},
+  {level:'n3',theme:'emotions',word:'怒り',reading:'いかり',meaning:'anger, wrath',pos:'noun',example_jp:'怒りを抑えることが大切だ。',example_en:'It is important to suppress anger.'},
+  {level:'n3',theme:'emotions',word:'恐れ',reading:'おそれ',meaning:'fear, apprehension',pos:'noun',example_jp:'失敗への恐れを克服した。',example_en:'I overcame my fear of failure.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N3 — ADJECTIVES (i-adjectives)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n3',theme:'adjectives',word:'鋭い',reading:'するどい',meaning:'sharp, keen, acute',pos:'i-adj',example_jp:'彼は鋭い観察力を持っている。',example_en:'He has a keen sense of observation.'},
+  {level:'n3',theme:'adjectives',word:'惜しい',reading:'おしい',meaning:'regrettable, a pity, close',pos:'i-adj',example_jp:'もう少しで合格できたのに惜しい。',example_en:'It\'s a pity — you were so close to passing.'},
+  {level:'n3',theme:'adjectives',word:'くだらない',reading:'くだらない',meaning:'trivial, worthless, stupid',pos:'i-adj',example_jp:'くだらないことで喧嘩しないで。',example_en:'Don\'t fight over trivial things.'},
+  {level:'n3',theme:'adjectives',word:'頼もしい',reading:'たのもしい',meaning:'reliable, reassuring, dependable',pos:'i-adj',example_jp:'頼もしい仲間がいれば怖くない。',example_en:'If I have reliable allies I am not afraid.'},
+  {level:'n3',theme:'adjectives',word:'情けない',reading:'なさけない',meaning:'shameful, pathetic, miserable',pos:'i-adj',example_jp:'こんなに弱いとは情けない。',example_en:'It is shameful to be this weak.'},
+  {level:'n3',theme:'adjectives',word:'懐かしい',reading:'なつかしい',meaning:'nostalgic, dear, longed-for',pos:'i-adj',example_jp:'懐かしい音楽を聞いた。',example_en:'I listened to nostalgic music.'},
+  {level:'n3',theme:'adjectives',word:'激しい',reading:'はげしい',meaning:'intense, severe, fierce, violent',pos:'i-adj',example_jp:'激しい雨が降っている。',example_en:'Heavy rain is falling.'},
+  {level:'n3',theme:'adjectives',word:'まぶしい',reading:'まぶしい',meaning:'dazzling, blinding, bright',pos:'i-adj',example_jp:'太陽がまぶしくて目が開けられない。',example_en:'The sun is so dazzling I can\'t open my eyes.'},
+  {level:'n3',theme:'adjectives',word:'みっともない',reading:'みっともない',meaning:'shameful, unseemly, disgraceful',pos:'i-adj',example_jp:'みっともない行動はやめなさい。',example_en:'Stop your disgraceful behaviour.'},
+  {level:'n3',theme:'adjectives',word:'もったいない',reading:'もったいない',meaning:'wasteful, a waste',pos:'i-adj',example_jp:'食べ物を捨てるのはもったいない。',example_en:'Throwing away food is wasteful.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N3 — ADJECTIVES (na-adjectives)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n3',theme:'adjectives',word:'意外',reading:'いがい',meaning:'unexpected, surprising',pos:'na-adj',example_jp:'意外な結果に驚いた。',example_en:'I was surprised by the unexpected result.'},
+  {level:'n3',theme:'adjectives',word:'曖昧',reading:'あいまい',meaning:'vague, ambiguous, unclear',pos:'na-adj',example_jp:'曖昧な返事はやめてください。',example_en:'Please stop giving vague answers.'},
+  {level:'n3',theme:'adjectives',word:'円滑',reading:'えんかつ',meaning:'smooth, harmonious, without friction',pos:'na-adj',example_jp:'業務を円滑に進めましょう。',example_en:'Let\'s proceed with operations smoothly.'},
+  {level:'n3',theme:'adjectives',word:'柔軟',reading:'じゅうなん',meaning:'flexible, supple, adaptable',pos:'na-adj',example_jp:'柔軟な考え方が必要です。',example_en:'Flexible thinking is necessary.'},
+  {level:'n3',theme:'adjectives',word:'積極的',reading:'せっきょくてき',meaning:'proactive, positive, assertive',pos:'na-adj',example_jp:'積極的に参加してください。',example_en:'Please participate proactively.'},
+  {level:'n3',theme:'adjectives',word:'消極的',reading:'しょうきょくてき',meaning:'passive, negative, reluctant',pos:'na-adj',example_jp:'消極的な態度では成長できない。',example_en:'You cannot grow with a passive attitude.'},
+  {level:'n3',theme:'adjectives',word:'適切',reading:'てきせつ',meaning:'appropriate, suitable, proper',pos:'na-adj',example_jp:'適切な言葉を選んでください。',example_en:'Please choose appropriate words.'},
+  {level:'n3',theme:'adjectives',word:'不思議',reading:'ふしぎ',meaning:'mysterious, strange, wonderful',pos:'na-adj',example_jp:'不思議なことが起きた。',example_en:'Something mysterious happened.'},
+  {level:'n3',theme:'adjectives',word:'豊か',reading:'ゆたか',meaning:'rich, abundant, wealthy',pos:'na-adj',example_jp:'自然が豊かな国に住みたい。',example_en:'I want to live in a country rich in nature.'},
+  {level:'n3',theme:'adjectives',word:'冷静',reading:'れいせい',meaning:'calm, cool-headed, composed',pos:'na-adj',example_jp:'緊急のときこそ冷静でいてください。',example_en:'Please stay calm especially in an emergency.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N3 — ADVERBS & EXPRESSIONS
+  // ═══════════════════════════════════════════════════════════
+  {level:'n3',theme:'adverbs',word:'あえて',reading:'あえて',meaning:'daring to, deliberately, purposely',pos:'adverb',example_jp:'あえて難しい道を選んだ。',example_en:'I deliberately chose the difficult path.'},
+  {level:'n3',theme:'adverbs',word:'案の定',reading:'あんのじょう',meaning:'just as expected, as one thought',pos:'adverb',example_jp:'案の定、試験に落ちた。',example_en:'Just as expected, I failed the exam.'},
+  {level:'n3',theme:'adverbs',word:'いかに',reading:'いかに',meaning:'how, in what way, to what extent',pos:'adverb',example_jp:'いかに努力するかが大切だ。',example_en:'How much effort one makes is what matters.'},
+  {level:'n3',theme:'adverbs',word:'いったい',reading:'いったい',meaning:'what on earth, just what, in the world',pos:'adverb',example_jp:'いったい何が起きたのですか。',example_en:'What on earth happened?'},
+  {level:'n3',theme:'adverbs',word:'いまだに',reading:'いまだに',meaning:'still, as yet, even now',pos:'adverb',example_jp:'いまだに連絡がありません。',example_en:'There is still no contact even now.'},
+  {level:'n3',theme:'adverbs',word:'思いがけず',reading:'おもいがけず',meaning:'unexpectedly, by chance',pos:'adverb',example_jp:'思いがけず旧友に会った。',example_en:'I unexpectedly met an old friend.'},
+  {level:'n3',theme:'adverbs',word:'かえって',reading:'かえって',meaning:'on the contrary, rather, instead',pos:'adverb',example_jp:'助けようとしてかえって迷惑をかけた。',example_en:'In trying to help I actually caused trouble instead.'},
+  {level:'n3',theme:'adverbs',word:'決して',reading:'けっして',meaning:'never, by no means (with negative)',pos:'adverb',example_jp:'決して諦めません。',example_en:'I will never give up.'},
+  {level:'n3',theme:'adverbs',word:'しかも',reading:'しかも',meaning:'moreover, furthermore, on top of that',pos:'conj',example_jp:'安くて、しかもおいしい。',example_en:'It\'s cheap, and moreover it\'s delicious.'},
+  {level:'n3',theme:'adverbs',word:'したがって',reading:'したがって',meaning:'therefore, accordingly, consequently',pos:'conj',example_jp:'問題が発生した。したがって計画を変更する。',example_en:'A problem arose. Therefore we will change the plan.'},
+  {level:'n3',theme:'adverbs',word:'そもそも',reading:'そもそも',meaning:'in the first place, to begin with, fundamentally',pos:'adverb',example_jp:'そもそもなぜそれを選んだのですか。',example_en:'Why did you choose that in the first place?'},
+  {level:'n3',theme:'adverbs',word:'たとえ',reading:'たとえ',meaning:'even if, suppose that (with ても)',pos:'adverb',example_jp:'たとえ失敗しても、また挑戦する。',example_en:'Even if I fail, I will try again.'},
+  {level:'n3',theme:'adverbs',word:'ちなみに',reading:'ちなみに',meaning:'incidentally, by the way, in this connection',pos:'adverb',example_jp:'ちなみに私の誕生日は３月です。',example_en:'Incidentally, my birthday is in March.'},
+  {level:'n3',theme:'adverbs',word:'次第に',reading:'しだいに',meaning:'gradually, little by little',pos:'adverb',example_jp:'次第に日本語が上手になってきた。',example_en:'I have gradually been getting better at Japanese.'},
+  {level:'n3',theme:'adverbs',word:'十分',reading:'じゅうぶん',meaning:'enough, sufficiently, fully',pos:'adverb/na-adj',example_jp:'十分に準備しました。',example_en:'I prepared sufficiently.'},
+  {level:'n3',theme:'adverbs',word:'実は',reading:'じつは',meaning:'actually, to tell the truth',pos:'adverb',example_jp:'実は、もう知っていた。',example_en:'Actually, I already knew.'},
+  {level:'n3',theme:'adverbs',word:'むしろ',reading:'むしろ',meaning:'rather, instead, on the contrary',pos:'adverb',example_jp:'悲しいというよりむしろ怒っている。',example_en:'Rather than sad, I am angry.'},
+  {level:'n3',theme:'adverbs',word:'やはり',reading:'やはり',meaning:'after all, as expected, sure enough',pos:'adverb',example_jp:'やはり君が一番うまい。',example_en:'After all, you are the best.'},
+  {level:'n3',theme:'adverbs',word:'わずか',reading:'わずか',meaning:'only, merely, a little, slight',pos:'adverb',example_jp:'わずか1点差で負けた。',example_en:'I lost by just one point.'},
+  {level:'n3',theme:'adverbs',word:'まさに',reading:'まさに',meaning:'exactly, precisely, indeed',pos:'adverb',example_jp:'これはまさに私が求めていたものだ。',example_en:'This is exactly what I was looking for.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N3 — NOUNS (science, tech & environment)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n3',theme:'science & tech',word:'技術',reading:'ぎじゅつ',meaning:'technology, technique, skill',pos:'noun',example_jp:'最新技術を活用しています。',example_en:'We are making use of the latest technology.'},
+  {level:'n3',theme:'science & tech',word:'科学',reading:'かがく',meaning:'science',pos:'noun',example_jp:'科学の進歩は目覚ましい。',example_en:'The progress of science is remarkable.'},
+  {level:'n3',theme:'science & tech',word:'研究',reading:'けんきゅう',meaning:'research, study',pos:'noun/verb',example_jp:'新薬の研究をしています。',example_en:'I am researching new medicines.'},
+  {level:'n3',theme:'science & tech',word:'開発',reading:'かいはつ',meaning:'development, exploitation',pos:'noun/verb',example_jp:'新製品を開発しています。',example_en:'We are developing a new product.'},
+  {level:'n3',theme:'science & tech',word:'資源',reading:'しげん',meaning:'resources, natural resources',pos:'noun',example_jp:'資源を大切に使いましょう。',example_en:'Let\'s use resources carefully.'},
+  {level:'n3',theme:'science & tech',word:'エネルギー',reading:'えねるぎー',meaning:'energy',pos:'noun',example_jp:'再生可能エネルギーが重要です。',example_en:'Renewable energy is important.'},
+  {level:'n3',theme:'science & tech',word:'汚染',reading:'おせん',meaning:'pollution, contamination',pos:'noun/verb',example_jp:'大気汚染が問題になっている。',example_en:'Air pollution is becoming a problem.'},
+  {level:'n3',theme:'science & tech',word:'排出',reading:'はいしゅつ',meaning:'emission, discharge',pos:'noun/verb',example_jp:'CO₂の排出を減らす必要がある。',example_en:'It is necessary to reduce CO₂ emissions.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N3 — NOUNS (health & body)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n3',theme:'health',word:'症状',reading:'しょうじょう',meaning:'symptom',pos:'noun',example_jp:'症状を医者に伝えてください。',example_en:'Please tell the doctor your symptoms.'},
+  {level:'n3',theme:'health',word:'治療',reading:'ちりょう',meaning:'treatment, therapy',pos:'noun/verb',example_jp:'早めに治療を始めましょう。',example_en:'Let\'s start treatment early.'},
+  {level:'n3',theme:'health',word:'手術',reading:'しゅじゅつ',meaning:'surgery, operation',pos:'noun/verb',example_jp:'手術は成功しました。',example_en:'The surgery was successful.'},
+  {level:'n3',theme:'health',word:'回復',reading:'かいふく',meaning:'recovery, recuperation',pos:'noun/verb',example_jp:'順調に回復しています。',example_en:'I am recovering smoothly.'},
+  {level:'n3',theme:'health',word:'予防',reading:'よぼう',meaning:'prevention',pos:'noun/verb',example_jp:'病気の予防が大切です。',example_en:'Prevention of illness is important.'},
+  {level:'n3',theme:'health',word:'栄養',reading:'えいよう',meaning:'nutrition, nourishment',pos:'noun',example_jp:'バランスよく栄養を取りましょう。',example_en:'Let\'s take nutrition in a balanced way.'},
+  {level:'n3',theme:'health',word:'睡眠',reading:'すいみん',meaning:'sleep',pos:'noun',example_jp:'十分な睡眠が必要です。',example_en:'Sufficient sleep is necessary.'},
+  {level:'n3',theme:'health',word:'ストレス',reading:'すとれす',meaning:'stress',pos:'noun',example_jp:'ストレスをうまく発散しましょう。',example_en:'Let\'s release stress effectively.'},
+
+// ═══════════════════════════════════════════════════════════
+  //  N2 — VERBS (u-verbs)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n2',theme:'verbs',word:'あてはまる',reading:'あてはまる',meaning:'to apply to, to fit, to be applicable',pos:'verb (u)',example_jp:'この規則は全員にあてはまります。',example_en:'This rule applies to everyone.'},
+  {level:'n2',theme:'verbs',word:'言い張る',reading:'いいはる',meaning:'to insist, to assert stubbornly',pos:'verb (u)',example_jp:'彼は自分が正しいと言い張った。',example_en:'He insisted that he was right.'},
+  {level:'n2',theme:'verbs',word:'痛む',reading:'いたむ',meaning:'to hurt, to ache; to go bad (food)',pos:'verb (u)',example_jp:'古い怪我が痛む。',example_en:'My old injury aches.'},
+  {level:'n2',theme:'verbs',word:'うなずく',reading:'うなずく',meaning:'to nod (in agreement)',pos:'verb (u)',example_jp:'彼女は黙ってうなずいた。',example_en:'She nodded silently.'},
+  {level:'n2',theme:'verbs',word:'うながす',reading:'うながす',meaning:'to urge, to prompt, to encourage',pos:'verb (u)',example_jp:'早期解決をうながしました。',example_en:'I urged an early resolution.'},
+  {level:'n2',theme:'verbs',word:'裏切る',reading:'うらぎる',meaning:'to betray, to let down',pos:'verb (u)',example_jp:'信頼を裏切ってはいけない。',example_en:'You must not betray trust.'},
+  {level:'n2',theme:'verbs',word:'恨む',reading:'うらむ',meaning:'to resent, to bear a grudge',pos:'verb (u)',example_jp:'誰かを恨んでも仕方ない。',example_en:'There is no point resenting someone.'},
+  {level:'n2',theme:'verbs',word:'及ぶ',reading:'およぶ',meaning:'to reach, to extend to, to amount to',pos:'verb (u)',example_jp:'被害は全国に及んだ。',example_en:'The damage extended throughout the country.'},
+  {level:'n2',theme:'verbs',word:'思い込む',reading:'おもいこむ',meaning:'to be convinced, to assume firmly',pos:'verb (u)',example_jp:'自分が正しいと思い込んでいた。',example_en:'I was firmly convinced I was right.'},
+  {level:'n2',theme:'verbs',word:'陥る',reading:'おちいる',meaning:'to fall into, to be trapped in',pos:'verb (u)',example_jp:'パニックに陥らないようにした。',example_en:'I tried not to fall into panic.'},
+  {level:'n2',theme:'verbs',word:'押さえる',reading:'おさえる',meaning:'to hold down, to suppress, to keep in check',pos:'verb (ru)',example_jp:'コストを押さえることが重要だ。',example_en:'It is important to keep costs in check.'},
+  {level:'n2',theme:'verbs',word:'抱える',reading:'かかえる',meaning:'to hold in one\'s arms; to have a problem',pos:'verb (ru)',example_jp:'多くの問題を抱えている。',example_en:'I am holding many problems.'},
+  {level:'n2',theme:'verbs',word:'掲げる',reading:'かかげる',meaning:'to hold up, to set forth, to advocate',pos:'verb (ru)',example_jp:'高い目標を掲げた。',example_en:'I set forth a high goal.'},
+  {level:'n2',theme:'verbs',word:'欠かす',reading:'かかす',meaning:'to skip, to omit, to miss (routine)',pos:'verb (u)',example_jp:'毎日の運動を欠かさない。',example_en:'I never skip my daily exercise.'},
+  {level:'n2',theme:'verbs',word:'刻む',reading:'きざむ',meaning:'to carve, to mince, to engrave',pos:'verb (u)',example_jp:'記憶に深く刻まれた出来事だ。',example_en:'It is an event deeply engraved in my memory.'},
+  {level:'n2',theme:'verbs',word:'築く',reading:'きずく',meaning:'to build up, to establish, to cultivate',pos:'verb (u)',example_jp:'長年かけて信頼関係を築いた。',example_en:'I built a relationship of trust over many years.'},
+  {level:'n2',theme:'verbs',word:'きっかけになる',reading:'きっかけになる',meaning:'to become a trigger, to serve as an opportunity',pos:'verb (u)',example_jp:'この出会いが転機のきっかけになった。',example_en:'This encounter became the trigger for a turning point.'},
+  {level:'n2',theme:'verbs',word:'繰り返す',reading:'くりかえす',meaning:'to repeat, to do over and over',pos:'verb (u)',example_jp:'同じ失敗を繰り返してはいけない。',example_en:'You must not repeat the same mistake.'},
+  {level:'n2',theme:'verbs',word:'加わる',reading:'くわわる',meaning:'to join, to be added to, to participate',pos:'verb (u)',example_jp:'新しいメンバーが加わった。',example_en:'A new member joined.'},
+  {level:'n2',theme:'verbs',word:'心がける',reading:'こころがける',meaning:'to keep in mind, to make a point of',pos:'verb (ru)',example_jp:'健康に心がけています。',example_en:'I make a point of taking care of my health.'},
+  {level:'n2',theme:'verbs',word:'断ち切る',reading:'たちきる',meaning:'to sever, to cut off, to break off',pos:'verb (u)',example_jp:'悪い習慣を断ち切りたい。',example_en:'I want to cut off bad habits.'},
+  {level:'n2',theme:'verbs',word:'たどる',reading:'たどる',meaning:'to follow (a path), to trace',pos:'verb (u)',example_jp:'歴史をたどってみよう。',example_en:'Let\'s trace through history.'},
+  {level:'n2',theme:'verbs',word:'保つ',reading:'たもつ',meaning:'to maintain, to keep, to preserve',pos:'verb (u)',example_jp:'健康を保つことが大切だ。',example_en:'It is important to maintain one\'s health.'},
+  {level:'n2',theme:'verbs',word:'費やす',reading:'ついやす',meaning:'to spend (time/money), to use up',pos:'verb (u)',example_jp:'研究に長い年月を費やした。',example_en:'I spent many years on research.'},
+  {level:'n2',theme:'verbs',word:'つぶやく',reading:'つぶやく',meaning:'to mutter, to murmur, to tweet',pos:'verb (u)',example_jp:'独り言をつぶやいていた。',example_en:'I was muttering to myself.'},
+  {level:'n2',theme:'verbs',word:'当てる',reading:'あてる',meaning:'to apply to, to guess correctly, to hit',pos:'verb (ru)',example_jp:'光を当てて確認した。',example_en:'I checked by applying light to it.'},
+  {level:'n2',theme:'verbs',word:'成り立つ',reading:'なりたつ',meaning:'to be established, to hold true, to come about',pos:'verb (u)',example_jp:'この理論は現代には成り立たない。',example_en:'This theory does not hold true in the modern age.'},
+  {level:'n2',theme:'verbs',word:'担う',reading:'になう',meaning:'to bear, to shoulder (responsibility)',pos:'verb (u)',example_jp:'次世代が日本を担う。',example_en:'The next generation will shoulder Japan.'},
+  {level:'n2',theme:'verbs',word:'抜く',reading:'ぬく',meaning:'to pull out, to extract; to surpass',pos:'verb (u)',example_jp:'雑草を抜いた。',example_en:'I pulled out the weeds.'},
+  {level:'n2',theme:'verbs',word:'逃す',reading:'のがす',meaning:'to miss, to let go, to let slip',pos:'verb (u)',example_jp:'チャンスを逃してしまった。',example_en:'I missed the opportunity.'},
+  {level:'n2',theme:'verbs',word:'省く',reading:'はぶく',meaning:'to omit, to leave out, to save (effort)',pos:'verb (u)',example_jp:'無駄な手順を省いた。',example_en:'I omitted unnecessary steps.'},
+  {level:'n2',theme:'verbs',word:'引き起こす',reading:'ひきおこす',meaning:'to cause, to bring about, to trigger',pos:'verb (u)',example_jp:'その発言が問題を引き起こした。',example_en:'That statement triggered a problem.'},
+  {level:'n2',theme:'verbs',word:'踏まえる',reading:'ふまえる',meaning:'to take into account, to be based on',pos:'verb (ru)',example_jp:'現状を踏まえて判断してください。',example_en:'Please judge based on the current situation.'},
+  {level:'n2',theme:'verbs',word:'振り返る',reading:'ふりかえる',meaning:'to look back (literally or figuratively)',pos:'verb (u)',example_jp:'過去を振り返って学ぶことが大切だ。',example_en:'It is important to look back and learn from the past.'},
+  {level:'n2',theme:'verbs',word:'まかせる',reading:'まかせる',meaning:'to leave to, to entrust to',pos:'verb (ru)',example_jp:'この件はあなたにまかせます。',example_en:'I will leave this matter to you.'},
+  {level:'n2',theme:'verbs',word:'見落とす',reading:'みおとす',meaning:'to overlook, to miss',pos:'verb (u)',example_jp:'重要な点を見落としていた。',example_en:'I had overlooked an important point.'},
+  {level:'n2',theme:'verbs',word:'見直す',reading:'みなおす',meaning:'to review, to reconsider, to revise',pos:'verb (u)',example_jp:'計画を見直す必要がある。',example_en:'It is necessary to review the plan.'},
+  {level:'n2',theme:'verbs',word:'満たす',reading:'みたす',meaning:'to satisfy, to fill, to meet (conditions)',pos:'verb (u)',example_jp:'条件を満たしてください。',example_en:'Please meet the conditions.'},
+  {level:'n2',theme:'verbs',word:'設ける',reading:'もうける',meaning:'to set up, to establish, to create',pos:'verb (ru)',example_jp:'新しい制度を設けた。',example_en:'A new system was established.'},
+  {level:'n2',theme:'verbs',word:'もたらす',reading:'もたらす',meaning:'to bring about, to cause, to produce',pos:'verb (u)',example_jp:'技術革新が大きな変化をもたらした。',example_en:'Technological innovation brought about major change.'},
+  {level:'n2',theme:'verbs',word:'もたれる',reading:'もたれる',meaning:'to lean against; to feel heavy (stomach)',pos:'verb (ru)',example_jp:'壁にもたれて立っていた。',example_en:'I was standing leaning against the wall.'},
+  {level:'n2',theme:'verbs',word:'揺れる',reading:'ゆれる',meaning:'to shake, to sway, to oscillate',pos:'verb (ru)',example_jp:'地震で建物が揺れた。',example_en:'The building swayed in the earthquake.'},
+  {level:'n2',theme:'verbs',word:'よみがえる',reading:'よみがえる',meaning:'to come back to life, to revive, to be restored',pos:'verb (u)',example_jp:'昔の記憶がよみがえった。',example_en:'Old memories came back to life.'},
+  {level:'n2',theme:'verbs',word:'和らげる',reading:'やわらげる',meaning:'to soften, to ease, to relieve',pos:'verb (ru)',example_jp:'薬が痛みを和らげた。',example_en:'The medicine eased the pain.'},
+  {level:'n2',theme:'verbs',word:'歪む',reading:'ゆがむ',meaning:'to warp, to be distorted, to be warped',pos:'verb (u)',example_jp:'フレームが歪んでしまった。',example_en:'The frame has warped.'},
+  {level:'n2',theme:'verbs',word:'割り当てる',reading:'わりあてる',meaning:'to assign, to allocate, to allot',pos:'verb (ru)',example_jp:'作業を均等に割り当てた。',example_en:'I allocated the work evenly.'},
+  {level:'n2',theme:'verbs',word:'わきまえる',reading:'わきまえる',meaning:'to know one\'s place, to be discreet, to understand',pos:'verb (ru)',example_jp:'場をわきまえた発言をしてください。',example_en:'Please make remarks that suit the occasion.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N2 — VERBS (する compounds)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n2',theme:'verbs',word:'維持する',reading:'いじする',meaning:'to maintain, to keep up, to sustain',pos:'verb (irr)',example_jp:'現状を維持するのは難しい。',example_en:'It is difficult to maintain the current situation.'},
+  {level:'n2',theme:'verbs',word:'一致する',reading:'いっちする',meaning:'to agree, to coincide, to match',pos:'verb (irr)',example_jp:'二人の意見が一致した。',example_en:'The two opinions coincided.'},
+  {level:'n2',theme:'verbs',word:'応用する',reading:'おうようする',meaning:'to apply (knowledge), to put into practice',pos:'verb (irr)',example_jp:'学んだ知識を応用します。',example_en:'I will apply the knowledge I have learned.'},
+  {level:'n2',theme:'verbs',word:'改善する',reading:'かいぜんする',meaning:'to improve, to make better',pos:'verb (irr)',example_jp:'業務プロセスを改善した。',example_en:'I improved the business process.'},
+  {level:'n2',theme:'verbs',word:'拡大する',reading:'かくだいする',meaning:'to expand, to enlarge, to scale up',pos:'verb (irr)',example_jp:'事業を海外に拡大した。',example_en:'We expanded the business overseas.'},
+  {level:'n2',theme:'verbs',word:'確保する',reading:'かくほする',meaning:'to secure, to ensure, to reserve',pos:'verb (irr)',example_jp:'予算を確保する必要がある。',example_en:'It is necessary to secure the budget.'},
+  {level:'n2',theme:'verbs',word:'活用する',reading:'かつようする',meaning:'to make use of, to utilise, to leverage',pos:'verb (irr)',example_jp:'AIを活用して業務を効率化した。',example_en:'We leveraged AI to make operations more efficient.'},
+  {level:'n2',theme:'verbs',word:'完了する',reading:'かんりょうする',meaning:'to complete, to finish',pos:'verb (irr)',example_jp:'手続きが完了しました。',example_en:'The procedure has been completed.'},
+  {level:'n2',theme:'verbs',word:'緩和する',reading:'かんわする',meaning:'to relax, to ease, to moderate (rules/tension)',pos:'verb (irr)',example_jp:'規制を緩和する方針だ。',example_en:'The policy is to relax the regulations.'},
+  {level:'n2',theme:'verbs',word:'吸収する',reading:'きゅうしゅうする',meaning:'to absorb, to take in',pos:'verb (irr)',example_jp:'子供はスポンジのように知識を吸収する。',example_en:'Children absorb knowledge like a sponge.'},
+  {level:'n2',theme:'verbs',word:'強調する',reading:'きょうちょうする',meaning:'to emphasise, to stress',pos:'verb (irr)',example_jp:'安全の重要性を強調した。',example_en:'I emphasised the importance of safety.'},
+  {level:'n2',theme:'verbs',word:'検討する',reading:'けんとうする',meaning:'to consider, to examine, to study (a proposal)',pos:'verb (irr)',example_jp:'ご提案を検討いたします。',example_en:'We will consider your proposal.'},
+  {level:'n2',theme:'verbs',word:'削減する',reading:'さくげんする',meaning:'to reduce, to cut, to trim',pos:'verb (irr)',example_jp:'コストを削減する計画だ。',example_en:'The plan is to cut costs.'},
+  {level:'n2',theme:'verbs',word:'実現する',reading:'じつげんする',meaning:'to realise, to make happen, to achieve',pos:'verb (irr)',example_jp:'夢を実現させたい。',example_en:'I want to make my dream a reality.'},
+  {level:'n2',theme:'verbs',word:'実施する',reading:'じっしする',meaning:'to implement, to carry out, to enforce',pos:'verb (irr)',example_jp:'新しい制度を実施します。',example_en:'We will implement the new system.'},
+  {level:'n2',theme:'verbs',word:'主張する',reading:'しゅちょうする',meaning:'to claim, to assert, to argue',pos:'verb (irr)',example_jp:'自分の権利を主張した。',example_en:'I asserted my rights.'},
+  {level:'n2',theme:'verbs',word:'促進する',reading:'そくしんする',meaning:'to promote, to accelerate, to facilitate',pos:'verb (irr)',example_jp:'経済成長を促進する政策だ。',example_en:'It is a policy to promote economic growth.'},
+  {level:'n2',theme:'verbs',word:'対応する',reading:'たいおうする',meaning:'to respond to, to deal with, to correspond to',pos:'verb (irr)',example_jp:'クレームに迅速に対応した。',example_en:'I responded quickly to the complaint.'},
+  {level:'n2',theme:'verbs',word:'達成する',reading:'たっせいする',meaning:'to achieve, to accomplish',pos:'verb (irr)',example_jp:'目標を達成しました。',example_en:'I achieved my goal.'},
+  {level:'n2',theme:'verbs',word:'低下する',reading:'ていかする',meaning:'to decline, to deteriorate, to fall',pos:'verb (irr)',example_jp:'品質が低下している。',example_en:'Quality is declining.'},
+  {level:'n2',theme:'verbs',word:'導入する',reading:'どうにゅうする',meaning:'to introduce, to adopt (a system/technology)',pos:'verb (irr)',example_jp:'新システムを導入した。',example_en:'We introduced a new system.'},
+  {level:'n2',theme:'verbs',word:'把握する',reading:'はあくする',meaning:'to grasp, to understand, to get a handle on',pos:'verb (irr)',example_jp:'状況を正確に把握してください。',example_en:'Please accurately grasp the situation.'},
+  {level:'n2',theme:'verbs',word:'発揮する',reading:'はっきする',meaning:'to demonstrate, to show (ability/talent)',pos:'verb (irr)',example_jp:'実力を発揮してください。',example_en:'Please demonstrate your true ability.'},
+  {level:'n2',theme:'verbs',word:'発生する',reading:'はっせいする',meaning:'to occur, to arise, to break out',pos:'verb (irr)',example_jp:'エラーが発生しました。',example_en:'An error has occurred.'},
+  {level:'n2',theme:'verbs',word:'普及する',reading:'ふきゅうする',meaning:'to spread, to become widespread',pos:'verb (irr)',example_jp:'スマートフォンが世界中に普及した。',example_en:'Smartphones have spread throughout the world.'},
+  {level:'n2',theme:'verbs',word:'分析する',reading:'ぶんせきする',meaning:'to analyse',pos:'verb (irr)',example_jp:'データを分析してください。',example_en:'Please analyse the data.'},
+  {level:'n2',theme:'verbs',word:'防止する',reading:'ぼうしする',meaning:'to prevent, to stop',pos:'verb (irr)',example_jp:'事故を防止するため対策を取った。',example_en:'We took measures to prevent accidents.'},
+  {level:'n2',theme:'verbs',word:'抑制する',reading:'よくせいする',meaning:'to suppress, to restrain, to curb',pos:'verb (irr)',example_jp:'感情を抑制するのは難しい。',example_en:'It is difficult to suppress emotions.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N2 — NOUNS (formal & written)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n2',theme:'formal',word:'意図',reading:'いと',meaning:'intention, intent, aim',pos:'noun',example_jp:'彼の意図が分からない。',example_en:'I do not understand his intention.'},
+  {level:'n2',theme:'formal',word:'一般',reading:'いっぱん',meaning:'general, common, ordinary',pos:'noun/na-adj',example_jp:'一般的な見解を述べます。',example_en:'I will state a general view.'},
+  {level:'n2',theme:'formal',word:'概要',reading:'がいよう',meaning:'outline, summary, overview',pos:'noun',example_jp:'計画の概要を説明してください。',example_en:'Please explain the outline of the plan.'},
+  {level:'n2',theme:'formal',word:'過程',reading:'かてい',meaning:'process, course, procedure',pos:'noun',example_jp:'学習の過程が大切です。',example_en:'The process of learning is important.'},
+  {level:'n2',theme:'formal',word:'観点',reading:'かんてん',meaning:'viewpoint, perspective, standpoint',pos:'noun',example_jp:'別の観点から考えてみましょう。',example_en:'Let\'s think about it from a different viewpoint.'},
+  {level:'n2',theme:'formal',word:'基準',reading:'きじゅん',meaning:'standard, criterion, benchmark',pos:'noun',example_jp:'品質基準を満たしてください。',example_en:'Please meet the quality standards.'},
+  {level:'n2',theme:'formal',word:'規模',reading:'きぼ',meaning:'scale, scope, size',pos:'noun',example_jp:'大規模なプロジェクトです。',example_en:'It is a large-scale project.'},
+  {level:'n2',theme:'formal',word:'根拠',reading:'こんきょ',meaning:'basis, grounds, evidence',pos:'noun',example_jp:'その主張の根拠を示してください。',example_en:'Please show the basis for that claim.'},
+  {level:'n2',theme:'formal',word:'作業',reading:'さぎょう',meaning:'work, operation, task',pos:'noun/verb',example_jp:'作業を分担しましょう。',example_en:'Let\'s divide up the work.'},
+  {level:'n2',theme:'formal',word:'姿勢',reading:'しせい',meaning:'posture, attitude, stance',pos:'noun',example_jp:'学ぶ姿勢を忘れないでください。',example_en:'Please do not forget the attitude of learning.'},
+  {level:'n2',theme:'formal',word:'指摘',reading:'してき',meaning:'pointing out, indication',pos:'noun/verb',example_jp:'問題点を指摘してもらった。',example_en:'I had the problems pointed out to me.'},
+  {level:'n2',theme:'formal',word:'手段',reading:'しゅだん',meaning:'means, method, measure',pos:'noun',example_jp:'目的のためなら手段を選ばない。',example_en:'He will use any means for his purpose.'},
+  {level:'n2',theme:'formal',word:'主体',reading:'しゅたい',meaning:'subject, main body, protagonist',pos:'noun',example_jp:'学生が主体的に学ぶことが重要だ。',example_en:'It is important for students to learn proactively.'},
+  {level:'n2',theme:'formal',word:'主張',reading:'しゅちょう',meaning:'claim, assertion, argument',pos:'noun',example_jp:'彼の主張は説得力がある。',example_en:'His argument is persuasive.'},
+  {level:'n2',theme:'formal',word:'仕様',reading:'しよう',meaning:'specification, description',pos:'noun',example_jp:'製品の仕様を確認してください。',example_en:'Please check the product specifications.'},
+  {level:'n2',theme:'formal',word:'水準',reading:'すいじゅん',meaning:'level, standard',pos:'noun',example_jp:'生活水準が上がった。',example_en:'The standard of living has risen.'},
+  {level:'n2',theme:'formal',word:'成果',reading:'せいか',meaning:'result, outcome, achievement',pos:'noun',example_jp:'研究の成果を発表した。',example_en:'I presented the results of the research.'},
+  {level:'n2',theme:'formal',word:'前提',reading:'ぜんてい',meaning:'premise, prerequisite, assumption',pos:'noun',example_jp:'その前提が間違っていた。',example_en:'That premise was wrong.'},
+  {level:'n2',theme:'formal',word:'措置',reading:'そち',meaning:'measure, step, action (formal)',pos:'noun',example_jp:'緊急措置を取りました。',example_en:'We took emergency measures.'},
+  {level:'n2',theme:'formal',word:'対策',reading:'たいさく',meaning:'countermeasure, step, remedy',pos:'noun',example_jp:'早急に対策を立てる必要がある。',example_en:'It is necessary to devise countermeasures urgently.'},
+  {level:'n2',theme:'formal',word:'体制',reading:'たいせい',meaning:'system, structure, regime',pos:'noun',example_jp:'新しい管理体制を整えた。',example_en:'We organised a new management structure.'},
+  {level:'n2',theme:'formal',word:'妥当',reading:'だとう',meaning:'appropriate, reasonable, valid',pos:'na-adj/noun',example_jp:'妥当な判断だと思います。',example_en:'I think it is a reasonable judgement.'},
+  {level:'n2',theme:'formal',word:'段階',reading:'だんかい',meaning:'stage, step, phase',pos:'noun',example_jp:'次の段階に進みましょう。',example_en:'Let\'s move to the next stage.'},
+  {level:'n2',theme:'formal',word:'展開',reading:'てんかい',meaning:'development, unfolding, expansion',pos:'noun/verb',example_jp:'事態が急展開した。',example_en:'The situation developed rapidly.'},
+  {level:'n2',theme:'formal',word:'動向',reading:'どうこう',meaning:'trend, movement, developments',pos:'noun',example_jp:'市場の動向を注視している。',example_en:'We are closely watching market trends.'},
+  {level:'n2',theme:'formal',word:'配慮',reading:'はいりょ',meaning:'consideration, thoughtfulness, care',pos:'noun/verb',example_jp:'環境に配慮した製品です。',example_en:'It is a product made with environmental consideration.'},
+  {level:'n2',theme:'formal',word:'背景',reading:'はいけい',meaning:'background, backdrop, context',pos:'noun',example_jp:'事件の背景を調査した。',example_en:'I investigated the background of the incident.'},
+  {level:'n2',theme:'formal',word:'方針',reading:'ほうしん',meaning:'policy, course, direction',pos:'noun',example_jp:'会社の方針に従います。',example_en:'I will follow the company\'s policy.'},
+  {level:'n2',theme:'formal',word:'補足',reading:'ほそく',meaning:'supplement, addition, footnote',pos:'noun/verb',example_jp:'補足説明をします。',example_en:'I will provide a supplementary explanation.'},
+  {level:'n2',theme:'formal',word:'見解',reading:'みかい',meaning:'view, opinion, interpretation',pos:'noun',example_jp:'個人的な見解を述べます。',example_en:'I will state my personal view.'},
+  {level:'n2',theme:'formal',word:'要因',reading:'よういん',meaning:'factor, cause, element',pos:'noun',example_jp:'成功の要因を分析した。',example_en:'I analysed the factors for success.'},
+  {level:'n2',theme:'formal',word:'立場',reading:'たちば',meaning:'position, standpoint, situation',pos:'noun',example_jp:'相手の立場を考えてください。',example_en:'Please consider the other person\'s position.'},
+  {level:'n2',theme:'formal',word:'論点',reading:'ろんてん',meaning:'point of argument, issue, point at issue',pos:'noun',example_jp:'論点を整理しましょう。',example_en:'Let\'s organise the points of argument.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N2 — NOUNS (economics & society)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n2',theme:'society',word:'格差',reading:'かくさ',meaning:'disparity, gap, inequality',pos:'noun',example_jp:'経済格差が広がっている。',example_en:'Economic disparity is widening.'},
+  {level:'n2',theme:'society',word:'競争',reading:'きょうそう',meaning:'competition',pos:'noun/verb',example_jp:'激しい競争にさらされている。',example_en:'We are exposed to fierce competition.'},
+  {level:'n2',theme:'society',word:'均衡',reading:'きんこう',meaning:'balance, equilibrium',pos:'noun',example_jp:'需給の均衡を保つことが大切だ。',example_en:'It is important to maintain the balance of supply and demand.'},
+  {level:'n2',theme:'society',word:'義務',reading:'ぎむ',meaning:'duty, obligation',pos:'noun',example_jp:'納税は国民の義務です。',example_en:'Paying taxes is a citizen\'s duty.'},
+  {level:'n2',theme:'society',word:'権利',reading:'けんり',meaning:'right, privilege',pos:'noun',example_jp:'すべての人に平等な権利がある。',example_en:'All people have equal rights.'},
+  {level:'n2',theme:'society',word:'現状',reading:'げんじょう',meaning:'current situation, status quo',pos:'noun',example_jp:'現状を正確に把握する必要がある。',example_en:'It is necessary to accurately grasp the current situation.'},
+  {level:'n2',theme:'society',word:'合理',reading:'ごうり',meaning:'rationality, reason',pos:'noun',example_jp:'合理的な判断を下した。',example_en:'A rational judgement was made.'},
+  {level:'n2',theme:'society',word:'財政',reading:'ざいせい',meaning:'public finance, financial affairs',pos:'noun',example_jp:'国の財政状況が悪化した。',example_en:'The country\'s fiscal situation has deteriorated.'},
+  {level:'n2',theme:'society',word:'市場',reading:'しじょう',meaning:'market',pos:'noun',example_jp:'グローバル市場に参入した。',example_en:'We entered the global market.'},
+  {level:'n2',theme:'society',word:'消費',reading:'しょうひ',meaning:'consumption, spending',pos:'noun/verb',example_jp:'個人消費が増えた。',example_en:'Personal consumption increased.'},
+  {level:'n2',theme:'society',word:'生産',reading:'せいさん',meaning:'production, manufacture',pos:'noun/verb',example_jp:'生産効率を上げた。',example_en:'We improved production efficiency.'},
+  {level:'n2',theme:'society',word:'損失',reading:'そんしつ',meaning:'loss (financial), damage',pos:'noun',example_jp:'巨額の損失が出た。',example_en:'A huge loss was incurred.'},
+  {level:'n2',theme:'society',word:'貿易',reading:'ぼうえき',meaning:'trade (international)',pos:'noun',example_jp:'日本は貿易大国です。',example_en:'Japan is a major trading nation.'},
+  {level:'n2',theme:'society',word:'輸出',reading:'ゆしゅつ',meaning:'export',pos:'noun/verb',example_jp:'自動車の輸出が増えた。',example_en:'Automobile exports increased.'},
+  {level:'n2',theme:'society',word:'輸入',reading:'ゆにゅう',meaning:'import',pos:'noun/verb',example_jp:'食料の多くを輸入に頼っている。',example_en:'We rely heavily on food imports.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N2 — ADJECTIVES (i-adjectives)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n2',theme:'adjectives',word:'著しい',reading:'いちじるしい',meaning:'remarkable, striking, conspicuous',pos:'i-adj',example_jp:'著しい成長を遂げた。',example_en:'Remarkable growth was achieved.'},
+  {level:'n2',theme:'adjectives',word:'乏しい',reading:'とぼしい',meaning:'scarce, poor, lacking',pos:'i-adj',example_jp:'資源が乏しい国だ。',example_en:'It is a country scarce in resources.'},
+  {level:'n2',theme:'adjectives',word:'乱暴',reading:'らんぼう',meaning:'rough, violent, reckless',pos:'na-adj/noun',example_jp:'乱暴な運転はやめなさい。',example_en:'Stop your reckless driving.'},
+  {level:'n2',theme:'adjectives',word:'わずらわしい',reading:'わずらわしい',meaning:'troublesome, annoying, complicated',pos:'i-adj',example_jp:'わずらわしい手続きが多い。',example_en:'There are many troublesome procedures.'},
+  {level:'n2',theme:'adjectives',word:'ふさわしい',reading:'ふさわしい',meaning:'suitable, appropriate, fitting',pos:'i-adj',example_jp:'場にふさわしい服装をしてください。',example_en:'Please wear clothing appropriate for the occasion.'},
+  {level:'n2',theme:'adjectives',word:'ほろ苦い',reading:'ほろにがい',meaning:'bittersweet',pos:'i-adj',example_jp:'卒業はほろ苦い思い出だ。',example_en:'Graduation is a bittersweet memory.'},
+  {level:'n2',theme:'adjectives',word:'まぎらわしい',reading:'まぎらわしい',meaning:'confusing, misleading, ambiguous',pos:'i-adj',example_jp:'まぎらわしい表現は避けてください。',example_en:'Please avoid confusing expressions.'},
+  {level:'n2',theme:'adjectives',word:'めざましい',reading:'めざましい',meaning:'remarkable, brilliant, striking',pos:'i-adj',example_jp:'めざましい発展を遂げた。',example_en:'Remarkable development was achieved.'},
+  {level:'n2',theme:'adjectives',word:'根強い',reading:'ねづよい',meaning:'deep-rooted, persistent, tenacious',pos:'i-adj',example_jp:'根強い偏見が残っている。',example_en:'Deep-rooted prejudice remains.'},
+  {level:'n2',theme:'adjectives',word:'手厚い',reading:'てあつい',meaning:'warm, generous, lavish (treatment)',pos:'i-adj',example_jp:'手厚いサポートをいただいた。',example_en:'I received generous support.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N2 — ADJECTIVES (na-adjectives)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n2',theme:'adjectives',word:'円熟',reading:'えんじゅく',meaning:'maturity, mellowness, seasoned',pos:'noun/na-adj',example_jp:'円熟した演技だった。',example_en:'It was a mature performance.'},
+  {level:'n2',theme:'adjectives',word:'画期的',reading:'かっきてき',meaning:'epoch-making, groundbreaking, innovative',pos:'na-adj',example_jp:'画期的な発明だ。',example_en:'It is a groundbreaking invention.'},
+  {level:'n2',theme:'adjectives',word:'客観的',reading:'きゃっかんてき',meaning:'objective',pos:'na-adj',example_jp:'客観的に判断してください。',example_en:'Please judge objectively.'},
+  {level:'n2',theme:'adjectives',word:'顕著',reading:'けんちょ',meaning:'remarkable, conspicuous, notable',pos:'na-adj',example_jp:'顕著な効果が見られた。',example_en:'A remarkable effect was observed.'},
+  {level:'n2',theme:'adjectives',word:'効率的',reading:'こうりつてき',meaning:'efficient, effective',pos:'na-adj',example_jp:'効率的な方法を採用した。',example_en:'We adopted an efficient method.'},
+  {level:'n2',theme:'adjectives',word:'根本的',reading:'こんぽんてき',meaning:'fundamental, basic, radical',pos:'na-adj',example_jp:'根本的な問題を解決しなければならない。',example_en:'We must resolve the fundamental problem.'},
+  {level:'n2',theme:'adjectives',word:'主観的',reading:'しゅかんてき',meaning:'subjective',pos:'na-adj',example_jp:'主観的な意見も大切です。',example_en:'Subjective opinions are also important.'},
+  {level:'n2',theme:'adjectives',word:'潜在的',reading:'せんざいてき',meaning:'latent, potential, dormant',pos:'na-adj',example_jp:'潜在的なリスクを把握せよ。',example_en:'Grasp the latent risks.'},
+  {level:'n2',theme:'adjectives',word:'多様',reading:'たよう',meaning:'diverse, varied, multifarious',pos:'na-adj',example_jp:'多様な意見を尊重する。',example_en:'I respect diverse opinions.'},
+  {level:'n2',theme:'adjectives',word:'独自',reading:'どくじ',meaning:'unique, original, one\'s own',pos:'na-adj',example_jp:'独自の視点で分析した。',example_en:'I analysed it from a unique viewpoint.'},
+  {level:'n2',theme:'adjectives',word:'抽象的',reading:'ちゅうしょうてき',meaning:'abstract',pos:'na-adj',example_jp:'抽象的な概念は理解しにくい。',example_en:'Abstract concepts are difficult to understand.'},
+  {level:'n2',theme:'adjectives',word:'具体的',reading:'ぐたいてき',meaning:'concrete, specific, tangible',pos:'na-adj',example_jp:'具体的な例を挙げてください。',example_en:'Please give a specific example.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N2 — ADVERBS & EXPRESSIONS
+  // ═══════════════════════════════════════════════════════════
+  {level:'n2',theme:'adverbs',word:'あらかじめ',reading:'あらかじめ',meaning:'in advance, beforehand',pos:'adverb',example_jp:'あらかじめ準備しておいた。',example_en:'I prepared in advance.'},
+  {level:'n2',theme:'adverbs',word:'一概に',reading:'いちがいに',meaning:'unconditionally, generally (with neg.)',pos:'adverb',example_jp:'一概にはいえません。',example_en:'It cannot be said unconditionally.'},
+  {level:'n2',theme:'adverbs',word:'一層',reading:'いっそう',meaning:'all the more, even more, further',pos:'adverb',example_jp:'一層の努力が必要だ。',example_en:'Even more effort is necessary.'},
+  {level:'n2',theme:'adverbs',word:'おのずと',reading:'おのずと',meaning:'naturally, automatically, of itself',pos:'adverb',example_jp:'努力すればおのずと結果がついてくる。',example_en:'If you make efforts the results will follow naturally.'},
+  {level:'n2',theme:'adverbs',word:'概して',reading:'がいして',meaning:'generally, on the whole',pos:'adverb',example_jp:'概して評判がよい。',example_en:'On the whole the reputation is good.'},
+  {level:'n2',theme:'adverbs',word:'かつて',reading:'かつて',meaning:'once, formerly, in the past',pos:'adverb',example_jp:'かつてはここに工場があった。',example_en:'There was once a factory here.'},
+  {level:'n2',theme:'adverbs',word:'ことごとく',reading:'ことごとく',meaning:'altogether, entirely, without exception',pos:'adverb',example_jp:'提案はことごとく却下された。',example_en:'The proposals were rejected without exception.'},
+  {level:'n2',theme:'adverbs',word:'さらに',reading:'さらに',meaning:'furthermore, moreover, even more',pos:'adverb',example_jp:'さらに詳しく説明してください。',example_en:'Please explain in even more detail.'},
+  {level:'n2',theme:'adverbs',word:'少なくとも',reading:'すくなくとも',meaning:'at least',pos:'adverb',example_jp:'少なくとも３回は確認してください。',example_en:'Please check at least three times.'},
+  {level:'n2',theme:'adverbs',word:'相当',reading:'そうとう',meaning:'considerably, fairly, quite; equivalent',pos:'adverb/na-adj',example_jp:'相当の費用がかかる。',example_en:'Considerable expense will be incurred.'},
+  {level:'n2',theme:'adverbs',word:'ただし',reading:'ただし',meaning:'however, but, provided that (formal)',pos:'conj',example_jp:'入場可。ただし予約が必要。',example_en:'Entry is permitted. However, a reservation is required.'},
+  {level:'n2',theme:'adverbs',word:'ちなみに',reading:'ちなみに',meaning:'incidentally, by the way',pos:'adverb',example_jp:'ちなみに私の専門は経済学です。',example_en:'Incidentally, my speciality is economics.'},
+  {level:'n2',theme:'adverbs',word:'当然',reading:'とうぜん',meaning:'naturally, of course, as a matter of course',pos:'adverb/na-adj',example_jp:'当然の結果だと思います。',example_en:'I think it is a natural result.'},
+  {level:'n2',theme:'adverbs',word:'なお',reading:'なお',meaning:'furthermore, also (formal additive); still',pos:'adverb/conj',example_jp:'なお、詳細は後日連絡します。',example_en:'Furthermore, details will be communicated at a later date.'},
+  {level:'n2',theme:'adverbs',word:'なるほど',reading:'なるほど',meaning:'I see, indeed, I understand',pos:'adverb',example_jp:'なるほど、そういう意味でしたか。',example_en:'I see, so that\'s what it meant.'},
+  {level:'n2',theme:'adverbs',word:'並びに',reading:'ならびに',meaning:'and, as well as (formal listing)',pos:'conj',example_jp:'社員並びに関係者の皆様へ。',example_en:'To all employees and those concerned.'},
+  {level:'n2',theme:'adverbs',word:'はたして',reading:'はたして',meaning:'really, as expected; will it really…?',pos:'adverb',example_jp:'はたして成功するだろうか。',example_en:'Will it really succeed?'},
+  {level:'n2',theme:'adverbs',word:'比較的',reading:'ひかくてき',meaning:'comparatively, relatively',pos:'adverb',example_jp:'この仕事は比較的簡単です。',example_en:'This job is comparatively easy.'},
+  {level:'n2',theme:'adverbs',word:'むやみに',reading:'むやみに',meaning:'recklessly, indiscriminately, excessively',pos:'adverb',example_jp:'むやみに他人を批判してはいけない。',example_en:'You must not criticise others recklessly.'},
+  {level:'n2',theme:'adverbs',word:'もっとも',reading:'もっとも',meaning:'however, though (concessive); most',pos:'adverb/conj',example_jp:'賛成です。もっとも、条件次第ですが。',example_en:'I agree. However, it depends on the conditions.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N2 — NOUNS (science, environment & technology)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n2',theme:'science & tech',word:'革新',reading:'かくしん',meaning:'innovation, reform, renovation',pos:'noun',example_jp:'技術革新が世界を変えた。',example_en:'Technological innovation changed the world.'},
+  {level:'n2',theme:'science & tech',word:'課題',reading:'かだい',meaning:'issue, challenge, assignment, task',pos:'noun',example_jp:'今後の課題について話し合う。',example_en:'We will discuss future challenges.'},
+  {level:'n2',theme:'science & tech',word:'機械',reading:'きかい',meaning:'machine, machinery',pos:'noun',example_jp:'機械が故障した。',example_en:'The machine has broken down.'},
+  {level:'n2',theme:'science & tech',word:'再生',reading:'さいせい',meaning:'regeneration, recycling, playback',pos:'noun/verb',example_jp:'廃棄物を再生利用する。',example_en:'We recycle waste materials.'},
+  {level:'n2',theme:'science & tech',word:'実験',reading:'じっけん',meaning:'experiment',pos:'noun/verb',example_jp:'実験結果を報告します。',example_en:'I will report the experimental results.'},
+  {level:'n2',theme:'science & tech',word:'システム',reading:'しすてむ',meaning:'system',pos:'noun',example_jp:'システムが更新されました。',example_en:'The system has been updated.'},
+  {level:'n2',theme:'science & tech',word:'循環',reading:'じゅんかん',meaning:'circulation, cycle',pos:'noun/verb',example_jp:'資源の循環利用が重要だ。',example_en:'Circular use of resources is important.'},
+  {level:'n2',theme:'science & tech',word:'自動化',reading:'じどうか',meaning:'automation',pos:'noun',example_jp:'製造工程の自動化が進んでいる。',example_en:'Automation of the manufacturing process is advancing.'},
+  {level:'n2',theme:'science & tech',word:'削減',reading:'さくげん',meaning:'reduction, cut',pos:'noun',example_jp:'CO₂削減が急務だ。',example_en:'CO₂ reduction is urgent.'},
+  {level:'n2',theme:'science & tech',word:'蓄積',reading:'ちくせき',meaning:'accumulation, stockpile',pos:'noun/verb',example_jp:'データを蓄積して分析する。',example_en:'We accumulate data and analyse it.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N2 — NOUNS (arts, culture & education)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n2',theme:'culture',word:'芸術',reading:'げいじゅつ',meaning:'art (fine art, performing art)',pos:'noun',example_jp:'芸術は人の心を動かす。',example_en:'Art moves people\'s hearts.'},
+  {level:'n2',theme:'culture',word:'創造',reading:'そうぞう',meaning:'creation, creativity',pos:'noun/verb',example_jp:'創造力を育てることが大切だ。',example_en:'It is important to nurture creativity.'},
+  {level:'n2',theme:'culture',word:'表象',reading:'ひょうしょう',meaning:'symbol, representation',pos:'noun',example_jp:'言語は文化の表象だ。',example_en:'Language is a representation of culture.'},
+  {level:'n2',theme:'culture',word:'評価',reading:'ひょうか',meaning:'evaluation, assessment, rating',pos:'noun/verb',example_jp:'公正な評価をお願いします。',example_en:'Please give a fair evaluation.'},
+  {level:'n2',theme:'culture',word:'普遍',reading:'ふへん',meaning:'universal, general',pos:'noun/na-adj',example_jp:'普遍的な価値観を探求する。',example_en:'I seek universal values.'},
+  {level:'n2',theme:'culture',word:'文明',reading:'ぶんめい',meaning:'civilisation',pos:'noun',example_jp:'文明の発展を学んだ。',example_en:'I learned about the development of civilisation.'},
+  {level:'n2',theme:'culture',word:'批評',reading:'ひひょう',meaning:'criticism, review, critique',pos:'noun/verb',example_jp:'映画の批評を書いた。',example_en:'I wrote a film review.'},
+  {level:'n2',theme:'culture',word:'象徴',reading:'しょうちょう',meaning:'symbol, emblem',pos:'noun/verb',example_jp:'桜は日本の象徴です。',example_en:'The cherry blossom is a symbol of Japan.'},
+
+// ═══════════════════════════════════════════════════════════
+  //  N1 — VERBS (u-verbs)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n1',theme:'verbs',word:'あがなう',reading:'あがなう',meaning:'to atone for, to compensate, to redeem',pos:'verb (u)',example_jp:'罪をあがなうために努力した。',example_en:'I made efforts to atone for my sins.'},
+  {level:'n1',theme:'verbs',word:'あざむく',reading:'あざむく',meaning:'to deceive, to trick, to delude',pos:'verb (u)',example_jp:'人をあざむくことは許されない。',example_en:'Deceiving people is not permitted.'},
+  {level:'n1',theme:'verbs',word:'あながち',reading:'あながち',meaning:'not necessarily, not always (with neg.)',pos:'adverb',example_jp:'それはあながち間違いとも言えない。',example_en:'That cannot necessarily be called wrong.'},
+  {level:'n1',theme:'verbs',word:'あらわす',reading:'あらわす',meaning:'to reveal, to express, to represent',pos:'verb (u)',example_jp:'感情を言葉であらわした。',example_en:'I expressed my emotions in words.'},
+  {level:'n1',theme:'verbs',word:'いつわる',reading:'いつわる',meaning:'to lie, to deceive, to pretend',pos:'verb (u)',example_jp:'身分をいつわっていた。',example_en:'He had been pretending to be someone else.'},
+  {level:'n1',theme:'verbs',word:'うちけす',reading:'うちけす',meaning:'to deny, to negate, to contradict',pos:'verb (u)',example_jp:'その噂を強くうちけした。',example_en:'He strongly denied the rumour.'},
+  {level:'n1',theme:'verbs',word:'うながす',reading:'うながす',meaning:'to urge, to prompt, to encourage',pos:'verb (u)',example_jp:'行動をうながすメッセージを送った。',example_en:'I sent a message to encourage action.'},
+  {level:'n1',theme:'verbs',word:'おもむく',reading:'おもむく',meaning:'to go to, to proceed to, to head for',pos:'verb (u)',example_jp:'現地に直接おもむいた。',example_en:'I headed directly to the site.'},
+  {level:'n1',theme:'verbs',word:'かかわる',reading:'かかわる',meaning:'to be involved in, to concern',pos:'verb (u)',example_jp:'命にかかわる問題だ。',example_en:'It is a matter involving life.'},
+  {level:'n1',theme:'verbs',word:'かこつける',reading:'かこつける',meaning:'to use as a pretext, to make an excuse of',pos:'verb (ru)',example_jp:'病気にかこつけて仕事を休んだ。',example_en:'He used illness as a pretext to take time off work.'},
+  {level:'n1',theme:'verbs',word:'かすむ',reading:'かすむ',meaning:'to grow hazy, to be obscured',pos:'verb (u)',example_jp:'霞がかかって山がかすんでいる。',example_en:'Haze has settled and the mountain is obscured.'},
+  {level:'n1',theme:'verbs',word:'きわめる',reading:'きわめる',meaning:'to master, to carry to extremes, to probe to the depths',pos:'verb (ru)',example_jp:'技術を極めることが目標だ。',example_en:'My goal is to master the technique.'},
+  {level:'n1',theme:'verbs',word:'くつがえす',reading:'くつがえす',meaning:'to overturn, to reverse, to upset',pos:'verb (u)',example_jp:'判決をくつがえすことは難しい。',example_en:'It is difficult to overturn the verdict.'},
+  {level:'n1',theme:'verbs',word:'こうむる',reading:'こうむる',meaning:'to suffer, to incur, to sustain (damage)',pos:'verb (u)',example_jp:'大きな損害をこうむった。',example_en:'We sustained great damage.'},
+  {level:'n1',theme:'verbs',word:'さえぎる',reading:'さえぎる',meaning:'to interrupt, to block, to cut off',pos:'verb (u)',example_jp:'話をさえぎらないでください。',example_en:'Please do not interrupt the conversation.'},
+  {level:'n1',theme:'verbs',word:'さまたげる',reading:'さまたげる',meaning:'to hinder, to obstruct, to disturb',pos:'verb (ru)',example_jp:'発展をさまたげる要因がある。',example_en:'There are factors that hinder development.'},
+  {level:'n1',theme:'verbs',word:'しいる',reading:'しいる',meaning:'to force, to compel, to coerce',pos:'verb (ru)',example_jp:'無理を強いることはできない。',example_en:'You cannot force unreasonable demands on someone.'},
+  {level:'n1',theme:'verbs',word:'すくう',reading:'すくう',meaning:'to scoop up; to save, to rescue',pos:'verb (u)',example_jp:'子供の命をすくった。',example_en:'He saved the child\'s life.'},
+  {level:'n1',theme:'verbs',word:'そむく',reading:'そむく',meaning:'to disobey, to go against, to betray',pos:'verb (u)',example_jp:'命令にそむいた。',example_en:'He disobeyed the order.'},
+  {level:'n1',theme:'verbs',word:'そびえる',reading:'そびえる',meaning:'to tower over, to loom up',pos:'verb (ru)',example_jp:'山がそびえ立っている。',example_en:'The mountain towers above.'},
+  {level:'n1',theme:'verbs',word:'たくらむ',reading:'たくらむ',meaning:'to scheme, to plot, to conspire',pos:'verb (u)',example_jp:'悪事をたくらんでいた。',example_en:'He was plotting something wicked.'},
+  {level:'n1',theme:'verbs',word:'たたえる',reading:'たたえる',meaning:'to praise highly, to extol, to glorify',pos:'verb (ru)',example_jp:'英雄の功績をたたえた。',example_en:'They praised the hero\'s achievements.'},
+  {level:'n1',theme:'verbs',word:'つのる',reading:'つのる',meaning:'to grow, to intensify; to solicit, to recruit',pos:'verb (u)',example_jp:'不安がつのるばかりだ。',example_en:'My anxiety keeps intensifying.'},
+  {level:'n1',theme:'verbs',word:'とどまる',reading:'とどまる',meaning:'to stay, to remain; to be limited to',pos:'verb (u)',example_jp:'被害は最小限にとどまった。',example_en:'The damage remained minimal.'},
+  {level:'n1',theme:'verbs',word:'とぼける',reading:'とぼける',meaning:'to play dumb, to feign ignorance',pos:'verb (ru)',example_jp:'知っているのにとぼけた。',example_en:'He played dumb even though he knew.'},
+  {level:'n1',theme:'verbs',word:'ないがしろにする',reading:'ないがしろにする',meaning:'to disregard, to belittle, to neglect',pos:'verb (irr)',example_jp:'相手の意見をないがしろにしてはいけない。',example_en:'You must not disregard the other person\'s opinion.'},
+  {level:'n1',theme:'verbs',word:'なだめる',reading:'なだめる',meaning:'to soothe, to calm, to appease',pos:'verb (ru)',example_jp:'泣いている子供をなだめた。',example_en:'I soothed the crying child.'},
+  {level:'n1',theme:'verbs',word:'にじむ',reading:'にじむ',meaning:'to bleed (ink/colour), to ooze, to well up',pos:'verb (u)',example_jp:'インクがにじんでしまった。',example_en:'The ink bled.'},
+  {level:'n1',theme:'verbs',word:'ねばる',reading:'ねばる',meaning:'to persist, to hold out, to be sticky',pos:'verb (u)',example_jp:'最後まであきらめずにねばった。',example_en:'I held out to the end without giving up.'},
+  {level:'n1',theme:'verbs',word:'はばむ',reading:'はばむ',meaning:'to obstruct, to check, to thwart',pos:'verb (u)',example_jp:'悪天候が進行をはばんだ。',example_en:'Bad weather thwarted the progress.'},
+  {level:'n1',theme:'verbs',word:'ひるむ',reading:'ひるむ',meaning:'to flinch, to shrink back, to waver',pos:'verb (u)',example_jp:'困難にひるまず進め。',example_en:'Advance without flinching from difficulties.'},
+  {level:'n1',theme:'verbs',word:'ふさぐ',reading:'ふさぐ',meaning:'to block, to close up, to plug',pos:'verb (u)',example_jp:'穴をふさいだ。',example_en:'I plugged the hole.'},
+  {level:'n1',theme:'verbs',word:'まかなう',reading:'まかなう',meaning:'to supply, to cover (costs), to provide for',pos:'verb (u)',example_jp:'自給自足で食料をまかなう。',example_en:'We provide for food through self-sufficiency.'},
+  {level:'n1',theme:'verbs',word:'みなす',reading:'みなす',meaning:'to consider, to regard as, to deem',pos:'verb (u)',example_jp:'これを証拠とみなします。',example_en:'I will regard this as evidence.'},
+  {level:'n1',theme:'verbs',word:'もたらす',reading:'もたらす',meaning:'to bring about, to cause',pos:'verb (u)',example_jp:'革命が大きな変化をもたらした。',example_en:'The revolution brought about great change.'},
+  {level:'n1',theme:'verbs',word:'やわらぐ',reading:'やわらぐ',meaning:'to soften, to relax, to calm down',pos:'verb (u)',example_jp:'緊張がやわらいだ。',example_en:'The tension relaxed.'},
+  {level:'n1',theme:'verbs',word:'ゆだねる',reading:'ゆだねる',meaning:'to entrust to, to leave to, to surrender to',pos:'verb (ru)',example_jp:'判断を相手にゆだねた。',example_en:'I left the judgement to the other party.'},
+  {level:'n1',theme:'verbs',word:'よそおう',reading:'よそおう',meaning:'to disguise oneself as, to pretend, to feign',pos:'verb (u)',example_jp:'冷静をよそおったが実は怖かった。',example_en:'I feigned composure but was actually afraid.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N1 — VERBS (する compounds)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n1',theme:'verbs',word:'懸念する',reading:'けねんする',meaning:'to be apprehensive about, to be concerned about',pos:'verb (irr)',example_jp:'副作用を懸念する声がある。',example_en:'There are voices expressing concern about side effects.'},
+  {level:'n1',theme:'verbs',word:'拒否する',reading:'きょひする',meaning:'to refuse, to reject, to deny',pos:'verb (irr)',example_jp:'要求を拒否しました。',example_en:'I refused the demand.'},
+  {level:'n1',theme:'verbs',word:'勘案する',reading:'かんあんする',meaning:'to take into consideration, to weigh up',pos:'verb (irr)',example_jp:'様々な要因を勘案して決めた。',example_en:'I decided after weighing up various factors.'},
+  {level:'n1',theme:'verbs',word:'敬遠する',reading:'けいえんする',meaning:'to keep at a distance, to avoid',pos:'verb (irr)',example_jp:'リスクが高い投資を敬遠している。',example_en:'I am keeping high-risk investments at a distance.'},
+  {level:'n1',theme:'verbs',word:'混同する',reading:'こんどうする',meaning:'to confuse, to mix up, to conflate',pos:'verb (irr)',example_jp:'二つの概念を混同してはいけない。',example_en:'You must not confuse the two concepts.'},
+  {level:'n1',theme:'verbs',word:'誇示する',reading:'こじする',meaning:'to flaunt, to show off, to parade',pos:'verb (irr)',example_jp:'権力を誇示するような行動だ。',example_en:'It is the kind of behaviour that flaunts power.'},
+  {level:'n1',theme:'verbs',word:'策定する',reading:'さくていする',meaning:'to formulate, to draw up (a plan)',pos:'verb (irr)',example_jp:'長期戦略を策定した。',example_en:'We formulated a long-term strategy.'},
+  {level:'n1',theme:'verbs',word:'示唆する',reading:'しさする',meaning:'to suggest, to imply, to hint at',pos:'verb (irr)',example_jp:'データは別の可能性を示唆している。',example_en:'The data suggests another possibility.'},
+  {level:'n1',theme:'verbs',word:'収束する',reading:'しゅうそくする',meaning:'to converge, to settle down, to subside',pos:'verb (irr)',example_jp:'問題がようやく収束した。',example_en:'The problem has finally subsided.'},
+  {level:'n1',theme:'verbs',word:'逸脱する',reading:'いつだつする',meaning:'to deviate from, to depart from',pos:'verb (irr)',example_jp:'議題から逸脱しないでください。',example_en:'Please do not deviate from the agenda.'},
+  {level:'n1',theme:'verbs',word:'帰属する',reading:'きぞくする',meaning:'to belong to, to be attributed to',pos:'verb (irr)',example_jp:'その権限は政府に帰属する。',example_en:'That authority belongs to the government.'},
+  {level:'n1',theme:'verbs',word:'倫理する',reading:'りんりする',meaning:'to judge ethically',pos:'verb (irr)',example_jp:'倫理的に判断することが求められる。',example_en:'Ethical judgement is required.'},
+  {level:'n1',theme:'verbs',word:'制裁する',reading:'せいさいする',meaning:'to sanction, to penalise',pos:'verb (irr)',example_jp:'違反者を制裁した。',example_en:'The violators were penalised.'},
+  {level:'n1',theme:'verbs',word:'統括する',reading:'とうかつする',meaning:'to supervise, to oversee, to unify',pos:'verb (irr)',example_jp:'全体を統括する立場にある。',example_en:'I am in a position to oversee the whole.'},
+  {level:'n1',theme:'verbs',word:'排除する',reading:'はいじょする',meaning:'to exclude, to eliminate, to remove',pos:'verb (irr)',example_jp:'差別を排除する取り組みだ。',example_en:'It is an effort to eliminate discrimination.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N1 — NOUNS (abstract & philosophical)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n1',theme:'abstract',word:'概念',reading:'がいねん',meaning:'concept, notion, idea',pos:'noun',example_jp:'抽象的な概念を理解するのは難しい。',example_en:'It is difficult to understand abstract concepts.'},
+  {level:'n1',theme:'abstract',word:'矛盾',reading:'むじゅん',meaning:'contradiction, inconsistency',pos:'noun/verb',example_jp:'彼の発言には矛盾がある。',example_en:'There is a contradiction in his statement.'},
+  {level:'n1',theme:'abstract',word:'本質',reading:'ほんしつ',meaning:'essence, true nature',pos:'noun',example_jp:'問題の本質を見極めることが大切だ。',example_en:'It is important to identify the essence of the problem.'},
+  {level:'n1',theme:'abstract',word:'普遍',reading:'ふへん',meaning:'universality, universal truth',pos:'noun/na-adj',example_jp:'普遍的な価値とは何か。',example_en:'What are universal values?'},
+  {level:'n1',theme:'abstract',word:'倫理',reading:'りんり',meaning:'ethics, morality',pos:'noun',example_jp:'研究倫理を守ることが必須だ。',example_en:'It is essential to adhere to research ethics.'},
+  {level:'n1',theme:'abstract',word:'価値観',reading:'かちかん',meaning:'sense of values, values system',pos:'noun',example_jp:'人それぞれ価値観が異なる。',example_en:'Each person has different values.'},
+  {level:'n1',theme:'abstract',word:'先入観',reading:'せんにゅうかん',meaning:'preconception, preconceived notion, bias',pos:'noun',example_jp:'先入観を捨てて考えてみよう。',example_en:'Let\'s think without preconceptions.'},
+  {level:'n1',theme:'abstract',word:'固定観念',reading:'こていかんねん',meaning:'fixed idea, stereotype',pos:'noun',example_jp:'固定観念にとらわれないようにしよう。',example_en:'Let\'s try not to be bound by stereotypes.'},
+  {level:'n1',theme:'abstract',word:'理念',reading:'りねん',meaning:'philosophy, ideal, principle',pos:'noun',example_jp:'会社の理念を共有する。',example_en:'We share the company\'s philosophy.'},
+  {level:'n1',theme:'abstract',word:'規範',reading:'きはん',meaning:'norm, standard, model',pos:'noun',example_jp:'社会規範を守ることが大切だ。',example_en:'It is important to observe social norms.'},
+  {level:'n1',theme:'abstract',word:'逆説',reading:'ぎゃくせつ',meaning:'paradox, irony',pos:'noun',example_jp:'豊かさの逆説について論じた。',example_en:'I argued about the paradox of affluence.'},
+  {level:'n1',theme:'abstract',word:'命題',reading:'めいだい',meaning:'proposition, thesis',pos:'noun',example_jp:'哲学的命題を考察した。',example_en:'I examined a philosophical proposition.'},
+  {level:'n1',theme:'abstract',word:'前例',reading:'ぜんれい',meaning:'precedent, previous example',pos:'noun',example_jp:'前例のない判断を下した。',example_en:'An unprecedented judgement was made.'},
+  {level:'n1',theme:'abstract',word:'模索',reading:'もさく',meaning:'groping for, searching for (an answer)',pos:'noun/verb',example_jp:'解決策を模索している。',example_en:'We are groping for a solution.'},
+  {level:'n1',theme:'abstract',word:'示唆',reading:'しさ',meaning:'suggestion, implication, hint',pos:'noun',example_jp:'その発言は問題があることを示唆している。',example_en:'That remark implies there is a problem.'},
+  {level:'n1',theme:'abstract',word:'実態',reading:'じったい',meaning:'actual condition, reality, true state',pos:'noun',example_jp:'問題の実態を調査した。',example_en:'I investigated the actual condition of the problem.'},
+  {level:'n1',theme:'abstract',word:'整合性',reading:'せいごうせい',meaning:'consistency, coherence',pos:'noun',example_jp:'議論の整合性を確認してください。',example_en:'Please confirm the consistency of the argument.'},
+  {level:'n1',theme:'abstract',word:'当惑',reading:'とうわく',meaning:'confusion, perplexity, embarrassment',pos:'noun/verb',example_jp:'突然の質問に当惑した。',example_en:'I was perplexed by the sudden question.'},
+  {level:'n1',theme:'abstract',word:'洞察',reading:'どうさつ',meaning:'insight, discernment',pos:'noun/verb',example_jp:'深い洞察に基づいた意見だ。',example_en:'It is an opinion based on deep insight.'},
+  {level:'n1',theme:'abstract',word:'偏見',reading:'へんけん',meaning:'prejudice, bias',pos:'noun',example_jp:'偏見をなくすことが大切だ。',example_en:'It is important to eliminate prejudice.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N1 — NOUNS (society, politics & law)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n1',theme:'society',word:'圧力',reading:'あつりょく',meaning:'pressure, coercion',pos:'noun',example_jp:'政治的圧力がかかっている。',example_en:'Political pressure is being applied.'},
+  {level:'n1',theme:'society',word:'意向',reading:'いこう',meaning:'intention, will, inclination',pos:'noun',example_jp:'上層部の意向に従います。',example_en:'I will follow the will of the upper management.'},
+  {level:'n1',theme:'society',word:'委託',reading:'いたく',meaning:'entrustment, commission, outsourcing',pos:'noun/verb',example_jp:'業務を外部に委託した。',example_en:'We outsourced the work externally.'},
+  {level:'n1',theme:'society',word:'介入',reading:'かいにゅう',meaning:'intervention, interference',pos:'noun/verb',example_jp:'政府が市場に介入した。',example_en:'The government intervened in the market.'},
+  {level:'n1',theme:'society',word:'規制',reading:'きせい',meaning:'regulation, restriction, control',pos:'noun/verb',example_jp:'排気ガスの規制が強化された。',example_en:'Exhaust emission regulations were strengthened.'},
+  {level:'n1',theme:'society',word:'欺瞞',reading:'ぎまん',meaning:'deception, deceit, fraud',pos:'noun',example_jp:'欺瞞に満ちた行為だ。',example_en:'It is an act full of deception.'},
+  {level:'n1',theme:'society',word:'拘束',reading:'こうそく',meaning:'restraint, confinement; binding',pos:'noun/verb',example_jp:'身体を拘束された。',example_en:'My body was restrained.'},
+  {level:'n1',theme:'society',word:'根絶',reading:'こんぜつ',meaning:'eradication, extermination',pos:'noun/verb',example_jp:'貧困を根絶するのは難しい。',example_en:'It is difficult to eradicate poverty.'},
+  {level:'n1',theme:'society',word:'裁量',reading:'さいりょう',meaning:'discretion, judgement',pos:'noun',example_jp:'担当者の裁量に任せます。',example_en:'I will leave it to the discretion of the person in charge.'},
+  {level:'n1',theme:'society',word:'制約',reading:'せいやく',meaning:'restriction, constraint, limitation',pos:'noun/verb',example_jp:'予算の制約がある。',example_en:'There are budget constraints.'},
+  {level:'n1',theme:'society',word:'弾圧',reading:'だんあつ',meaning:'oppression, suppression',pos:'noun/verb',example_jp:'言論を弾圧することは許されない。',example_en:'Suppression of speech is not permitted.'},
+  {level:'n1',theme:'society',word:'腐敗',reading:'ふはい',meaning:'corruption, decay, decomposition',pos:'noun/verb',example_jp:'政治腐敗が問題になっている。',example_en:'Political corruption is becoming a problem.'},
+  {level:'n1',theme:'society',word:'分裂',reading:'ぶんれつ',meaning:'division, split, rupture',pos:'noun/verb',example_jp:'組織の分裂を防ぐ必要がある。',example_en:'It is necessary to prevent the organisation from splitting.'},
+  {level:'n1',theme:'society',word:'摩擦',reading:'まさつ',meaning:'friction, discord, conflict',pos:'noun',example_jp:'貿易摩擦が深刻化している。',example_en:'Trade friction is intensifying.'},
+  {level:'n1',theme:'society',word:'利害',reading:'りがい',meaning:'interests, advantages and disadvantages',pos:'noun',example_jp:'利害関係者が多い問題だ。',example_en:'It is a problem with many stakeholders.'},
+  {level:'n1',theme:'society',word:'紛争',reading:'ふんそう',meaning:'conflict, dispute, strife',pos:'noun',example_jp:'地域紛争が続いている。',example_en:'Regional conflict is continuing.'},
+  {level:'n1',theme:'society',word:'抑圧',reading:'よくあつ',meaning:'suppression, repression',pos:'noun/verb',example_jp:'表現の抑圧は民主主義に反する。',example_en:'Suppression of expression is contrary to democracy.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N1 — ADJECTIVES (i-adjectives)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n1',theme:'adjectives',word:'いまいましい',reading:'いまいましい',meaning:'irritating, annoying, vexing',pos:'i-adj',example_jp:'いまいましいミスをしてしまった。',example_en:'I made an irritating mistake.'},
+  {level:'n1',theme:'adjectives',word:'おびただしい',reading:'おびただしい',meaning:'enormous, vast, innumerable',pos:'i-adj',example_jp:'おびただしい数の問い合わせが来た。',example_en:'An enormous number of enquiries came in.'},
+  {level:'n1',theme:'adjectives',word:'かたくるしい',reading:'かたくるしい',meaning:'stiff, formal, overly serious',pos:'i-adj',example_jp:'かたくるしい言葉は使わないでください。',example_en:'Please do not use overly formal language.'},
+  {level:'n1',theme:'adjectives',word:'きわどい',reading:'きわどい',meaning:'on the edge, risky, suggestive, close call',pos:'i-adj',example_jp:'きわどい結果になった。',example_en:'It was a close-call result.'},
+  {level:'n1',theme:'adjectives',word:'くどい',reading:'くどい',meaning:'repetitive, persistent, over-the-top',pos:'i-adj',example_jp:'くどい説明は聞く気をなくす。',example_en:'Repetitive explanations kill the will to listen.'},
+  {level:'n1',theme:'adjectives',word:'ずうずうしい',reading:'ずうずうしい',meaning:'impudent, brazen, audacious',pos:'i-adj',example_jp:'ずうずうしい態度に呆れた。',example_en:'I was exasperated by the brazen attitude.'},
+  {level:'n1',theme:'adjectives',word:'すさまじい',reading:'すさまじい',meaning:'terrific, terrible, tremendous, fierce',pos:'i-adj',example_jp:'すさまじい勢いで成長している。',example_en:'It is growing at a tremendous pace.'},
+  {level:'n1',theme:'adjectives',word:'ずる賢い',reading:'ずるがしこい',meaning:'cunning, crafty, sly',pos:'i-adj',example_jp:'ずる賢い手口で騙された。',example_en:'I was tricked by a cunning scheme.'},
+  {level:'n1',theme:'adjectives',word:'たくましい',reading:'たくましい',meaning:'sturdy, robust, tough, rugged',pos:'i-adj',example_jp:'たくましい精神力が必要だ。',example_en:'A robust mental strength is necessary.'},
+  {level:'n1',theme:'adjectives',word:'つたない',reading:'つたない',meaning:'poor, unskilled, clumsy',pos:'i-adj',example_jp:'つたない文章ですが読んでください。',example_en:'The writing is poor but please read it.'},
+  {level:'n1',theme:'adjectives',word:'はかない',reading:'はかない',meaning:'fleeting, transient, ephemeral',pos:'i-adj',example_jp:'はかない夢を追い続けた。',example_en:'I kept chasing a fleeting dream.'},
+  {level:'n1',theme:'adjectives',word:'ひたむき',reading:'ひたむき',meaning:'single-minded, earnest, wholehearted',pos:'na-adj',example_jp:'ひたむきな努力が実を結んだ。',example_en:'Wholehearted effort bore fruit.'},
+  {level:'n1',theme:'adjectives',word:'みすぼらしい',reading:'みすぼらしい',meaning:'shabby, squalid, seedy',pos:'i-adj',example_jp:'みすぼらしい格好で現れた。',example_en:'He appeared in a shabby appearance.'},
+  {level:'n1',theme:'adjectives',word:'やましい',reading:'やましい',meaning:'feeling guilty, having a guilty conscience',pos:'i-adj',example_jp:'やましいところはありません。',example_en:'I have nothing to feel guilty about.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N1 — ADJECTIVES (na-adjectives)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n1',theme:'adjectives',word:'過激',reading:'かげき',meaning:'extreme, radical, violent',pos:'na-adj',example_jp:'過激な発言は控えてください。',example_en:'Please refrain from extreme statements.'},
+  {level:'n1',theme:'adjectives',word:'機敏',reading:'きびん',meaning:'nimble, agile, quick-witted',pos:'na-adj',example_jp:'機敏な対応が求められる。',example_en:'Agile response is required.'},
+  {level:'n1',theme:'adjectives',word:'巧妙',reading:'こうみょう',meaning:'clever, ingenious, crafty',pos:'na-adj',example_jp:'巧妙な罠にはまった。',example_en:'I fell into a clever trap.'},
+  {level:'n1',theme:'adjectives',word:'崇高',reading:'すうこう',meaning:'sublime, lofty, noble',pos:'na-adj',example_jp:'崇高な理想を持っている。',example_en:'He has lofty ideals.'},
+  {level:'n1',theme:'adjectives',word:'精巧',reading:'せいこう',meaning:'elaborate, exquisite, precise',pos:'na-adj',example_jp:'精巧な時計を製造している。',example_en:'We manufacture elaborate watches.'},
+  {level:'n1',theme:'adjectives',word:'粗雑',reading:'そざつ',meaning:'rough, crude, careless',pos:'na-adj',example_jp:'粗雑な仕事は許されない。',example_en:'Crude work is not permitted.'},
+  {level:'n1',theme:'adjectives',word:'大胆',reading:'だいたん',meaning:'bold, daring, audacious',pos:'na-adj',example_jp:'大胆な改革が必要だ。',example_en:'Bold reform is necessary.'},
+  {level:'n1',theme:'adjectives',word:'曖昧模糊',reading:'あいまいもこ',meaning:'vague and hazy, obscure',pos:'na-adj',example_jp:'曖昧模糊とした説明だった。',example_en:'It was a vague and hazy explanation.'},
+  {level:'n1',theme:'adjectives',word:'寛大',reading:'かんだい',meaning:'lenient, generous, magnanimous',pos:'na-adj',example_jp:'寛大な対応をありがとうございます。',example_en:'Thank you for your magnanimous response.'},
+  {level:'n1',theme:'adjectives',word:'慎重',reading:'しんちょう',meaning:'careful, cautious, prudent',pos:'na-adj',example_jp:'慎重に判断してください。',example_en:'Please judge carefully.'},
+  {level:'n1',theme:'adjectives',word:'辛辣',reading:'しんらつ',meaning:'caustic, biting, scathing',pos:'na-adj',example_jp:'辛辣な批評を受けた。',example_en:'I received a scathing critique.'},
+  {level:'n1',theme:'adjectives',word:'露骨',reading:'ろこつ',meaning:'explicit, blatant, undisguised',pos:'na-adj',example_jp:'露骨な差別発言だ。',example_en:'It is a blatant discriminatory remark.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N1 — ADVERBS & FORMAL EXPRESSIONS
+  // ═══════════════════════════════════════════════════════════
+  {level:'n1',theme:'adverbs',word:'あいにく',reading:'あいにく',meaning:'unfortunately, unluckily, as bad luck would have it',pos:'adverb',example_jp:'あいにく本日は満席です。',example_en:'Unfortunately we are fully booked today.'},
+  {level:'n1',theme:'adverbs',word:'あながち',reading:'あながち',meaning:'not necessarily, not always (with negative)',pos:'adverb',example_jp:'あながち間違いとも言い切れない。',example_en:'One cannot say it is necessarily wrong.'},
+  {level:'n1',theme:'adverbs',word:'あるいは',reading:'あるいは',meaning:'or, alternatively, perhaps',pos:'conj',example_jp:'電車、あるいはバスで来てください。',example_en:'Please come by train or alternatively by bus.'},
+  {level:'n1',theme:'adverbs',word:'いかんせん',reading:'いかんせん',meaning:'unfortunately, regrettably, however hard one tries',pos:'adverb',example_jp:'いかんせん時間が足りなかった。',example_en:'Unfortunately there was not enough time.'},
+  {level:'n1',theme:'adverbs',word:'いわば',reading:'いわば',meaning:'so to speak, as it were',pos:'adverb',example_jp:'彼はいわば天才だ。',example_en:'He is, so to speak, a genius.'},
+  {level:'n1',theme:'adverbs',word:'おおむね',reading:'おおむね',meaning:'generally, mostly, on the whole',pos:'adverb',example_jp:'計画はおおむね順調だ。',example_en:'The plan is going well on the whole.'},
+  {level:'n1',theme:'adverbs',word:'かえって',reading:'かえって',meaning:'on the contrary, rather, instead',pos:'adverb',example_jp:'手を貸してかえって迷惑をかけた。',example_en:'By lending a hand I caused trouble instead.'},
+  {level:'n1',theme:'adverbs',word:'かたや',reading:'かたや',meaning:'on one side, on the other hand',pos:'adverb',example_jp:'かたや裕福な家庭、かたや貧しい家庭。',example_en:'On one side a wealthy family, on the other a poor one.'},
+  {level:'n1',theme:'adverbs',word:'かつ',reading:'かつ',meaning:'and, moreover, at the same time (formal)',pos:'conj',example_jp:'迅速かつ正確に処理してください。',example_en:'Please process it quickly and accurately.'},
+  {level:'n1',theme:'adverbs',word:'かねて',reading:'かねて',meaning:'beforehand, long since, for some time',pos:'adverb',example_jp:'かねてより計画していたことだ。',example_en:'It is something that has been planned for some time.'},
+  {level:'n1',theme:'adverbs',word:'くれぐれも',reading:'くれぐれも',meaning:'sincerely, earnestly; please be sure to',pos:'adverb',example_jp:'くれぐれもご自愛ください。',example_en:'Please do take good care of yourself.'},
+  {level:'n1',theme:'adverbs',word:'こともあろうに',reading:'こともあろうに',meaning:'of all things, of all people (expressing disbelief)',pos:'adverb',example_jp:'こともあろうに上司に反論した。',example_en:'Of all things, he argued back against his superior.'},
+  {level:'n1',theme:'adverbs',word:'さながら',reading:'さながら',meaning:'just like, exactly as, as if',pos:'adverb',example_jp:'まるでさながら戦場のようだった。',example_en:'It was just like a battlefield.'},
+  {level:'n1',theme:'adverbs',word:'さりとて',reading:'さりとて',meaning:'yet, even so, that said',pos:'conj',example_jp:'難しい。さりとて諦めるわけにはいかない。',example_en:'It is difficult. Yet I cannot give up.'},
+  {level:'n1',theme:'adverbs',word:'すなわち',reading:'すなわち',meaning:'that is, namely, in other words (formal)',pos:'conj',example_jp:'努力、すなわち成功への道だ。',example_en:'Effort — that is, the path to success.'},
+  {level:'n1',theme:'adverbs',word:'ただに',reading:'ただに',meaning:'simply, merely, just (literary)',pos:'adverb',example_jp:'ただに美しいだけではない。',example_en:'It is not simply beautiful.'},
+  {level:'n1',theme:'adverbs',word:'たちまち',reading:'たちまち',meaning:'instantly, at once, in a flash',pos:'adverb',example_jp:'噂はたちまち広まった。',example_en:'The rumour spread in a flash.'},
+  {level:'n1',theme:'adverbs',word:'つくづく',reading:'つくづく',meaning:'keenly, deeply, heartily',pos:'adverb',example_jp:'つくづく後悔している。',example_en:'I am deeply regretting it.'},
+  {level:'n1',theme:'adverbs',word:'とかく',reading:'とかく',meaning:'in various ways, one way or another, apt to',pos:'adverb',example_jp:'とかく人はうわさ話が好きだ。',example_en:'People tend to like gossip in various ways.'},
+  {level:'n1',theme:'adverbs',word:'とりわけ',reading:'とりわけ',meaning:'above all, especially, particularly',pos:'adverb',example_jp:'とりわけ夏が暑い地域だ。',example_en:'It is a region that is especially hot in summer.'},
+  {level:'n1',theme:'adverbs',word:'なにしろ',reading:'なにしろ',meaning:'at any rate, anyway, after all',pos:'adverb',example_jp:'なにしろ経験が大切だ。',example_en:'At any rate, experience is important.'},
+  {level:'n1',theme:'adverbs',word:'にわかに',reading:'にわかに',meaning:'suddenly, abruptly, hastily',pos:'adverb',example_jp:'天気がにわかに変わった。',example_en:'The weather changed abruptly.'},
+  {level:'n1',theme:'adverbs',word:'のきなみ',reading:'のきなみ',meaning:'all together, without exception, uniformly',pos:'adverb',example_jp:'店ののきなみ値上げした。',example_en:'All the shops raised prices without exception.'},
+  {level:'n1',theme:'adverbs',word:'はなはだ',reading:'はなはだ',meaning:'very, extremely, greatly (formal)',pos:'adverb',example_jp:'はなはだ遺憾です。',example_en:'It is extremely regrettable.'},
+  {level:'n1',theme:'adverbs',word:'ひとえに',reading:'ひとえに',meaning:'solely, entirely, purely',pos:'adverb',example_jp:'成功はひとえにあなたのおかげです。',example_en:'The success is solely thanks to you.'},
+  {level:'n1',theme:'adverbs',word:'ふと',reading:'ふと',meaning:'suddenly, unexpectedly, by chance',pos:'adverb',example_jp:'ふと昔のことを思い出した。',example_en:'I suddenly recalled things from the past.'},
+  {level:'n1',theme:'adverbs',word:'まさしく',reading:'まさしく',meaning:'surely, certainly, exactly',pos:'adverb',example_jp:'まさしくその通りです。',example_en:'That is exactly right.'},
+  {level:'n1',theme:'adverbs',word:'もとより',reading:'もとより',meaning:'from the start, of course, naturally',pos:'adverb',example_jp:'もとより承知の上です。',example_en:'Of course I am aware of it from the start.'},
+  {level:'n1',theme:'adverbs',word:'ようやく',reading:'ようやく',meaning:'finally, at last, barely',pos:'adverb',example_jp:'ようやく目標を達成した。',example_en:'I finally achieved my goal.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N1 — NOUNS (formal & academic)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n1',theme:'formal',word:'威圧',reading:'いあつ',meaning:'intimidation, coercion, pressure',pos:'noun/verb',example_jp:'威圧的な態度はやめてください。',example_en:'Please stop the intimidating attitude.'},
+  {level:'n1',theme:'formal',word:'隔絶',reading:'かくぜつ',meaning:'isolation, separation, utter disconnection',pos:'noun/verb',example_jp:'世界から隔絶された場所だ。',example_en:'It is a place isolated from the world.'},
+  {level:'n1',theme:'formal',word:'傑出',reading:'けっしゅつ',meaning:'outstanding, remarkable, prominent',pos:'noun/verb',example_jp:'傑出した才能を持つ人物だ。',example_en:'He is a person of outstanding talent.'},
+  {level:'n1',theme:'formal',word:'根幹',reading:'こんかん',meaning:'root and trunk; core, foundation',pos:'noun',example_jp:'制度の根幹を揺るがす問題だ。',example_en:'It is a problem that shakes the core of the system.'},
+  {level:'n1',theme:'formal',word:'策略',reading:'さくりゃく',meaning:'strategy, scheme, tactics',pos:'noun',example_jp:'巧みな策略にはめられた。',example_en:'I was trapped in a clever scheme.'},
+  {level:'n1',theme:'formal',word:'真髄',reading:'しんずい',meaning:'quintessence, essence, true meaning',pos:'noun',example_jp:'武道の真髄を体得した。',example_en:'I mastered the quintessence of martial arts.'},
+  {level:'n1',theme:'formal',word:'辛苦',reading:'しんく',meaning:'hardship, toil, bitter hardship',pos:'noun',example_jp:'長年の辛苦が報われた。',example_en:'Years of hardship were rewarded.'},
+  {level:'n1',theme:'formal',word:'制覇',reading:'せいは',meaning:'conquest, domination, mastery',pos:'noun/verb',example_jp:'世界制覇を目指している。',example_en:'We are aiming for world domination.'},
+  {level:'n1',theme:'formal',word:'相違',reading:'そうい',meaning:'difference, discrepancy',pos:'noun',example_jp:'二者間に大きな相違がある。',example_en:'There is a large discrepancy between the two.'},
+  {level:'n1',theme:'formal',word:'端緒',reading:'たんしょ',meaning:'beginning, starting point, clue',pos:'noun',example_jp:'この発見が解決の端緒となった。',example_en:'This discovery became the starting point for a solution.'},
+  {level:'n1',theme:'formal',word:'沈黙',reading:'ちんもく',meaning:'silence, stillness',pos:'noun/verb',example_jp:'彼は沈黙を守り続けた。',example_en:'He continued to maintain silence.'},
+  {level:'n1',theme:'formal',word:'天賦',reading:'てんぷ',meaning:'natural gift, innate talent',pos:'noun',example_jp:'天賦の才を持つ音楽家だ。',example_en:'He is a musician with innate talent.'},
+  {level:'n1',theme:'formal',word:'波紋',reading:'はもん',meaning:'ripple; repercussion, controversy',pos:'noun',example_jp:'その発言が大きな波紋を呼んだ。',example_en:'That statement caused a great ripple of controversy.'},
+  {level:'n1',theme:'formal',word:'反響',reading:'はんきょう',meaning:'echo; response, repercussion, reaction',pos:'noun',example_jp:'その発表は大きな反響を呼んだ。',example_en:'The announcement drew a great response.'},
+  {level:'n1',theme:'formal',word:'弊害',reading:'へいがい',meaning:'harmful effect, evil, drawback',pos:'noun',example_jp:'過度な競争には弊害がある。',example_en:'Excessive competition has harmful effects.'},
+  {level:'n1',theme:'formal',word:'本末転倒',reading:'ほんまつてんとう',meaning:'putting the cart before the horse, inversion of priorities',pos:'noun',example_jp:'これは本末転倒だ。',example_en:'This is putting the cart before the horse.'},
+  {level:'n1',theme:'formal',word:'妥協',reading:'だきょう',meaning:'compromise, concession',pos:'noun/verb',example_jp:'品質では妥協できない。',example_en:'I cannot compromise on quality.'},
+  {level:'n1',theme:'formal',word:'名誉',reading:'めいよ',meaning:'honour, glory, prestige',pos:'noun',example_jp:'名誉を傷つけることは許されない。',example_en:'Damaging someone\'s honour is not permitted.'},
+  {level:'n1',theme:'formal',word:'融合',reading:'ゆうごう',meaning:'fusion, integration, merging',pos:'noun/verb',example_jp:'伝統と現代が融合した作品だ。',example_en:'It is a work that fuses tradition and modernity.'},
+  {level:'n1',theme:'formal',word:'余地',reading:'よち',meaning:'room, margin, leeway',pos:'noun',example_jp:'改善の余地はまだある。',example_en:'There is still room for improvement.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N1 — NOUNS (literary, arts & character)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n1',theme:'character',word:'気概',reading:'きがい',meaning:'spirit, mettle, indomitable will',pos:'noun',example_jp:'彼には強い気概がある。',example_en:'He has a strong indomitable spirit.'},
+  {level:'n1',theme:'character',word:'気骨',reading:'きこつ',meaning:'spirit, backbone, moral courage',pos:'noun',example_jp:'気骨のある人物だ。',example_en:'He is a person with backbone.'},
+  {level:'n1',theme:'character',word:'狡猾',reading:'こうかつ',meaning:'cunning, crafty, wily',pos:'na-adj',example_jp:'狡猾な手を使ってきた。',example_en:'He has been using cunning moves.'},
+  {level:'n1',theme:'character',word:'豪快',reading:'ごうかい',meaning:'bold, magnanimous, hearty',pos:'na-adj',example_jp:'豪快な笑い声が響いた。',example_en:'A hearty laugh resounded.'},
+  {level:'n1',theme:'character',word:'誠実',reading:'せいじつ',meaning:'sincere, honest, faithful',pos:'na-adj',example_jp:'誠実な対応をしていただいた。',example_en:'I received a sincere response.'},
+  {level:'n1',theme:'character',word:'高潔',reading:'こうけつ',meaning:'noble, lofty, pure in character',pos:'na-adj',example_jp:'高潔な人物として知られている。',example_en:'He is known as a noble person.'},
+  {level:'n1',theme:'character',word:'卑劣',reading:'ひれつ',meaning:'mean, cowardly, despicable',pos:'na-adj',example_jp:'卑劣な行為は許さない。',example_en:'I will not permit despicable acts.'},
+  {level:'n1',theme:'character',word:'剛毅',reading:'ごうき',meaning:'resolute, strong-willed, firm',pos:'na-adj',example_jp:'剛毅な精神で困難を乗り越えた。',example_en:'He overcame difficulties with a resolute spirit.'},
+  {level:'n1',theme:'character',word:'奔放',reading:'ほんぽう',meaning:'uninhibited, free-spirited, unbridled',pos:'na-adj',example_jp:'自由奔放に生きてきた。',example_en:'He has lived freely and uninhibited.'},
+  {level:'n1',theme:'character',word:'傲慢',reading:'ごうまん',meaning:'arrogant, haughty, overbearing',pos:'na-adj',example_jp:'傲慢な態度をやめなさい。',example_en:'Stop your arrogant attitude.'},
+  {level:'n1',theme:'character',word:'謙虚',reading:'けんきょ',meaning:'humble, modest, unassuming',pos:'na-adj',example_jp:'謙虚な姿勢を忘れないでください。',example_en:'Please do not forget a humble attitude.'},
+  {level:'n1',theme:'character',word:'潔癖',reading:'けっぺき',meaning:'fastidious, scrupulously clean, uncompromising',pos:'na-adj',example_jp:'彼は潔癖な性格で有名だ。',example_en:'He is famous for his fastidious nature.'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  N1 — NOUNS (science & environment)
+  // ═══════════════════════════════════════════════════════════
+  {level:'n1',theme:'science & tech',word:'触媒',reading:'しょくばい',meaning:'catalyst',pos:'noun',example_jp:'この物質が反応の触媒となる。',example_en:'This substance acts as a catalyst for the reaction.'},
+  {level:'n1',theme:'science & tech',word:'変遷',reading:'へんせん',meaning:'change over time, transition, vicissitudes',pos:'noun',example_jp:'言語の変遷を研究している。',example_en:'I am researching the change of language over time.'},
+  {level:'n1',theme:'science & tech',word:'漸進',reading:'ぜんしん',meaning:'gradual progress, step by step',pos:'noun',example_jp:'漸進的な改革が必要だ。',example_en:'Gradual reform is necessary.'},
+  {level:'n1',theme:'science & tech',word:'脆弱',reading:'ぜいじゃく',meaning:'fragile, vulnerable, weak',pos:'na-adj',example_jp:'脆弱なセキュリティが問題だ。',example_en:'Vulnerable security is a problem.'},
+  {level:'n1',theme:'science & tech',word:'縮小',reading:'しゅくしょう',meaning:'reduction, contraction, scaling down',pos:'noun/verb',example_jp:'事業を縮小する方針だ。',example_en:'The policy is to scale down the business.'},
+  {level:'n1',theme:'science & tech',word:'飛躍',reading:'ひやく',meaning:'leap, jump, rapid advance',pos:'noun/verb',example_jp:'技術が飛躍的に進歩した。',example_en:'Technology has advanced by leaps and bounds.'},
+];
+
+
+// ── State ─────────────────────────────────────────────────────
+let activeLevel = 'all';
+let activeTheme = 'all';
+let searchTerm  = '';
+let currentView = 'grid';
+
+// ── Derive themes ─────────────────────────────────────────────
+const allThemes = [...new Set(vocab.map(v => v.theme))].sort();
+
+// ── Build theme chips ─────────────────────────────────────────
+function buildThemeChips() {
+  const container = document.getElementById('theme-chips');
+  const all = document.createElement('button');
+  all.className = 'theme-chip active';
+  all.textContent = 'All';
+  all.dataset.theme = 'all';
+  all.onclick = () => setTheme('all', all);
+  container.appendChild(all);
+
+  allThemes.forEach(theme => {
+    const btn = document.createElement('button');
+    btn.className = 'theme-chip';
+    btn.textContent = theme;
+    btn.dataset.theme = theme;
+    btn.onclick = () => setTheme(theme, btn);
+    container.appendChild(btn);
+  });
+}
+
+function setTheme(theme, el) {
+  activeTheme = theme;
+  document.querySelectorAll('.theme-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+// ── Level filter ──────────────────────────────────────────────
+document.querySelectorAll('.filter-btn[data-level]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn[data-level]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeLevel = btn.dataset.level;
+    render();
+  });
+});
+
+// ── Search ────────────────────────────────────────────────────
+document.getElementById('search-input').addEventListener('input', e => {
+  searchTerm = e.target.value.toLowerCase();
+  render();
+});
+
+// ── View toggle ───────────────────────────────────────────────
+function setView(v) {
+  currentView = v;
+  document.getElementById('btn-grid').classList.toggle('active', v === 'grid');
+  document.getElementById('btn-list').classList.toggle('active', v === 'list');
+  render();
+}
+
+// ── Scroll to section ─────────────────────────────────────────
+function scrollTo(level) {
+  const el = document.getElementById('section-' + level);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── Filter vocab ──────────────────────────────────────────────
+function filtered() {
+  return vocab.filter(v => {
+    const levelOk = activeLevel === 'all' || v.level === activeLevel;
+    const themeOk = activeTheme === 'all' || v.theme === activeTheme;
+    const search  = !searchTerm || v.word.includes(searchTerm) || v.reading.includes(searchTerm) || v.meaning.toLowerCase().includes(searchTerm);
+    return levelOk && themeOk && search;
+  });
+}
+
+// ── Render ────────────────────────────────────────────────────
+function render() {
+  const data   = filtered();
+  const levels = ['n4','n3','n2','n1'];
+  const container = document.getElementById('vocab-container');
+  container.innerHTML = '';
+
+  document.getElementById('results-count').textContent = `${data.length} word${data.length !== 1 ? 's' : ''}`;
+  document.getElementById('count-label').textContent   = `${data.length} word${data.length !== 1 ? 's' : ''}`;
+
+  const levelLabels = {
+    n4: { jp: '<ruby>初<rt>しょ</rt></ruby><ruby>級<rt>きゅう</rt></ruby>', en: 'Elementary' },
+    n3: { jp: '<ruby>中<rt>ちゅう</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>下<rt>か</rt></ruby>', en: 'Pre-intermediate' },
+    n2: { jp: '<ruby>中<rt>ちゅう</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>上<rt>じょう</rt></ruby>', en: 'Upper-intermediate' },
+    n1: { jp: '<ruby>上<rt>じょう</rt></ruby><ruby>級<rt>きゅう</rt></ruby>', en: 'Advanced' },
+  };
+
+  levels.forEach(lvl => {
+    const lvlData = data.filter(v => v.level === lvl);
+    if (!lvlData.length) return;
+
+    const section = document.createElement('div');
+    section.className = 'level-section';
+    section.id = 'section-' + lvl;
+
+    section.innerHTML = `
+      <div class="level-heading">
+        <span class="level-badge level-${lvl}">${lvl.toUpperCase()}</span>
+        <div>
+          <div class="level-heading-text">${levelLabels[lvl].jp}</div>
+          <div class="level-heading-en">${levelLabels[lvl].en} — ${lvlData.length} word${lvlData.length !== 1 ? 's' : ''}</div>
+        </div>
+      </div>
+    `;
+
+    if (currentView === 'grid') {
+      const grid = document.createElement('div');
+      grid.className = 'vocab-grid active';
+      lvlData.forEach(v => grid.appendChild(makeCard(v)));
+      section.appendChild(grid);
+    } else {
+      const list = document.createElement('div');
+      list.className = 'vocab-list active';
+      lvlData.forEach(v => list.appendChild(makeListItem(v)));
+      section.appendChild(list);
+    }
+
+    container.appendChild(section);
+  });
+
+  if (!data.length) {
+    container.innerHTML = `<div style="text-align:center;padding:3rem;color:#7a6450;font-family:var(--serif-en);font-style:italic;">No words match your search.</div>`;
+  }
+}
+
+// ── Build card ────────────────────────────────────────────────
+function makeCard(v) {
+  const card = document.createElement('div');
+  card.className = `vocab-card ${v.level}`;
+
+  // add furigana to word display
+  const wordHtml = addFurigana(v.word, v.reading);
+  const exJpHtml = v.example_jp;
+
+  card.innerHTML = `
+    <div class="card-word">${wordHtml}<button class="vv-btn" onclick="event.stopPropagation();playJapanese('${v.word}', this)" title="Play audio">🔊</button></div>
+    <div class="card-reading">${v.reading}</div>
+    <div class="card-meaning">${v.meaning}</div>
+    <div class="card-pos">${v.pos}</div>
+    <div class="card-example">
+      <div class="ex-jp">${exJpHtml}<button class="vv-btn" onclick="event.stopPropagation();playJapanese('${v.example_jp}', this)" title="Play audio">🔊</button></div>
+      <div class="ex-en">${v.example_en}</div>
+    </div>
+    <div class="card-tags"><span class="tag">${v.theme}</span></div>
+  `;
+
+  card.addEventListener('click', (e) => {
+    if (e.target.closest('.vv-btn')) return;
+    const ex = card.querySelector('.card-example');
+    ex.classList.toggle('visible');
+  });
+
+  return card;
+}
+
+// ── Build list item ───────────────────────────────────────────
+function makeListItem(v) {
+  const item = document.createElement('div');
+  item.className = 'list-item';
+  const wordHtml = addFurigana(v.word, v.reading);
+  item.innerHTML = `
+    <div class="list-word">${wordHtml}</div>
+    <div class="list-reading">${v.reading}</div>
+    <div class="list-meaning">${v.meaning}</div>
+    <div class="list-pos">${v.pos}</div>
+  `;
+  return item;
+}
+
+// ── Simple furigana helper ────────────────────────────────────
+// Wraps entire word in ruby with reading — works for compound words
+function addFurigana(word, reading) {
+  // If the word is purely kana, no furigana needed
+  if (!/[\u4e00-\u9faf]/.test(word)) return word;
+  return `<ruby>${word}<rt>${reading}</rt></ruby>`;
+}
+
+// ── Init ──────────────────────────────────────────────────────
+buildThemeChips();
+render();
+</script>
+  <script src="voicevox.js"></script>
+</body>
+</html>

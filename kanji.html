@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>漢字 Kanji — 日本語学習</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;500;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:#f0e6d6;--ink-mid:#d4c4a8;--ink-soft:#b09878;--ink-faint:#7a6450;
+      --washi:#4a3728;--washi-warm:#3d2d20;--washi-deep:#2e2018;--washi-card:#56402f;
+      --teal:#4aaf9e;--teal-light:#6dcebb;--teal-pale:rgba(74,175,158,0.15);
+      --serif-jp:'Shippori Mincho','Noto Serif JP',serif;
+      --serif-en:'IM Fell English',Georgia,serif;
+      --sans-jp:'Noto Sans JP',sans-serif;
+      --radius-sm:4px;--radius-md:8px;--radius-lg:16px;
+      --shadow-soft:0 2px 16px rgba(0,0,0,0.3);
+      --shadow-card:0 6px 32px rgba(0,0,0,0.4);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:19px;scroll-behavior:smooth;}
+    body{background-color:#4a3728;color:#f0e6d6;font-family:'Noto Sans JP',sans-serif;font-weight:300;line-height:1.8;min-height:100vh;overflow-x:hidden;}
+
+    /* NAV */
+    .site-nav{position:sticky;top:0;z-index:100;background:#2e2018;border-bottom:1px solid #1e1208;padding:0.75rem 0;}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;}
+    .nav-logo{display:flex;flex-direction:column;text-decoration:none;}
+    .nav-logo .jp{font-family:var(--serif-jp);font-size:1.1rem;color:#f0e6d6;letter-spacing:0.1em;line-height:1.9;}
+    .nav-logo .jp ruby rt{font-size:0.54em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-logo .en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .nav-links{display:flex;gap:0.15rem;list-style:none;}
+    .nav-links a{display:flex;flex-direction:column;align-items:center;padding:0.4rem 0.7rem;text-decoration:none;border-radius:4px;transition:background 0.2s;}
+    .nav-links a .jp{font-family:var(--serif-jp);font-size:0.85rem;color:#d4c4a8;line-height:1.9;}
+    .nav-links a .jp ruby rt{font-size:0.56em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-links a .en{font-family:var(--serif-en);font-style:italic;font-size:0.62rem;color:#7a6450;}
+    .nav-links a:hover,.nav-links a.active{background:rgba(74,175,158,0.15);}
+    .nav-links a:hover .jp,.nav-links a.active .jp{color:#4aaf9e;}
+
+    /* LAYOUT */
+    .page-wrap{display:grid;grid-template-columns:220px 1fr;max-width:1100px;margin:0 auto;padding:2rem;gap:2rem;}
+    @media(max-width:900px){.page-wrap{grid-template-columns:1fr;}.sidebar{display:none;}}
+
+    /* SIDEBAR */
+    .sidebar{position:sticky;top:80px;height:fit-content;}
+    .sidebar-section{margin-bottom:1.5rem;}
+    .sidebar-title{font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#4aaf9e;letter-spacing:0.12em;margin-bottom:0.6rem;}
+    .filter-btn{display:flex;align-items:center;gap:0.6rem;width:100%;padding:0.45rem 0.75rem;background:transparent;border:1px solid #2e2018;border-radius:4px;color:#b09878;font-family:var(--sans-jp);font-size:0.82rem;cursor:pointer;transition:all 0.2s;margin-bottom:0.3rem;text-align:left;}
+    .filter-btn:hover{background:rgba(74,175,158,0.12);border-color:#4aaf9e;color:#f0e6d6;}
+    .filter-btn.active{background:rgba(74,175,158,0.18);border-color:#4aaf9e;color:#4aaf9e;}
+    .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+    .dot-n4{background:#8fd47a;}.dot-n3{background:#7ab4e8;}.dot-n2{background:#e8b47a;}.dot-n1{background:#e87a7a;}.dot-all{background:#4aaf9e;}
+    .search-box{width:100%;padding:0.5rem 0.75rem;background:#3d2d20;border:1px solid #2e2018;border-radius:4px;color:#f0e6d6;font-family:var(--sans-jp);font-size:0.82rem;outline:none;transition:border-color 0.2s;margin-bottom:0.4rem;}
+    .search-box::placeholder{color:#7a6450;}
+    .search-box:focus{border-color:#4aaf9e;}
+    .count-label{font-family:var(--serif-en);font-style:italic;font-size:0.7rem;color:#7a6450;}
+
+    /* PAGE HEADER */
+    .main-content{min-width:0;}
+    .page-header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid #2e2018;}
+    .page-header .jp-title{font-family:var(--serif-jp);font-size:2.4rem;color:#f0e6d6;letter-spacing:0.05em;line-height:1.85;}
+    .page-header .jp-title ruby rt{font-size:0.58em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .page-header .en-title{font-family:var(--serif-en);font-style:italic;font-size:0.9rem;color:#7a6450;}
+    .page-header .desc{margin-top:0.5rem;color:#b09878;font-size:0.88rem;}
+
+    /* VIEW BAR */
+    .view-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:0.5rem;}
+    .view-toggle{display:flex;gap:0.25rem;}
+    .view-btn{padding:0.3rem 0.7rem;background:transparent;border:1px solid #2e2018;border-radius:4px;color:#7a6450;font-family:var(--sans-jp);font-size:0.75rem;cursor:pointer;transition:all 0.2s;}
+    .view-btn.active{background:rgba(74,175,158,0.18);border-color:#4aaf9e;color:#4aaf9e;}
+    .results-count{font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;}
+
+    /* LEVEL HEADING */
+    .level-section{margin-bottom:2.5rem;}
+    .level-heading{display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;padding-bottom:0.6rem;border-bottom:1px solid #2e2018;}
+    .level-badge{display:inline-flex;align-items:center;justify-content:center;width:2.2rem;height:2.2rem;border-radius:50%;font-family:var(--serif-en);font-size:0.72rem;font-weight:500;flex-shrink:0;}
+    .level-n4{background:rgba(58,107,46,0.3);color:#8fd47a;border:1px solid rgba(143,212,122,0.3);}
+    .level-n3{background:rgba(42,82,128,0.3);color:#7ab4e8;border:1px solid rgba(122,180,232,0.3);}
+    .level-n2{background:rgba(122,74,30,0.3);color:#e8b47a;border:1px solid rgba(232,180,122,0.3);}
+    .level-n1{background:rgba(122,30,30,0.3);color:#e87a7a;border:1px solid rgba(232,122,122,0.3);}
+    .level-heading-text{font-family:var(--serif-jp);font-size:1rem;color:#d4c4a8;line-height:1.9;}
+    .level-heading-text ruby rt{font-size:0.56em;font-family:var(--sans-jp);}
+    .level-heading-en{font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;}
+
+    /* KANJI CARD — GRID VIEW */
+    .kanji-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;}
+
+    .kanji-card{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-lg);padding:1.25rem;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;position:relative;overflow:hidden;}
+    .kanji-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--kc-accent,#4aaf9e);}
+    .kanji-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-card);}
+    .kanji-card.n4{--kc-accent:#8fd47a;}.kanji-card.n3{--kc-accent:#7ab4e8;}.kanji-card.n2{--kc-accent:#e8b47a;}.kanji-card.n1{--kc-accent:#e87a7a;}
+
+    .kanji-char{font-family:var(--serif-jp);font-size:3.5rem;color:#f0e6d6;line-height:1;display:block;margin-bottom:0.5rem;text-align:center;}
+    .kanji-stroke{font-family:var(--serif-en);font-style:italic;font-size:0.65rem;color:#7a6450;text-align:center;margin-bottom:0.75rem;}
+
+    .readings-block{margin-bottom:0.6rem;}
+    .reading-row{display:flex;gap:0.5rem;align-items:baseline;margin-bottom:0.2rem;flex-wrap:wrap;}
+    .reading-label{font-family:var(--serif-en);font-style:italic;font-size:0.65rem;color:#7a6450;min-width:24px;flex-shrink:0;}
+    .reading-val{font-family:var(--sans-jp);font-size:0.78rem;color:#d4c4a8;letter-spacing:0.05em;}
+
+    .kanji-meaning{font-family:var(--serif-en);font-style:italic;font-size:0.82rem;color:#4aaf9e;text-align:center;margin-bottom:0.6rem;}
+
+    .compounds-block{border-top:1px solid #2e2018;padding-top:0.6rem;margin-top:0.6rem;display:none;}
+    .compounds-block.visible{display:block;}
+    .compound-item{display:flex;justify-content:space-between;align-items:baseline;gap:0.5rem;padding:0.2rem 0;border-bottom:1px solid rgba(46,32,24,0.5);}
+    .compound-item:last-child{border-bottom:none;}
+    .compound-word{font-family:var(--serif-jp);font-size:0.92rem;color:#f0e6d6;}
+    .compound-read{font-family:var(--sans-jp);font-size:0.7rem;color:#7a6450;}
+    .compound-mean{font-family:var(--serif-en);font-style:italic;font-size:0.75rem;color:#b09878;text-align:right;}
+
+    .expand-hint{font-family:var(--serif-en);font-style:italic;font-size:0.65rem;color:#7a6450;text-align:center;margin-top:0.5rem;}
+
+    /* LIST VIEW */
+    .kanji-list-item{display:grid;grid-template-columns:60px 80px 1fr 1fr;gap:1rem;align-items:center;padding:0.7rem 1rem;background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-sm);margin-bottom:0.4rem;cursor:pointer;transition:background 0.2s;}
+    .kanji-list-item:hover{background:#5e4835;}
+    .list-char{font-family:var(--serif-jp);font-size:2rem;color:#f0e6d6;text-align:center;}
+    .list-readings{font-family:var(--sans-jp);font-size:0.72rem;color:#b09878;line-height:1.6;}
+    .list-meaning{font-family:var(--serif-en);font-style:italic;font-size:0.85rem;color:#4aaf9e;}
+    .list-compounds{font-family:var(--sans-jp);font-size:0.72rem;color:#7a6450;}
+    @media(max-width:700px){.kanji-list-item{grid-template-columns:50px 1fr;}.list-readings,.list-compounds{display:none;}}
+
+    /* RUBY */
+    ruby{display:inline-flex;flex-direction:column-reverse;align-items:center;vertical-align:bottom;line-height:1;}
+    ruby rt{font-family:'Noto Sans JP',sans-serif;font-size:0.55em;color:#e8d8c0;text-align:center;letter-spacing:0.04em;line-height:1.5;user-select:none;}
+
+    /* FOOTER */
+    .site-footer{border-top:1px solid #2e2018;background:#3d2d20;padding:1.25rem 0;margin-top:2rem;}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;flex-wrap:wrap;gap:1rem;}
+    .footer-jp{font-family:var(--serif-jp);font-size:0.8rem;color:#b09878;}
+    .footer-en{font-family:var(--serif-en);font-style:italic;font-size:0.7rem;color:#7a6450;}
+
+    @media(max-width:768px){.nav-links{display:none;}.page-wrap{padding:1rem;}}
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="jp"><ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span>
+      <span class="en">Personal Japanese Study</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a></li>
+      <li><a href="vocabulary.html"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a></li>
+      <li><a href="kanji.html" class="active"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a></li>
+      <li><a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
+      <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <p class="sidebar-title">Search</p>
+      <input class="search-box" id="search-input" type="text" placeholder="Kanji, reading, meaning...">
+      <p class="count-label" id="count-label">Loading...</p>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-title">Level</p>
+      <button class="filter-btn active" data-level="all"><span class="dot dot-all"></span>All Levels</button>
+      <button class="filter-btn" data-level="n4"><span class="dot dot-n4"></span>N4 <ruby>初<rt>しょ</rt></ruby><ruby>級<rt>きゅう</rt></ruby></button>
+      <button class="filter-btn" data-level="n3"><span class="dot dot-n3"></span>N3 <ruby>中<rt>ちゅう</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>下<rt>か</rt></ruby></button>
+      <button class="filter-btn" data-level="n2"><span class="dot dot-n2"></span>N2 <ruby>中<rt>ちゅう</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>上<rt>じょう</rt></ruby></button>
+      <button class="filter-btn" data-level="n1"><span class="dot dot-n1"></span>N1 <ruby>上<rt>じょう</rt></ruby><ruby>級<rt>きゅう</rt></ruby></button>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-title">Jump to</p>
+      <button class="filter-btn" onclick="jumpTo('n4')"><span class="dot dot-n4"></span>N4 kanji</button>
+      <button class="filter-btn" onclick="jumpTo('n3')"><span class="dot dot-n3"></span>N3 kanji</button>
+      <button class="filter-btn" onclick="jumpTo('n2')"><span class="dot dot-n2"></span>N2 kanji</button>
+      <button class="filter-btn" onclick="jumpTo('n1')"><span class="dot dot-n1"></span>N1 kanji</button>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-title">Tip</p>
+      <p style="font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#7a6450;line-height:1.6;">Click any kanji card to reveal key compounds and example words.</p>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <div class="page-header">
+      <div class="jp-title"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></div>
+      <div class="en-title">Kanji Reference</div>
+      <p class="desc">On-readings (音読み), kun-readings (訓読み), meanings, stroke counts, and key compounds. Click any card to see example words.</p>
+    </div>
+
+    <div class="view-bar">
+      <span class="results-count" id="results-count"></span>
+      <div class="view-toggle">
+        <button class="view-btn active" id="btn-grid" onclick="setView('grid')">⊞ Cards</button>
+        <button class="view-btn" id="btn-list" onclick="setView('list')">☰ List</button>
+      </div>
+    </div>
+
+    <div id="kanji-container"></div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <p class="footer-jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby> — <ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></p>
+      <p class="footer-en">Kanji Reference · N4 → N1</p>
+    </div>
+    <a href="index.html" style="font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;text-decoration:none;">← Back to home</a>
+  </div>
+</footer>
+
+<script>
+// ── Kanji Data ────────────────────────────────────────────────
+const kanjiData = [
+
+  // ═══════════════════════════════════════════════════════════
+  //  N4 KANJI
+  // ═══════════════════════════════════════════════════════════
+
+  // ── People & Body ──
+  {level:'n4',char:'体',on:'タイ・テイ',kun:'からだ',meaning:'body, form',
+   compounds:[{word:'体力',read:'たいりょく',mean:'physical strength'},{word:'体育',read:'たいいく',mean:'physical education'},{word:'体験',read:'たいけん',mean:'experience'}]},
+  {level:'n4',char:'顔',on:'ガン',kun:'かお',meaning:'face',
+   compounds:[{word:'顔色',read:'かおいろ',mean:'complexion, mood'},{word:'笑顔',read:'えがお',mean:'smiling face'},{word:'顔面',read:'がんめん',mean:'face (formal)'}]},
+  {level:'n4',char:'頭',on:'トウ・ズ',kun:'あたま・かしら',meaning:'head',
+   compounds:[{word:'頭痛',read:'ずつう',mean:'headache'},{word:'先頭',read:'せんとう',mean:'front, lead'},{word:'頭脳',read:'ずのう',mean:'brains, intellect'}]},
+  {level:'n4',char:'足',on:'ソク',kun:'あし・た（りる）',meaning:'foot, leg, suffice',
+   compounds:[{word:'足りる',read:'たりる',mean:'to be enough'},{word:'足元',read:'あしもと',mean:'at one\'s feet'},{word:'満足',read:'まんぞく',mean:'satisfaction'}]},
+  {level:'n4',char:'手',on:'シュ',kun:'て',meaning:'hand',
+   compounds:[{word:'手紙',read:'てがみ',mean:'letter'},{word:'手伝う',read:'てつだう',mean:'to help'},{word:'握手',read:'あくしゅ',mean:'handshake'}]},
+  {level:'n4',char:'目',on:'モク・ボク',kun:'め・ま',meaning:'eye',
+   compounds:[{word:'目的',read:'もくてき',mean:'purpose, goal'},{word:'注目',read:'ちゅうもく',mean:'attention'},{word:'目標',read:'もくひょう',mean:'target, goal'}]},
+  {level:'n4',char:'口',on:'コウ・ク',kun:'くち',meaning:'mouth, opening',
+   compounds:[{word:'口実',read:'こうじつ',mean:'pretext, excuse'},{word:'入口',read:'いりぐち',mean:'entrance'},{word:'出口',read:'でぐち',mean:'exit'}]},
+  {level:'n4',char:'耳',on:'ジ',kun:'みみ',meaning:'ear',
+   compounds:[{word:'耳鼻科',read:'じびか',mean:'ENT department'},{word:'耳打ち',read:'みみうち',mean:'whisper in ear'},{word:'初耳',read:'はつみみ',mean:'first time hearing it'}]},
+  {level:'n4',char:'心',on:'シン',kun:'こころ',meaning:'heart, mind',
+   compounds:[{word:'心配',read:'しんぱい',mean:'worry'},{word:'安心',read:'あんしん',mean:'relief'},{word:'中心',read:'ちゅうしん',mean:'centre, core'}]},
+  {level:'n4',char:'声',on:'セイ・ショウ',kun:'こえ',meaning:'voice, sound',
+   compounds:[{word:'声優',read:'せいゆう',mean:'voice actor'},{word:'大声',read:'おおごえ',mean:'loud voice'},{word:'歌声',read:'うたごえ',mean:'singing voice'}]},
+
+  // ── Family ──
+  {level:'n4',char:'父',on:'フ',kun:'ちち',meaning:'father',
+   compounds:[{word:'父親',read:'ちちおや',mean:'father'},{word:'祖父',read:'そふ',mean:'grandfather'},{word:'父母',read:'ふぼ',mean:'parents'}]},
+  {level:'n4',char:'母',on:'ボ',kun:'はは',meaning:'mother',
+   compounds:[{word:'母親',read:'ははおや',mean:'mother'},{word:'祖母',read:'そぼ',mean:'grandmother'},{word:'母語',read:'ぼご',mean:'mother tongue'}]},
+  {level:'n4',char:'兄',on:'ケイ・キョウ',kun:'あに',meaning:'older brother',
+   compounds:[{word:'兄弟',read:'きょうだい',mean:'siblings'},{word:'お兄さん',read:'おにいさん',mean:'older brother (polite)'},{word:'義兄',read:'ぎけい',mean:'brother-in-law'}]},
+  {level:'n4',char:'姉',on:'シ',kun:'あね',meaning:'older sister',
+   compounds:[{word:'姉妹',read:'しまい',mean:'sisters'},{word:'お姉さん',read:'おねえさん',mean:'older sister (polite)'},{word:'義姉',read:'ぎし',mean:'sister-in-law'}]},
+  {level:'n4',char:'弟',on:'テイ・ダイ・デ',kun:'おとうと',meaning:'younger brother',
+   compounds:[{word:'弟子',read:'でし',mean:'disciple, apprentice'},{word:'兄弟',read:'きょうだい',mean:'siblings'},{word:'義弟',read:'ぎてい',mean:'younger brother-in-law'}]},
+  {level:'n4',char:'妹',on:'マイ',kun:'いもうと',meaning:'younger sister',
+   compounds:[{word:'姉妹',read:'しまい',mean:'sisters'},{word:'妹さん',read:'いもうとさん',mean:'younger sister (polite)'},{word:'義妹',read:'ぎまい',mean:'younger sister-in-law'}]},
+  {level:'n4',char:'夫',on:'フ・フウ',kun:'おっと',meaning:'husband, man',
+   compounds:[{word:'夫婦',read:'ふうふ',mean:'married couple'},{word:'夫人',read:'ふじん',mean:'wife, Mrs.'},{word:'農夫',read:'のうふ',mean:'farmer'}]},
+  {level:'n4',char:'妻',on:'サイ',kun:'つま',meaning:'wife',
+   compounds:[{word:'妻子',read:'さいし',mean:'wife and children'},{word:'夫妻',read:'ふさい',mean:'husband and wife'},{word:'人妻',read:'ひとづま',mean:'another man\'s wife'}]},
+
+  // ── Time ──
+  {level:'n4',char:'昨',on:'サク',kun:'—',meaning:'yesterday, previous',
+   compounds:[{word:'昨日',read:'きのう',mean:'yesterday'},{word:'昨年',read:'さくねん',mean:'last year'},{word:'昨夜',read:'さくや',mean:'last night'}]},
+  {level:'n4',char:'今',on:'コン・キン',kun:'いま',meaning:'now, present',
+   compounds:[{word:'今日',read:'きょう',mean:'today'},{word:'今夜',read:'こんや',mean:'tonight'},{word:'今後',read:'こんご',mean:'from now on'}]},
+  {level:'n4',char:'朝',on:'チョウ',kun:'あさ',meaning:'morning',
+   compounds:[{word:'朝食',read:'ちょうしょく',mean:'breakfast'},{word:'今朝',read:'けさ',mean:'this morning'},{word:'朝礼',read:'ちょうれい',mean:'morning assembly'}]},
+  {level:'n4',char:'昼',on:'チュウ',kun:'ひる',meaning:'noon, daytime',
+   compounds:[{word:'昼食',read:'ちゅうしょく',mean:'lunch'},{word:'昼間',read:'ひるま',mean:'daytime'},{word:'昼寝',read:'ひるね',mean:'nap'}]},
+  {level:'n4',char:'夜',on:'ヤ',kun:'よる・よ',meaning:'night, evening',
+   compounds:[{word:'夜中',read:'よなか',mean:'middle of the night'},{word:'深夜',read:'しんや',mean:'late at night'},{word:'夜間',read:'やかん',mean:'night time'}]},
+  {level:'n4',char:'週',on:'シュウ',kun:'—',meaning:'week',
+   compounds:[{word:'来週',read:'らいしゅう',mean:'next week'},{word:'先週',read:'せんしゅう',mean:'last week'},{word:'毎週',read:'まいしゅう',mean:'every week'}]},
+  {level:'n4',char:'月',on:'ゲツ・ガツ',kun:'つき',meaning:'month, moon',
+   compounds:[{word:'先月',read:'せんげつ',mean:'last month'},{word:'来月',read:'らいげつ',mean:'next month'},{word:'月曜',read:'げつよう',mean:'Monday'}]},
+  {level:'n4',char:'年',on:'ネン',kun:'とし',meaning:'year, age',
+   compounds:[{word:'今年',read:'ことし',mean:'this year'},{word:'去年',read:'きょねん',mean:'last year'},{word:'来年',read:'らいねん',mean:'next year'}]},
+  {level:'n4',char:'春',on:'シュン',kun:'はる',meaning:'spring',
+   compounds:[{word:'春休み',read:'はるやすみ',mean:'spring holiday'},{word:'青春',read:'せいしゅん',mean:'youth, adolescence'},{word:'春分',read:'しゅんぶん',mean:'spring equinox'}]},
+  {level:'n4',char:'夏',on:'カ・ゲ',kun:'なつ',meaning:'summer',
+   compounds:[{word:'夏休み',read:'なつやすみ',mean:'summer holiday'},{word:'夏季',read:'かき',mean:'summer season'},{word:'真夏',read:'まなつ',mean:'midsummer'}]},
+  {level:'n4',char:'秋',on:'シュウ',kun:'あき',meaning:'autumn, fall',
+   compounds:[{word:'秋分',read:'しゅうぶん',mean:'autumn equinox'},{word:'秋風',read:'あきかぜ',mean:'autumn breeze'},{word:'晩秋',read:'ばんしゅう',mean:'late autumn'}]},
+  {level:'n4',char:'冬',on:'トウ',kun:'ふゆ',meaning:'winter',
+   compounds:[{word:'冬休み',read:'ふゆやすみ',mean:'winter holiday'},{word:'冬季',read:'とうき',mean:'winter season'},{word:'真冬',read:'まふゆ',mean:'midwinter'}]},
+
+  // ── Places & Direction ──
+  {level:'n4',char:'国',on:'コク',kun:'くに',meaning:'country, nation',
+   compounds:[{word:'外国',read:'がいこく',mean:'foreign country'},{word:'国際',read:'こくさい',mean:'international'},{word:'全国',read:'ぜんこく',mean:'whole country'}]},
+  {level:'n4',char:'市',on:'シ',kun:'いち',meaning:'city, market',
+   compounds:[{word:'市民',read:'しみん',mean:'citizen'},{word:'市場',read:'しじょう',mean:'market'},{word:'都市',read:'とし',mean:'city'}]},
+  {level:'n4',char:'町',on:'チョウ',kun:'まち',meaning:'town, block',
+   compounds:[{word:'町長',read:'ちょうちょう',mean:'town mayor'},{word:'下町',read:'したまち',mean:'downtown'},{word:'町内',read:'ちょうない',mean:'neighbourhood'}]},
+  {level:'n4',char:'村',on:'ソン',kun:'むら',meaning:'village',
+   compounds:[{word:'村長',read:'そんちょう',mean:'village chief'},{word:'農村',read:'のうそん',mean:'farming village'},{word:'村人',read:'むらびと',mean:'villager'}]},
+  {level:'n4',char:'東',on:'トウ',kun:'ひがし',meaning:'east',
+   compounds:[{word:'東京',read:'とうきょう',mean:'Tokyo'},{word:'東側',read:'ひがしがわ',mean:'east side'},{word:'東洋',read:'とうよう',mean:'the East, Orient'}]},
+  {level:'n4',char:'西',on:'セイ・サイ',kun:'にし',meaning:'west',
+   compounds:[{word:'西洋',read:'せいよう',mean:'the West, Occident'},{word:'関西',read:'かんさい',mean:'Kansai region'},{word:'西側',read:'にしがわ',mean:'west side'}]},
+  {level:'n4',char:'南',on:'ナン・ナ',kun:'みなみ',meaning:'south',
+   compounds:[{word:'南北',read:'なんぼく',mean:'north and south'},{word:'南米',read:'なんべい',mean:'South America'},{word:'南側',read:'みなみがわ',mean:'south side'}]},
+  {level:'n4',char:'北',on:'ホク',kun:'きた',meaning:'north',
+   compounds:[{word:'北海道',read:'ほっかいどう',mean:'Hokkaido'},{word:'北極',read:'ほっきょく',mean:'North Pole'},{word:'東北',read:'とうほく',mean:'Tohoku region'}]},
+  {level:'n4',char:'外',on:'ガイ・ゲ',kun:'そと・ほか',meaning:'outside, other',
+   compounds:[{word:'外国',read:'がいこく',mean:'foreign country'},{word:'以外',read:'いがい',mean:'except, other than'},{word:'外出',read:'がいしゅつ',mean:'going out'}]},
+  {level:'n4',char:'内',on:'ナイ・ダイ',kun:'うち',meaning:'inside, within',
+   compounds:[{word:'国内',read:'こくない',mean:'domestic'},{word:'案内',read:'あんない',mean:'guidance, guide'},{word:'内容',read:'ないよう',mean:'content'}]},
+  {level:'n4',char:'上',on:'ジョウ・ショウ',kun:'うえ・あ（がる）・のぼ（る）',meaning:'above, up, rise',
+   compounds:[{word:'上手',read:'じょうず',mean:'skilled'},{word:'以上',read:'いじょう',mean:'more than, above'},{word:'向上',read:'こうじょう',mean:'improvement'}]},
+  {level:'n4',char:'下',on:'カ・ゲ',kun:'した・さ（がる）・お（りる）',meaning:'below, down, lower',
+   compounds:[{word:'地下',read:'ちか',mean:'underground'},{word:'以下',read:'いか',mean:'less than, below'},{word:'下降',read:'かこう',mean:'descent'}]},
+  {level:'n4',char:'右',on:'ウ・ユウ',kun:'みぎ',meaning:'right (direction)',
+   compounds:[{word:'右手',read:'みぎて',mean:'right hand'},{word:'右側',read:'みぎがわ',mean:'right side'},{word:'左右',read:'さゆう',mean:'left and right'}]},
+  {level:'n4',char:'左',on:'サ',kun:'ひだり',meaning:'left (direction)',
+   compounds:[{word:'左手',read:'ひだりて',mean:'left hand'},{word:'左側',read:'ひだりがわ',mean:'left side'},{word:'左折',read:'させつ',mean:'turning left'}]},
+
+  // ── Numbers & Quantities ──
+  {level:'n4',char:'半',on:'ハン',kun:'なか（ば）',meaning:'half',
+   compounds:[{word:'半分',read:'はんぶん',mean:'half'},{word:'前半',read:'ぜんはん',mean:'first half'},{word:'半年',read:'はんとし',mean:'half a year'}]},
+  {level:'n4',char:'百',on:'ヒャク',kun:'—',meaning:'hundred',
+   compounds:[{word:'百貨店',read:'ひゃっかてん',mean:'department store'},{word:'数百',read:'すうひゃく',mean:'hundreds'},{word:'百科',read:'ひゃっか',mean:'encyclopaedia'}]},
+  {level:'n4',char:'千',on:'セン',kun:'ち',meaning:'thousand',
+   compounds:[{word:'千円',read:'せんえん',mean:'1000 yen'},{word:'数千',read:'すうせん',mean:'thousands'},{word:'千代',read:'ちよ',mean:'a thousand years'}]},
+  {level:'n4',char:'万',on:'マン・バン',kun:'よろず',meaning:'ten thousand',
+   compounds:[{word:'万円',read:'まんえん',mean:'10,000 yen'},{word:'万全',read:'ばんぜん',mean:'thorough, perfect'},{word:'万一',read:'まんいち',mean:'just in case'}]},
+  {level:'n4',char:'多',on:'タ',kun:'おお（い）',meaning:'many, much',
+   compounds:[{word:'多数',read:'たすう',mean:'majority, many'},{word:'多様',read:'たよう',mean:'diverse'},{word:'多忙',read:'たぼう',mean:'very busy'}]},
+  {level:'n4',char:'少',on:'ショウ',kun:'すく（ない）・すこ（し）',meaning:'few, a little',
+   compounds:[{word:'少数',read:'しょうすう',mean:'minority, few'},{word:'少々',read:'しょうしょう',mean:'a little (formal)'},{word:'減少',read:'げんしょう',mean:'decrease'}]},
+
+  // ── Nature ──
+  {level:'n4',char:'空',on:'クウ',kun:'そら・あ（く）・から',meaning:'sky, empty, air',
+   compounds:[{word:'空港',read:'くうこう',mean:'airport'},{word:'空気',read:'くうき',mean:'air, atmosphere'},{word:'空間',read:'くうかん',mean:'space, room'}]},
+  {level:'n4',char:'海',on:'カイ',kun:'うみ',meaning:'sea, ocean',
+   compounds:[{word:'海外',read:'かいがい',mean:'overseas, abroad'},{word:'海岸',read:'かいがん',mean:'coast, beach'},{word:'日本海',read:'にほんかい',mean:'Sea of Japan'}]},
+  {level:'n4',char:'山',on:'サン・ザン',kun:'やま',meaning:'mountain',
+   compounds:[{word:'富士山',read:'ふじさん',mean:'Mt. Fuji'},{word:'山頂',read:'さんちょう',mean:'mountaintop'},{word:'登山',read:'とざん',mean:'mountain climbing'}]},
+  {level:'n4',char:'川',on:'セン',kun:'かわ',meaning:'river',
+   compounds:[{word:'川岸',read:'かわぎし',mean:'riverbank'},{word:'河川',read:'かせん',mean:'rivers (formal)'},{word:'小川',read:'おがわ',mean:'stream, brook'}]},
+  {level:'n4',char:'木',on:'モク・ボク',kun:'き・こ',meaning:'tree, wood',
+   compounds:[{word:'木曜',read:'もくよう',mean:'Thursday'},{word:'木材',read:'もくざい',mean:'timber, wood'},{word:'草木',read:'くさき',mean:'plants and trees'}]},
+  {level:'n4',char:'花',on:'カ',kun:'はな',meaning:'flower',
+   compounds:[{word:'花見',read:'はなみ',mean:'cherry blossom viewing'},{word:'花火',read:'はなび',mean:'fireworks'},{word:'開花',read:'かいか',mean:'blooming'}]},
+  {level:'n4',char:'草',on:'ソウ',kun:'くさ',meaning:'grass, plant',
+   compounds:[{word:'草花',read:'くさばな',mean:'flowers and plants'},{word:'雑草',read:'ざっそう',mean:'weeds'},{word:'草原',read:'そうげん',mean:'grasslands'}]},
+  {level:'n4',char:'魚',on:'ギョ',kun:'さかな・うお',meaning:'fish',
+   compounds:[{word:'魚介',read:'ぎょかい',mean:'seafood'},{word:'金魚',read:'きんぎょ',mean:'goldfish'},{word:'魚市場',read:'うおいちば',mean:'fish market'}]},
+  {level:'n4',char:'鳥',on:'チョウ',kun:'とり',meaning:'bird',
+   compounds:[{word:'小鳥',read:'ことり',mean:'small bird'},{word:'野鳥',read:'やちょう',mean:'wild bird'},{word:'鳥居',read:'とりい',mean:'Shinto gate'}]},
+  {level:'n4',char:'犬',on:'ケン',kun:'いぬ',meaning:'dog',
+   compounds:[{word:'愛犬',read:'あいけん',mean:'beloved dog'},{word:'野犬',read:'やけん',mean:'stray dog'},{word:'番犬',read:'ばんけん',mean:'guard dog'}]},
+  {level:'n4',char:'猫',on:'ビョウ',kun:'ねこ',meaning:'cat',
+   compounds:[{word:'野良猫',read:'のらねこ',mean:'stray cat'},{word:'子猫',read:'こねこ',mean:'kitten'},{word:'猫舌',read:'ねこじた',mean:'sensitive to hot food'}]},
+  {level:'n4',char:'米',on:'ベイ・マイ',kun:'こめ',meaning:'rice, America',
+   compounds:[{word:'玄米',read:'げんまい',mean:'brown rice'},{word:'米国',read:'べいこく',mean:'USA'},{word:'白米',read:'はくまい',mean:'white rice'}]},
+
+  // ── Weather ──
+  {level:'n4',char:'天',on:'テン',kun:'あま・あめ',meaning:'heaven, sky, weather',
+   compounds:[{word:'天気',read:'てんき',mean:'weather'},{word:'天国',read:'てんごく',mean:'heaven, paradise'},{word:'天才',read:'てんさい',mean:'genius'}]},
+  {level:'n4',char:'雨',on:'ウ',kun:'あめ・あま',meaning:'rain',
+   compounds:[{word:'雨天',read:'うてん',mean:'rainy weather'},{word:'大雨',read:'おおあめ',mean:'heavy rain'},{word:'梅雨',read:'つゆ',mean:'rainy season'}]},
+  {level:'n4',char:'雪',on:'セツ',kun:'ゆき',meaning:'snow',
+   compounds:[{word:'大雪',read:'おおゆき',mean:'heavy snow'},{word:'雪国',read:'ゆきぐに',mean:'snowy country'},{word:'初雪',read:'はつゆき',mean:'first snow'}]},
+  {level:'n4',char:'風',on:'フウ・フ',kun:'かぜ・かざ',meaning:'wind',
+   compounds:[{word:'台風',read:'たいふう',mean:'typhoon'},{word:'風景',read:'ふうけい',mean:'scenery'},{word:'強風',read:'きょうふう',mean:'strong wind'}]},
+  {level:'n4',char:'晴',on:'セイ',kun:'は（れる）',meaning:'clear up, fine weather',
+   compounds:[{word:'晴天',read:'せいてん',mean:'fine weather'},{word:'晴れ間',read:'はれま',mean:'break in the clouds'},{word:'快晴',read:'かいせい',mean:'clear weather'}]},
+  {level:'n4',char:'曇',on:'ドン',kun:'くも（る）',meaning:'cloudy',
+   compounds:[{word:'曇り',read:'くもり',mean:'cloudy'},{word:'曇天',read:'どんてん',mean:'overcast sky'},{word:'薄曇り',read:'うすぐもり',mean:'lightly overcast'}]},
+
+  // ── Home & Daily Life ──
+  {level:'n4',char:'家',on:'カ・ケ',kun:'いえ・や',meaning:'house, home, family',
+   compounds:[{word:'家族',read:'かぞく',mean:'family'},{word:'家庭',read:'かてい',mean:'home, household'},{word:'専門家',read:'せんもんか',mean:'specialist'}]},
+  {level:'n4',char:'部',on:'ブ',kun:'—',meaning:'part, section, club',
+   compounds:[{word:'部屋',read:'へや',mean:'room'},{word:'全部',read:'ぜんぶ',mean:'all, everything'},{word:'部長',read:'ぶちょう',mean:'department head'}]},
+  {level:'n4',char:'室',on:'シツ',kun:'むろ',meaning:'room, chamber',
+   compounds:[{word:'教室',read:'きょうしつ',mean:'classroom'},{word:'研究室',read:'けんきゅうしつ',mean:'research room'},{word:'個室',read:'こしつ',mean:'private room'}]},
+  {level:'n4',char:'玄',on:'ゲン',kun:'—',meaning:'dark, mysterious, entrance',
+   compounds:[{word:'玄関',read:'げんかん',mean:'entrance hall, front door'},{word:'玄米',read:'げんまい',mean:'brown rice'},{word:'玄人',read:'くろうと',mean:'expert, professional'}]},
+  {level:'n4',char:'台',on:'ダイ・タイ',kun:'—',meaning:'stand, counter, platform',
+   compounds:[{word:'台所',read:'だいどころ',mean:'kitchen'},{word:'台風',read:'たいふう',mean:'typhoon'},{word:'舞台',read:'ぶたい',mean:'stage'}]},
+  {level:'n4',char:'門',on:'モン',kun:'かど',meaning:'gate, entrance',
+   compounds:[{word:'門番',read:'もんばん',mean:'gatekeeper'},{word:'専門',read:'せんもん',mean:'speciality'},{word:'正門',read:'せいもん',mean:'main gate'}]},
+  {level:'n4',char:'庭',on:'テイ',kun:'にわ',meaning:'garden, yard',
+   compounds:[{word:'家庭',read:'かてい',mean:'household, home'},{word:'庭園',read:'ていえん',mean:'garden, park'},{word:'中庭',read:'なかにわ',mean:'courtyard'}]},
+  {level:'n4',char:'押',on:'オウ',kun:'お（す）',meaning:'push, press',
+   compounds:[{word:'押す',read:'おす',mean:'to push'},{word:'押し入れ',read:'おしいれ',mean:'closet'},{word:'押収',read:'おうしゅう',mean:'seizure, confiscation'}]},
+  {level:'n4',char:'引',on:'イン',kun:'ひ（く）',meaning:'pull, draw',
+   compounds:[{word:'引っ越し',read:'ひっこし',mean:'moving house'},{word:'吸引',read:'きゅういん',mean:'suction'},{word:'引用',read:'いんよう',mean:'quotation, citation'}]},
+
+  // ── Transport & Travel ──
+  {level:'n4',char:'乗',on:'ジョウ',kun:'の（る）',meaning:'ride, board, get on',
+   compounds:[{word:'乗り換え',read:'のりかえ',mean:'transfer'},{word:'乗客',read:'じょうきゃく',mean:'passenger'},{word:'乗車',read:'じょうしゃ',mean:'boarding'}]},
+  {level:'n4',char:'降',on:'コウ',kun:'お（りる）・ふ（る）',meaning:'descend, fall (rain)',
+   compounds:[{word:'降りる',read:'おりる',mean:'to get off'},{word:'降水',read:'こうすい',mean:'rainfall'},{word:'降車',read:'こうしゃ',mean:'alighting'}]},
+  {level:'n4',char:'着',on:'チャク',kun:'き（る）・つ（く）',meaning:'arrive, wear, attach',
+   compounds:[{word:'到着',read:'とうちゃく',mean:'arrival'},{word:'着替え',read:'きがえ',mean:'change of clothes'},{word:'着地',read:'ちゃくち',mean:'landing'}]},
+  {level:'n4',char:'発',on:'ハツ・ホツ',kun:'た（つ）',meaning:'depart, emit, issue',
+   compounds:[{word:'出発',read:'しゅっぱつ',mean:'departure'},{word:'発展',read:'はってん',mean:'development'},{word:'発見',read:'はっけん',mean:'discovery'}]},
+  {level:'n4',char:'急',on:'キュウ',kun:'いそ（ぐ）',meaning:'hurry, urgent, sudden',
+   compounds:[{word:'急ぐ',read:'いそぐ',mean:'to hurry'},{word:'緊急',read:'きんきゅう',mean:'emergency'},{word:'急行',read:'きゅうこう',mean:'express (train)'}]},
+  {level:'n4',char:'速',on:'ソク',kun:'はや（い）・はや（める）',meaning:'fast, speed',
+   compounds:[{word:'速度',read:'そくど',mean:'speed'},{word:'高速',read:'こうそく',mean:'high speed'},{word:'急速',read:'きゅうそく',mean:'rapid'}]},
+  {level:'n4',char:'道',on:'ドウ・トウ',kun:'みち',meaning:'road, way, path',
+   compounds:[{word:'道路',read:'どうろ',mean:'road'},{word:'近道',read:'ちかみち',mean:'shortcut'},{word:'柔道',read:'じゅうどう',mean:'judo'}]},
+  {level:'n4',char:'橋',on:'キョウ',kun:'はし',meaning:'bridge',
+   compounds:[{word:'橋渡し',read:'はしわたし',mean:'mediation'},{word:'歩道橋',read:'ほどうきょう',mean:'footbridge'},{word:'鉄橋',read:'てっきょう',mean:'railway bridge'}]},
+  {level:'n4',char:'駅',on:'エキ',kun:'—',meaning:'station',
+   compounds:[{word:'駅員',read:'えきいん',mean:'station staff'},{word:'終点',read:'しゅうてん',mean:'terminal station'},{word:'駅前',read:'えきまえ',mean:'in front of the station'}]},
+  {level:'n4',char:'線',on:'セン',kun:'—',meaning:'line, route',
+   compounds:[{word:'新幹線',read:'しんかんせん',mean:'Shinkansen'},{word:'路線',read:'ろせん',mean:'route, line'},{word:'直線',read:'ちょくせん',mean:'straight line'}]},
+
+  // ── Work & Study ──
+  {level:'n4',char:'社',on:'シャ',kun:'やしろ',meaning:'company, society, shrine',
+   compounds:[{word:'会社',read:'かいしゃ',mean:'company'},{word:'社会',read:'しゃかい',mean:'society'},{word:'神社',read:'じんじゃ',mean:'Shinto shrine'}]},
+  {level:'n4',char:'員',on:'イン',kun:'—',meaning:'member, staff',
+   compounds:[{word:'社員',read:'しゃいん',mean:'company employee'},{word:'全員',read:'ぜんいん',mean:'all members'},{word:'店員',read:'てんいん',mean:'shop staff'}]},
+  {level:'n4',char:'課',on:'カ',kun:'—',meaning:'section, lesson, assignment',
+   compounds:[{word:'課長',read:'かちょう',mean:'section chief'},{word:'宿題',read:'しゅくだい',mean:'homework'},{word:'課題',read:'かだい',mean:'task, challenge'}]},
+  {level:'n4',char:'業',on:'ギョウ・ゴウ',kun:'わざ',meaning:'business, work, industry',
+   compounds:[{word:'授業',read:'じゅぎょう',mean:'class, lesson'},{word:'産業',read:'さんぎょう',mean:'industry'},{word:'農業',read:'のうぎょう',mean:'agriculture'}]},
+  {level:'n4',char:'勉',on:'ベン',kun:'—',meaning:'diligence, study',
+   compounds:[{word:'勉強',read:'べんきょう',mean:'study'},{word:'勉学',read:'べんがく',mean:'studying, learning'},{word:'不勉強',read:'ふべんきょう',mean:'laziness in study'}]},
+  {level:'n4',char:'試',on:'シ',kun:'こころ（みる）・ため（す）',meaning:'try, test, attempt',
+   compounds:[{word:'試験',read:'しけん',mean:'examination'},{word:'試合',read:'しあい',mean:'match, game'},{word:'試す',read:'ためす',mean:'to try out'}]},
+  {level:'n4',char:'験',on:'ケン・ゲン',kun:'—',meaning:'effect, testing, experience',
+   compounds:[{word:'経験',read:'けいけん',mean:'experience'},{word:'実験',read:'じっけん',mean:'experiment'},{word:'受験',read:'じゅけん',mean:'taking an exam'}]},
+  {level:'n4',char:'習',on:'シュウ',kun:'なら（う）',meaning:'learn, practice',
+   compounds:[{word:'練習',read:'れんしゅう',mean:'practice'},{word:'習慣',read:'しゅうかん',mean:'habit, custom'},{word:'学習',read:'がくしゅう',mean:'learning, study'}]},
+  {level:'n4',char:'教',on:'キョウ',kun:'おし（える）・おそ（わる）',meaning:'teach, religion',
+   compounds:[{word:'教室',read:'きょうしつ',mean:'classroom'},{word:'教育',read:'きょういく',mean:'education'},{word:'宗教',read:'しゅうきょう',mean:'religion'}]},
+  {level:'n4',char:'院',on:'イン',kun:'—',meaning:'institution, temple',
+   compounds:[{word:'病院',read:'びょういん',mean:'hospital'},{word:'大学院',read:'だいがくいん',mean:'graduate school'},{word:'美容院',read:'びよういん',mean:'beauty salon'}]},
+
+  // ── Food & Shopping ──
+  {level:'n4',char:'食',on:'ショク・ジキ',kun:'た（べる）・く（う）',meaning:'eat, food',
+   compounds:[{word:'食事',read:'しょくじ',mean:'meal'},{word:'食料',read:'しょくりょう',mean:'food, provisions'},{word:'食欲',read:'しょくよく',mean:'appetite'}]},
+  {level:'n4',char:'飲',on:'イン',kun:'の（む）',meaning:'drink, swallow',
+   compounds:[{word:'飲み物',read:'のみもの',mean:'beverage'},{word:'飲食',read:'いんしょく',mean:'eating and drinking'},{word:'飲料',read:'いんりょう',mean:'beverages (formal)'}]},
+  {level:'n4',char:'料',on:'リョウ',kun:'—',meaning:'fee, material, cooking',
+   compounds:[{word:'料理',read:'りょうり',mean:'cooking, dish'},{word:'無料',read:'むりょう',mean:'free of charge'},{word:'材料',read:'ざいりょう',mean:'material, ingredient'}]},
+  {level:'n4',char:'味',on:'ミ',kun:'あじ',meaning:'taste, flavour',
+   compounds:[{word:'意味',read:'いみ',mean:'meaning'},{word:'調味料',read:'ちょうみりょう',mean:'seasoning'},{word:'味方',read:'みかた',mean:'ally, one\'s side'}]},
+  {level:'n4',char:'肉',on:'ニク',kun:'—',meaning:'meat, flesh',
+   compounds:[{word:'牛肉',read:'ぎゅうにく',mean:'beef'},{word:'筋肉',read:'きんにく',mean:'muscle'},{word:'肉体',read:'にくたい',mean:'body, flesh'}]},
+  {level:'n4',char:'野',on:'ヤ',kun:'の',meaning:'field, plain, wild',
+   compounds:[{word:'野菜',read:'やさい',mean:'vegetables'},{word:'野球',read:'やきゅう',mean:'baseball'},{word:'分野',read:'ぶんや',mean:'field, area'}]},
+  {level:'n4',char:'菜',on:'サイ',kun:'な',meaning:'vegetable, greens',
+   compounds:[{word:'野菜',read:'やさい',mean:'vegetables'},{word:'菜食',read:'さいしょく',mean:'vegetarian diet'},{word:'菜の花',read:'なのはな',mean:'rape blossom'}]},
+  {level:'n4',char:'店',on:'テン',kun:'みせ',meaning:'shop, store',
+   compounds:[{word:'百貨店',read:'ひゃっかてん',mean:'department store'},{word:'本店',read:'ほんてん',mean:'main store'},{word:'店員',read:'てんいん',mean:'shop staff'}]},
+  {level:'n4',char:'品',on:'ヒン',kun:'しな',meaning:'goods, quality, article',
+   compounds:[{word:'商品',read:'しょうひん',mean:'product, goods'},{word:'品質',read:'ひんしつ',mean:'quality'},{word:'食品',read:'しょくひん',mean:'food product'}]},
+  {level:'n4',char:'買',on:'バイ',kun:'か（う）',meaning:'buy, purchase',
+   compounds:[{word:'買い物',read:'かいもの',mean:'shopping'},{word:'売買',read:'ばいばい',mean:'buying and selling'},{word:'購買',read:'こうばい',mean:'purchasing'}]},
+  {level:'n4',char:'売',on:'バイ',kun:'う（る）',meaning:'sell',
+   compounds:[{word:'販売',read:'はんばい',mean:'sales'},{word:'売り場',read:'うりば',mean:'sales floor'},{word:'売上',read:'うりあげ',mean:'sales, revenue'}]},
+  {level:'n4',char:'安',on:'アン',kun:'やす（い）',meaning:'cheap, peaceful, safe',
+   compounds:[{word:'安全',read:'あんぜん',mean:'safety'},{word:'不安',read:'ふあん',mean:'anxiety'},{word:'安心',read:'あんしん',mean:'relief'}]},
+  {level:'n4',char:'高',on:'コウ',kun:'たか（い）',meaning:'high, expensive, tall',
+   compounds:[{word:'高校',read:'こうこう',mean:'high school'},{word:'最高',read:'さいこう',mean:'best, highest'},{word:'高速',read:'こうそく',mean:'high speed'}]},
+  {level:'n4',char:'低',on:'テイ',kun:'ひく（い）',meaning:'low, short, base',
+   compounds:[{word:'低下',read:'ていか',mean:'decline, fall'},{word:'最低',read:'さいてい',mean:'lowest, worst'},{word:'低温',read:'ていおん',mean:'low temperature'}]},
+
+  // ── Health & Body ──
+  {level:'n4',char:'病',on:'ビョウ・ヘイ',kun:'や（む）・やまい',meaning:'illness, disease',
+   compounds:[{word:'病院',read:'びょういん',mean:'hospital'},{word:'病気',read:'びょうき',mean:'illness'},{word:'看病',read:'かんびょう',mean:'nursing, caring for sick'}]},
+  {level:'n4',char:'薬',on:'ヤク',kun:'くすり',meaning:'medicine, drug',
+   compounds:[{word:'薬局',read:'やっきょく',mean:'pharmacy'},{word:'薬品',read:'やくひん',mean:'pharmaceutical'},{word:'解熱薬',read:'げねつやく',mean:'fever reducer'}]},
+  {level:'n4',char:'医',on:'イ',kun:'—',meaning:'medicine, doctor',
+   compounds:[{word:'医者',read:'いしゃ',mean:'doctor'},{word:'医学',read:'いがく',mean:'medical science'},{word:'医院',read:'いいん',mean:'clinic'}]},
+  {level:'n4',char:'熱',on:'ネツ',kun:'あつ（い）',meaning:'heat, fever, zeal',
+   compounds:[{word:'体温',read:'たいおん',mean:'body temperature'},{word:'熱心',read:'ねっしん',mean:'enthusiastic, eager'},{word:'情熱',read:'じょうねつ',mean:'passion'}]},
+  {level:'n4',char:'痛',on:'ツウ',kun:'いた（い）・いた（む）',meaning:'pain, ache, hurt',
+   compounds:[{word:'頭痛',read:'ずつう',mean:'headache'},{word:'腹痛',read:'ふくつう',mean:'stomachache'},{word:'苦痛',read:'くつう',mean:'pain, suffering'}]},
+  {level:'n4',char:'運',on:'ウン',kun:'はこ（ぶ）',meaning:'carry, luck, fate',
+   compounds:[{word:'運動',read:'うんどう',mean:'exercise, movement'},{word:'運転',read:'うんてん',mean:'driving'},{word:'幸運',read:'こううん',mean:'good luck'}]},
+  {level:'n4',char:'動',on:'ドウ',kun:'うご（く）',meaning:'move, motion',
+   compounds:[{word:'運動',read:'うんどう',mean:'exercise'},{word:'感動',read:'かんどう',mean:'being moved'},{word:'自動',read:'じどう',mean:'automatic'}]},
+
+  // ── Emotions & Character ──
+  {level:'n4',char:'好',on:'コウ',kun:'す（き）・この（む）',meaning:'like, fond of',
+   compounds:[{word:'好き',read:'すき',mean:'like, favourite'},{word:'好意',read:'こうい',mean:'goodwill, favour'},{word:'親好',read:'しんこう',mean:'friendship, goodwill'}]},
+  {level:'n4',char:'楽',on:'ガク・ラク',kun:'たの（しい）',meaning:'enjoyable, music, ease',
+   compounds:[{word:'楽しい',read:'たのしい',mean:'enjoyable, fun'},{word:'音楽',read:'おんがく',mean:'music'},{word:'気楽',read:'きらく',mean:'carefree, easy-going'}]},
+  {level:'n4',char:'悲',on:'ヒ',kun:'かな（しい）',meaning:'sad, grief',
+   compounds:[{word:'悲しい',read:'かなしい',mean:'sad'},{word:'悲劇',read:'ひげき',mean:'tragedy'},{word:'悲観',read:'ひかん',mean:'pessimism'}]},
+  {level:'n4',char:'怒',on:'ド・ヌ',kun:'おこ（る）・いか（る）',meaning:'angry, rage',
+   compounds:[{word:'怒る',read:'おこる',mean:'to get angry'},{word:'憤怒',read:'ふんど',mean:'rage, fury'},{word:'怒鳴る',read:'どなる',mean:'to shout angrily'}]},
+  {level:'n4',char:'泣',on:'キュウ',kun:'な（く）',meaning:'cry, weep',
+   compounds:[{word:'泣く',read:'なく',mean:'to cry'},{word:'号泣',read:'ごうきゅう',mean:'sobbing'},{word:'感泣',read:'かんきゅう',mean:'crying with emotion'}]},
+  {level:'n4',char:'笑',on:'ショウ',kun:'わら（う）・え（む）',meaning:'laugh, smile',
+   compounds:[{word:'笑顔',read:'えがお',mean:'smiling face'},{word:'微笑む',read:'ほほえむ',mean:'to smile'},{word:'爆笑',read:'ばくしょう',mean:'burst of laughter'}]},
+  {level:'n4',char:'親',on:'シン',kun:'おや・した（しい）',meaning:'parent, intimate',
+   compounds:[{word:'親切',read:'しんせつ',mean:'kindness'},{word:'親友',read:'しんゆう',mean:'close friend'},{word:'両親',read:'りょうしん',mean:'parents'}]},
+  {level:'n4',char:'愛',on:'アイ',kun:'い（とおしい）・いとおしい',meaning:'love, affection',
+   compounds:[{word:'愛情',read:'あいじょう',mean:'affection, love'},{word:'愛犬',read:'あいけん',mean:'beloved dog'},{word:'恋愛',read:'れんあい',mean:'romantic love'}]},
+
+  // ── Actions & Verbs ──
+  {level:'n4',char:'始',on:'シ',kun:'はじ（まる）・はじ（める）',meaning:'begin, start',
+   compounds:[{word:'開始',read:'かいし',mean:'start, commencement'},{word:'始業',read:'しぎょう',mean:'start of work'},{word:'年始',read:'ねんし',mean:'beginning of the year'}]},
+  {level:'n4',char:'終',on:'シュウ',kun:'お（わる）・お（える）',meaning:'end, finish',
+   compounds:[{word:'終わり',read:'おわり',mean:'end, conclusion'},{word:'最終',read:'さいしゅう',mean:'last, final'},{word:'終点',read:'しゅうてん',mean:'terminal station'}]},
+  {level:'n4',char:'開',on:'カイ',kun:'あ（く）・ひら（く）',meaning:'open',
+   compounds:[{word:'開発',read:'かいはつ',mean:'development'},{word:'公開',read:'こうかい',mean:'public release'},{word:'開始',read:'かいし',mean:'start'}]},
+  {level:'n4',char:'閉',on:'ヘイ',kun:'し（まる）・と（じる）',meaning:'close, shut',
+   compounds:[{word:'閉店',read:'へいてん',mean:'closing a shop'},{word:'閉会',read:'へいかい',mean:'close of meeting'},{word:'密閉',read:'みっぺい',mean:'airtight seal'}]},
+  {level:'n4',char:'立',on:'リツ・リュウ',kun:'た（つ）・た（てる）',meaning:'stand, establish',
+   compounds:[{word:'立場',read:'たちば',mean:'position, standpoint'},{word:'独立',read:'どくりつ',mean:'independence'},{word:'設立',read:'せつりつ',mean:'establishment'}]},
+  {level:'n4',char:'歩',on:'ホ・ブ',kun:'ある（く）・あゆ（む）',meaning:'walk, step',
+   compounds:[{word:'散歩',read:'さんぽ',mean:'walk, stroll'},{word:'徒歩',read:'とほ',mean:'on foot'},{word:'歩道',read:'ほどう',mean:'pavement, footpath'}]},
+  {level:'n4',char:'走',on:'ソウ',kun:'はし（る）',meaning:'run',
+   compounds:[{word:'走る',read:'はしる',mean:'to run'},{word:'競走',read:'きょうそう',mean:'race'},{word:'脱走',read:'だっそう',mean:'escape, flight'}]},
+  {level:'n4',char:'飛',on:'ヒ',kun:'と（ぶ）・と（ばす）',meaning:'fly, jump',
+   compounds:[{word:'飛行機',read:'ひこうき',mean:'aeroplane'},{word:'飛び込む',read:'とびこむ',mean:'to dive in'},{word:'飛躍',read:'ひやく',mean:'leap, rapid advance'}]},
+  {level:'n4',char:'泳',on:'エイ',kun:'およ（ぐ）',meaning:'swim',
+   compounds:[{word:'水泳',read:'すいえい',mean:'swimming'},{word:'競泳',read:'きょうえい',mean:'swimming race'},{word:'遠泳',read:'えんえい',mean:'long-distance swimming'}]},
+  {level:'n4',char:'聞',on:'ブン・モン',kun:'き（く）・き（こえる）',meaning:'hear, listen, ask',
+   compounds:[{word:'新聞',read:'しんぶん',mean:'newspaper'},{word:'見聞',read:'けんぶん',mean:'information, experience'},{word:'聴聞',read:'ちょうもん',mean:'hearing'}]},
+  {level:'n4',char:'話',on:'ワ',kun:'はな（す）・はなし',meaning:'talk, speak, story',
+   compounds:[{word:'会話',read:'かいわ',mean:'conversation'},{word:'話題',read:'わだい',mean:'topic'},{word:'電話',read:'でんわ',mean:'telephone'}]},
+  {level:'n4',char:'読',on:'ドク・トク',kun:'よ（む）',meaning:'read',
+   compounds:[{word:'読書',read:'どくしょ',mean:'reading'},{word:'読解',read:'どっかい',mean:'reading comprehension'},{word:'音読',read:'おんどく',mean:'reading aloud'}]},
+  {level:'n4',char:'書',on:'ショ',kun:'か（く）',meaning:'write',
+   compounds:[{word:'図書館',read:'としょかん',mean:'library'},{word:'教科書',read:'きょうかしょ',mean:'textbook'},{word:'手書き',read:'てがき',mean:'handwriting'}]},
+  {level:'n4',char:'考',on:'コウ',kun:'かんが（える）',meaning:'think, consider',
+   compounds:[{word:'考え方',read:'かんがえかた',mean:'way of thinking'},{word:'思考',read:'しこう',mean:'thought, thinking'},{word:'参考',read:'さんこう',mean:'reference'}]},
+  {level:'n4',char:'思',on:'シ',kun:'おも（う）',meaning:'think, feel',
+   compounds:[{word:'思想',read:'しそう',mean:'thought, ideology'},{word:'意思',read:'いし',mean:'will, intention'},{word:'思い出',read:'おもいで',mean:'memory, recollection'}]},
+  {level:'n4',char:'知',on:'チ',kun:'し（る）',meaning:'know, knowledge',
+   compounds:[{word:'知識',read:'ちしき',mean:'knowledge'},{word:'知人',read:'ちじん',mean:'acquaintance'},{word:'無知',read:'むち',mean:'ignorance'}]},
+  {level:'n4',char:'見',on:'ケン',kun:'み（る）・み（える）',meaning:'see, look, show',
+   compounds:[{word:'見学',read:'けんがく',mean:'field trip, visit'},{word:'意見',read:'いけん',mean:'opinion'},{word:'発見',read:'はっけん',mean:'discovery'}]},
+  {level:'n4',char:'使',on:'シ',kun:'つか（う）',meaning:'use, employ',
+   compounds:[{word:'使用',read:'しよう',mean:'use'},{word:'大使',read:'たいし',mean:'ambassador'},{word:'行使',read:'こうし',mean:'exercise (of right)'}]},
+  {level:'n4',char:'作',on:'サク・サ',kun:'つく（る）',meaning:'make, create, work',
+   compounds:[{word:'作業',read:'さぎょう',mean:'work, operation'},{word:'作家',read:'さっか',mean:'author, writer'},{word:'創作',read:'そうさく',mean:'creative work'}]},
+  {level:'n4',char:'持',on:'ジ',kun:'も（つ）',meaning:'hold, have, carry',
+   compounds:[{word:'持ち物',read:'もちもの',mean:'belongings'},{word:'気持ち',read:'きもち',mean:'feeling'},{word:'維持',read:'いじ',mean:'maintenance'}]},
+  {level:'n4',char:'待',on:'タイ',kun:'ま（つ）',meaning:'wait, expect',
+   compounds:[{word:'期待',read:'きたい',mean:'expectation'},{word:'招待',read:'しょうたい',mean:'invitation'},{word:'待合',read:'まちあい',mean:'waiting room'}]},
+  {level:'n4',char:'会',on:'カイ・エ',kun:'あ（う）',meaning:'meet, society, meeting',
+   compounds:[{word:'会議',read:'かいぎ',mean:'conference'},{word:'社会',read:'しゃかい',mean:'society'},{word:'機会',read:'きかい',mean:'opportunity'}]},
+  {level:'n4',char:'帰',on:'キ',kun:'かえ（る）',meaning:'return, go home',
+   compounds:[{word:'帰国',read:'きこく',mean:'return to one\'s country'},{word:'帰宅',read:'きたく',mean:'return home'},{word:'復帰',read:'ふっき',mean:'comeback, return'}]},
+  {level:'n4',char:'来',on:'ライ',kun:'く（る）・き（たる）',meaning:'come, next',
+   compounds:[{word:'来年',read:'らいねん',mean:'next year'},{word:'将来',read:'しょうらい',mean:'future'},{word:'往来',read:'おうらい',mean:'coming and going'}]},
+  {level:'n4',char:'行',on:'コウ・ギョウ・アン',kun:'い（く）・おこな（う）',meaning:'go, do, carry out',
+   compounds:[{word:'旅行',read:'りょこう',mean:'trip, travel'},{word:'銀行',read:'ぎんこう',mean:'bank'},{word:'行事',read:'ぎょうじ',mean:'event'}]},
+  {level:'n4',char:'出',on:'シュツ・スイ',kun:'で（る）・だ（す）',meaning:'exit, go out, produce',
+   compounds:[{word:'出発',read:'しゅっぱつ',mean:'departure'},{word:'提出',read:'ていしゅつ',mean:'submission'},{word:'出席',read:'しゅっせき',mean:'attendance'}]},
+  {level:'n4',char:'入',on:'ニュウ',kun:'い（る）・はい（る）',meaning:'enter, put in',
+   compounds:[{word:'入学',read:'にゅうがく',mean:'school enrolment'},{word:'収入',read:'しゅうにゅう',mean:'income'},{word:'入力',read:'にゅうりょく',mean:'input'}]},
+  {level:'n4',char:'言',on:'ゲン・ゴン',kun:'い（う）・こと',meaning:'say, word, speech',
+   compounds:[{word:'言語',read:'げんご',mean:'language'},{word:'宣言',read:'せんげん',mean:'declaration'},{word:'言葉',read:'ことば',mean:'word, language'}]},
+  {level:'n4',char:'答',on:'トウ',kun:'こた（える）・こたえ',meaning:'answer, reply',
+   compounds:[{word:'回答',read:'かいとう',mean:'answer, reply'},{word:'解答',read:'かいとう',mean:'solution, answer'},{word:'答案',read:'とうあん',mean:'answer sheet'}]},
+  {level:'n4',char:'問',on:'モン',kun:'と（う）・とい',meaning:'ask, question',
+   compounds:[{word:'問題',read:'もんだい',mean:'problem, question'},{word:'質問',read:'しつもん',mean:'question'},{word:'疑問',read:'ぎもん',mean:'doubt, query'}]},
+  {level:'n4',char:'売',on:'バイ',kun:'う（る）',meaning:'sell',
+   compounds:[{word:'販売',read:'はんばい',mean:'sales'},{word:'売り場',read:'うりば',mean:'sales floor'},{word:'発売',read:'はつばい',mean:'sale, release'}]},
+  {level:'n4',char:'貸',on:'タイ',kun:'か（す）',meaning:'lend, rent out',
+   compounds:[{word:'貸し出し',read:'かしだし',mean:'lending'},{word:'賃貸',read:'ちんたい',mean:'lease, rental'},{word:'貸借',read:'たいしゃく',mean:'lending and borrowing'}]},
+  {level:'n4',char:'借',on:'シャク',kun:'か（りる）',meaning:'borrow',
+   compounds:[{word:'借金',read:'しゃっきん',mean:'debt'},{word:'借家',read:'しゃくや',mean:'rented house'},{word:'賃借',read:'ちんしゃく',mean:'renting, leasing'}]},
+  {level:'n4',char:'払',on:'フツ',kun:'はら（う）',meaning:'pay, brush away',
+   compounds:[{word:'支払い',read:'しはらい',mean:'payment'},{word:'払い戻し',read:'はらいもどし',mean:'refund'},{word:'前払い',read:'まえばらい',mean:'advance payment'}]},
+
+  // ── Quality & Condition ──
+  {level:'n4',char:'新',on:'シン',kun:'あたら（しい）・あら',meaning:'new',
+   compounds:[{word:'新幹線',read:'しんかんせん',mean:'Shinkansen'},{word:'最新',read:'さいしん',mean:'latest'},{word:'革新',read:'かくしん',mean:'innovation'}]},
+  {level:'n4',char:'古',on:'コ',kun:'ふる（い）',meaning:'old',
+   compounds:[{word:'古代',read:'こだい',mean:'ancient times'},{word:'古典',read:'こてん',mean:'classic'},{word:'中古',read:'ちゅうこ',mean:'secondhand, used'}]},
+  {level:'n4',char:'大',on:'ダイ・タイ',kun:'おお（きい）',meaning:'big, great',
+   compounds:[{word:'大学',read:'だいがく',mean:'university'},{word:'大切',read:'たいせつ',mean:'important'},{word:'大丈夫',read:'だいじょうぶ',mean:'all right, fine'}]},
+  {level:'n4',char:'小',on:'ショウ',kun:'ちい（さい）・こ',meaning:'small, little',
+   compounds:[{word:'小学校',read:'しょうがっこう',mean:'elementary school'},{word:'小説',read:'しょうせつ',mean:'novel'},{word:'縮小',read:'しゅくしょう',mean:'reduction'}]},
+  {level:'n4',char:'長',on:'チョウ',kun:'なが（い）',meaning:'long, chief',
+   compounds:[{word:'社長',read:'しゃちょう',mean:'company president'},{word:'成長',read:'せいちょう',mean:'growth'},{word:'長所',read:'ちょうしょ',mean:'strong point, merit'}]},
+  {level:'n4',char:'短',on:'タン',kun:'みじか（い）',meaning:'short',
+   compounds:[{word:'短所',read:'たんしょ',mean:'weak point, fault'},{word:'短期',read:'たんき',mean:'short term'},{word:'短縮',read:'たんしゅく',mean:'shortening, reduction'}]},
+  {level:'n4',char:'強',on:'キョウ',kun:'つよ（い）・し（いる）',meaning:'strong, force',
+   compounds:[{word:'強調',read:'きょうちょう',mean:'emphasis'},{word:'強力',read:'きょうりょく',mean:'powerful'},{word:'勉強',read:'べんきょう',mean:'study'}]},
+  {level:'n4',char:'弱',on:'ジャク',kun:'よわ（い）',meaning:'weak',
+   compounds:[{word:'弱点',read:'じゃくてん',mean:'weakness'},{word:'弱者',read:'じゃくしゃ',mean:'the weak'},{word:'虚弱',read:'きょじゃく',mean:'frail, weak'}]},
+  {level:'n4',char:'重',on:'ジュウ・チョウ',kun:'おも（い）・かさ（ねる）',meaning:'heavy, important, pile up',
+   compounds:[{word:'重要',read:'じゅうよう',mean:'important'},{word:'体重',read:'たいじゅう',mean:'body weight'},{word:'貴重',read:'きちょう',mean:'precious, valuable'}]},
+  {level:'n4',char:'軽',on:'ケイ',kun:'かる（い）',meaning:'light (weight), easy',
+   compounds:[{word:'軽食',read:'けいしょく',mean:'light meal, snack'},{word:'気軽',read:'きがる',mean:'carefree, casual'},{word:'軽減',read:'けいげん',mean:'reduction, mitigation'}]},
+  {level:'n4',char:'近',on:'キン',kun:'ちか（い）',meaning:'near, close',
+   compounds:[{word:'近所',read:'きんじょ',mean:'neighbourhood'},{word:'最近',read:'さいきん',mean:'recently'},{word:'近代',read:'きんだい',mean:'modern era'}]},
+  {level:'n4',char:'遠',on:'エン',kun:'とお（い）',meaning:'far, distant',
+   compounds:[{word:'遠足',read:'えんそく',mean:'excursion, field trip'},{word:'遠慮',read:'えんりょ',mean:'reserve, restraint'},{word:'永遠',read:'えいえん',mean:'eternity'}]},
+  {level:'n4',char:'広',on:'コウ',kun:'ひろ（い）',meaning:'wide, broad, spacious',
+   compounds:[{word:'広告',read:'こうこく',mean:'advertisement'},{word:'広場',read:'ひろば',mean:'public square'},{word:'拡大',read:'かくだい',mean:'expansion'}]},
+  {level:'n4',char:'明',on:'メイ・ミョウ',kun:'あか（るい）・あ（ける）',meaning:'bright, clear, dawn',
+   compounds:[{word:'説明',read:'せつめい',mean:'explanation'},{word:'明日',read:'あした',mean:'tomorrow'},{word:'発明',read:'はつめい',mean:'invention'}]},
+  {level:'n4',char:'暗',on:'アン',kun:'くら（い）',meaning:'dark, gloomy',
+   compounds:[{word:'暗記',read:'あんき',mean:'memorisation'},{word:'暗示',read:'あんじ',mean:'suggestion, hint'},{word:'暗号',read:'あんごう',mean:'code, cipher'}]},
+  {level:'n4',char:'正',on:'セイ・ショウ',kun:'ただ（しい）',meaning:'correct, right, proper',
+   compounds:[{word:'正直',read:'しょうじき',mean:'honest'},{word:'正式',read:'せいしき',mean:'formal, official'},{word:'修正',read:'しゅうせい',mean:'correction, amendment'}]},
+  {level:'n4',char:'悪',on:'アク・オ',kun:'わる（い）',meaning:'bad, evil',
+   compounds:[{word:'悪化',read:'あっか',mean:'worsening'},{word:'最悪',read:'さいあく',mean:'worst'},{word:'悪魔',read:'あくま',mean:'devil, demon'}]},
+  {level:'n4',char:'全',on:'ゼン',kun:'まった（く）・すべ（て）',meaning:'complete, all, whole',
+   compounds:[{word:'全部',read:'ぜんぶ',mean:'all, everything'},{word:'全力',read:'ぜんりょく',mean:'full effort'},{word:'全体',read:'ぜんたい',mean:'whole, entirety'}]},
+  {level:'n4',char:'半',on:'ハン',kun:'なか（ば）',meaning:'half, middle',
+   compounds:[{word:'半分',read:'はんぶん',mean:'half'},{word:'前半',read:'ぜんはん',mean:'first half'},{word:'後半',read:'こうはん',mean:'second half'}]},
+
+  // ── Money & Economy ──
+  {level:'n4',char:'金',on:'キン・コン',kun:'かね・かな',meaning:'gold, money, metal',
+   compounds:[{word:'お金',read:'おかね',mean:'money'},{word:'料金',read:'りょうきん',mean:'fee, charge'},{word:'賃金',read:'ちんぎん',mean:'wages'}]},
+  {level:'n4',char:'円',on:'エン',kun:'まる（い）',meaning:'yen, circle, round',
+   compounds:[{word:'円高',read:'えんだか',mean:'strong yen'},{word:'円安',read:'えんやす',mean:'weak yen'},{word:'円形',read:'えんけい',mean:'circular shape'}]},
+  {level:'n4',char:'費',on:'ヒ',kun:'つい（やす）',meaning:'expense, cost, spend',
+   compounds:[{word:'費用',read:'ひよう',mean:'cost, expense'},{word:'消費',read:'しょうひ',mean:'consumption'},{word:'学費',read:'がくひ',mean:'school fees'}]},
+
+  // ── Special ──
+  {level:'n4',char:'旅',on:'リョ',kun:'たび',meaning:'travel, journey',
+   compounds:[{word:'旅行',read:'りょこう',mean:'travel, trip'},{word:'旅館',read:'りょかん',mean:'Japanese inn'},{word:'旅人',read:'たびびと',mean:'traveller'}]},
+  {level:'n4',char:'族',on:'ゾク',kun:'—',meaning:'tribe, family, group',
+   compounds:[{word:'家族',read:'かぞく',mean:'family'},{word:'民族',read:'みんぞく',mean:'ethnic group'},{word:'部族',read:'ぶぞく',mean:'tribe'}]},
+  {level:'n4',char:'集',on:'シュウ',kun:'あつ（まる）',meaning:'gather, collect',
+   compounds:[{word:'集合',read:'しゅうごう',mean:'assembly'},{word:'集中',read:'しゅうちゅう',mean:'concentration'},{word:'収集',read:'しゅうしゅう',mean:'collection'}]},
+  {level:'n4',char:'送',on:'ソウ',kun:'おく（る）',meaning:'send, dispatch',
+   compounds:[{word:'送る',read:'おくる',mean:'to send'},{word:'放送',read:'ほうそう',mean:'broadcast'},{word:'輸送',read:'ゆそう',mean:'transport'}]},
+  {level:'n4',char:'働',on:'ドウ',kun:'はたら（く）',meaning:'work, labour',
+   compounds:[{word:'働く',read:'はたらく',mean:'to work'},{word:'労働',read:'ろうどう',mean:'labour'},{word:'共働き',read:'ともばたらき',mean:'both spouses working'}]},
+  {level:'n4',char:'選',on:'セン',kun:'えら（ぶ）',meaning:'select, choose',
+   compounds:[{word:'選ぶ',read:'えらぶ',mean:'to choose'},{word:'選手',read:'せんしゅ',mean:'athlete'},{word:'選挙',read:'せんきょ',mean:'election'}]},
+
+  // ── N3 stubs (original) ──
+  {level:'n3',char:'得',on:'トク',kun:'え（る）',meaning:'gain, acquire, profit',
+   compounds:[{word:'得る',read:'える',mean:'to gain'},{word:'所得',read:'しょとく',mean:'income'},{word:'納得',read:'なっとく',mean:'understanding, agreement'}]},
+  {level:'n3',char:'失',on:'シツ',kun:'うしな（う）',meaning:'lose, miss, error',
+   compounds:[{word:'失う',read:'うしなう',mean:'to lose'},{word:'失敗',read:'しっぱい',mean:'failure'},{word:'失礼',read:'しつれい',mean:'rudeness, excuse me'}]},
+  {level:'n3',char:'望',on:'ボウ・モウ',kun:'のぞ（む）',meaning:'hope, desire, look to',
+   compounds:[{word:'希望',read:'きぼう',mean:'hope, wish'},{word:'絶望',read:'ぜつぼう',mean:'despair'},{word:'望む',read:'のぞむ',mean:'to hope for'}]},
+  {level:'n3',char:'感',on:'カン',kun:'—',meaning:'feeling, sense, emotion',
+   compounds:[{word:'感じる',read:'かんじる',mean:'to feel'},{word:'感動',read:'かんどう',mean:'being moved emotionally'},{word:'感謝',read:'かんしゃ',mean:'gratitude'}]},
+  {level:'n3',char:'続',on:'ゾク',kun:'つづ（く）',meaning:'continue, follow',
+   compounds:[{word:'続く',read:'つづく',mean:'to continue'},{word:'継続',read:'けいぞく',mean:'continuation'},{word:'手続き',read:'てつづき',mean:'procedure, formalities'}]},
+  {level:'n3',char:'然',on:'ゼン・ネン',kun:'—',meaning:'natural, so, like that',
+   compounds:[{word:'自然',read:'しぜん',mean:'nature'},{word:'当然',read:'とうぜん',mean:'naturally, of course'},{word:'突然',read:'とつぜん',mean:'suddenly'}]},
+  {level:'n3',char:'様',on:'ヨウ',kun:'さま',meaning:'manner, appearance, Mr/Ms',
+   compounds:[{word:'様子',read:'ようす',mean:'appearance, situation'},{word:'同様',read:'どうよう',mean:'same, likewise'},{word:'皆様',read:'みなさま',mean:'everyone (polite)'}]},
+  {level:'n3',char:'各',on:'カク',kun:'おのおの',meaning:'each, every, respective',
+   compounds:[{word:'各自',read:'かくじ',mean:'each person'},{word:'各地',read:'かくち',mean:'various places'},{word:'各国',read:'かっこく',mean:'each country'}]},
+
+  // ── N2 stubs (original) ──
+  {level:'n2',char:'批',on:'ヒ',kun:'—',meaning:'criticism, comment',
+   compounds:[{word:'批判',read:'ひはん',mean:'criticism'},{word:'批評',read:'ひひょう',mean:'critique, review'},{word:'批准',read:'ひじゅん',mean:'ratification'}]},
+  {level:'n2',char:'貿',on:'ボウ',kun:'—',meaning:'trade, exchange',
+   compounds:[{word:'貿易',read:'ぼうえき',mean:'trade, commerce'},{word:'貿易赤字',read:'ぼうえきあかじ',mean:'trade deficit'},{word:'自由貿易',read:'じゆうぼうえき',mean:'free trade'}]},
+  {level:'n2',char:'績',on:'セキ',kun:'—',meaning:'achievement, results',
+   compounds:[{word:'実績',read:'じっせき',mean:'track record'},{word:'成績',read:'せいせき',mean:'results, grades'},{word:'業績',read:'ぎょうせき',mean:'business results'}]},
+  {level:'n2',char:'率',on:'リツ・ソツ',kun:'ひき（いる）',meaning:'rate, ratio, lead',
+   compounds:[{word:'正解率',read:'せいかいりつ',mean:'accuracy rate'},{word:'効率',read:'こうりつ',mean:'efficiency'},{word:'確率',read:'かくりつ',mean:'probability'}]},
+  {level:'n2',char:'複',on:'フク',kun:'—',meaning:'duplicate, multiple, compound',
+   compounds:[{word:'複数',read:'ふくすう',mean:'plural, multiple'},{word:'複雑',read:'ふくざつ',mean:'complicated'},{word:'複合',read:'ふくごう',mean:'compound, composite'}]},
+  {level:'n2',char:'統',on:'トウ',kun:'す（べる）',meaning:'govern, unite, all',
+   compounds:[{word:'統計',read:'とうけい',mean:'statistics'},{word:'伝統',read:'でんとう',mean:'tradition'},{word:'統一',read:'とういつ',mean:'unification'}]},
+  {level:'n2',char:'範',on:'ハン',kun:'—',meaning:'pattern, model, example',
+   compounds:[{word:'範囲',read:'はんい',mean:'scope, range'},{word:'模範',read:'もはん',mean:'model, example'},{word:'規範',read:'きはん',mean:'norm, standard'}]},
+  {level:'n2',char:'影',on:'エイ',kun:'かげ',meaning:'shadow, influence',
+   compounds:[{word:'影響',read:'えいきょう',mean:'influence, effect'},{word:'影',read:'かげ',mean:'shadow, shade'},{word:'撮影',read:'さつえい',mean:'photography, filming'}]},
+
+  // ── N1 stubs (original) ──
+  {level:'n1',char:'憤',on:'フン',kun:'いきどお（る）',meaning:'indignation, anger',
+   compounds:[{word:'憤る',read:'いきどおる',mean:'to be indignant'},{word:'憤慨',read:'ふんがい',mean:'indignation'},{word:'義憤',read:'ぎふん',mean:'righteous indignation'}]},
+  {level:'n1',char:'慕',on:'ボ',kun:'した（う）',meaning:'yearn for, adore, follow',
+   compounds:[{word:'慕う',read:'したう',mean:'to adore, look up to'},{word:'思慕',read:'しぼ',mean:'longing, yearning'},{word:'敬慕',read:'けいぼ',mean:'admiration and longing'}]},
+  {level:'n1',char:'惜',on:'セキ',kun:'お（しい）・お（しむ）',meaning:'regret, spare, grudge',
+   compounds:[{word:'惜しむ',read:'おしむ',mean:'to regret losing'},{word:'惜しい',read:'おしい',mean:'regrettable, a pity'},{word:'惜別',read:'せきべつ',mean:'reluctant parting'}]},
+  {level:'n1',char:'潔',on:'ケツ',kun:'いさぎよ（い）',meaning:'pure, clean, righteous',
+   compounds:[{word:'潔い',read:'いさぎよい',mean:'graceful (in defeat)'},{word:'清潔',read:'せいけつ',mean:'cleanliness'},{word:'純潔',read:'じゅんけつ',mean:'purity'}]},
+  {level:'n1',char:'概',on:'ガイ',kun:'おおむ（ね）',meaning:'general, approximate',
+   compounds:[{word:'概ね',read:'おおむね',mean:'generally, mostly'},{word:'概念',read:'がいねん',mean:'concept, notion'},{word:'概要',read:'がいよう',mean:'outline, summary'}]},
+  {level:'n1',char:'称',on:'ショウ',kun:'たた（える）',meaning:'praise, name, title',
+   compounds:[{word:'称える',read:'たたえる',mean:'to praise, extol'},{word:'称号',read:'しょうごう',mean:'title, degree'},{word:'名称',read:'めいしょう',mean:'name, designation'}]},
+  {level:'n1',char:'献',on:'ケン・コン',kun:'—',meaning:'offer, present, contribute',
+   compounds:[{word:'貢献',read:'こうけん',mean:'contribution'},{word:'献身',read:'けんしん',mean:'devotion'},{word:'文献',read:'ぶんけん',mean:'literature, documents'}]},
+  {level:'n1',char:'敢',on:'カン',kun:'あ（えて）',meaning:'dare, venture, bold',
+   compounds:[{word:'敢えて',read:'あえて',mean:'dare to, venture to'},{word:'果敢',read:'かかん',mean:'bold, daring'},{word:'勇敢',read:'ゆうかん',mean:'brave, courageous'}]},
+
+// ═══════════════════════════════════════════════════════════
+  //  N3 KANJI
+  // ═══════════════════════════════════════════════════════════
+
+  // ── Human & Society ──
+  {level:'n3',char:'氏',on:'シ',kun:'うじ',meaning:'surname, family name, Mr.',
+   compounds:[{word:'氏名',read:'しめい',mean:'full name'},{word:'源氏',read:'げんじ',mean:'Genji clan'},{word:'各氏',read:'かくし',mean:'each person (formal)'}]},
+  {level:'n3',char:'民',on:'ミン',kun:'たみ',meaning:'people, nation, civilian',
+   compounds:[{word:'市民',read:'しみん',mean:'citizen'},{word:'民族',read:'みんぞく',mean:'ethnic group'},{word:'難民',read:'なんみん',mean:'refugee'}]},
+  {level:'n3',char:'者',on:'シャ',kun:'もの',meaning:'person, one who',
+   compounds:[{word:'患者',read:'かんじゃ',mean:'patient'},{word:'記者',read:'きしゃ',mean:'journalist'},{word:'読者',read:'どくしゃ',mean:'reader'}]},
+  {level:'n3',char:'他',on:'タ',kun:'ほか',meaning:'other, another, else',
+   compounds:[{word:'他人',read:'たにん',mean:'other person, stranger'},{word:'その他',read:'そのほか',mean:'other, etc.'},{word:'他国',read:'たこく',mean:'another country'}]},
+  {level:'n3',char:'共',on:'キョウ',kun:'とも',meaning:'together, both, share',
+   compounds:[{word:'共通',read:'きょうつう',mean:'common, shared'},{word:'共同',read:'きょうどう',mean:'joint, cooperative'},{word:'公共',read:'こうきょう',mean:'public'}]},
+  {level:'n3',char:'両',on:'リョウ',kun:'—',meaning:'both, two',
+   compounds:[{word:'両親',read:'りょうしん',mean:'parents'},{word:'両方',read:'りょうほう',mean:'both sides'},{word:'両立',read:'りょうりつ',mean:'compatibility'}]},
+  {level:'n3',char:'相',on:'ソウ・ショウ',kun:'あい',meaning:'mutual, together, minister',
+   compounds:[{word:'相談',read:'そうだん',mean:'consultation'},{word:'首相',read:'しゅしょう',mean:'prime minister'},{word:'相手',read:'あいて',mean:'partner, opponent'}]},
+  {level:'n3',char:'互',on:'ゴ',kun:'たが（い）',meaning:'mutually, reciprocal',
+   compounds:[{word:'互いに',read:'たがいに',mean:'mutually, each other'},{word:'相互',read:'そうご',mean:'mutual, reciprocal'},{word:'互助',read:'ごじょ',mean:'mutual aid'}]},
+  {level:'n3',char:'個',on:'コ',kun:'—',meaning:'individual, counter for items',
+   compounds:[{word:'個人',read:'こじん',mean:'individual'},{word:'個別',read:'こべつ',mean:'individual, separate'},{word:'個性',read:'こせい',mean:'individuality'}]},
+  {level:'n3',char:'各',on:'カク',kun:'おのおの',meaning:'each, every, respective',
+   compounds:[{word:'各自',read:'かくじ',mean:'each person'},{word:'各地',read:'かくち',mean:'various places'},{word:'各国',read:'かっこく',mean:'each country'}]},
+
+  // ── Actions & Verbs ──
+  {level:'n3',char:'得',on:'トク',kun:'え（る）',meaning:'gain, acquire, profit',
+   compounds:[{word:'得る',read:'える',mean:'to gain'},{word:'所得',read:'しょとく',mean:'income'},{word:'納得',read:'なっとく',mean:'understanding, agreement'}]},
+  {level:'n3',char:'失',on:'シツ',kun:'うしな（う）',meaning:'lose, miss, error',
+   compounds:[{word:'失う',read:'うしなう',mean:'to lose'},{word:'失敗',read:'しっぱい',mean:'failure'},{word:'失礼',read:'しつれい',mean:'rudeness, excuse me'}]},
+  {level:'n3',char:'求',on:'キュウ',kun:'もと（める）',meaning:'seek, request, desire',
+   compounds:[{word:'要求',read:'ようきゅう',mean:'demand, request'},{word:'求人',read:'きゅうじん',mean:'job offer'},{word:'追求',read:'ついきゅう',mean:'pursuit'}]},
+  {level:'n3',char:'与',on:'ヨ',kun:'あた（える）',meaning:'give, provide, award',
+   compounds:[{word:'与える',read:'あたえる',mean:'to give'},{word:'関与',read:'かんよ',mean:'involvement'},{word:'付与',read:'ふよ',mean:'grant, bestow'}]},
+  {level:'n3',char:'受',on:'ジュ',kun:'う（ける）',meaning:'receive, accept, undergo',
+   compounds:[{word:'受験',read:'じゅけん',mean:'taking an exam'},{word:'受付',read:'うけつけ',mean:'reception'},{word:'受け入れ',read:'うけいれ',mean:'acceptance'}]},
+  {level:'n3',char:'渡',on:'ト',kun:'わた（る）・わた（す）',meaning:'cross, hand over',
+   compounds:[{word:'渡す',read:'わたす',mean:'to hand over'},{word:'渡る',read:'わたる',mean:'to cross'},{word:'引き渡す',read:'ひきわたす',mean:'to hand over, extradite'}]},
+  {level:'n3',char:'取',on:'シュ',kun:'と（る）',meaning:'take, get, fetch',
+   compounds:[{word:'取引',read:'とりひき',mean:'transaction'},{word:'取得',read:'しゅとく',mean:'acquisition'},{word:'取り組む',read:'とりくむ',mean:'to tackle'}]},
+  {level:'n3',char:'置',on:'チ',kun:'お（く）',meaning:'place, put, leave behind',
+   compounds:[{word:'位置',read:'いち',mean:'position, location'},{word:'放置',read:'ほうち',mean:'leaving alone, neglect'},{word:'設置',read:'せっち',mean:'installation, setup'}]},
+  {level:'n3',char:'進',on:'シン',kun:'すす（む）',meaning:'advance, proceed',
+   compounds:[{word:'進む',read:'すすむ',mean:'to advance'},{word:'促進',read:'そくしん',mean:'promotion, acceleration'},{word:'前進',read:'ぜんしん',mean:'advance, progress'}]},
+  {level:'n3',char:'止',on:'シ',kun:'と（まる）・や（める）',meaning:'stop, cease',
+   compounds:[{word:'中止',read:'ちゅうし',mean:'suspension, cancellation'},{word:'禁止',read:'きんし',mean:'prohibition'},{word:'廃止',read:'はいし',mean:'abolition'}]},
+  {level:'n3',char:'変',on:'ヘン',kun:'か（わる）・か（える）',meaning:'change, strange',
+   compounds:[{word:'変化',read:'へんか',mean:'change'},{word:'変更',read:'へんこう',mean:'change, alteration'},{word:'大変',read:'たいへん',mean:'very, serious'}]},
+  {level:'n3',char:'起',on:'キ',kun:'お（きる）・お（こる）',meaning:'rise, occur, cause',
+   compounds:[{word:'起きる',read:'おきる',mean:'to get up, occur'},{word:'起こす',read:'おこす',mean:'to wake up, cause'},{word:'起源',read:'きげん',mean:'origin'}]},
+  {level:'n3',char:'返',on:'ヘン',kun:'かえ（る）・かえ（す）',meaning:'return, reply',
+   compounds:[{word:'返事',read:'へんじ',mean:'reply, answer'},{word:'返却',read:'へんきゃく',mean:'return (of goods)'},{word:'返済',read:'へんさい',mean:'repayment'}]},
+  {level:'n3',char:'向',on:'コウ',kun:'む（く）・む（かう）',meaning:'face, direction, toward',
+   compounds:[{word:'方向',read:'ほうこう',mean:'direction'},{word:'向上',read:'こうじょう',mean:'improvement'},{word:'傾向',read:'けいこう',mean:'tendency, trend'}]},
+  {level:'n3',char:'落',on:'ラク',kun:'お（ちる）・お（とす）',meaning:'fall, drop, fail',
+   compounds:[{word:'落ちる',read:'おちる',mean:'to fall, to fail'},{word:'脱落',read:'だつらく',mean:'dropout, omission'},{word:'落下',read:'らっか',mean:'fall, drop'}]},
+  {level:'n3',char:'流',on:'リュウ・ル',kun:'なが（れる）',meaning:'flow, style, current',
+   compounds:[{word:'流れる',read:'ながれる',mean:'to flow'},{word:'交流',read:'こうりゅう',mean:'exchange, interaction'},{word:'主流',read:'しゅりゅう',mean:'mainstream'}]},
+  {level:'n3',char:'守',on:'シュ・ス',kun:'まも（る）',meaning:'protect, defend, keep',
+   compounds:[{word:'守る',read:'まもる',mean:'to protect'},{word:'保守',read:'ほしゅ',mean:'conservative, maintenance'},{word:'守備',read:'しゅび',mean:'defence'}]},
+  {level:'n3',char:'争',on:'ソウ',kun:'あらそ（う）',meaning:'compete, dispute, fight',
+   compounds:[{word:'争う',read:'あらそう',mean:'to compete'},{word:'競争',read:'きょうそう',mean:'competition'},{word:'紛争',read:'ふんそう',mean:'conflict'}]},
+  {level:'n3',char:'断',on:'ダン',kun:'た（つ）・ことわ（る）',meaning:'sever, refuse, decide',
+   compounds:[{word:'断る',read:'ことわる',mean:'to refuse'},{word:'判断',read:'はんだん',mean:'judgement'},{word:'決断',read:'けつだん',mean:'decision'}]},
+  {level:'n3',char:'負',on:'フ',kun:'ま（ける）・お（う）',meaning:'lose, bear, owe',
+   compounds:[{word:'負ける',read:'まける',mean:'to lose'},{word:'責任を負う',read:'せきにんをおう',mean:'to bear responsibility'},{word:'負担',read:'ふたん',mean:'burden'}]},
+  {level:'n3',char:'勝',on:'ショウ',kun:'か（つ）',meaning:'win, victory',
+   compounds:[{word:'勝つ',read:'かつ',mean:'to win'},{word:'優勝',read:'ゆうしょう',mean:'championship, victory'},{word:'勝利',read:'しょうり',mean:'victory'}]},
+  {level:'n3',char:'比',on:'ヒ',kun:'くら（べる）',meaning:'compare, ratio',
+   compounds:[{word:'比べる',read:'くらべる',mean:'to compare'},{word:'比較',read:'ひかく',mean:'comparison'},{word:'対比',read:'たいひ',mean:'contrast'}]},
+  {level:'n3',char:'示',on:'ジ・シ',kun:'しめ（す）',meaning:'show, indicate, reveal',
+   compounds:[{word:'示す',read:'しめす',mean:'to show, indicate'},{word:'指示',read:'しじ',mean:'instruction'},{word:'展示',read:'てんじ',mean:'exhibition'}]},
+  {level:'n3',char:'認',on:'ニン',kun:'みと（める）',meaning:'recognise, acknowledge',
+   compounds:[{word:'認める',read:'みとめる',mean:'to acknowledge'},{word:'確認',read:'かくにん',mean:'confirmation'},{word:'認識',read:'にんしき',mean:'recognition, awareness'}]},
+  {level:'n3',char:'感',on:'カン',kun:'—',meaning:'feeling, sense, emotion',
+   compounds:[{word:'感じる',read:'かんじる',mean:'to feel'},{word:'感動',read:'かんどう',mean:'being moved'},{word:'感謝',read:'かんしゃ',mean:'gratitude'}]},
+  {level:'n3',char:'続',on:'ゾク',kun:'つづ（く）',meaning:'continue, follow',
+   compounds:[{word:'続く',read:'つづく',mean:'to continue'},{word:'継続',read:'けいぞく',mean:'continuation'},{word:'手続き',read:'てつづき',mean:'procedure'}]},
+  {level:'n3',char:'望',on:'ボウ',kun:'のぞ（む）',meaning:'hope, desire',
+   compounds:[{word:'希望',read:'きぼう',mean:'hope'},{word:'絶望',read:'ぜつぼう',mean:'despair'},{word:'要望',read:'ようぼう',mean:'demand, request'}]},
+  {level:'n3',char:'信',on:'シン',kun:'—',meaning:'trust, believe, faith',
+   compounds:[{word:'信じる',read:'しんじる',mean:'to believe'},{word:'自信',read:'じしん',mean:'self-confidence'},{word:'信頼',read:'しんらい',mean:'trust'}]},
+  {level:'n3',char:'疑',on:'ギ',kun:'うたが（う）',meaning:'doubt, suspect',
+   compounds:[{word:'疑問',read:'ぎもん',mean:'question, doubt'},{word:'疑う',read:'うたがう',mean:'to doubt'},{word:'容疑',read:'ようぎ',mean:'suspicion'}]},
+  {level:'n3',char:'支',on:'シ',kun:'ささ（える）',meaning:'support, branch, pay',
+   compounds:[{word:'支援',read:'しえん',mean:'support, aid'},{word:'支払い',read:'しはらい',mean:'payment'},{word:'支持',read:'しじ',mean:'support, backing'}]},
+  {level:'n3',char:'助',on:'ジョ',kun:'たす（ける）・すけ',meaning:'help, rescue, aid',
+   compounds:[{word:'助ける',read:'たすける',mean:'to help, rescue'},{word:'援助',read:'えんじょ',mean:'aid, assistance'},{word:'助言',read:'じょげん',mean:'advice'}]},
+  {level:'n3',char:'救',on:'キュウ',kun:'すく（う）',meaning:'rescue, save',
+   compounds:[{word:'救助',read:'きゅうじょ',mean:'rescue'},{word:'救急',read:'きゅうきゅう',mean:'first aid, emergency'},{word:'救済',read:'きゅうさい',mean:'relief, salvation'}]},
+  {level:'n3',char:'防',on:'ボウ',kun:'ふせ（ぐ）',meaning:'prevent, defend',
+   compounds:[{word:'予防',read:'よぼう',mean:'prevention'},{word:'防止',read:'ぼうし',mean:'prevention'},{word:'防衛',read:'ぼうえい',mean:'defence'}]},
+  {level:'n3',char:'害',on:'ガイ',kun:'—',meaning:'harm, damage, injury',
+   compounds:[{word:'被害',read:'ひがい',mean:'damage, harm'},{word:'障害',read:'しょうがい',mean:'obstacle, disability'},{word:'公害',read:'こうがい',mean:'pollution'}]},
+  {level:'n3',char:'因',on:'イン',kun:'よ（る）',meaning:'cause, reason, factor',
+   compounds:[{word:'原因',read:'げんいん',mean:'cause'},{word:'要因',read:'よういん',mean:'factor'},{word:'起因',read:'きいん',mean:'cause, origin'}]},
+  {level:'n3',char:'果',on:'カ',kun:'は（たす）・くだもの',meaning:'result, fruit, carry out',
+   compounds:[{word:'結果',read:'けっか',mean:'result'},{word:'果たす',read:'はたす',mean:'to fulfil, accomplish'},{word:'効果',read:'こうか',mean:'effect'}]},
+  {level:'n3',char:'達',on:'タツ・ダ',kun:'—',meaning:'reach, attain, plural suffix',
+   compounds:[{word:'達成',read:'たっせい',mean:'achievement'},{word:'伝達',read:'でんたつ',mean:'communication, transmission'},{word:'友達',read:'ともだち',mean:'friend'}]},
+  {level:'n3',char:'成',on:'セイ・ジョウ',kun:'な（る）・な（す）',meaning:'become, achieve, complete',
+   compounds:[{word:'成長',read:'せいちょう',mean:'growth'},{word:'成功',read:'せいこう',mean:'success'},{word:'達成',read:'たっせい',mean:'achievement'}]},
+  {level:'n3',char:'増',on:'ゾウ',kun:'ふ（える）・ふ（やす）',meaning:'increase, grow',
+   compounds:[{word:'増える',read:'ふえる',mean:'to increase'},{word:'増加',read:'ぞうか',mean:'increase'},{word:'増大',read:'ぞうだい',mean:'growth, increase'}]},
+  {level:'n3',char:'減',on:'ゲン',kun:'へ（る）・へ（らす）',meaning:'decrease, reduce',
+   compounds:[{word:'減る',read:'へる',mean:'to decrease'},{word:'削減',read:'さくげん',mean:'reduction, cut'},{word:'減少',read:'げんしょう',mean:'decrease'}]},
+  {level:'n3',char:'産',on:'サン',kun:'う（む）・うぶ',meaning:'produce, birth, property',
+   compounds:[{word:'生産',read:'せいさん',mean:'production'},{word:'産業',read:'さんぎょう',mean:'industry'},{word:'遺産',read:'いさん',mean:'heritage, inheritance'}]},
+  {level:'n3',char:'供',on:'キョウ・ク',kun:'とも・そな（える）',meaning:'provide, accompany, offer',
+   compounds:[{word:'子供',read:'こども',mean:'child'},{word:'提供',read:'ていきょう',mean:'provision, offer'},{word:'供給',read:'きょうきゅう',mean:'supply'}]},
+  {level:'n3',char:'利',on:'リ',kun:'き（く）',meaning:'profit, advantage, use',
+   compounds:[{word:'利用',read:'りよう',mean:'use, utilisation'},{word:'利益',read:'りえき',mean:'profit, benefit'},{word:'便利',read:'べんり',mean:'convenient'}]},
+  {level:'n3',char:'益',on:'エキ・ヤク',kun:'ます',meaning:'benefit, profit, gain',
+   compounds:[{word:'利益',read:'りえき',mean:'profit, benefit'},{word:'有益',read:'ゆうえき',mean:'beneficial'},{word:'無益',read:'むえき',mean:'useless, futile'}]},
+  {level:'n3',char:'損',on:'ソン',kun:'そこ（なう）',meaning:'loss, damage, harm',
+   compounds:[{word:'損失',read:'そんしつ',mean:'loss'},{word:'損害',read:'そんがい',mean:'damage'},{word:'損なう',read:'そこなう',mean:'to harm, damage'}]},
+
+  // ── Mind & Thought ──
+  {level:'n3',char:'念',on:'ネン',kun:'—',meaning:'sense, thought, wish',
+   compounds:[{word:'概念',read:'がいねん',mean:'concept'},{word:'記念',read:'きねん',mean:'commemoration'},{word:'念願',read:'ねんがん',mean:'long-cherished wish'}]},
+  {level:'n3',char:'意',on:'イ',kun:'—',meaning:'meaning, will, mind',
+   compounds:[{word:'意味',read:'いみ',mean:'meaning'},{word:'意識',read:'いしき',mean:'consciousness'},{word:'注意',read:'ちゅうい',mean:'attention, caution'}]},
+  {level:'n3',char:'識',on:'シキ',kun:'し（る）',meaning:'know, discern, awareness',
+   compounds:[{word:'意識',read:'いしき',mean:'consciousness'},{word:'認識',read:'にんしき',mean:'recognition'},{word:'常識',read:'じょうしき',mean:'common sense'}]},
+  {level:'n3',char:'覚',on:'カク',kun:'おぼ（える）・さ（める）',meaning:'memorise, realise, wake',
+   compounds:[{word:'覚える',read:'おぼえる',mean:'to memorise'},{word:'感覚',read:'かんかく',mean:'sense, feeling'},{word:'自覚',read:'じかく',mean:'self-awareness'}]},
+  {level:'n3',char:'忘',on:'ボウ',kun:'わす（れる）',meaning:'forget',
+   compounds:[{word:'忘れる',read:'わすれる',mean:'to forget'},{word:'備忘録',read:'びぼうろく',mean:'memorandum'},{word:'忘年会',read:'ぼうねんかい',mean:'year-end party'}]},
+  {level:'n3',char:'悩',on:'ノウ',kun:'なや（む）',meaning:'trouble, worry, be distressed',
+   compounds:[{word:'悩む',read:'なやむ',mean:'to worry, agonise'},{word:'悩み',read:'なやみ',mean:'worry, trouble'},{word:'苦悩',read:'くのう',mean:'anguish, agony'}]},
+  {level:'n3',char:'苦',on:'ク',kun:'くる（しい）',meaning:'suffering, pain, bitter',
+   compounds:[{word:'苦しい',read:'くるしい',mean:'painful, difficult'},{word:'苦労',read:'くろう',mean:'hardship, toil'},{word:'苦手',read:'にがて',mean:'not good at'}]},
+  {level:'n3',char:'喜',on:'キ',kun:'よろこ（ぶ）',meaning:'rejoice, be happy',
+   compounds:[{word:'喜ぶ',read:'よろこぶ',mean:'to rejoice'},{word:'喜び',read:'よろこび',mean:'joy'},{word:'歓喜',read:'かんき',mean:'great joy'}]},
+  {level:'n3',char:'怖',on:'フ',kun:'こわ（い）',meaning:'scared, frightening',
+   compounds:[{word:'怖い',read:'こわい',mean:'scary, frightening'},{word:'恐怖',read:'きょうふ',mean:'fear, terror'},{word:'怖がる',read:'こわがる',mean:'to be afraid'}]},
+  {level:'n3',char:'恥',on:'チ',kun:'は（じる）・はじ',meaning:'shame, embarrassment',
+   compounds:[{word:'恥ずかしい',read:'はずかしい',mean:'embarrassing'},{word:'恥じる',read:'はじる',mean:'to feel ashamed'},{word:'羞恥',read:'しゅうち',mean:'shame'}]},
+  {level:'n3',char:'誇',on:'コ',kun:'ほこ（る）',meaning:'pride, boast',
+   compounds:[{word:'誇る',read:'ほこる',mean:'to be proud of'},{word:'誇り',read:'ほこり',mean:'pride'},{word:'誇示',read:'こじ',mean:'showing off'}]},
+  {level:'n3',char:'悔',on:'カイ',kun:'く（いる）・くや（しい）',meaning:'regret, remorse',
+   compounds:[{word:'後悔',read:'こうかい',mean:'regret'},{word:'悔やむ',read:'くやむ',mean:'to regret'},{word:'悔しい',read:'くやしい',mean:'frustrating, vexing'}]},
+
+  // ── Society & Systems ──
+  {level:'n3',char:'様',on:'ヨウ',kun:'さま',meaning:'manner, appearance, style',
+   compounds:[{word:'様子',read:'ようす',mean:'appearance, situation'},{word:'同様',read:'どうよう',mean:'same, likewise'},{word:'様々',read:'さまざま',mean:'various'}]},
+  {level:'n3',char:'然',on:'ゼン・ネン',kun:'—',meaning:'natural, so, in that way',
+   compounds:[{word:'自然',read:'しぜん',mean:'nature'},{word:'当然',read:'とうぜん',mean:'naturally'},{word:'突然',read:'とつぜん',mean:'suddenly'}]},
+  {level:'n3',char:'際',on:'サイ',kun:'きわ',meaning:'occasion, edge, border',
+   compounds:[{word:'国際',read:'こくさい',mean:'international'},{word:'実際',read:'じっさい',mean:'actually, in fact'},{word:'交際',read:'こうさい',mean:'association, socialising'}]},
+  {level:'n3',char:'関',on:'カン',kun:'せき・かか（わる）',meaning:'barrier, relate, connect',
+   compounds:[{word:'関係',read:'かんけい',mean:'relationship'},{word:'関心',read:'かんしん',mean:'interest, concern'},{word:'機関',read:'きかん',mean:'organisation, engine'}]},
+  {level:'n3',char:'係',on:'ケイ',kun:'かか（る）・かかり',meaning:'person in charge, relate',
+   compounds:[{word:'関係',read:'かんけい',mean:'relationship'},{word:'係員',read:'かかりいん',mean:'person in charge'},{word:'利害関係',read:'りがいかんけい',mean:'interests, stakes'}]},
+  {level:'n3',char:'形',on:'ケイ・ギョウ',kun:'かたち・かた',meaning:'shape, form',
+   compounds:[{word:'形式',read:'けいしき',mean:'format, formality'},{word:'変形',read:'へんけい',mean:'deformation'},{word:'人形',read:'にんぎょう',mean:'doll'}]},
+  {level:'n3',char:'式',on:'シキ',kun:'—',meaning:'ceremony, style, formula',
+   compounds:[{word:'形式',read:'けいしき',mean:'format, formality'},{word:'公式',read:'こうしき',mean:'official, formula'},{word:'卒業式',read:'そつぎょうしき',mean:'graduation ceremony'}]},
+  {level:'n3',char:'規',on:'キ',kun:'—',meaning:'standard, rule, norm',
+   compounds:[{word:'規則',read:'きそく',mean:'rule, regulation'},{word:'規模',read:'きぼ',mean:'scale, scope'},{word:'規制',read:'きせい',mean:'regulation'}]},
+  {level:'n3',char:'則',on:'ソク',kun:'のり',meaning:'rule, law, norm',
+   compounds:[{word:'規則',read:'きそく',mean:'rule, regulation'},{word:'原則',read:'げんそく',mean:'principle'},{word:'法則',read:'ほうそく',mean:'law, rule'}]},
+  {level:'n3',char:'法',on:'ホウ・ハッ',kun:'—',meaning:'law, method, way',
+   compounds:[{word:'方法',read:'ほうほう',mean:'method, way'},{word:'法律',read:'ほうりつ',mean:'law'},{word:'合法',read:'ごうほう',mean:'legal'}]},
+  {level:'n3',char:'権',on:'ケン',kun:'—',meaning:'right, authority, power',
+   compounds:[{word:'権利',read:'けんり',mean:'right, privilege'},{word:'政権',read:'せいけん',mean:'political power'},{word:'人権',read:'じんけん',mean:'human rights'}]},
+  {level:'n3',char:'制',on:'セイ',kun:'—',meaning:'system, control, restrain',
+   compounds:[{word:'制度',read:'せいど',mean:'system, institution'},{word:'規制',read:'きせい',mean:'regulation'},{word:'制限',read:'せいげん',mean:'restriction, limit'}]},
+  {level:'n3',char:'度',on:'ド・タク',kun:'たび',meaning:'degree, time, occasion',
+   compounds:[{word:'制度',read:'せいど',mean:'system'},{word:'程度',read:'ていど',mean:'degree, extent'},{word:'態度',read:'たいど',mean:'attitude'}]},
+  {level:'n3',char:'政',on:'セイ・ショウ',kun:'まつりごと',meaning:'government, politics',
+   compounds:[{word:'政治',read:'せいじ',mean:'politics'},{word:'行政',read:'ぎょうせい',mean:'administration'},{word:'政策',read:'せいさく',mean:'policy'}]},
+  {level:'n3',char:'府',on:'フ',kun:'—',meaning:'urban prefecture, government',
+   compounds:[{word:'政府',read:'せいふ',mean:'government'},{word:'首府',read:'しゅふ',mean:'capital'},{word:'大阪府',read:'おおさかふ',mean:'Osaka Prefecture'}]},
+  {level:'n3',char:'庁',on:'チョウ',kun:'—',meaning:'government office, agency',
+   compounds:[{word:'官庁',read:'かんちょう',mean:'government office'},{word:'気象庁',read:'きしょうちょう',mean:'Meteorological Agency'},{word:'警察庁',read:'けいさつちょう',mean:'National Police Agency'}]},
+  {level:'n3',char:'省',on:'ショウ・セイ',kun:'はぶ（く）',meaning:'ministry, reflect, save',
+   compounds:[{word:'反省',read:'はんせい',mean:'reflection, remorse'},{word:'省エネ',read:'しょうえね',mean:'energy saving'},{word:'外務省',read:'がいむしょう',mean:'Ministry of Foreign Affairs'}]},
+  {level:'n3',char:'税',on:'ゼイ',kun:'—',meaning:'tax',
+   compounds:[{word:'消費税',read:'しょうひぜい',mean:'consumption tax'},{word:'税金',read:'ぜいきん',mean:'tax'},{word:'税務署',read:'ぜいむしょ',mean:'tax office'}]},
+
+  // ── Work & Economy ──
+  {level:'n3',char:'経',on:'ケイ・キョウ',kun:'た（つ）',meaning:'pass through, manage, sutra',
+   compounds:[{word:'経済',read:'けいざい',mean:'economy'},{word:'経験',read:'けいけん',mean:'experience'},{word:'経営',read:'けいえい',mean:'management'}]},
+  {level:'n3',char:'営',on:'エイ',kun:'いとな（む）',meaning:'manage, operate, run',
+   compounds:[{word:'経営',read:'けいえい',mean:'management'},{word:'営業',read:'えいぎょう',mean:'business, sales'},{word:'国営',read:'こくえい',mean:'state-run'}]},
+  {level:'n3',char:'商',on:'ショウ',kun:'あきな（う）',meaning:'commerce, trade, merchant',
+   compounds:[{word:'商品',read:'しょうひん',mean:'product, goods'},{word:'商業',read:'しょうぎょう',mean:'commerce'},{word:'商社',read:'しょうしゃ',mean:'trading company'}]},
+  {level:'n3',char:'務',on:'ム',kun:'つと（める）',meaning:'duty, service, work',
+   compounds:[{word:'義務',read:'ぎむ',mean:'duty, obligation'},{word:'業務',read:'ぎょうむ',mean:'business, work'},{word:'公務員',read:'こうむいん',mean:'public servant'}]},
+  {level:'n3',char:'給',on:'キュウ',kun:'—',meaning:'salary, supply, provide',
+   compounds:[{word:'給料',read:'きゅうりょう',mean:'salary'},{word:'供給',read:'きょうきゅう',mean:'supply'},{word:'月給',read:'げっきゅう',mean:'monthly salary'}]},
+  {level:'n3',char:'収',on:'シュウ',kun:'おさ（める）',meaning:'income, collect, store',
+   compounds:[{word:'収入',read:'しゅうにゅう',mean:'income'},{word:'収集',read:'しゅうしゅう',mean:'collection'},{word:'回収',read:'かいしゅう',mean:'collection, recovery'}]},
+  {level:'n3',char:'価',on:'カ',kun:'あたい',meaning:'price, value, worth',
+   compounds:[{word:'価格',read:'かかく',mean:'price'},{word:'物価',read:'ぶっか',mean:'prices, cost of living'},{word:'高価',read:'こうか',mean:'expensive'}]},
+  {level:'n3',char:'額',on:'ガク',kun:'ひたい',meaning:'amount, sum, forehead',
+   compounds:[{word:'金額',read:'きんがく',mean:'amount of money'},{word:'総額',read:'そうがく',mean:'total amount'},{word:'巨額',read:'きょがく',mean:'huge sum'}]},
+  {level:'n3',char:'資',on:'シ',kun:'—',meaning:'resources, capital, fund',
+   compounds:[{word:'資源',read:'しげん',mean:'resources'},{word:'資金',read:'しきん',mean:'funds, capital'},{word:'投資',read:'とうし',mean:'investment'}]},
+  {level:'n3',char:'産',on:'サン',kun:'う（む）',meaning:'produce, birth, property',
+   compounds:[{word:'生産',read:'せいさん',mean:'production'},{word:'財産',read:'ざいさん',mean:'property, assets'},{word:'農産物',read:'のうさんぶつ',mean:'agricultural products'}]},
+  {level:'n3',char:'貨',on:'カ',kun:'—',meaning:'goods, freight, money',
+   compounds:[{word:'貨物',read:'かもつ',mean:'cargo, freight'},{word:'通貨',read:'つうか',mean:'currency'},{word:'百貨店',read:'ひゃっかてん',mean:'department store'}]},
+
+  // ── Nature & Environment ──
+  {level:'n3',char:'地',on:'チ・ジ',kun:'—',meaning:'ground, earth, land',
+   compounds:[{word:'地球',read:'ちきゅう',mean:'Earth'},{word:'土地',read:'とち',mean:'land'},{word:'地域',read:'ちいき',mean:'region, area'}]},
+  {level:'n3',char:'球',on:'キュウ',kun:'たま',meaning:'sphere, ball, globe',
+   compounds:[{word:'地球',read:'ちきゅう',mean:'Earth'},{word:'野球',read:'やきゅう',mean:'baseball'},{word:'電球',read:'でんきゅう',mean:'light bulb'}]},
+  {level:'n3',char:'星',on:'セイ・ショウ',kun:'ほし',meaning:'star, planet',
+   compounds:[{word:'火星',read:'かせい',mean:'Mars'},{word:'星座',read:'せいざ',mean:'constellation'},{word:'衛星',read:'えいせい',mean:'satellite'}]},
+  {level:'n3',char:'林',on:'リン',kun:'はやし',meaning:'forest, woods',
+   compounds:[{word:'森林',read:'しんりん',mean:'forest'},{word:'林業',read:'りんぎょう',mean:'forestry'},{word:'竹林',read:'ちくりん',mean:'bamboo grove'}]},
+  {level:'n3',char:'森',on:'シン',kun:'もり',meaning:'forest',
+   compounds:[{word:'森林',read:'しんりん',mean:'forest'},{word:'森の中',read:'もりのなか',mean:'in the forest'},{word:'深森',read:'しんしん',mean:'deep forest'}]},
+  {level:'n3',char:'岸',on:'ガン',kun:'きし',meaning:'shore, bank, coast',
+   compounds:[{word:'海岸',read:'かいがん',mean:'coast, beach'},{word:'川岸',read:'かわぎし',mean:'riverbank'},{word:'岸壁',read:'がんぺき',mean:'quay, wharf'}]},
+  {level:'n3',char:'島',on:'トウ',kun:'しま',meaning:'island',
+   compounds:[{word:'半島',read:'はんとう',mean:'peninsula'},{word:'列島',read:'れっとう',mean:'island chain'},{word:'無人島',read:'むじんとう',mean:'uninhabited island'}]},
+  {level:'n3',char:'湖',on:'コ',kun:'みずうみ',meaning:'lake',
+   compounds:[{word:'湖畔',read:'こはん',mean:'lakeside'},{word:'琵琶湖',read:'びわこ',mean:'Lake Biwa'},{word:'火口湖',read:'かこうこ',mean:'crater lake'}]},
+  {level:'n3',char:'原',on:'ゲン',kun:'はら',meaning:'field, plain, origin',
+   compounds:[{word:'原因',read:'げんいん',mean:'cause'},{word:'原則',read:'げんそく',mean:'principle'},{word:'高原',read:'こうげん',mean:'plateau, highland'}]},
+  {level:'n3',char:'野',on:'ヤ',kun:'の',meaning:'field, plain, wild',
+   compounds:[{word:'野菜',read:'やさい',mean:'vegetables'},{word:'野球',read:'やきゅう',mean:'baseball'},{word:'分野',read:'ぶんや',mean:'field, area'}]},
+  {level:'n3',char:'石',on:'セキ・シャク',kun:'いし',meaning:'stone, rock',
+   compounds:[{word:'宝石',read:'ほうせき',mean:'gem, jewel'},{word:'磁石',read:'じしゃく',mean:'magnet'},{word:'岩石',read:'がんせき',mean:'rock'}]},
+  {level:'n3',char:'土',on:'ド・ト',kun:'つち',meaning:'earth, soil, ground',
+   compounds:[{word:'土地',read:'とち',mean:'land'},{word:'土曜',read:'どよう',mean:'Saturday'},{word:'粘土',read:'ねんど',mean:'clay'}]},
+  {level:'n3',char:'水',on:'スイ',kun:'みず',meaning:'water',
+   compounds:[{word:'水泳',read:'すいえい',mean:'swimming'},{word:'洪水',read:'こうずい',mean:'flood'},{word:'水準',read:'すいじゅん',mean:'level, standard'}]},
+  {level:'n3',char:'火',on:'カ',kun:'ひ・ほ',meaning:'fire',
+   compounds:[{word:'火災',read:'かさい',mean:'fire, conflagration'},{word:'火曜',read:'かよう',mean:'Tuesday'},{word:'噴火',read:'ふんか',mean:'volcanic eruption'}]},
+
+  // ── Science & Technology ──
+  {level:'n3',char:'科',on:'カ',kun:'—',meaning:'department, subject, science',
+   compounds:[{word:'科学',read:'かがく',mean:'science'},{word:'教科書',read:'きょうかしょ',mean:'textbook'},{word:'外科',read:'げか',mean:'surgery'}]},
+  {level:'n3',char:'学',on:'ガク',kun:'まな（ぶ）',meaning:'study, learning, science',
+   compounds:[{word:'学習',read:'がくしゅう',mean:'learning'},{word:'医学',read:'いがく',mean:'medical science'},{word:'奨学金',read:'しょうがくきん',mean:'scholarship'}]},
+  {level:'n3',char:'術',on:'ジュツ',kun:'—',meaning:'art, technique, skill',
+   compounds:[{word:'技術',read:'ぎじゅつ',mean:'technology, technique'},{word:'手術',read:'しゅじゅつ',mean:'surgery'},{word:'芸術',read:'げいじゅつ',mean:'art'}]},
+  {level:'n3',char:'機',on:'キ',kun:'はた',meaning:'machine, opportunity',
+   compounds:[{word:'機会',read:'きかい',mean:'opportunity'},{word:'飛行機',read:'ひこうき',mean:'aeroplane'},{word:'機能',read:'きのう',mean:'function, capability'}]},
+  {level:'n3',char:'器',on:'キ',kun:'うつわ',meaning:'vessel, device, instrument',
+   compounds:[{word:'機器',read:'きき',mean:'device, instrument'},{word:'楽器',read:'がっき',mean:'musical instrument'},{word:'容器',read:'ようき',mean:'container'}]},
+  {level:'n3',char:'能',on:'ノウ',kun:'—',meaning:'ability, talent, Noh',
+   compounds:[{word:'能力',read:'のうりょく',mean:'ability'},{word:'可能',read:'かのう',mean:'possible'},{word:'有能',read:'ゆうのう',mean:'capable, competent'}]},
+  {level:'n3',char:'力',on:'リョク・リキ',kun:'ちから',meaning:'strength, power, force',
+   compounds:[{word:'努力',read:'どりょく',mean:'effort'},{word:'能力',read:'のうりょく',mean:'ability'},{word:'影響力',read:'えいきょうりょく',mean:'influence, power'}]},
+  {level:'n3',char:'数',on:'スウ・ス',kun:'かず・かぞ（える）',meaning:'number, count, several',
+   compounds:[{word:'数字',read:'すうじ',mean:'number, digit'},{word:'多数',read:'たすう',mean:'majority'},{word:'少数',read:'しょうすう',mean:'minority'}]},
+  {level:'n3',char:'量',on:'リョウ',kun:'はか（る）',meaning:'quantity, amount, measure',
+   compounds:[{word:'量産',read:'りょうさん',mean:'mass production'},{word:'大量',read:'たいりょう',mean:'large quantity'},{word:'重量',read:'じゅうりょう',mean:'weight'}]},
+  {level:'n3',char:'測',on:'ソク',kun:'はか（る）',meaning:'measure, survey, fathom',
+   compounds:[{word:'測定',read:'そくてい',mean:'measurement'},{word:'観測',read:'かんそく',mean:'observation'},{word:'予測',read:'よそく',mean:'prediction'}]},
+  {level:'n3',char:'計',on:'ケイ',kun:'はか（る）・はか（らう）',meaning:'plan, measure, count',
+   compounds:[{word:'計画',read:'けいかく',mean:'plan'},{word:'統計',read:'とうけい',mean:'statistics'},{word:'時計',read:'とけい',mean:'clock, watch'}]},
+
+  // ── Communication & Language ──
+  {level:'n3',char:'告',on:'コク',kun:'つ（げる）',meaning:'announce, tell, inform',
+   compounds:[{word:'報告',read:'ほうこく',mean:'report'},{word:'広告',read:'こうこく',mean:'advertisement'},{word:'忠告',read:'ちゅうこく',mean:'advice, warning'}]},
+  {level:'n3',char:'報',on:'ホウ',kun:'むく（いる）',meaning:'report, news, reward',
+   compounds:[{word:'情報',read:'じょうほう',mean:'information'},{word:'報告',read:'ほうこく',mean:'report'},{word:'速報',read:'そくほう',mean:'news flash'}]},
+  {level:'n3',char:'伝',on:'デン',kun:'つた（える）',meaning:'transmit, convey, tradition',
+   compounds:[{word:'伝える',read:'つたえる',mean:'to convey'},{word:'宣伝',read:'せんでん',mean:'advertising, propaganda'},{word:'伝統',read:'でんとう',mean:'tradition'}]},
+  {level:'n3',char:'語',on:'ゴ',kun:'かた（る）',meaning:'language, word, tell',
+   compounds:[{word:'言語',read:'げんご',mean:'language'},{word:'語学',read:'ごがく',mean:'language study'},{word:'物語',read:'ものがたり',mean:'story, tale'}]},
+  {level:'n3',char:'表',on:'ヒョウ',kun:'あらわ（す）・おもて',meaning:'express, surface, table',
+   compounds:[{word:'表現',read:'ひょうげん',mean:'expression'},{word:'代表',read:'だいひょう',mean:'representative'},{word:'表情',read:'ひょうじょう',mean:'expression (facial)'}]},
+  {level:'n3',char:'現',on:'ゲン',kun:'あらわ（れる）',meaning:'appear, reality, present',
+   compounds:[{word:'現在',read:'げんざい',mean:'present, now'},{word:'実現',read:'じつげん',mean:'realisation'},{word:'現代',read:'げんだい',mean:'modern age'}]},
+  {level:'n3',char:'述',on:'ジュツ',kun:'の（べる）',meaning:'state, mention, narrate',
+   compounds:[{word:'述べる',read:'のべる',mean:'to state'},{word:'記述',read:'きじゅつ',mean:'description'},{word:'口述',read:'こうじゅつ',mean:'oral statement'}]},
+  {level:'n3',char:'説',on:'セツ・ゼイ',kun:'と（く）',meaning:'explain, theory',
+   compounds:[{word:'説明',read:'せつめい',mean:'explanation'},{word:'小説',read:'しょうせつ',mean:'novel'},{word:'演説',read:'えんぜつ',mean:'speech'}]},
+  {level:'n3',char:'議',on:'ギ',kun:'—',meaning:'deliberate, discuss',
+   compounds:[{word:'会議',read:'かいぎ',mean:'meeting'},{word:'議論',read:'ぎろん',mean:'argument, debate'},{word:'国会議員',read:'こっかいぎいん',mean:'parliament member'}]},
+  {level:'n3',char:'論',on:'ロン',kun:'—',meaning:'argue, discuss, theory',
+   compounds:[{word:'議論',read:'ぎろん',mean:'argument, debate'},{word:'理論',read:'りろん',mean:'theory'},{word:'結論',read:'けつろん',mean:'conclusion'}]},
+
+  // ── Health ──
+  {level:'n3',char:'治',on:'チ・ジ',kun:'なお（る）・おさ（める）',meaning:'cure, govern, reign',
+   compounds:[{word:'治療',read:'ちりょう',mean:'treatment, therapy'},{word:'政治',read:'せいじ',mean:'politics'},{word:'完治',read:'かんち',mean:'complete recovery'}]},
+  {level:'n3',char:'症',on:'ショウ',kun:'—',meaning:'symptom, illness',
+   compounds:[{word:'症状',read:'しょうじょう',mean:'symptom'},{word:'炎症',read:'えんしょう',mean:'inflammation'},{word:'後遺症',read:'こういしょう',mean:'after-effect, sequela'}]},
+  {level:'n3',char:'傷',on:'ショウ',kun:'きず・いた（む）',meaning:'wound, injury, scar',
+   compounds:[{word:'傷つく',read:'きずつく',mean:'to get hurt'},{word:'負傷',read:'ふしょう',mean:'injury'},{word:'傷跡',read:'きずあと',mean:'scar'}]},
+  {level:'n3',char:'療',on:'リョウ',kun:'—',meaning:'heal, treat, cure',
+   compounds:[{word:'治療',read:'ちりょう',mean:'treatment'},{word:'療法',read:'りょうほう',mean:'therapy, treatment'},{word:'医療',read:'いりょう',mean:'medical care'}]},
+  {level:'n3',char:'健',on:'ケン',kun:'すこ（やか）',meaning:'healthy, health',
+   compounds:[{word:'健康',read:'けんこう',mean:'health'},{word:'保健',read:'ほけん',mean:'health maintenance'},{word:'健全',read:'けんぜん',mean:'sound, healthy'}]},
+
+  // ── Education & Arts ──
+  {level:'n3',char:'芸',on:'ゲイ',kun:'—',meaning:'art, performance, craft',
+   compounds:[{word:'芸術',read:'げいじゅつ',mean:'art'},{word:'芸能',read:'げいのう',mean:'performing arts'},{word:'工芸',read:'こうげい',mean:'craft, handicraft'}]},
+  {level:'n3',char:'文',on:'ブン・モン',kun:'ふみ',meaning:'writing, literature, culture',
+   compounds:[{word:'文化',read:'ぶんか',mean:'culture'},{word:'文章',read:'ぶんしょう',mean:'sentence, writing'},{word:'注文',read:'ちゅうもん',mean:'order'}]},
+  {level:'n3',char:'字',on:'ジ',kun:'あざ',meaning:'character, letter, writing',
+   compounds:[{word:'漢字',read:'かんじ',mean:'kanji character'},{word:'字幕',read:'じまく',mean:'subtitle'},{word:'黒字',read:'くろじ',mean:'in the black, profit'}]},
+  {level:'n3',char:'章',on:'ショウ',kun:'—',meaning:'chapter, badge, composition',
+   compounds:[{word:'文章',read:'ぶんしょう',mean:'sentence, writing'},{word:'章',read:'しょう',mean:'chapter'},{word:'勲章',read:'くんしょう',mean:'decoration, medal'}]},
+  {level:'n3',char:'題',on:'ダイ',kun:'—',meaning:'topic, title, problem',
+   compounds:[{word:'問題',read:'もんだい',mean:'problem'},{word:'話題',read:'わだい',mean:'topic'},{word:'課題',read:'かだい',mean:'task, challenge'}]},
+  {level:'n3',char:'史',on:'シ',kun:'—',meaning:'history, chronicle',
+   compounds:[{word:'歴史',read:'れきし',mean:'history'},{word:'史上',read:'しじょう',mean:'in history'},{word:'日本史',read:'にほんし',mean:'Japanese history'}]},
+  {level:'n3',char:'歴',on:'レキ・レク',kun:'—',meaning:'experience, history, career',
+   compounds:[{word:'歴史',read:'れきし',mean:'history'},{word:'経歴',read:'けいれき',mean:'career, background'},{word:'来歴',read:'らいれき',mean:'origin, history'}]},
+  {level:'n3',char:'典',on:'テン',kun:'—',meaning:'ceremony, code, classic',
+   compounds:[{word:'古典',read:'こてん',mean:'classic'},{word:'辞典',read:'じてん',mean:'dictionary'},{word:'辞典',read:'じてん',mean:'dictionary'}]},
+  {level:'n3',char:'館',on:'カン',kun:'—',meaning:'building, hall, mansion',
+   compounds:[{word:'図書館',read:'としょかん',mean:'library'},{word:'美術館',read:'びじゅつかん',mean:'art museum'},{word:'大使館',read:'たいしかん',mean:'embassy'}]},
+
+  // ── Miscellaneous ──
+  {level:'n3',char:'様',on:'ヨウ',kun:'さま',meaning:'manner, appearance, Mr/Ms',
+   compounds:[{word:'様子',read:'ようす',mean:'appearance'},{word:'同様',read:'どうよう',mean:'same, likewise'},{word:'皆様',read:'みなさま',mean:'everyone (polite)'}]},
+  {level:'n3',char:'品',on:'ヒン',kun:'しな',meaning:'goods, quality, class',
+   compounds:[{word:'商品',read:'しょうひん',mean:'product'},{word:'品質',read:'ひんしつ',mean:'quality'},{word:'作品',read:'さくひん',mean:'work, piece'}]},
+  {level:'n3',char:'類',on:'ルイ',kun:'たぐい',meaning:'kind, type, sort, similar',
+   compounds:[{word:'種類',read:'しゅるい',mean:'type, kind'},{word:'人類',read:'じんるい',mean:'humanity'},{word:'分類',read:'ぶんるい',mean:'classification'}]},
+  {level:'n3',char:'種',on:'シュ',kun:'たね',meaning:'kind, seed, species',
+   compounds:[{word:'種類',read:'しゅるい',mean:'type, kind'},{word:'品種',read:'ひんしゅ',mean:'variety, breed'},{word:'人種',read:'じんしゅ',mean:'race (human)'}]},
+  {level:'n3',char:'数',on:'スウ',kun:'かず・かぞ（える）',meaning:'number, count',
+   compounds:[{word:'数字',read:'すうじ',mean:'number'},{word:'多数',read:'たすう',mean:'majority'},{word:'複数',read:'ふくすう',mean:'plural'}]},
+  {level:'n3',char:'部',on:'ブ',kun:'—',meaning:'part, section, department',
+   compounds:[{word:'全部',read:'ぜんぶ',mean:'all'},{word:'部分',read:'ぶぶん',mean:'part, portion'},{word:'部門',read:'ぶもん',mean:'department, division'}]},
+  {level:'n3',char:'分',on:'ブン・フン',kun:'わ（ける）',meaning:'divide, minute, understand',
+   compounds:[{word:'分かる',read:'わかる',mean:'to understand'},{word:'部分',read:'ぶぶん',mean:'part, portion'},{word:'成分',read:'せいぶん',mean:'ingredient, component'}]},
+  {level:'n3',char:'代',on:'ダイ・タイ',kun:'か（わる）・よ',meaning:'substitute, generation, era',
+   compounds:[{word:'代表',read:'だいひょう',mean:'representative'},{word:'時代',read:'じだい',mean:'era, age'},{word:'世代',read:'せだい',mean:'generation'}]},
+  {level:'n3',char:'期',on:'キ・ゴ',kun:'—',meaning:'period, time, term',
+   compounds:[{word:'時期',read:'じき',mean:'time, period'},{word:'期待',read:'きたい',mean:'expectation'},{word:'学期',read:'がっき',mean:'academic term'}]},
+  {level:'n3',char:'後',on:'ゴ・コウ',kun:'あと・うし（ろ）・のち',meaning:'after, behind, back',
+   compounds:[{word:'今後',read:'こんご',mean:'from now on'},{word:'後半',read:'こうはん',mean:'second half'},{word:'最後',read:'さいご',mean:'last, final'}]},
+  {level:'n3',char:'前',on:'ゼン',kun:'まえ',meaning:'before, front, previous',
+   compounds:[{word:'以前',read:'いぜん',mean:'before, formerly'},{word:'前半',read:'ぜんはん',mean:'first half'},{word:'午前',read:'ごぜん',mean:'a.m., morning'}]},
+  {level:'n3',char:'以',on:'イ',kun:'—',meaning:'by means of, compared with',
+   compounds:[{word:'以上',read:'いじょう',mean:'above, more than'},{word:'以下',read:'いか',mean:'below, less than'},{word:'以外',read:'いがい',mean:'other than'}]},
+
+// ═══════════════════════════════════════════════════════════
+  //  N2 KANJI
+  // ═══════════════════════════════════════════════════════════
+
+  // ── Human & Relationships ──
+  {level:'n2',char:'彼',on:'ヒ',kun:'かれ・かのじょ',meaning:'he, she, that one',
+   compounds:[{word:'彼女',read:'かのじょ',mean:'she, girlfriend'},{word:'彼氏',read:'かれし',mean:'boyfriend'},{word:'彼方',read:'かなた',mean:'yonder, over there'}]},
+  {level:'n2',char:'況',on:'キョウ',kun:'—',meaning:'condition, situation',
+   compounds:[{word:'状況',read:'じょうきょう',mean:'situation, circumstances'},{word:'況して',read:'まして',mean:'much more, still less'},{word:'近況',read:'きんきょう',mean:'recent situation'}]},
+  {level:'n2',char:'衆',on:'シュウ',kun:'—',meaning:'masses, multitude, people',
+   compounds:[{word:'大衆',read:'たいしゅう',mean:'the masses, general public'},{word:'民衆',read:'みんしゅう',mean:'the people'},{word:'聴衆',read:'ちょうしゅう',mean:'audience'}]},
+  {level:'n2',char:'姿',on:'シ',kun:'すがた',meaning:'figure, form, appearance',
+   compounds:[{word:'姿勢',read:'しせい',mean:'posture, attitude'},{word:'姿',read:'すがた',mean:'figure, form'},{word:'後ろ姿',read:'うしろすがた',mean:'figure seen from behind'}]},
+  {level:'n2',char:'態',on:'タイ',kun:'—',meaning:'appearance, condition, state',
+   compounds:[{word:'態度',read:'たいど',mean:'attitude'},{word:'状態',read:'じょうたい',mean:'condition, state'},{word:'事態',read:'じたい',mean:'situation, state of affairs'}]},
+  {level:'n2',char:'賛',on:'サン',kun:'—',meaning:'approve, praise, agree',
+   compounds:[{word:'賛成',read:'さんせい',mean:'agreement, approval'},{word:'賛否',read:'さんぴ',mean:'pros and cons'},{word:'協賛',read:'きょうさん',mean:'cooperation, sponsorship'}]},
+  {level:'n2',char:'否',on:'ヒ',kun:'いな',meaning:'no, deny, negate',
+   compounds:[{word:'否定',read:'ひてい',mean:'denial, negation'},{word:'拒否',read:'きょひ',mean:'refusal, rejection'},{word:'賛否',read:'さんぴ',mean:'pros and cons'}]},
+  {level:'n2',char:'批',on:'ヒ',kun:'—',meaning:'criticism, comment',
+   compounds:[{word:'批判',read:'ひはん',mean:'criticism'},{word:'批評',read:'ひひょう',mean:'critique, review'},{word:'批准',read:'ひじゅん',mean:'ratification'}]},
+
+  // ── Thought & Communication ──
+  {level:'n2',char:'概',on:'ガイ',kun:'おおむね',meaning:'general, approximate, outline',
+   compounds:[{word:'概念',read:'がいねん',mean:'concept, notion'},{word:'概要',read:'がいよう',mean:'outline, summary'},{word:'概算',read:'がいさん',mean:'rough estimate'}]},
+  {level:'n2',char:'略',on:'リャク',kun:'はぶ（く）',meaning:'abbreviate, outline, plunder',
+   compounds:[{word:'省略',read:'しょうりゃく',mean:'abbreviation, omission'},{word:'略語',read:'りゃくご',mean:'abbreviation'},{word:'戦略',read:'せんりゃく',mean:'strategy'}]},
+  {level:'n2',char:'述',on:'ジュツ',kun:'の（べる）',meaning:'state, mention, narrate',
+   compounds:[{word:'述べる',read:'のべる',mean:'to state'},{word:'記述',read:'きじゅつ',mean:'description'},{word:'陳述',read:'ちんじゅつ',mean:'testimony, statement'}]},
+  {level:'n2',char:'訴',on:'ソ',kun:'うった（える）',meaning:'sue, appeal, accuse',
+   compounds:[{word:'訴える',read:'うったえる',mean:'to appeal, accuse'},{word:'起訴',read:'きそ',mean:'indictment'},{word:'訴訟',read:'そしょう',mean:'lawsuit'}]},
+  {level:'n2',char:'証',on:'ショウ',kun:'あか（す）',meaning:'proof, evidence, certificate',
+   compounds:[{word:'証明',read:'しょうめい',mean:'proof, certification'},{word:'保証',read:'ほしょう',mean:'guarantee'},{word:'証拠',read:'しょうこ',mean:'evidence'}]},
+  {level:'n2',char:'確',on:'カク',kun:'たし（かめる）',meaning:'certain, confirm, sure',
+   compounds:[{word:'確認',read:'かくにん',mean:'confirmation'},{word:'確率',read:'かくりつ',mean:'probability'},{word:'正確',read:'せいかく',mean:'accurate, precise'}]},
+  {level:'n2',char:'察',on:'サツ',kun:'—',meaning:'perceive, guess, inspect',
+   compounds:[{word:'観察',read:'かんさつ',mean:'observation'},{word:'警察',read:'けいさつ',mean:'police'},{word:'察する',read:'さっする',mean:'to infer, sense'}]},
+  {level:'n2',char:'判',on:'ハン・バン',kun:'わか（る）',meaning:'judge, distinguish, verdict',
+   compounds:[{word:'判断',read:'はんだん',mean:'judgement'},{word:'裁判',read:'さいばん',mean:'trial, court case'},{word:'判明',read:'はんめい',mean:'becoming clear'}]},
+  {level:'n2',char:'評',on:'ヒョウ',kun:'—',meaning:'evaluate, assess, comment',
+   compounds:[{word:'評価',read:'ひょうか',mean:'evaluation'},{word:'批評',read:'ひひょう',mean:'critique'},{word:'好評',read:'こうひょう',mean:'favourable reception'}]},
+  {level:'n2',char:'論',on:'ロン',kun:'—',meaning:'argue, discuss, theory',
+   compounds:[{word:'議論',read:'ぎろん',mean:'argument, debate'},{word:'理論',read:'りろん',mean:'theory'},{word:'結論',read:'けつろん',mean:'conclusion'}]},
+  {level:'n2',char:'弁',on:'ベン',kun:'—',meaning:'speech, dialectal, petal',
+   compounds:[{word:'弁護士',read:'べんごし',mean:'lawyer, attorney'},{word:'弁当',read:'べんとう',mean:'boxed lunch'},{word:'答弁',read:'とうべん',mean:'response, explanation'}]},
+
+  // ── Society, Law & Politics ──
+  {level:'n2',char:'憲',on:'ケン',kun:'—',meaning:'constitution, rule',
+   compounds:[{word:'憲法',read:'けんぽう',mean:'constitution'},{word:'立憲',read:'りっけん',mean:'constitutional'},{word:'違憲',read:'いけん',mean:'unconstitutional'}]},
+  {level:'n2',char:'律',on:'リツ・リチ',kun:'—',meaning:'law, rhythm, regulation',
+   compounds:[{word:'法律',read:'ほうりつ',mean:'law'},{word:'規律',read:'きりつ',mean:'discipline, rule'},{word:'旋律',read:'せんりつ',mean:'melody'}]},
+  {level:'n2',char:'裁',on:'サイ',kun:'た（つ）・さば（く）',meaning:'judge, cut, tailor',
+   compounds:[{word:'裁判',read:'さいばん',mean:'trial, court case'},{word:'裁量',read:'さいりょう',mean:'discretion'},{word:'仲裁',read:'ちゅうさい',mean:'arbitration'}]},
+  {level:'n2',char:'罰',on:'バツ・バチ',kun:'—',meaning:'punishment, penalty',
+   compounds:[{word:'罰金',read:'ばっきん',mean:'fine, penalty'},{word:'体罰',read:'たいばつ',mean:'corporal punishment'},{word:'処罰',read:'しょばつ',mean:'punishment'}]},
+  {level:'n2',char:'犯',on:'ハン',kun:'おか（す）',meaning:'crime, offend, violate',
+   compounds:[{word:'犯罪',read:'はんざい',mean:'crime'},{word:'犯人',read:'はんにん',mean:'criminal'},{word:'防犯',read:'ぼうはん',mean:'crime prevention'}]},
+  {level:'n2',char:'罪',on:'ザイ',kun:'つみ',meaning:'crime, sin, guilt',
+   compounds:[{word:'犯罪',read:'はんざい',mean:'crime'},{word:'謝罪',read:'しゃざい',mean:'apology'},{word:'無罪',read:'むざい',mean:'innocent, not guilty'}]},
+  {level:'n2',char:'議',on:'ギ',kun:'—',meaning:'deliberate, discuss, council',
+   compounds:[{word:'会議',read:'かいぎ',mean:'meeting, conference'},{word:'議員',read:'ぎいん',mean:'member of parliament'},{word:'議論',read:'ぎろん',mean:'debate'}]},
+  {level:'n2',char:'選',on:'セン',kun:'えら（ぶ）',meaning:'select, choose, elect',
+   compounds:[{word:'選挙',read:'せんきょ',mean:'election'},{word:'選択',read:'せんたく',mean:'choice, selection'},{word:'当選',read:'とうせん',mean:'winning an election'}]},
+  {level:'n2',char:'挙',on:'キョ',kun:'あ（げる）',meaning:'raise, list, nominate',
+   compounds:[{word:'選挙',read:'せんきょ',mean:'election'},{word:'挙げる',read:'あげる',mean:'to raise, list'},{word:'一挙',read:'いっきょ',mean:'at one stroke'}]},
+  {level:'n2',char:'党',on:'トウ',kun:'—',meaning:'party, faction, clique',
+   compounds:[{word:'政党',read:'せいとう',mean:'political party'},{word:'与党',read:'よとう',mean:'ruling party'},{word:'野党',read:'やとう',mean:'opposition party'}]},
+  {level:'n2',char:'閣',on:'カク',kun:'—',meaning:'cabinet, tower, chamber',
+   compounds:[{word:'内閣',read:'ないかく',mean:'cabinet (government)'},{word:'入閣',read:'にゅうかく',mean:'joining the cabinet'},{word:'閣僚',read:'かくりょう',mean:'cabinet minister'}]},
+  {level:'n2',char:'署',on:'ショ',kun:'—',meaning:'government office, sign',
+   compounds:[{word:'警察署',read:'けいさつしょ',mean:'police station'},{word:'署名',read:'しょめい',mean:'signature'},{word:'税務署',read:'ぜいむしょ',mean:'tax office'}]},
+
+  // ── Economy & Business ──
+  {level:'n2',char:'貿',on:'ボウ',kun:'—',meaning:'trade, exchange',
+   compounds:[{word:'貿易',read:'ぼうえき',mean:'international trade'},{word:'自由貿易',read:'じゆうぼうえき',mean:'free trade'},{word:'貿易黒字',read:'ぼうえきくろじ',mean:'trade surplus'}]},
+  {level:'n2',char:'績',on:'セキ',kun:'—',meaning:'achievement, results, spin',
+   compounds:[{word:'実績',read:'じっせき',mean:'track record'},{word:'成績',read:'せいせき',mean:'results, grades'},{word:'業績',read:'ぎょうせき',mean:'business performance'}]},
+  {level:'n2',char:'率',on:'リツ・ソツ',kun:'ひき（いる）',meaning:'rate, ratio, lead',
+   compounds:[{word:'効率',read:'こうりつ',mean:'efficiency'},{word:'確率',read:'かくりつ',mean:'probability'},{word:'打率',read:'だりつ',mean:'batting average'}]},
+  {level:'n2',char:'統',on:'トウ',kun:'す（べる）',meaning:'govern, unite, all',
+   compounds:[{word:'統計',read:'とうけい',mean:'statistics'},{word:'伝統',read:'でんとう',mean:'tradition'},{word:'統一',read:'とういつ',mean:'unification'}]},
+  {level:'n2',char:'範',on:'ハン',kun:'—',meaning:'pattern, model, example',
+   compounds:[{word:'範囲',read:'はんい',mean:'scope, range'},{word:'模範',read:'もはん',mean:'model, example'},{word:'規範',read:'きはん',mean:'norm, standard'}]},
+  {level:'n2',char:'影',on:'エイ',kun:'かげ',meaning:'shadow, influence',
+   compounds:[{word:'影響',read:'えいきょう',mean:'influence, effect'},{word:'影',read:'かげ',mean:'shadow'},{word:'撮影',read:'さつえい',mean:'filming, photography'}]},
+  {level:'n2',char:'響',on:'キョウ',kun:'ひび（く）',meaning:'echo, sound, influence',
+   compounds:[{word:'影響',read:'えいきょう',mean:'influence, effect'},{word:'反響',read:'はんきょう',mean:'echo, repercussion'},{word:'音響',read:'おんきょう',mean:'acoustics, sound'}]},
+  {level:'n2',char:'際',on:'サイ',kun:'きわ',meaning:'occasion, edge, border',
+   compounds:[{word:'国際',read:'こくさい',mean:'international'},{word:'実際',read:'じっさい',mean:'actually, in fact'},{word:'この際',read:'このさい',mean:'on this occasion'}]},
+  {level:'n2',char:'需',on:'ジュ',kun:'—',meaning:'demand, need',
+   compounds:[{word:'需要',read:'じゅよう',mean:'demand'},{word:'需給',read:'じゅきゅう',mean:'supply and demand'},{word:'必需品',read:'ひつじゅひん',mean:'necessity, essential item'}]},
+  {level:'n2',char:'供',on:'キョウ・ク',kun:'とも・そな（える）',meaning:'supply, provide, accompany',
+   compounds:[{word:'供給',read:'きょうきゅう',mean:'supply'},{word:'提供',read:'ていきょう',mean:'provision, offer'},{word:'供える',read:'そなえる',mean:'to offer'}]},
+  {level:'n2',char:'消',on:'ショウ',kun:'き（える）・け（す）',meaning:'extinguish, disappear, consume',
+   compounds:[{word:'消費',read:'しょうひ',mean:'consumption'},{word:'消える',read:'きえる',mean:'to disappear'},{word:'消防',read:'しょうぼう',mean:'fire fighting'}]},
+  {level:'n2',char:'費',on:'ヒ',kun:'つい（やす）',meaning:'expense, spend',
+   compounds:[{word:'費用',read:'ひよう',mean:'cost, expense'},{word:'消費',read:'しょうひ',mean:'consumption'},{word:'交通費',read:'こうつうひ',mean:'transportation cost'}]},
+  {level:'n2',char:'収',on:'シュウ',kun:'おさ（める）',meaning:'income, collect, yield',
+   compounds:[{word:'収入',read:'しゅうにゅう',mean:'income'},{word:'回収',read:'かいしゅう',mean:'collection, recovery'},{word:'収益',read:'しゅうえき',mean:'revenue, earnings'}]},
+  {level:'n2',char:'納',on:'ノウ・ナン',kun:'おさ（める）',meaning:'pay, supply, accept',
+   compounds:[{word:'納得',read:'なっとく',mean:'understanding, satisfaction'},{word:'納税',read:'のうぜい',mean:'tax payment'},{word:'収納',read:'しゅうのう',mean:'storage, putting away'}]},
+  {level:'n2',char:'融',on:'ユウ',kun:'と（ける）',meaning:'melt, dissolve, finance',
+   compounds:[{word:'金融',read:'きんゆう',mean:'finance, banking'},{word:'融合',read:'ゆうごう',mean:'fusion, integration'},{word:'融資',read:'ゆうし',mean:'financing, loan'}]},
+  {level:'n2',char:'株',on:'カブ',kun:'かぶ',meaning:'stock, share, stump',
+   compounds:[{word:'株式',read:'かぶしき',mean:'stock, shares'},{word:'株価',read:'かぶか',mean:'stock price'},{word:'株主',read:'かぶぬし',mean:'shareholder'}]},
+
+  // ── Science & Technology ──
+  {level:'n2',char:'複',on:'フク',kun:'—',meaning:'duplicate, multiple, compound',
+   compounds:[{word:'複数',read:'ふくすう',mean:'plural, multiple'},{word:'複雑',read:'ふくざつ',mean:'complicated'},{word:'複合',read:'ふくごう',mean:'compound, composite'}]},
+  {level:'n2',char:'構',on:'コウ',kun:'かま（える）',meaning:'structure, posture, build',
+   compounds:[{word:'構造',read:'こうぞう',mean:'structure'},{word:'機構',read:'きこう',mean:'mechanism, organisation'},{word:'構成',read:'こうせい',mean:'composition, constitution'}]},
+  {level:'n2',char:'造',on:'ゾウ',kun:'つく（る）',meaning:'create, build, manufacture',
+   compounds:[{word:'構造',read:'こうぞう',mean:'structure'},{word:'製造',read:'せいぞう',mean:'manufacturing'},{word:'改造',read:'かいぞう',mean:'remodelling, modification'}]},
+  {level:'n2',char:'製',on:'セイ',kun:'—',meaning:'manufacture, made of',
+   compounds:[{word:'製造',read:'せいぞう',mean:'manufacturing'},{word:'製品',read:'せいひん',mean:'product, manufactured goods'},{word:'国産製',read:'こくさんせい',mean:'domestically made'}]},
+  {level:'n2',char:'設',on:'セツ',kun:'もう（ける）',meaning:'establish, set up, install',
+   compounds:[{word:'設計',read:'せっけい',mean:'design, planning'},{word:'設備',read:'せつび',mean:'equipment, facilities'},{word:'建設',read:'けんせつ',mean:'construction'}]},
+  {level:'n2',char:'備',on:'ビ',kun:'そな（える）',meaning:'prepare, equip, furnish',
+   compounds:[{word:'設備',read:'せつび',mean:'equipment, facilities'},{word:'準備',read:'じゅんび',mean:'preparation'},{word:'予備',read:'よび',mean:'reserve, backup'}]},
+  {level:'n2',char:'操',on:'ソウ',kun:'あやつ（る）',meaning:'operate, control, manoeuvre',
+   compounds:[{word:'操作',read:'そうさ',mean:'operation, control'},{word:'体操',read:'たいそう',mean:'gymnastics'},{word:'操縦',read:'そうじゅう',mean:'piloting, operation'}]},
+  {level:'n2',char:'効',on:'コウ',kun:'き（く）',meaning:'effective, result',
+   compounds:[{word:'効果',read:'こうか',mean:'effect'},{word:'有効',read:'ゆうこう',mean:'valid, effective'},{word:'効率',read:'こうりつ',mean:'efficiency'}]},
+  {level:'n2',char:'率',on:'リツ',kun:'—',meaning:'rate, ratio',
+   compounds:[{word:'効率',read:'こうりつ',mean:'efficiency'},{word:'確率',read:'かくりつ',mean:'probability'},{word:'割合',read:'わりあい',mean:'ratio, proportion'}]},
+  {level:'n2',char:'測',on:'ソク',kun:'はか（る）',meaning:'measure, survey',
+   compounds:[{word:'測定',read:'そくてい',mean:'measurement'},{word:'観測',read:'かんそく',mean:'observation'},{word:'推測',read:'すいそく',mean:'conjecture, guess'}]},
+  {level:'n2',char:'実',on:'ジツ',kun:'み・みの（る）',meaning:'real, truth, fruit',
+   compounds:[{word:'実際',read:'じっさい',mean:'actually, in fact'},{word:'実現',read:'じつげん',mean:'realisation'},{word:'事実',read:'じじつ',mean:'fact'}]},
+  {level:'n2',char:'験',on:'ケン',kun:'—',meaning:'test, effect, experience',
+   compounds:[{word:'実験',read:'じっけん',mean:'experiment'},{word:'経験',read:'けいけん',mean:'experience'},{word:'試験',read:'しけん',mean:'examination'}]},
+  {level:'n2',char:'化',on:'カ・ケ',kun:'ば（ける）',meaning:'change, transform, -ise/-ize',
+   compounds:[{word:'変化',read:'へんか',mean:'change'},{word:'文化',read:'ぶんか',mean:'culture'},{word:'自動化',read:'じどうか',mean:'automation'}]},
+  {level:'n2',char:'革',on:'カク',kun:'かわ',meaning:'reform, leather, change',
+   compounds:[{word:'革新',read:'かくしん',mean:'innovation, reform'},{word:'改革',read:'かいかく',mean:'reform'},{word:'革命',read:'かくめい',mean:'revolution'}]},
+  {level:'n2',char:'展',on:'テン',kun:'—',meaning:'unfold, develop, exhibit',
+   compounds:[{word:'発展',read:'はってん',mean:'development, growth'},{word:'展示',read:'てんじ',mean:'exhibition'},{word:'展開',read:'てんかい',mean:'development, unfolding'}]},
+  {level:'n2',char:'普',on:'フ',kun:'あまね（く）',meaning:'universal, widespread, ordinary',
+   compounds:[{word:'普及',read:'ふきゅう',mean:'spread, dissemination'},{word:'普通',read:'ふつう',mean:'ordinary, normal'},{word:'普遍',read:'ふへん',mean:'universal'}]},
+
+  // ── Environment & Nature ──
+  {level:'n2',char:'環',on:'カン',kun:'—',meaning:'ring, circle, environment',
+   compounds:[{word:'環境',read:'かんきょう',mean:'environment'},{word:'循環',read:'じゅんかん',mean:'circulation, cycle'},{word:'一環',read:'いっかん',mean:'part of, link in'}]},
+  {level:'n2',char:'境',on:'キョウ・ケイ',kun:'さかい',meaning:'boundary, border, situation',
+   compounds:[{word:'環境',read:'かんきょう',mean:'environment'},{word:'境界',read:'きょうかい',mean:'boundary'},{word:'国境',read:'こっきょう',mean:'national border'}]},
+  {level:'n2',char:'排',on:'ハイ',kun:'—',meaning:'discharge, exclude, reject',
+   compounds:[{word:'排出',read:'はいしゅつ',mean:'discharge, emission'},{word:'排除',read:'はいじょ',mean:'exclusion, removal'},{word:'排気',read:'はいき',mean:'exhaust'}]},
+  {level:'n2',char:'汚',on:'オ',kun:'よご（れる）・けが（す）',meaning:'dirty, pollute, stain',
+   compounds:[{word:'汚染',read:'おせん',mean:'pollution, contamination'},{word:'汚れ',read:'よごれ',mean:'dirt, stain'},{word:'汚職',read:'おしょく',mean:'corruption'}]},
+  {level:'n2',char:'廃',on:'ハイ',kun:'すた（れる）',meaning:'abolish, abandon,废',
+   compounds:[{word:'廃棄',read:'はいき',mean:'disposal, abandonment'},{word:'廃止',read:'はいし',mean:'abolition'},{word:'廃業',read:'はいぎょう',mean:'closing a business'}]},
+  {level:'n2',char:'再',on:'サイ・サ',kun:'ふたた（び）',meaning:'again, re-, twice',
+   compounds:[{word:'再生',read:'さいせい',mean:'regeneration, playback'},{word:'再び',read:'ふたたび',mean:'again'},{word:'再建',read:'さいけん',mean:'reconstruction'}]},
+  {level:'n2',char:'循',on:'ジュン',kun:'—',meaning:'circulate, cycle',
+   compounds:[{word:'循環',read:'じゅんかん',mean:'circulation, cycle'},{word:'悪循環',read:'あくじゅんかん',mean:'vicious cycle'},{word:'血液循環',read:'けつえきじゅんかん',mean:'blood circulation'}]},
+  {level:'n2',char:'燃',on:'ネン',kun:'も（える）',meaning:'burn, combust',
+   compounds:[{word:'燃料',read:'ねんりょう',mean:'fuel'},{word:'燃える',read:'もえる',mean:'to burn'},{word:'不燃',read:'ふねん',mean:'non-combustible'}]},
+  {level:'n2',char:'資',on:'シ',kun:'—',meaning:'resources, capital, fund',
+   compounds:[{word:'資源',read:'しげん',mean:'resources'},{word:'資金',read:'しきん',mean:'funds, capital'},{word:'資産',read:'しさん',mean:'assets'}]},
+
+  // ── Medicine & Health ──
+  {level:'n2',char:'診',on:'シン',kun:'み（る）',meaning:'diagnose, examine',
+   compounds:[{word:'診断',read:'しんだん',mean:'diagnosis'},{word:'診察',read:'しんさつ',mean:'medical examination'},{word:'受診',read:'じゅしん',mean:'seeing a doctor'}]},
+  {level:'n2',char:'患',on:'カン',kun:'わずら（う）',meaning:'afflicted, suffer, patient',
+   compounds:[{word:'患者',read:'かんじゃ',mean:'patient'},{word:'疾患',read:'しっかん',mean:'disease, ailment'},{word:'患う',read:'わずらう',mean:'to suffer from'}]},
+  {level:'n2',char:'菌',on:'キン',kun:'—',meaning:'germ, bacteria, fungus',
+   compounds:[{word:'細菌',read:'さいきん',mean:'bacteria'},{word:'殺菌',read:'さっきん',mean:'sterilisation'},{word:'抗菌',read:'こうきん',mean:'antibacterial'}]},
+  {level:'n2',char:'免',on:'メン',kun:'まぬか（れる）',meaning:'excuse, exempt, immunity',
+   compounds:[{word:'免疫',read:'めんえき',mean:'immunity'},{word:'免許',read:'めんきょ',mean:'licence'},{word:'免除',read:'めんじょ',mean:'exemption'}]},
+  {level:'n2',char:'疫',on:'エキ・ヤク',kun:'—',meaning:'epidemic, plague',
+   compounds:[{word:'免疫',read:'めんえき',mean:'immunity'},{word:'防疫',read:'ぼうえき',mean:'disease prevention'},{word:'検疫',read:'けんえき',mean:'quarantine'}]},
+  {level:'n2',char:'臓',on:'ゾウ',kun:'—',meaning:'internal organ',
+   compounds:[{word:'心臓',read:'しんぞう',mean:'heart'},{word:'肝臓',read:'かんぞう',mean:'liver'},{word:'腎臓',read:'じんぞう',mean:'kidney'}]},
+  {level:'n2',char:'脳',on:'ノウ',kun:'—',meaning:'brain',
+   compounds:[{word:'脳',read:'のう',mean:'brain'},{word:'脳卒中',read:'のうそっちゅう',mean:'stroke'},{word:'洗脳',read:'せんのう',mean:'brainwashing'}]},
+  {level:'n2',char:'骨',on:'コツ',kun:'ほね',meaning:'bone, frame',
+   compounds:[{word:'骨折',read:'こっせつ',mean:'fracture'},{word:'骨格',read:'こっかく',mean:'skeleton, frame'},{word:'背骨',read:'せぼね',meaning:'backbone'}]},
+
+  // ── Abstract & Philosophy ──
+  {level:'n2',char:'域',on:'イキ',kun:'—',meaning:'region, area, zone',
+   compounds:[{word:'地域',read:'ちいき',mean:'region, area'},{word:'領域',read:'りょういき',mean:'domain, field'},{word:'範域',read:'はんいき',mean:'scope'}]},
+  {level:'n2',char:'値',on:'チ',kun:'ね・あたい',meaning:'price, value, worth',
+   compounds:[{word:'価値',read:'かち',mean:'value, worth'},{word:'値段',read:'ねだん',mean:'price'},{word:'平均値',read:'へいきんち',mean:'average value'}]},
+  {level:'n2',char:'程',on:'テイ',kun:'ほど',meaning:'degree, extent, limit',
+   compounds:[{word:'程度',read:'ていど',mean:'degree, extent'},{word:'工程',read:'こうてい',mean:'process, stage'},{word:'日程',read:'にってい',mean:'schedule, itinerary'}]},
+  {level:'n2',char:'限',on:'ゲン',kun:'かぎ（る）',meaning:'limit, restrict, edge',
+   compounds:[{word:'限る',read:'かぎる',mean:'to limit'},{word:'制限',read:'せいげん',mean:'restriction'},{word:'無限',read:'むげん',mean:'infinite, unlimited'}]},
+  {level:'n2',char:'基',on:'キ',kun:'もと',meaning:'base, foundation, basis',
+   compounds:[{word:'基本',read:'きほん',mean:'basic, fundamental'},{word:'基準',read:'きじゅん',mean:'standard, criterion'},{word:'基礎',read:'きそ',mean:'foundation, basics'}]},
+  {level:'n2',char:'礎',on:'ソ',kun:'いしずえ',meaning:'cornerstone, foundation',
+   compounds:[{word:'基礎',read:'きそ',mean:'foundation, basics'},{word:'礎石',read:'そせき',mean:'cornerstone'},{word:'礎を築く',read:'そをきずく',mean:'to lay the foundation'}]},
+  {level:'n2',char:'源',on:'ゲン',kun:'みなもと',meaning:'source, origin',
+   compounds:[{word:'起源',read:'きげん',mean:'origin'},{word:'資源',read:'しげん',mean:'resources'},{word:'語源',read:'ごげん',mean:'etymology'}]},
+  {level:'n2',char:'素',on:'ソ・ス',kun:'もと',meaning:'element, plain, nature',
+   compounds:[{word:'素材',read:'そざい',mean:'material, element'},{word:'要素',read:'ようそ',mean:'factor, element'},{word:'酸素',read:'さんそ',mean:'oxygen'}]},
+  {level:'n2',char:'質',on:'シツ・シチ',kun:'たち',meaning:'quality, nature, matter',
+   compounds:[{word:'品質',read:'ひんしつ',mean:'quality'},{word:'本質',read:'ほんしつ',mean:'essence'},{word:'体質',read:'たいしつ',mean:'constitution, disposition'}]},
+  {level:'n2',char:'層',on:'ソウ',kun:'—',meaning:'stratum, layer, class',
+   compounds:[{word:'階層',read:'かいそう',mean:'hierarchy, stratum'},{word:'上層',read:'じょうそう',mean:'upper stratum'},{word:'断層',read:'だんそう',mean:'geological fault'}]},
+  {level:'n2',char:'格',on:'カク・コウ',kun:'—',meaning:'status, rank, case, character',
+   compounds:[{word:'格差',read:'かくさ',mean:'disparity, gap'},{word:'資格',read:'しかく',mean:'qualification'},{word:'合格',read:'ごうかく',mean:'passing an exam'}]},
+  {level:'n2',char:'況',on:'キョウ',kun:'—',meaning:'condition, circumstance',
+   compounds:[{word:'状況',read:'じょうきょう',mean:'situation'},{word:'実況',read:'じっきょう',mean:'live commentary'},{word:'近況',read:'きんきょう',mean:'recent situation'}]},
+
+  // ── Actions (formal) ──
+  {level:'n2',char:'採',on:'サイ',kun:'と（る）',meaning:'pick, adopt, employ',
+   compounds:[{word:'採用',read:'さいよう',mean:'adoption, employment'},{word:'採取',read:'さいしゅ',mean:'collecting, sampling'},{word:'採択',read:'さいたく',mean:'adoption, selection'}]},
+  {level:'n2',char:'拡',on:'カク',kun:'ひろ（げる）',meaning:'expand, enlarge',
+   compounds:[{word:'拡大',read:'かくだい',mean:'expansion'},{word:'拡張',read:'かくちょう',mean:'extension'},{word:'拡散',read:'かくさん',mean:'diffusion, spread'}]},
+  {level:'n2',char:'縮',on:'シュク',kun:'ちぢ（む）',meaning:'shrink, contract, reduce',
+   compounds:[{word:'縮小',read:'しゅくしょう',mean:'reduction, scaling down'},{word:'短縮',read:'たんしゅく',mean:'shortening'},{word:'圧縮',read:'あっしゅく',mean:'compression'}]},
+  {level:'n2',char:'緩',on:'カン',kun:'ゆる（む）',meaning:'loose, relax, ease',
+   compounds:[{word:'緩和',read:'かんわ',mean:'relaxation, easing'},{word:'緩やか',read:'ゆるやか',mean:'gentle, gradual'},{word:'緩む',read:'ゆるむ',mean:'to loosen, relax'}]},
+  {level:'n2',char:'抑',on:'ヨク',kun:'おさ（える）',meaning:'suppress, restrain, hold down',
+   compounds:[{word:'抑制',read:'よくせい',mean:'suppression, restraint'},{word:'抑える',read:'おさえる',mean:'to hold down, suppress'},{word:'抑圧',read:'よくあつ',mean:'oppression, repression'}]},
+  {level:'n2',char:'促',on:'ソク',kun:'うなが（す）',meaning:'urge, hasten, promote',
+   compounds:[{word:'促進',read:'そくしん',mean:'promotion, acceleration'},{word:'催促',read:'さいそく',mean:'urging, pressing'},{word:'促す',read:'うながす',mean:'to urge, prompt'}]},
+  {level:'n2',char:'施',on:'シ・セ',kun:'ほどこ（す）',meaning:'carry out, apply, bestow',
+   compounds:[{word:'実施',read:'じっし',mean:'implementation'},{word:'施設',read:'しせつ',mean:'facility, institution'},{word:'施策',read:'しさく',mean:'policy, measure'}]},
+  {level:'n2',char:'廃',on:'ハイ',kun:'すた（れる）',meaning:'abolish, abandon, discard',
+   compounds:[{word:'廃棄',read:'はいき',mean:'disposal'},{word:'廃止',read:'はいし',mean:'abolition'},{word:'廃墟',read:'はいきょ',mean:'ruins'}]},
+  {level:'n2',char:'導',on:'ドウ',kun:'みちび（く）',meaning:'guide, lead, introduce',
+   compounds:[{word:'導く',read:'みちびく',mean:'to guide, lead'},{word:'指導',read:'しどう',mean:'guidance, coaching'},{word:'誘導',read:'ゆうどう',mean:'guidance, induction'}]},
+  {level:'n2',char:'推',on:'スイ',kun:'お（す）',meaning:'push, recommend, infer',
+   compounds:[{word:'推進',read:'すいしん',mean:'promotion, driving forward'},{word:'推測',read:'すいそく',mean:'conjecture'},{word:'推薦',read:'すいせん',mean:'recommendation'}]},
+  {level:'n2',char:'及',on:'キュウ',kun:'およ（ぶ）・および',meaning:'reach, extend, and',
+   compounds:[{word:'及ぶ',read:'およぶ',mean:'to reach, extend'},{word:'及び',read:'および',mean:'and, as well as'},{word:'普及',read:'ふきゅう',mean:'spread, dissemination'}]},
+  {level:'n2',char:'占',on:'セン',kun:'し（める）・うらな（う）',meaning:'occupy, divine, take up',
+   compounds:[{word:'占める',read:'しめる',mean:'to occupy, account for'},{word:'独占',read:'どくせん',mean:'monopoly'},{word:'占い',read:'うらない',mean:'fortune-telling'}]},
+  {level:'n2',char:'超',on:'チョウ',kun:'こ（える）',meaning:'exceed, surpass, super-',
+   compounds:[{word:'超える',read:'こえる',mean:'to exceed'},{word:'超過',read:'ちょうか',mean:'excess, surplus'},{word:'超大国',read:'ちょうたいこく',mean:'superpower'}]},
+
+  // ── Traits & Conditions ──
+  {level:'n2',char:'著',on:'チョ・チャク',kun:'いちじる（しい）',meaning:'remarkable, write, author',
+   compounds:[{word:'著しい',read:'いちじるしい',mean:'remarkable, striking'},{word:'著者',read:'ちょしゃ',mean:'author'},{word:'著作',read:'ちょさく',mean:'literary work'}]},
+  {level:'n2',char:'激',on:'ゲキ',kun:'はげ（しい）',meaning:'intense, violent, fierce',
+   compounds:[{word:'激しい',read:'はげしい',mean:'intense, violent'},{word:'激減',read:'げきげん',mean:'drastic decrease'},{word:'過激',read:'かげき',mean:'extreme, radical'}]},
+  {level:'n2',char:'微',on:'ビ',kun:'かす（かな）',meaning:'slight, delicate, subtle',
+   compounds:[{word:'微妙',read:'びみょう',mean:'subtle, delicate'},{word:'微笑む',read:'ほほえむ',mean:'to smile'},{word:'微生物',read:'びせいぶつ',mean:'microorganism'}]},
+  {level:'n2',char:'妙',on:'ミョウ',kun:'たえ',meaning:'strange, wonderful, subtle',
+   compounds:[{word:'微妙',read:'びみょう',mean:'subtle, delicate'},{word:'奇妙',read:'きみょう',mean:'strange, peculiar'},{word:'絶妙',read:'ぜつみょう',mean:'exquisite, superb'}]},
+  {level:'n2',char:'鋭',on:'エイ',kun:'するど（い）',meaning:'sharp, keen, acute',
+   compounds:[{word:'鋭い',read:'するどい',mean:'sharp, keen'},{word:'鋭敏',read:'えいびん',mean:'acute, sensitive'},{word:'鋭角',read:'えいかく',mean:'acute angle'}]},
+  {level:'n2',char:'鈍',on:'ドン',kun:'にぶ（い）',meaning:'dull, blunt, slow',
+   compounds:[{word:'鈍い',read:'にぶい',mean:'dull, blunt'},{word:'鈍化',read:'どんか',mean:'slowing down, dulling'},{word:'鈍感',read:'どんかん',mean:'insensitive, thick-skinned'}]},
+  {level:'n2',char:'稀',on:'キ',kun:'まれ',meaning:'rare, scarce',
+   compounds:[{word:'稀',read:'まれ',mean:'rare'},{word:'稀少',read:'きしょう',mean:'scarce, rare'},{word:'稀有',read:'けう',mean:'rare, extraordinary'}]},
+  {level:'n2',char:'豊',on:'ホウ',kun:'ゆた（か）',meaning:'abundant, rich, fertile',
+   compounds:[{word:'豊か',read:'ゆたか',mean:'rich, abundant'},{word:'豊富',read:'ほうふ',mean:'abundant, plentiful'},{word:'豊作',read:'ほうさく',mean:'good harvest'}]},
+
+  // ── Structure & Space ──
+  {level:'n2',char:'築',on:'チク',kun:'きず（く）',meaning:'build, construct',
+   compounds:[{word:'建築',read:'けんちく',mean:'architecture, construction'},{word:'築く',read:'きずく',mean:'to build, establish'},{word:'改築',read:'かいちく',mean:'reconstruction, renovation'}]},
+  {level:'n2',char:'棟',on:'トウ',kun:'むね',meaning:'ridgepole, main building, counter for buildings',
+   compounds:[{word:'病棟',read:'びょうとう',mean:'hospital ward'},{word:'一棟',read:'いっとう',mean:'one building'},{word:'棟梁',read:'とうりょう',mean:'master carpenter'}]},
+  {level:'n2',char:'壁',on:'ヘキ',kun:'かべ',meaning:'wall, barrier',
+   compounds:[{word:'壁',read:'かべ',mean:'wall'},{word:'城壁',read:'じょうへき',mean:'castle wall'},{word:'壁画',read:'へきが',mean:'mural'}]},
+  {level:'n2',char:'廊',on:'ロウ',kun:'—',meaning:'corridor, hall',
+   compounds:[{word:'廊下',read:'ろうか',mean:'corridor, hallway'},{word:'回廊',read:'かいろう',mean:'corridor, cloister'},{word:'画廊',read:'がろう',mean:'art gallery'}]},
+  {level:'n2',char:'欄',on:'ラン',kun:'—',meaning:'column, railing, blank',
+   compounds:[{word:'欄外',read:'らんがい',mean:'margin'},{word:'投書欄',read:'とうしょらん',mean:'letters column'},{word:'記入欄',read:'きにゅうらん',mean:'entry field'}]},
+  {level:'n2',char:'段',on:'ダン',kun:'—',meaning:'step, stage, rank',
+   compounds:[{word:'段階',read:'だんかい',mean:'stage, phase'},{word:'手段',read:'しゅだん',mean:'means, method'},{word:'一段と',read:'いちだんと',mean:'even more'}]},
+  {level:'n2',char:'際',on:'サイ',kun:'きわ',meaning:'edge, occasion, border',
+   compounds:[{word:'国際',read:'こくさい',mean:'international'},{word:'実際',read:'じっさい',mean:'actually'},{word:'際立つ',read:'きわだつ',mean:'to stand out'}]},
+
+  // ── Time & Sequence ──
+  {level:'n2',char:'既',on:'キ',kun:'すで（に）',meaning:'already, previously',
+   compounds:[{word:'既に',read:'すでに',mean:'already'},{word:'既存',read:'きぞん',mean:'existing'},{word:'既成',read:'きせい',mean:'established, ready-made'}]},
+  {level:'n2',char:'従',on:'ジュウ・ショウ',kun:'したが（う）',meaning:'obey, follow, accompany',
+   compounds:[{word:'従う',read:'したがう',mean:'to follow, obey'},{word:'服従',read:'ふくじゅう',mean:'obedience, submission'},{word:'従来',read:'じゅうらい',mean:'conventional, hitherto'}]},
+  {level:'n2',char:'経',on:'ケイ',kun:'へ（る）・た（つ）',meaning:'pass, via, manage',
+   compounds:[{word:'経過',read:'けいか',mean:'passage, progress'},{word:'経由',read:'けいゆ',mean:'via, through'},{word:'経験',read:'けいけん',mean:'experience'}]},
+  {level:'n2',char:'久',on:'キュウ・ク',kun:'ひさ（しい）',meaning:'long time, lasting',
+   compounds:[{word:'久しぶり',read:'ひさしぶり',mean:'after a long time'},{word:'永久',read:'えいきゅう',mean:'permanent, eternal'},{word:'耐久',read:'たいきゅう',mean:'durability'}]},
+  {level:'n2',char:'初',on:'ショ',kun:'はじ（めて）・はつ',meaning:'first, beginning, initial',
+   compounds:[{word:'最初',read:'さいしょ',mean:'first, beginning'},{word:'初めて',read:'はじめて',mean:'for the first time'},{word:'初期',read:'しょき',mean:'early stage, initial period'}]},
+  {level:'n2',char:'末',on:'マツ・バツ',kun:'すえ',meaning:'end, tip, powder',
+   compounds:[{word:'末',read:'すえ',mean:'end, result'},{word:'週末',read:'しゅうまつ',mean:'weekend'},{word:'年末',read:'ねんまつ',mean:'year-end'}]},
+  {level:'n2',char:'終',on:'シュウ',kun:'お（わる）',meaning:'end, finish',
+   compounds:[{word:'終了',read:'しゅうりょう',mean:'completion, end'},{word:'最終',read:'さいしゅう',mean:'last, final'},{word:'終点',read:'しゅうてん',mean:'terminal station'}]},
+
+// ═══════════════════════════════════════════════════════════
+  //  N1 KANJI
+  // ═══════════════════════════════════════════════════════════
+
+  // ── Human Character & Virtue ──
+  {level:'n1',char:'憤',on:'フン',kun:'いきどお（る）',meaning:'indignation, anger, rage',
+   compounds:[{word:'憤る',read:'いきどおる',mean:'to be indignant'},{word:'憤慨',read:'ふんがい',mean:'indignation'},{word:'義憤',read:'ぎふん',mean:'righteous indignation'}]},
+  {level:'n1',char:'慕',on:'ボ',kun:'した（う）',meaning:'yearn for, adore, follow',
+   compounds:[{word:'慕う',read:'したう',mean:'to adore, look up to'},{word:'思慕',read:'しぼ',mean:'longing, yearning'},{word:'敬慕',read:'けいぼ',mean:'admiration and longing'}]},
+  {level:'n1',char:'惜',on:'セキ',kun:'お（しい）・お（しむ）',meaning:'regret, spare, value highly',
+   compounds:[{word:'惜しむ',read:'おしむ',mean:'to regret losing'},{word:'惜しい',read:'おしい',mean:'regrettable, a pity'},{word:'惜別',read:'せきべつ',mean:'reluctant parting'}]},
+  {level:'n1',char:'潔',on:'ケツ',kun:'いさぎよ（い）',meaning:'pure, clean, righteous',
+   compounds:[{word:'潔い',read:'いさぎよい',mean:'graceful in defeat'},{word:'清潔',read:'せいけつ',mean:'cleanliness'},{word:'純潔',read:'じゅんけつ',mean:'purity, chastity'}]},
+  {level:'n1',char:'概',on:'ガイ',kun:'おおむね',meaning:'general, approximate, outline',
+   compounds:[{word:'概ね',read:'おおむね',mean:'generally, mostly'},{word:'概念',read:'がいねん',mean:'concept, notion'},{word:'概要',read:'がいよう',mean:'outline, summary'}]},
+  {level:'n1',char:'称',on:'ショウ',kun:'たた（える）',meaning:'praise, name, title',
+   compounds:[{word:'称える',read:'たたえる',mean:'to praise, extol'},{word:'称号',read:'しょうごう',mean:'title, degree'},{word:'名称',read:'めいしょう',mean:'name, designation'}]},
+  {level:'n1',char:'献',on:'ケン・コン',kun:'—',meaning:'offer, present, contribute',
+   compounds:[{word:'貢献',read:'こうけん',mean:'contribution'},{word:'献身',read:'けんしん',mean:'devotion, dedication'},{word:'文献',read:'ぶんけん',mean:'literature, document'}]},
+  {level:'n1',char:'敢',on:'カン',kun:'あ（えて）',meaning:'dare, venture, bold',
+   compounds:[{word:'敢えて',read:'あえて',mean:'dare to, purposely'},{word:'果敢',read:'かかん',mean:'bold, daring'},{word:'勇敢',read:'ゆうかん',mean:'brave, courageous'}]},
+  {level:'n1',char:'謙',on:'ケン',kun:'—',meaning:'humble, modest',
+   compounds:[{word:'謙虚',read:'けんきょ',mean:'humble, modest'},{word:'謙遜',read:'けんそん',mean:'modesty, humility'},{word:'謙譲語',read:'けんじょうご',mean:'humble language'}]},
+  {level:'n1',char:'傲',on:'ゴウ',kun:'おご（る）',meaning:'arrogant, haughty, proud',
+   compounds:[{word:'傲慢',read:'ごうまん',mean:'arrogant, haughty'},{word:'傲る',read:'おごる',mean:'to be arrogant'},{word:'傲岸',read:'ごうがん',mean:'arrogance, haughtiness'}]},
+  {level:'n1',char:'卑',on:'ヒ',kun:'いや（しい）・ひく（い）',meaning:'lowly, base, humble',
+   compounds:[{word:'卑劣',read:'ひれつ',mean:'mean, despicable'},{word:'卑しい',read:'いやしい',mean:'lowly, base'},{word:'卑下',read:'ひげ',mean:'self-deprecation'}]},
+  {level:'n1',char:'剛',on:'ゴウ',kun:'—',meaning:'strong, hard, resolute',
+   compounds:[{word:'剛毅',read:'ごうき',mean:'resolute, strong-willed'},{word:'柔剛',read:'じゅうごう',mean:'soft and hard'},{word:'剛健',read:'ごうけん',mean:'vigorous, robust'}]},
+  {level:'n1',char:'誠',on:'セイ',kun:'まこと',meaning:'sincere, honest, true',
+   compounds:[{word:'誠実',read:'せいじつ',mean:'sincere, honest'},{word:'誠意',read:'せいい',mean:'sincerity'},{word:'誠に',read:'まことに',mean:'truly, sincerely'}]},
+
+  // ── Emotion & Psychology ──
+  {level:'n1',char:'慌',on:'コウ',kun:'あわ（てる）',meaning:'flustered, agitated, hurried',
+   compounds:[{word:'慌てる',read:'あわてる',mean:'to be flustered'},{word:'慌ただしい',read:'あわただしい',mean:'busy, hectic'},{word:'慌てふためく',read:'あわてふためく',mean:'to be in a panic'}]},
+  {level:'n1',char:'戸惑',on:'—',kun:'とまど（う）',meaning:'bewildered, perplexed',
+   compounds:[{word:'戸惑う',read:'とまどう',mean:'to be bewildered'},{word:'戸惑い',read:'とまどい',mean:'bewilderment, perplexity'},{word:'戸惑わせる',read:'とまどわせる',mean:'to bewilder someone'}]},
+  {level:'n1',char:'憂',on:'ユウ',kun:'うれ（える）・うれ（い）',meaning:'grief, gloom, melancholy',
+   compounds:[{word:'憂鬱',read:'ゆううつ',mean:'melancholy, depression'},{word:'憂慮',read:'ゆうりょ',mean:'concern, anxiety'},{word:'一憂',read:'いちゆう',mean:'momentary worry'}]},
+  {level:'n1',char:'嘆',on:'タン',kun:'なげ（く）',meaning:'sigh, grieve, lament',
+   compounds:[{word:'嘆く',read:'なげく',mean:'to lament, grieve'},{word:'嘆き',read:'なげき',mean:'grief, lament'},{word:'感嘆',read:'かんたん',mean:'admiration, exclamation'}]},
+  {level:'n1',char:'怨',on:'エン',kun:'うら（む）',meaning:'grudge, resentment, hatred',
+   compounds:[{word:'怨む',read:'うらむ',mean:'to resent, bear a grudge'},{word:'怨恨',read:'えんこん',mean:'resentment, grudge'},{word:'怨念',read:'おんねん',mean:'grudge, spite'}]},
+  {level:'n1',char:'憧',on:'ショウ',kun:'あこが（れる）',meaning:'longing, yearning, admire',
+   compounds:[{word:'憧れる',read:'あこがれる',mean:'to long for, admire'},{word:'憧れ',read:'あこがれ',mean:'longing, admiration'},{word:'憧憬',read:'どうけい',mean:'longing, aspiration'}]},
+  {level:'n1',char:'羞',on:'シュウ',kun:'は（じる）',meaning:'shame, shyness',
+   compounds:[{word:'羞恥',read:'しゅうち',mean:'shame, shyness'},{word:'羞恥心',read:'しゅうちしん',mean:'sense of shame'},{word:'羞じる',read:'はじる',mean:'to feel ashamed'}]},
+  {level:'n1',char:'憎',on:'ゾウ',kun:'にく（む）',meaning:'hate, detest',
+   compounds:[{word:'憎む',read:'にくむ',mean:'to hate'},{word:'憎しみ',read:'にくしみ',mean:'hatred'},{word:'愛憎',read:'あいぞう',mean:'love and hate'}]},
+
+  // ── Morality & Society ──
+  {level:'n1',char:'倫',on:'リン',kun:'—',meaning:'ethics, morality, relations',
+   compounds:[{word:'倫理',read:'りんり',mean:'ethics, morality'},{word:'人倫',read:'じんりん',mean:'human relations, morality'},{word:'倫理学',read:'りんりがく',mean:'ethics (academic)'}]},
+  {level:'n1',char:'矛',on:'ム',kun:'ほこ',meaning:'halberd, pike, contradiction',
+   compounds:[{word:'矛盾',read:'むじゅん',mean:'contradiction'},{word:'矛先',read:'ほこさき',mean:'spearhead, object of attack'},{word:'矛',read:'ほこ',mean:'spear, halberd'}]},
+  {level:'n1',char:'盾',on:'ジュン',kun:'たて',meaning:'shield, reverse side',
+   compounds:[{word:'矛盾',read:'むじゅん',mean:'contradiction'},{word:'盾',read:'たて',mean:'shield'},{word:'後ろ盾',read:'うしろだて',mean:'backing, support'}]},
+  {level:'n1',char:'欺',on:'ギ',kun:'あざむ（く）',meaning:'deceive, cheat, delude',
+   compounds:[{word:'欺く',read:'あざむく',mean:'to deceive'},{word:'詐欺',read:'さぎ',mean:'fraud, swindle'},{word:'欺瞞',read:'ぎまん',mean:'deception, deceit'}]},
+  {level:'n1',char:'詐',on:'サ',kun:'—',meaning:'deceive, lie, cheat',
+   compounds:[{word:'詐欺',read:'さぎ',mean:'fraud, swindle'},{word:'詐称',read:'さしょう',mean:'false representation'},{word:'詐取',read:'さしゅ',mean:'fraudulent acquisition'}]},
+  {level:'n1',char:'弾',on:'ダン',kun:'ひ（く）・たま',meaning:'bullet, spring, play (instrument)',
+   compounds:[{word:'弾圧',read:'だんあつ',mean:'suppression, oppression'},{word:'弾力',read:'だんりょく',mean:'elasticity, flexibility'},{word:'爆弾',read:'ばくだん',mean:'bomb'}]},
+  {level:'n1',char:'裂',on:'レツ',kun:'さ（く）',meaning:'split, rend, tear',
+   compounds:[{word:'分裂',read:'ぶんれつ',mean:'division, split'},{word:'破裂',read:'はれつ',mean:'explosion, rupture'},{word:'亀裂',read:'きれつ',mean:'crack, fissure'}]},
+  {level:'n1',char:'腐',on:'フ',kun:'く（さる）',meaning:'rot, decay, corrupt',
+   compounds:[{word:'腐敗',read:'ふはい',mean:'corruption, decay'},{word:'腐る',read:'くさる',mean:'to rot, go bad'},{word:'腐食',read:'ふしょく',mean:'corrosion'}]},
+  {level:'n1',char:'賄',on:'ワイ',kun:'まかな（う）',meaning:'bribe, provide food',
+   compounds:[{word:'収賄',read:'しゅうわい',mean:'bribery, corruption'},{word:'賄賂',read:'わいろ',mean:'bribe'},{word:'賄う',read:'まかなう',mean:'to provide, cover (costs)'}]},
+  {level:'n1',char:'搾',on:'サク',kun:'しぼ（る）',meaning:'squeeze, exploit',
+   compounds:[{word:'搾取',read:'さくしゅ',mean:'exploitation'},{word:'搾る',read:'しぼる',mean:'to squeeze, exploit'},{word:'圧搾',read:'あっさく',mean:'compression, pressing'}]},
+
+  // ── Governance & Power ──
+  {level:'n1',char:'覇',on:'ハ',kun:'—',meaning:'supremacy, hegemony, dominate',
+   compounds:[{word:'制覇',read:'せいは',mean:'conquest, domination'},{word:'覇権',read:'はけん',mean:'hegemony, supremacy'},{word:'覇者',read:'はしゃ',mean:'champion, conqueror'}]},
+  {level:'n1',char:'凌',on:'リョウ',kun:'しの（ぐ）',meaning:'endure, surpass, outwit',
+   compounds:[{word:'凌ぐ',read:'しのぐ',mean:'to endure, surpass'},{word:'凌駕',read:'りょうが',mean:'surpassing, outdoing'},{word:'凌辱',read:'りょうじょく',mean:'insult, humiliation'}]},
+  {level:'n1',char:'威',on:'イ',kun:'おど（す）',meaning:'authority, intimidate, power',
+   compounds:[{word:'威圧',read:'いあつ',mean:'intimidation, coercion'},{word:'権威',read:'けんい',mean:'authority, prestige'},{word:'威力',read:'いりょく',mean:'power, might'}]},
+  {level:'n1',char:'脅',on:'キョウ',kun:'おびや（かす）',meaning:'threaten, intimidate',
+   compounds:[{word:'脅かす',read:'おびやかす',mean:'to threaten, menace'},{word:'脅迫',read:'きょうはく',mean:'threat, intimidation'},{word:'脅威',read:'きょうい',mean:'threat, menace'}]},
+  {level:'n1',char:'圧',on:'アツ',kun:'お（さえる）',meaning:'pressure, overwhelm, compress',
+   compounds:[{word:'圧力',read:'あつりょく',mean:'pressure'},{word:'圧迫',read:'あっぱく',mean:'pressure, oppression'},{word:'弾圧',read:'だんあつ',mean:'suppression'}]},
+  {level:'n1',char:'迫',on:'ハク',kun:'せま（る）',meaning:'urge, press, imminent',
+   compounds:[{word:'迫る',read:'せまる',mean:'to press, draw near'},{word:'圧迫',read:'あっぱく',mean:'pressure, oppression'},{word:'切迫',read:'せっぱく',mean:'urgency, pressing'}]},
+  {level:'n1',char:'縛',on:'バク',kun:'しば（る）',meaning:'tie, bind, restrain',
+   compounds:[{word:'縛る',read:'しばる',mean:'to tie, bind'},{word:'束縛',read:'そくばく',mean:'restraint, constraint'},{word:'呪縛',read:'じゅばく',mean:'spell, curse'}]},
+  {level:'n1',char:'奪',on:'ダツ',kun:'うば（う）',meaning:'take by force, rob, deprive',
+   compounds:[{word:'奪う',read:'うばう',mean:'to snatch, rob'},{word:'剥奪',read:'はくだつ',mean:'deprivation, stripping'},{word:'強奪',read:'ごうだつ',mean:'robbery, plunder'}]},
+  {level:'n1',char:'侵',on:'シン',kun:'おか（す）',meaning:'invade, encroach, violate',
+   compounds:[{word:'侵略',read:'しんりゃく',mean:'invasion, aggression'},{word:'侵害',read:'しんがい',mean:'infringement, violation'},{word:'侵入',read:'しんにゅう',mean:'intrusion, invasion'}]},
+
+  // ── Abstract Thought ──
+  {level:'n1',char:'逆',on:'ギャク',kun:'さか・さか（らう）',meaning:'reverse, contrary, oppose',
+   compounds:[{word:'逆説',read:'ぎゃくせつ',mean:'paradox'},{word:'逆転',read:'ぎゃくてん',mean:'reversal, comeback'},{word:'逆効果',read:'ぎゃくこうか',mean:'counterproductive effect'}]},
+  {level:'n1',char:'矛盾',on:'ムジュン',kun:'—',meaning:'contradiction',
+   compounds:[{word:'矛盾',read:'むじゅん',mean:'contradiction'},{word:'矛盾する',read:'むじゅんする',mean:'to contradict'},{word:'自己矛盾',read:'じこむじゅん',mean:'self-contradiction'}]},
+  {level:'n1',char:'哲',on:'テツ',kun:'—',meaning:'philosophy, wisdom',
+   compounds:[{word:'哲学',read:'てつがく',mean:'philosophy'},{word:'哲人',read:'てつじん',mean:'philosopher, sage'},{word:'哲理',read:'てつり',mean:'philosophical principle'}]},
+  {level:'n1',char:'摂',on:'セツ',kun:'と（る）',meaning:'absorb, control, govern',
+   compounds:[{word:'摂取',read:'せっしゅ',mean:'ingestion, absorption'},{word:'摂理',read:'せつり',mean:'providence'},{word:'摂生',read:'せっせい',mean:'moderation, self-care'}]},
+  {level:'n1',char:'漠',on:'バク',kun:'—',meaning:'vague, vast, desert',
+   compounds:[{word:'漠然',read:'ばくぜん',mean:'vague, obscure'},{word:'砂漠',read:'さばく',mean:'desert'},{word:'漠大',read:'ばくだい',mean:'vast, immense'}]},
+  {level:'n1',char:'曖',on:'アイ',kun:'—',meaning:'vague, ambiguous, obscure',
+   compounds:[{word:'曖昧',read:'あいまい',mean:'vague, ambiguous'},{word:'曖昧模糊',read:'あいまいもこ',mean:'vague and obscure'},{word:'曖昧さ',read:'あいまいさ',mean:'ambiguity, vagueness'}]},
+  {level:'n1',char:'暧',on:'アイ',kun:'—',meaning:'dim, indistinct',
+   compounds:[{word:'暧昧',read:'あいまい',mean:'ambiguous, vague'},{word:'暧昧な返事',read:'あいまいなへんじ',mean:'vague answer'},{word:'暧昧にする',read:'あいまいにする',mean:'to be evasive'}]},
+  {level:'n1',char:'峻',on:'シュン',kun:'けわ（しい）',meaning:'steep, harsh, strict',
+   compounds:[{word:'峻厳',read:'しゅんげん',mean:'strict, stern'},{word:'険峻',read:'けんしゅん',mean:'precipitous, steep'},{word:'峻別',read:'しゅんべつ',mean:'strict distinction'}]},
+  {level:'n1',char:'崇',on:'スウ',kun:'あが（める）',meaning:'revere, respect, worship',
+   compounds:[{word:'崇高',read:'すうこう',mean:'sublime, noble'},{word:'崇拝',read:'すうはい',mean:'worship, adoration'},{word:'崇める',read:'あがめる',mean:'to revere, worship'}]},
+
+  // ── Movement & Action (literary) ──
+  {level:'n1',char:'跳',on:'チョウ',kun:'と（ぶ）・は（ねる）',meaning:'jump, leap, spring',
+   compounds:[{word:'跳ぶ',read:'とぶ',mean:'to jump, leap'},{word:'跳ね上がる',read:'はねあがる',mean:'to spring up'},{word:'跳躍',read:'ちょうやく',mean:'leap, jump'}]},
+  {level:'n1',char:'躍',on:'ヤク',kun:'おど（る）',meaning:'leap, jump, dance',
+   compounds:[{word:'飛躍',read:'ひやく',mean:'leap, rapid advance'},{word:'躍動',read:'やくどう',mean:'lively movement'},{word:'活躍',read:'かつやく',mean:'active role, great work'}]},
+  {level:'n1',char:'漂',on:'ヒョウ',kun:'ただよ（う）',meaning:'drift, float, wander',
+   compounds:[{word:'漂う',read:'ただよう',mean:'to drift, float'},{word:'漂流',read:'ひょうりゅう',mean:'drifting, wandering'},{word:'漂白',read:'ひょうはく',mean:'bleaching'}]},
+  {level:'n1',char:'揺',on:'ヨウ',kun:'ゆ（れる）・ゆ（らぐ）',meaning:'shake, sway, rock',
+   compounds:[{word:'揺れる',read:'ゆれる',mean:'to shake, sway'},{word:'動揺',read:'どうよう',mean:'agitation, disturbance'},{word:'揺らぐ',read:'ゆらぐ',mean:'to waver, fluctuate'}]},
+  {level:'n1',char:'潜',on:'セン',kun:'もぐ（る）・ひそ（む）',meaning:'lurk, submerge, latent',
+   compounds:[{word:'潜在',read:'せんざい',mean:'latent, potential'},{word:'潜む',read:'ひそむ',mean:'to lurk, hide'},{word:'潜水',read:'せんすい',mean:'diving, submersion'}]},
+  {level:'n1',char:'浮',on:'フ',kun:'う（く）・う（かぶ）',meaning:'float, emerge, arise',
+   compounds:[{word:'浮かぶ',read:'うかぶ',mean:'to float, come to mind'},{word:'浮上',read:'ふじょう',mean:'surfacing, rising'},{word:'浮沈',read:'ふちん',mean:'rise and fall'}]},
+  {level:'n1',char:'沈',on:'チン',kun:'しず（む）',meaning:'sink, subside, gloomy',
+   compounds:[{word:'沈む',read:'しずむ',mean:'to sink, set (sun)'},{word:'沈黙',read:'ちんもく',mean:'silence'},{word:'沈下',read:'ちんか',mean:'subsidence, sinking'}]},
+  {level:'n1',char:'溶',on:'ヨウ',kun:'と（ける）',meaning:'melt, dissolve',
+   compounds:[{word:'溶ける',read:'とける',mean:'to melt, dissolve'},{word:'溶解',read:'ようかい',mean:'dissolution, melting'},{word:'融溶',read:'ゆうよう',mean:'melting, fusing'}]},
+  {level:'n1',char:'凝',on:'ギョウ',kun:'こ（る）・こ（らす）',meaning:'congeal, focus, stiff',
+   compounds:[{word:'凝る',read:'こる',mean:'to be absorbed in, stiff'},{word:'凝縮',read:'ぎょうしゅく',mean:'condensation'},{word:'凝視',read:'ぎょうし',mean:'staring, gazing'}]},
+
+  // ── Nature & Phenomena ──
+  {level:'n1',char:'霧',on:'ム',kun:'きり',meaning:'fog, mist',
+   compounds:[{word:'霧',read:'きり',mean:'fog, mist'},{word:'霧雨',read:'きりさめ',mean:'drizzle'},{word:'濃霧',read:'のうむ',mean:'dense fog'}]},
+  {level:'n1',char:'嵐',on:'ラン',kun:'あらし',meaning:'storm, tempest',
+   compounds:[{word:'嵐',read:'あらし',mean:'storm, tempest'},{word:'砂嵐',read:'すなあらし',mean:'sandstorm'},{word:'嵐の前',read:'あらしのまえ',mean:'the calm before the storm'}]},
+  {level:'n1',char:'雷',on:'ライ',kun:'かみなり',meaning:'thunder, lightning',
+   compounds:[{word:'雷',read:'かみなり',mean:'thunder, lightning'},{word:'落雷',read:'らくらい',mean:'lightning strike'},{word:'雷雨',read:'らいう',mean:'thunderstorm'}]},
+  {level:'n1',char:'稲',on:'トウ',kun:'いね・いな',meaning:'rice plant',
+   compounds:[{word:'稲',read:'いね',mean:'rice plant'},{word:'稲妻',read:'いなずま',mean:'lightning'},{word:'稲作',read:'いなさく',mean:'rice cultivation'}]},
+  {level:'n1',char:'苔',on:'タイ',kun:'こけ',meaning:'moss',
+   compounds:[{word:'苔',read:'こけ',mean:'moss'},{word:'苔むす',read:'こけむす',mean:'to be covered in moss'},{word:'苔玉',read:'こけだま',mean:'moss ball (plant arrangement)'}]},
+  {level:'n1',char:'藻',on:'ソウ',kun:'も',meaning:'seaweed, algae',
+   compounds:[{word:'海藻',read:'かいそう',mean:'seaweed'},{word:'藻類',read:'そうるい',mean:'algae'},{word:'水藻',read:'みずも',mean:'water weed'}]},
+  {level:'n1',char:'岩',on:'ガン',kun:'いわ',meaning:'rock, boulder, crag',
+   compounds:[{word:'岩石',read:'がんせき',mean:'rock'},{word:'溶岩',read:'ようがん',mean:'lava'},{word:'岩盤',read:'がんばん',mean:'bedrock'}]},
+  {level:'n1',char:'峰',on:'ホウ',kun:'みね',meaning:'peak, summit, ridge',
+   compounds:[{word:'山峰',read:'さんぽう',mean:'mountain peak'},{word:'連峰',read:'れんぽう',mean:'mountain range'},{word:'頂上',read:'ちょうじょう',mean:'summit, peak'}]},
+
+  // ── Literary & Formal Expression ──
+  {level:'n1',char:'暁',on:'ギョウ',kun:'あかつき',meaning:'dawn, daybreak, at the time of',
+   compounds:[{word:'暁',read:'あかつき',mean:'dawn, daybreak'},{word:'暁に',read:'あかつきに',mean:'at the time of, when'},{word:'払暁',read:'ふつぎょう',mean:'dawn, early morning'}]},
+  {level:'n1',char:'宵',on:'ショウ',kun:'よい',meaning:'evening, early night',
+   compounds:[{word:'宵',read:'よい',mean:'evening, early night'},{word:'宵越し',read:'よいごし',mean:'overnight'},{word:'宵闇',read:'よいやみ',mean:'early evening darkness'}]},
+  {level:'n1',char:'彩',on:'サイ',kun:'いろど（る）',meaning:'colour, decorate, adorn',
+   compounds:[{word:'色彩',read:'しきさい',mean:'colour, colouring'},{word:'彩る',read:'いろどる',mean:'to colour, decorate'},{word:'多彩',read:'たさい',mean:'colourful, varied'}]},
+  {level:'n1',char:'映',on:'エイ',kun:'うつ（る）・は（える）',meaning:'reflect, project, shine',
+   compounds:[{word:'映画',read:'えいが',mean:'film, movie'},{word:'反映',read:'はんえい',mean:'reflection, embodiment'},{word:'上映',read:'じょうえい',mean:'screening, showing'}]},
+  {level:'n1',char:'吟',on:'ギン',kun:'—',meaning:'recite, chant, compose (verse)',
+   compounds:[{word:'吟詠',read:'ぎんえい',mean:'recitation of poetry'},{word:'吟味',read:'ぎんみ',mean:'scrutiny, careful examination'},{word:'吟じる',read:'ぎんじる',mean:'to recite, chant'}]},
+  {level:'n1',char:'詠',on:'エイ',kun:'よ（む）',meaning:'compose (poem), recite',
+   compounds:[{word:'詠む',read:'よむ',mean:'to compose a poem'},{word:'詠嘆',read:'えいたん',mean:'exclamation, admiration'},{word:'朗詠',read:'ろうえい',mean:'recitation, chanting'}]},
+  {level:'n1',char:'摩',on:'マ',kun:'—',meaning:'rub, chafe, wear away',
+   compounds:[{word:'摩擦',read:'まさつ',mean:'friction, conflict'},{word:'摩耗',read:'まもう',mean:'wear and tear'},{word:'按摩',read:'あんま',mean:'massage'}]},
+
+  // ── Science, Medicine & Formal ──
+  {level:'n1',char:'酵',on:'コウ',kun:'—',meaning:'ferment, yeast',
+   compounds:[{word:'酵母',read:'こうぼ',mean:'yeast'},{word:'酵素',read:'こうそ',mean:'enzyme'},{word:'発酵',read:'はっこう',mean:'fermentation'}]},
+  {level:'n1',char:'膜',on:'マク',kun:'—',meaning:'membrane, film, coating',
+   compounds:[{word:'細胞膜',read:'さいぼうまく',mean:'cell membrane'},{word:'鼓膜',read:'こまく',mean:'eardrum'},{word:'角膜',read:'かくまく',mean:'cornea'}]},
+  {level:'n1',char:'繊',on:'セン',kun:'—',meaning:'fibre, slender, delicate',
+   compounds:[{word:'繊維',read:'せんい',mean:'fibre, textile'},{word:'繊細',read:'せんさい',mean:'delicate, sensitive'},{word:'化学繊維',read:'かがくせんい',mean:'synthetic fibre'}]},
+  {level:'n1',char:'粒',on:'リュウ',kun:'つぶ',meaning:'grain, granule, drop',
+   compounds:[{word:'粒子',read:'りゅうし',mean:'particle'},{word:'粒',read:'つぶ',mean:'grain, drop'},{word:'素粒子',read:'そりゅうし',mean:'elementary particle'}]},
+  {level:'n1',char:'核',on:'カク',kun:'—',meaning:'nucleus, core, kernel',
+   compounds:[{word:'核心',read:'かくしん',mean:'core, crux'},{word:'核兵器',read:'かくへいき',mean:'nuclear weapons'},{word:'中核',read:'ちゅうかく',mean:'core, nucleus'}]},
+  {level:'n1',char:'鎖',on:'サ',kun:'くさり',meaning:'chain, lock, shackle',
+   compounds:[{word:'連鎖',read:'れんさ',mean:'chain, linkage'},{word:'封鎖',read:'ふうさ',mean:'blockade, lockdown'},{word:'鎖国',read:'さこく',mean:'national isolation'}]},
+  {level:'n1',char:'錯',on:'サク・シャク',kun:'—',meaning:'confused, mixed up, intertwine',
+   compounds:[{word:'錯覚',read:'さっかく',mean:'illusion, misperception'},{word:'錯誤',read:'さくご',mean:'error, mistake'},{word:'交錯',read:'こうさく',mean:'intermingling, entanglement'}]},
+  {level:'n1',char:'痕',on:'コン',kun:'あと',meaning:'scar, trace, mark',
+   compounds:[{word:'傷痕',read:'きずあと',mean:'scar'},{word:'痕跡',read:'こんせき',mean:'trace, vestige'},{word:'血痕',read:'けっこん',mean:'bloodstain'}]},
+
+  // ── Formal Connectors & Function Kanji ──
+  {level:'n1',char:'即',on:'ソク',kun:'すなわち',meaning:'immediately, namely, equal to',
+   compounds:[{word:'即座に',read:'そくざに',mean:'immediately, at once'},{word:'即決',read:'そっけつ',mean:'prompt decision'},{word:'即興',read:'そっきょう',mean:'improvisation'}]},
+  {level:'n1',char:'従',on:'ジュウ',kun:'したが（う）',meaning:'obey, follow, attend',
+   compounds:[{word:'従う',read:'したがう',mean:'to follow, obey'},{word:'服従',read:'ふくじゅう',mean:'submission, obedience'},{word:'従来',read:'じゅうらい',mean:'conventional, hitherto'}]},
+  {level:'n1',char:'旨',on:'シ',kun:'むね',meaning:'gist, point, purport, delicious',
+   compounds:[{word:'趣旨',read:'しゅし',mean:'purpose, gist'},{word:'旨い',read:'うまい',mean:'delicious, skilful'},{word:'主旨',read:'しゅし',mean:'main point, purport'}]},
+  {level:'n1',char:'趣',on:'シュ',kun:'おもむき',meaning:'taste, elegance, purport',
+   compounds:[{word:'趣旨',read:'しゅし',mean:'purpose, gist'},{word:'趣味',read:'しゅみ',mean:'hobby, taste'},{word:'興趣',read:'きょうしゅ',mean:'interest, appeal'}]},
+  {level:'n1',char:'端',on:'タン',kun:'はし・は・はた',meaning:'edge, tip, origin, extreme',
+   compounds:[{word:'端緒',read:'たんしょ',mean:'beginning, starting point'},{word:'端末',read:'たんまつ',mean:'terminal, device'},{word:'先端',read:'せんたん',mean:'tip, forefront'}]},
+  {level:'n1',char:'紡',on:'ボウ',kun:'つむ（ぐ）',meaning:'spin (thread), weave together',
+   compounds:[{word:'紡ぐ',read:'つむぐ',mean:'to spin, weave'},{word:'紡績',read:'ぼうせき',mean:'spinning, textile'},{word:'紡織',read:'ぼうしょく',mean:'spinning and weaving'}]},
+  {level:'n1',char:'縫',on:'ホウ',kun:'ぬ（う）',meaning:'sew, stitch',
+   compounds:[{word:'縫う',read:'ぬう',mean:'to sew, stitch'},{word:'縫製',read:'ほうせい',mean:'sewing, tailoring'},{word:'天衣無縫',read:'てんいむほう',mean:'natural, unaffected'}]},
+  {level:'n1',char:'鍛',on:'タン',kun:'きた（える）',meaning:'forge, temper, train',
+   compounds:[{word:'鍛える',read:'きたえる',mean:'to forge, train'},{word:'鍛冶',read:'かじ',mean:'blacksmith'},{word:'鍛錬',read:'たんれん',mean:'tempering, training'}]},
+  {level:'n1',char:'磨',on:'マ',kun:'みが（く）',meaning:'polish, grind, refine',
+   compounds:[{word:'磨く',read:'みがく',mean:'to polish, refine'},{word:'研磨',read:'けんま',mean:'polishing, grinding'},{word:'切磋琢磨',read:'せっさたくま',mean:'mutual improvement through effort'}]},
+  {level:'n1',char:'刻',on:'コク',kun:'きざ（む）',meaning:'carve, engrave, moment',
+   compounds:[{word:'刻む',read:'きざむ',mean:'to carve, engrave'},{word:'時刻',read:'じこく',mean:'time, hour'},{word:'深刻',read:'しんこく',mean:'serious, grave'}]},
+  {level:'n1',char:'塑',on:'ソ',kun:'—',meaning:'mould, model, plasticity',
+   compounds:[{word:'彫塑',read:'ちょうそ',mean:'sculpture'},{word:'塑像',read:'そぞう',mean:'clay figure'},{word:'可塑性',read:'かそせい',mean:'plasticity, malleability'}]},
+
+  // ── Architecture & Material Culture ──
+  {level:'n1',char:'拭',on:'ショク',kun:'ぬぐ（う）・ふ（く）',meaning:'wipe, rub, cleanse',
+   compounds:[{word:'拭く',read:'ふく',mean:'to wipe'},{word:'拭い去る',read:'ぬぐいさる',mean:'to wipe away, erase'},{word:'手拭い',read:'てぬぐい',mean:'hand towel'}]},
+  {level:'n1',char:'錆',on:'—',kun:'さび',meaning:'rust, tarnish',
+   compounds:[{word:'錆びる',read:'さびる',mean:'to rust'},{word:'錆',read:'さび',mean:'rust'},{word:'防錆',read:'ぼうさび',mean:'rust prevention'}]},
+  {level:'n1',char:'砕',on:'サイ',kun:'くだ（く）',meaning:'break, smash, shatter',
+   compounds:[{word:'砕く',read:'くだく',mean:'to break, smash'},{word:'砕石',read:'さいせき',mean:'crushed stone'},{word:'粉砕',read:'ふんさい',mean:'crushing, smashing'}]},
+  {level:'n1',char:'埋',on:'マイ',kun:'う（める）・う（まる）',meaning:'bury, fill in',
+   compounds:[{word:'埋める',read:'うめる',mean:'to bury, fill in'},{word:'埋蔵',read:'まいぞう',mean:'buried, underground'},{word:'埋立地',read:'うめたてち',mean:'reclaimed land'}]},
+  {level:'n1',char:'掘',on:'クツ',kun:'ほ（る）',meaning:'dig, excavate',
+   compounds:[{word:'掘る',read:'ほる',mean:'to dig'},{word:'発掘',read:'はっくつ',mean:'excavation, unearthing'},{word:'採掘',read:'さいくつ',mean:'mining, extraction'}]},
+
+  // ── Abstract Time & Change ──
+  {level:'n1',char:'遷',on:'セン',kun:'うつ（る）',meaning:'transition, change, move',
+   compounds:[{word:'変遷',read:'へんせん',mean:'change, transition'},{word:'遷都',read:'せんと',mean:'transfer of capital'},{word:'左遷',read:'させん',mean:'demotion'}]},
+  {level:'n1',char:'廃',on:'ハイ',kun:'すた（れる）',meaning:'abolish, decline, discard',
+   compounds:[{word:'廃棄',read:'はいき',mean:'disposal, discard'},{word:'廃止',read:'はいし',mean:'abolition'},{word:'廃れる',read:'すたれる',mean:'to fall into disuse'}]},
+  {level:'n1',char:'興',on:'コウ・キョウ',kun:'おこ（る）・おこ（す）',meaning:'rise, prosper, interest',
+   compounds:[{word:'興味',read:'きょうみ',mean:'interest'},{word:'振興',read:'しんこう',mean:'promotion, development'},{word:'興亡',read:'こうぼう',mean:'rise and fall'}]},
+  {level:'n1',char:'衰',on:'スイ',kun:'おとろ（える）',meaning:'decline, wane, weaken',
+   compounds:[{word:'衰退',read:'すいたい',mean:'decline, decay'},{word:'衰える',read:'おとろえる',mean:'to weaken, decline'},{word:'盛衰',read:'せいすい',mean:'rise and fall'}]},
+  {level:'n1',char:'滅',on:'メツ',kun:'ほろ（びる）',meaning:'destroy, perish, extinguish',
+   compounds:[{word:'滅ぼす',read:'ほろぼす',mean:'to destroy'},{word:'消滅',read:'しょうめつ',mean:'extinction, disappearance'},{word:'壊滅',read:'かいめつ',mean:'annihilation, devastation'}]},
+  {level:'n1',char:'殺',on:'サツ',kun:'ころ（す）',meaning:'kill, murder',
+   compounds:[{word:'殺菌',read:'さっきん',mean:'sterilisation'},{word:'暗殺',read:'あんさつ',mean:'assassination'},{word:'相殺',read:'そうさい',mean:'offsetting, cancelling out'}]},
+  {level:'n1',char:'蘇',on:'ソ',kun:'よみがえ（る）',meaning:'revive, resurrect, come back',
+   compounds:[{word:'蘇る',read:'よみがえる',mean:'to revive, come back to life'},{word:'蘇生',read:'そせい',mean:'revival, resuscitation'},{word:'復蘇',read:'ふくそ',mean:'revival, recovery'}]},
+
+  // ── Miscellaneous N1 ──
+  {level:'n1',char:'狙',on:'ソ',kun:'ねら（う）',meaning:'aim, target, plan to',
+   compounds:[{word:'狙う',read:'ねらう',mean:'to aim at, target'},{word:'狙い',read:'ねらい',mean:'aim, target'},{word:'狙撃',read:'そげき',mean:'sniping, sharpshooting'}]},
+  {level:'n1',char:'奔',on:'ホン',kun:'はし（る）',meaning:'run, bustle, rush',
+   compounds:[{word:'奔走',read:'ほんそう',mean:'running around, bustling'},{word:'奔放',read:'ほんぽう',mean:'unrestrained, free-spirited'},{word:'奔流',read:'ほんりゅう',mean:'rushing current, torrent'}]},
+  {level:'n1',char:'惟',on:'イ',kun:'—',meaning:'consider, reflect, only',
+   compounds:[{word:'思惟',read:'しい',mean:'thought, thinking'},{word:'惟一',read:'ゆいいつ',mean:'only, sole'},{word:'惟',read:'ただ',mean:'only, merely (literary)'}]},
+  {level:'n1',char:'傍',on:'ボウ',kun:'かたわら・はた',meaning:'beside, bystander, side',
+   compounds:[{word:'傍ら',read:'かたわら',mean:'beside, by the side'},{word:'傍観',read:'ぼうかん',mean:'looking on, being a bystander'},{word:'傍線',read:'ぼうせん',mean:'sideline, underline'}]},
+  {level:'n1',char:'沸',on:'フツ',kun:'わ（く）',meaning:'boil, seethe',
+   compounds:[{word:'沸く',read:'わく',mean:'to boil, seethe'},{word:'沸騰',read:'ふっとう',mean:'boiling, boiling point'},{word:'煮沸',read:'しゃふつ',mean:'boiling, sterilising by boiling'}]},
+  {level:'n1',char:'凄',on:'セイ',kun:'すご（い）・すさ（まじい）',meaning:'dreadful, awe-inspiring, terrific',
+   compounds:[{word:'凄い',read:'すごい',mean:'amazing, terrible'},{word:'凄まじい',read:'すさまじい',mean:'terrific, tremendous'},{word:'凄絶',read:'せいぜつ',mean:'horrifying, awesome'}]},
+  {level:'n1',char:'冒',on:'ボウ',kun:'おか（す）',meaning:'risk, brave, violate',
+   compounds:[{word:'冒険',read:'ぼうけん',mean:'adventure, risk'},{word:'冒す',read:'おかす',mean:'to brave, violate'},{word:'冒頭',read:'ぼうとう',mean:'beginning, opening'}]},
+  {level:'n1',char:'陥',on:'カン',kun:'おちい（る）',meaning:'fall into, be trapped, cave in',
+   compounds:[{word:'陥る',read:'おちいる',mean:'to fall into, be trapped'},{word:'陥落',read:'かんらく',mean:'fall, capture'},{word:'欠陥',read:'けっかん',mean:'defect, flaw'}]},
+  {level:'n1',char:'暴',on:'ボウ',kun:'あば（れる）・あら（わす）',meaning:'violent, expose, rampage',
+   compounds:[{word:'暴力',read:'ぼうりょく',mean:'violence'},{word:'暴露',read:'ばくろ',mean:'exposure, revelation'},{word:'乱暴',read:'らんぼう',mean:'rough, violent'}]},
+  {level:'n1',char:'繁',on:'ハン',kun:'しげ（る）',meaning:'flourishing, busy, frequent',
+   compounds:[{word:'繁栄',read:'はんえい',mean:'prosperity, thriving'},{word:'繁忙',read:'はんぼう',mean:'busy, hectic'},{word:'頻繁',read:'ひんぱん',mean:'frequent'}]},
+  {level:'n1',char:'栄',on:'エイ',kun:'さか（える）',meaning:'flourish, glory, honour',
+   compounds:[{word:'繁栄',read:'はんえい',mean:'prosperity'},{word:'栄養',read:'えいよう',mean:'nutrition'},{word:'光栄',read:'こうえい',mean:'honour, glory'}]},
+  {level:'n1',char:'誉',on:'ヨ',kun:'ほま（れ）',meaning:'honour, reputation',
+   compounds:[{word:'名誉',read:'めいよ',mean:'honour, prestige'},{word:'誉れ',read:'ほまれ',mean:'honour, glory'},{word:'栄誉',read:'えいよ',mean:'honour, distinction'}]},
+  {level:'n1',char:'廉',on:'レン',kun:'かど',meaning:'honest, cheap, corner',
+   compounds:[{word:'廉潔',read:'れんけつ',mean:'integrity, honesty'},{word:'安廉',read:'あんれん',mean:'cheap, inexpensive'},{word:'廉価',read:'れんか',mean:'low price, cheap'}]},
+  {level:'n1',char:'粛',on:'シュク',kun:'—',meaning:'solemn, strict, reverent',
+   compounds:[{word:'粛清',read:'しゅくせい',mean:'purge, elimination'},{word:'厳粛',read:'げんしゅく',mean:'solemn, grave'},{word:'粛然',read:'しゅくぜん',mean:'with solemnity'}]},
+];
+
+
+// ── State ─────────────────────────────────────────────────────
+let activeLevel = 'all';
+let searchTerm  = '';
+let currentView = 'grid';
+
+// ── Level filter ──────────────────────────────────────────────
+document.querySelectorAll('.filter-btn[data-level]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn[data-level]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeLevel = btn.dataset.level;
+    render();
+  });
+});
+
+// ── Search ────────────────────────────────────────────────────
+document.getElementById('search-input').addEventListener('input', e => {
+  searchTerm = e.target.value.toLowerCase();
+  render();
+});
+
+// ── View toggle ───────────────────────────────────────────────
+function setView(v) {
+  currentView = v;
+  document.getElementById('btn-grid').classList.toggle('active', v === 'grid');
+  document.getElementById('btn-list').classList.toggle('active', v === 'list');
+  render();
+}
+
+function jumpTo(lvl) {
+  const el = document.getElementById('section-' + lvl);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── Filter ────────────────────────────────────────────────────
+function filtered() {
+  return kanjiData.filter(k => {
+    const lvlOk  = activeLevel === 'all' || k.level === activeLevel;
+    const srchOk = !searchTerm ||
+      k.char.includes(searchTerm) ||
+      k.on.toLowerCase().includes(searchTerm) ||
+      k.kun.toLowerCase().includes(searchTerm) ||
+      k.meaning.toLowerCase().includes(searchTerm) ||
+      k.compounds.some(c => c.word.includes(searchTerm) || c.read.includes(searchTerm) || c.mean.toLowerCase().includes(searchTerm));
+    return lvlOk && srchOk;
+  });
+}
+
+// ── Render ────────────────────────────────────────────────────
+const levelMeta = {
+  n4:{ jp:'<ruby>初<rt>しょ</rt></ruby><ruby>級<rt>きゅう</rt></ruby>', en:'Elementary' },
+  n3:{ jp:'<ruby>中<rt>ちゅう</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>下<rt>か</rt></ruby>', en:'Pre-intermediate' },
+  n2:{ jp:'<ruby>中<rt>ちゅう</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>上<rt>じょう</rt></ruby>', en:'Upper-intermediate' },
+  n1:{ jp:'<ruby>上<rt>じょう</rt></ruby><ruby>級<rt>きゅう</rt></ruby>', en:'Advanced' },
+};
+
+function render() {
+  const data = filtered();
+  const container = document.getElementById('kanji-container');
+  container.innerHTML = '';
+
+  document.getElementById('results-count').textContent = `${data.length} kanji`;
+  document.getElementById('count-label').textContent   = `${data.length} kanji`;
+
+  ['n4','n3','n2','n1'].forEach(lvl => {
+    const lvlData = data.filter(k => k.level === lvl);
+    if (!lvlData.length) return;
+
+    const section = document.createElement('div');
+    section.className = 'level-section';
+    section.id = 'section-' + lvl;
+    section.innerHTML = `
+      <div class="level-heading">
+        <span class="level-badge level-${lvl}">${lvl.toUpperCase()}</span>
+        <div>
+          <div class="level-heading-text">${levelMeta[lvl].jp}</div>
+          <div class="level-heading-en">${levelMeta[lvl].en} — ${lvlData.length} kanji</div>
+        </div>
+      </div>`;
+
+    if (currentView === 'grid') {
+      const grid = document.createElement('div');
+      grid.className = 'kanji-grid';
+      lvlData.forEach(k => grid.appendChild(makeCard(k)));
+      section.appendChild(grid);
+    } else {
+      lvlData.forEach(k => section.appendChild(makeListItem(k)));
+    }
+
+    container.appendChild(section);
+  });
+
+  if (!data.length) {
+    container.innerHTML = `<div style="text-align:center;padding:3rem;color:#7a6450;font-family:var(--serif-en);font-style:italic;">No kanji match your search.</div>`;
+  }
+}
+
+// ── Card ──────────────────────────────────────────────────────
+function makeCard(k) {
+  const card = document.createElement('div');
+  card.className = `kanji-card ${k.level}`;
+
+  const compHtml = k.compounds.map(c =>
+    `<div class="compound-item">
+      <span class="compound-word">${c.word}<button class="vv-btn" onclick="event.stopPropagation();playJapanese('${c.word}', this)" title="Play audio">🔊</button></span>
+      <span class="compound-read">${c.read}</span>
+      <span class="compound-mean">${c.mean}</span>
+    </div>`
+  ).join('');
+
+  card.innerHTML = `
+    <span class="kanji-char">${k.char}</span>
+    <div class="kanji-stroke">${k.strokes} strokes</div>
+    <div class="kanji-meaning">${k.meaning}</div>
+    <div class="readings-block">
+      <div class="reading-row"><span class="reading-label">音</span><span class="reading-val">${k.on}</span></div>
+      <div class="reading-row"><span class="reading-label">訓</span><span class="reading-val">${k.kun}</span></div>
+    </div>
+    <div class="compounds-block" id="comp-${k.char}">${compHtml}</div>
+    <div class="expand-hint">▾ tap to see compounds</div>
+  `;
+
+  card.addEventListener('click', (e) => {
+    if (e.target.closest('.vv-btn')) return;
+    const block = card.querySelector('.compounds-block');
+    const hint  = card.querySelector('.expand-hint');
+    const open  = block.classList.toggle('visible');
+    hint.textContent = open ? '▴ hide compounds' : '▾ tap to see compounds';
+  });
+
+  return card;
+}
+
+// ── List item ─────────────────────────────────────────────────
+function makeListItem(k) {
+  const item = document.createElement('div');
+  item.className = 'kanji-list-item';
+  const compWords = k.compounds.map(c => c.word).join('・');
+  item.innerHTML = `
+    <div class="list-char">${k.char}</div>
+    <div class="list-readings">
+      <div>音: ${k.on}</div>
+      <div>訓: ${k.kun}</div>
+    </div>
+    <div class="list-meaning">${k.meaning}</div>
+    <div class="list-compounds">${compWords}</div>
+  `;
+  return item;
+}
+
+// ── Init ──────────────────────────────────────────────────────
+render();
+</script>
+  <script src="voicevox.js"></script>
+</body>
+</html>

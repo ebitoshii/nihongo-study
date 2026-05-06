@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>読解 Reading — 日本語学習</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;500;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:#f0e6d6;--ink-mid:#d4c4a8;--ink-soft:#b09878;--ink-faint:#7a6450;
+      --washi:#4a3728;--washi-warm:#3d2d20;--washi-deep:#2e2018;--washi-card:#56402f;
+      --teal:#4aaf9e;--teal-light:#6dcebb;--teal-pale:rgba(74,175,158,0.15);
+      --serif-jp:'Shippori Mincho','Noto Serif JP',serif;
+      --serif-en:'IM Fell English',Georgia,serif;
+      --sans-jp:'Noto Sans JP',sans-serif;
+      --radius-sm:4px;--radius-md:8px;--radius-lg:16px;
+      --shadow-soft:0 2px 16px rgba(0,0,0,0.3);
+      --shadow-card:0 6px 32px rgba(0,0,0,0.4);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:19px;scroll-behavior:smooth;}
+    body{background-color:#4a3728;color:#f0e6d6;font-family:'Noto Sans JP',sans-serif;font-weight:300;line-height:1.8;min-height:100vh;overflow-x:hidden;}
+
+    /* NAV */
+    .site-nav{position:sticky;top:0;z-index:100;background:#2e2018;border-bottom:1px solid #1e1208;padding:0.75rem 0;}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;}
+    .nav-logo{display:flex;flex-direction:column;text-decoration:none;}
+    .nav-logo .jp{font-family:var(--serif-jp);font-size:1.1rem;color:#f0e6d6;letter-spacing:0.1em;line-height:1.9;}
+    .nav-logo .jp ruby rt{font-size:0.54em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-logo .en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .nav-links{display:flex;gap:0.15rem;list-style:none;}
+    .nav-links a{display:flex;flex-direction:column;align-items:center;padding:0.4rem 0.7rem;text-decoration:none;border-radius:4px;transition:background 0.2s;}
+    .nav-links a .jp{font-family:var(--serif-jp);font-size:0.85rem;color:#d4c4a8;line-height:1.9;}
+    .nav-links a .jp ruby rt{font-size:0.56em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-links a .en{font-family:var(--serif-en);font-style:italic;font-size:0.62rem;color:#7a6450;}
+    .nav-links a:hover,.nav-links a.active{background:rgba(74,175,158,0.15);}
+    .nav-links a:hover .jp,.nav-links a.active .jp{color:#4aaf9e;}
+
+    /* LAYOUT */
+    .page-wrap{display:grid;grid-template-columns:220px 1fr;max-width:1100px;margin:0 auto;padding:2rem;gap:2rem;}
+    @media(max-width:900px){.page-wrap{grid-template-columns:1fr;}.sidebar{display:none;}}
+
+    /* SIDEBAR */
+    .sidebar{position:sticky;top:80px;height:fit-content;}
+    .sidebar-section{margin-bottom:1.5rem;}
+    .sidebar-title{font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#4aaf9e;letter-spacing:0.12em;margin-bottom:0.6rem;}
+    .filter-btn{display:flex;align-items:center;gap:0.6rem;width:100%;padding:0.45rem 0.75rem;background:transparent;border:1px solid #2e2018;border-radius:4px;color:#b09878;font-family:var(--sans-jp);font-size:0.82rem;cursor:pointer;transition:all 0.2s;margin-bottom:0.3rem;text-align:left;}
+    .filter-btn:hover{background:rgba(74,175,158,0.12);border-color:#4aaf9e;color:#f0e6d6;}
+    .filter-btn.active{background:rgba(74,175,158,0.18);border-color:#4aaf9e;color:#4aaf9e;}
+    .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+    .dot-n4{background:#8fd47a;}.dot-n3{background:#7ab4e8;}.dot-n2{background:#e8b47a;}.dot-n1{background:#e87a7a;}.dot-all{background:#4aaf9e;}
+
+    /* PAGE HEADER */
+    .main-content{min-width:0;}
+    .page-header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid #2e2018;}
+    .page-header .jp-title{font-family:var(--serif-jp);font-size:2.4rem;color:#f0e6d6;letter-spacing:0.05em;line-height:1.85;}
+    .page-header .jp-title ruby rt{font-size:0.58em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .page-header .en-title{font-family:var(--serif-en);font-style:italic;font-size:0.9rem;color:#7a6450;}
+    .page-header .desc{margin-top:0.5rem;color:#b09878;font-size:0.88rem;}
+
+    /* PASSAGE LIST */
+    .passage-list{display:flex;flex-direction:column;gap:1rem;margin-bottom:2rem;}
+    .passage-card{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-lg);overflow:hidden;transition:box-shadow 0.2s;}
+    .passage-card:hover{box-shadow:var(--shadow-card);}
+
+    .passage-header{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;cursor:pointer;gap:1rem;}
+    .passage-header-left{display:flex;align-items:center;gap:1rem;}
+    .level-badge{display:inline-flex;align-items:center;justify-content:center;width:2.2rem;height:2.2rem;border-radius:50%;font-family:var(--serif-en);font-size:0.72rem;font-weight:500;flex-shrink:0;}
+    .level-n4{background:rgba(58,107,46,0.3);color:#8fd47a;border:1px solid rgba(143,212,122,0.3);}
+    .level-n3{background:rgba(42,82,128,0.3);color:#7ab4e8;border:1px solid rgba(122,180,232,0.3);}
+    .level-n2{background:rgba(122,74,30,0.3);color:#e8b47a;border:1px solid rgba(232,180,122,0.3);}
+    .level-n1{background:rgba(122,30,30,0.3);color:#e87a7a;border:1px solid rgba(232,122,122,0.3);}
+
+    .passage-title-jp{font-family:var(--serif-jp);font-size:1.05rem;color:#f0e6d6;line-height:1.9;}
+    .passage-title-jp ruby rt{font-size:0.54em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .passage-title-en{font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;}
+    .passage-meta{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.2rem;}
+    .meta-chip{padding:0.1rem 0.5rem;background:#3d2d20;border:1px solid #2e2018;border-radius:3px;font-size:0.68rem;color:#7a6450;font-family:var(--sans-jp);}
+    .expand-arrow{color:#7a6450;font-size:0.9rem;transition:transform 0.3s;flex-shrink:0;}
+    .passage-card.open .expand-arrow{transform:rotate(180deg);}
+
+    /* PASSAGE BODY */
+    .passage-body{display:none;padding:0 1.5rem 1.5rem;border-top:1px solid #2e2018;}
+    .passage-card.open .passage-body{display:block;}
+
+    .passage-text{font-family:var(--serif-jp);font-size:1rem;line-height:2.4;color:#f0e6d6;margin:1.25rem 0;padding:1.25rem;background:#3d2d20;border-radius:var(--radius-md);border-left:3px solid rgba(74,175,158,0.35);}
+    .passage-text ruby rt{font-size:0.58em;color:#e8d8c0;font-family:var(--sans-jp);}
+
+    /* VOCAB GLOSS */
+    .vocab-gloss{margin-bottom:1.25rem;}
+    .gloss-title{font-family:var(--serif-en);font-style:italic;font-size:0.75rem;color:#4aaf9e;letter-spacing:0.1em;margin-bottom:0.5rem;}
+    .gloss-grid{display:flex;flex-wrap:wrap;gap:0.4rem;}
+    .gloss-item{padding:0.25rem 0.65rem;background:#3d2d20;border:1px solid #2e2018;border-radius:3px;font-size:0.75rem;color:#b09878;}
+    .gloss-item .gw{font-family:var(--serif-jp);color:#f0e6d6;margin-right:0.3rem;}
+    .gloss-item .gm{font-family:var(--serif-en);font-style:italic;color:#7a6450;}
+
+    /* QUESTIONS */
+    .questions-section{margin-top:1.25rem;}
+    .questions-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;flex-wrap:wrap;gap:0.5rem;}
+    .questions-label{font-family:var(--serif-en);font-style:italic;font-size:0.75rem;color:#4aaf9e;letter-spacing:0.1em;}
+    .gen-btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.9rem;background:var(--teal);color:#1a1200;border:none;border-radius:4px;font-family:var(--sans-jp);font-size:0.78rem;font-weight:500;cursor:pointer;transition:background 0.2s;}
+    .gen-btn:hover{background:#6dcebb;}
+    .gen-btn:disabled{background:#3d2d20;color:#7a6450;cursor:not-allowed;}
+
+    .q-loading{display:flex;align-items:center;gap:0.6rem;color:#7a6450;font-family:var(--serif-en);font-style:italic;font-size:0.82rem;padding:0.75rem 0;}
+    .spinner{width:16px;height:16px;border:2px solid #3d2d20;border-top-color:#4aaf9e;border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .question-block{background:#3d2d20;border:1px solid #2e2018;border-radius:var(--radius-md);padding:1rem 1.25rem;margin-bottom:0.75rem;}
+    .q-text{font-size:0.88rem;color:#d4c4a8;line-height:1.8;margin-bottom:0.75rem;}
+    .q-options{display:flex;flex-direction:column;gap:0.4rem;}
+    .q-option{padding:0.5rem 0.9rem;background:#56402f;border:1px solid #2e2018;border-radius:4px;font-size:0.85rem;color:#b09878;cursor:pointer;text-align:left;transition:all 0.15s;font-family:var(--sans-jp);}
+    .q-option:hover:not(:disabled){border-color:#4aaf9e;background:rgba(74,175,158,0.1);color:#f0e6d6;}
+    .q-option.correct{border-color:#8fd47a;background:rgba(143,212,122,0.15);color:#8fd47a;}
+    .q-option.incorrect{border-color:#e87a7a;background:rgba(232,122,122,0.12);color:#e87a7a;}
+    .q-option.reveal{border-color:#7ab4e8;background:rgba(122,180,232,0.1);color:#7ab4e8;}
+    .q-option:disabled{cursor:not-allowed;}
+    .q-explanation{margin-top:0.75rem;padding:0.6rem 0.9rem;background:rgba(74,175,158,0.08);border:1px solid rgba(74,175,158,0.2);border-radius:4px;font-size:0.8rem;color:#b09878;line-height:1.7;display:none;}
+    .q-explanation.visible{display:block;}
+
+    /* OPEN Q (free response) */
+    .open-q-area{width:100%;min-height:80px;background:#56402f;border:1px solid #2e2018;border-radius:4px;color:#f0e6d6;font-family:var(--sans-jp);font-size:0.85rem;padding:0.6rem 0.9rem;resize:vertical;outline:none;transition:border-color 0.2s;margin-top:0.5rem;}
+    .open-q-area:focus{border-color:#4aaf9e;}
+    .check-btn{margin-top:0.4rem;padding:0.35rem 0.9rem;background:transparent;border:1px solid rgba(74,175,158,0.4);border-radius:4px;color:#4aaf9e;font-family:var(--sans-jp);font-size:0.75rem;cursor:pointer;transition:all 0.2s;}
+    .check-btn:hover{background:rgba(74,175,158,0.15);}
+
+    /* SCORE BAR */
+    .score-bar{margin-top:1rem;padding:0.75rem 1rem;background:#3d2d20;border:1px solid #2e2018;border-radius:var(--radius-md);display:none;}
+    .score-bar.visible{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+    .score-text{font-family:var(--serif-en);font-style:italic;font-size:0.85rem;color:#d4c4a8;}
+    .score-teal{color:#4aaf9e;font-style:normal;}
+
+    /* RUBY */
+    ruby{display:inline-flex;flex-direction:column-reverse;align-items:center;vertical-align:bottom;line-height:1;}
+    ruby rt{font-family:'Noto Sans JP',sans-serif;font-size:0.55em;color:#e8d8c0;text-align:center;letter-spacing:0.04em;line-height:1.5;user-select:none;}
+
+    /* FOOTER */
+    .site-footer{border-top:1px solid #2e2018;background:#3d2d20;padding:1.25rem 0;margin-top:2rem;}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;flex-wrap:wrap;gap:1rem;}
+    .footer-jp{font-family:var(--serif-jp);font-size:0.8rem;color:#b09878;}
+    .footer-en{font-family:var(--serif-en);font-style:italic;font-size:0.7rem;color:#7a6450;}
+
+    @media(max-width:768px){.nav-links{display:none;}.page-wrap{padding:1rem;}}
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="jp"><ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span>
+      <span class="en">Personal Japanese Study</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a></li>
+      <li><a href="vocabulary.html"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a></li>
+      <li><a href="kanji.html"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a></li>
+      <li><a href="reading.html" class="active"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
+      <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <p class="sidebar-title">Filter by Level</p>
+      <button class="filter-btn active" data-level="all"><span class="dot dot-all"></span>All Levels</button>
+      <button class="filter-btn" data-level="n4"><span class="dot dot-n4"></span>N4 <ruby>初<rt>しょ</rt></ruby><ruby>級<rt>きゅう</rt></ruby></button>
+      <button class="filter-btn" data-level="n3"><span class="dot dot-n3"></span>N3 <ruby>中<rt>ちゅう</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>下<rt>か</rt></ruby></button>
+      <button class="filter-btn" data-level="n2"><span class="dot dot-n2"></span>N2 <ruby>中<rt>ちゅう</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>上<rt>じょう</rt></ruby></button>
+      <button class="filter-btn" data-level="n1"><span class="dot dot-n1"></span>N1 <ruby>上<rt>じょう</rt></ruby><ruby>級<rt>きゅう</rt></ruby></button>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-title">How to use</p>
+      <p style="font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#7a6450;line-height:1.7;">1. Open a passage<br>2. Read it carefully<br>3. Click Generate Questions<br>4. Answer and check your score</p>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-title">AI Features</p>
+      <p style="font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#7a6450;line-height:1.7;">Questions are generated fresh each time by Claude — no two sessions are the same.</p>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div class="jp-title"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></div>
+      <div class="en-title">Reading Comprehension</div>
+      <p class="desc">Graded passages from N4 through N1. Read each text, then use the AI to generate comprehension questions. Key vocabulary is glossed below each passage.</p>
+    </div>
+
+    <div class="passage-list" id="passage-list"></div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <p class="footer-jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby> — <ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></p>
+      <p class="footer-en">Reading Comprehension · N4 → N1</p>
+    </div>
+    <a href="index.html" style="font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;text-decoration:none;">← Back to home</a>
+  </div>
+</footer>
+
+<script>
+// ── Passages ──────────────────────────────────────────────────
+const passages = [
+
+  // ════════════════════════════════════════════════════════════
+  //  N4 PASSAGES
+  // ════════════════════════════════════════════════════════════
+
+  {
+    id:'n4-1', level:'n4',
+    titleJp:'<ruby>駅<rt>えき</rt></ruby>での<ruby>案<rt>あん</rt></ruby><ruby>内<rt>ない</rt></ruby>',
+    titleEn:'Directions at the Station',
+    topic:'daily life', chars:185,
+    text:`<ruby>山<rt>やま</rt></ruby><ruby>田<rt>だ</rt></ruby>さんは<ruby>初<rt>はじ</rt></ruby>めて<ruby>東<rt>とう</rt></ruby><ruby>京<rt>きょう</rt></ruby>に<ruby>来<rt>き</rt></ruby>ました。<ruby>駅<rt>えき</rt></ruby>を<ruby>出<rt>で</rt></ruby>たところで、<ruby>道<rt>みち</rt></ruby>が<ruby>分<rt>わ</rt></ruby>からなくなってしまいました。<ruby>近<rt>ちか</rt></ruby>くにいた<ruby>女<rt>じょ</rt></ruby><ruby>性<rt>せい</rt></ruby>に<ruby>声<rt>こえ</rt></ruby>をかけると、「<ruby>この<rt>この</rt></ruby><ruby>道<rt>みち</rt></ruby>をまっすぐ<ruby>行<rt>い</rt></ruby>って、<ruby>信<rt>しん</rt></ruby><ruby>号<rt>ごう</rt></ruby>を<ruby>右<rt>みぎ</rt></ruby>に<ruby>曲<rt>ま</rt></ruby>がってください。<ruby>美<rt>び</rt></ruby><ruby>術<rt>じゅつ</rt></ruby><ruby>館<rt>かん</rt></ruby>は<ruby>そこから<rt>そこから</rt></ruby><ruby>歩<rt>ある</rt></ruby>いて<ruby>五<rt>ご</rt></ruby><ruby>分<rt>ふん</rt></ruby>ほどです」と<ruby>教<rt>おし</rt></ruby>えてもらいました。<ruby>山<rt>やま</rt></ruby><ruby>田<rt>だ</rt></ruby>さんはお<ruby>礼<rt>れい</rt></ruby>を<ruby>言<rt>い</rt></ruby>って、<ruby>教<rt>おし</rt></ruby>えてもらった<ruby>通<rt>とお</rt></ruby>りに<ruby>歩<rt>ある</rt></ruby>きました。すると、<ruby>本<rt>ほん</rt></ruby><ruby>当<rt>とう</rt></ruby>に<ruby>五<rt>ご</rt></ruby><ruby>分<rt>ふん</rt></ruby>で<ruby>美<rt>び</rt></ruby><ruby>術<rt>じゅつ</rt></ruby><ruby>館<rt>かん</rt></ruby>に<ruby>着<rt>つ</rt></ruby>きました。`,
+    gloss:[
+      {w:'案内',r:'あんない',m:'directions, guidance'},
+      {w:'声をかける',r:'こえをかける',m:'to call out to, to speak to'},
+      {w:'信号',r:'しんごう',m:'traffic light'},
+      {w:'曲がる',r:'まがる',m:'to turn'},
+      {w:'美術館',r:'びじゅつかん',m:'art museum'},
+      {w:'お礼',r:'おれい',m:'thanks, gratitude'},
+      {w:'通り',r:'とおり',m:'as told, as per'},
+    ],
+    questions:[
+      {type:'mcq',question:'山田さんはなぜ道に迷いましたか。',options:['A. 地図を忘れたから','B. 東京に来るのが初めてだったから','C. 美術館が遠かったから','D. 女性の説明が分からなかったから'],answer:'B',explanation:'「初めて東京に来ました」とあるため、道が分からなくなったのは初めて来たからです。'},
+      {type:'mcq',question:'美術館に行くには、まず何をしますか。',options:['A. 左に曲がる','B. 右に曲がる','C. まっすぐ進んで左に曲がる','D. まっすぐ歩いて信号を右に曲がる'],answer:'D',explanation:'女性は「この道をまっすぐ行って、信号を右に曲がってください」と言いました。'},
+      {type:'mcq',question:'駅から美術館まで歩いてどのくらいかかりますか。',options:['A. 3分','B. 5分','C. 10分','D. 15分'],answer:'B',explanation:'「歩いて五分ほど」と教えてもらい、本当に五分で着きました。'},
+      {type:'open',question:'あなたが道に迷ったとき、どうしますか。日本語で書いてください。'},
+    ]
+  },
+
+  {
+    id:'n4-2', level:'n4',
+    titleJp:'<ruby>田<rt>た</rt></ruby><ruby>中<rt>なか</rt></ruby>さんの<ruby>一<rt>いち</rt></ruby><ruby>日<rt>にち</rt></ruby>',
+    titleEn:'A Day in Tanaka\'s Life',
+    topic:'daily life', chars:210,
+    text:`<ruby>田<rt>た</rt></ruby><ruby>中<rt>なか</rt></ruby>さんは<ruby>毎<rt>まい</rt></ruby><ruby>朝<rt>あさ</rt></ruby><ruby>六<rt>ろく</rt></ruby><ruby>時<rt>じ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きます。<ruby>起<rt>お</rt></ruby>きてすぐ、コーヒーを<ruby>一<rt>いっ</rt></ruby><ruby>杯<rt>ぱい</rt></ruby><ruby>飲<rt>の</rt></ruby>みながら<ruby>新<rt>しん</rt></ruby><ruby>聞<rt>ぶん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>むのが<ruby>習<rt>しゅう</rt></ruby><ruby>慣<rt>かん</rt></ruby>です。<ruby>七<rt>しち</rt></ruby><ruby>時<rt>じ</rt></ruby>に<ruby>家<rt>いえ</rt></ruby>を<ruby>出<rt>で</rt></ruby>て、<ruby>電<rt>でん</rt></ruby><ruby>車<rt>しゃ</rt></ruby>で<ruby>会<rt>かい</rt></ruby><ruby>社<rt>しゃ</rt></ruby>に<ruby>向<rt>む</rt></ruby>かいます。<ruby>会<rt>かい</rt></ruby><ruby>社<rt>しゃ</rt></ruby>では<ruby>午<rt>ご</rt></ruby><ruby>前<rt>ぜん</rt></ruby><ruby>中<rt>じゅう</rt></ruby>に<ruby>会<rt>かい</rt></ruby><ruby>議<rt>ぎ</rt></ruby>が<ruby>多<rt>おお</rt></ruby>く、<ruby>午<rt>ご</rt></ruby><ruby>後<rt>ご</rt></ruby>は<ruby>書<rt>しょ</rt></ruby><ruby>類<rt>るい</rt></ruby>の<ruby>整<rt>せい</rt></ruby><ruby>理<rt>り</rt></ruby>をすることが<ruby>多<rt>おお</rt></ruby>いです。<ruby>昼<rt>ひる</rt></ruby><ruby>食<rt>しょく</rt></ruby>は<ruby>同<rt>どう</rt></ruby><ruby>僚<rt>りょう</rt></ruby>と<ruby>一<rt>いっ</rt></ruby><ruby>緒<rt>しょ</rt></ruby>に<ruby>近<rt>ちか</rt></ruby>くの<ruby>定<rt>てい</rt></ruby><ruby>食<rt>しょく</rt></ruby><ruby>屋<rt>や</rt></ruby>で<ruby>食<rt>た</rt></ruby>べます。<ruby>夜<rt>よる</rt></ruby>は<ruby>六<rt>ろく</rt></ruby><ruby>時<rt>じ</rt></ruby>ごろに<ruby>帰<rt>かえ</rt></ruby>るつもりですが、<ruby>残<rt>ざん</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>になることもよくあります。<ruby>帰<rt>かえ</rt></ruby>宅<ruby>後<rt>ご</rt></ruby>は<ruby>夕<rt>ゆう</rt></ruby><ruby>食<rt>しょく</rt></ruby>を<ruby>食<rt>た</rt></ruby>べてから、<ruby>少<rt>すこ</rt></ruby>し<ruby>テレビ<rt>テレビ</rt></ruby>を<ruby>見<rt>み</rt></ruby>て<ruby>寝<rt>ね</rt></ruby>ます。`,
+    gloss:[
+      {w:'習慣',r:'しゅうかん',m:'habit, custom'},
+      {w:'向かう',r:'むかう',m:'to head toward'},
+      {w:'書類',r:'しょるい',m:'documents, paperwork'},
+      {w:'同僚',r:'どうりょう',m:'colleague'},
+      {w:'定食屋',r:'ていしょくや',m:'set-meal restaurant'},
+      {w:'残業',r:'ざんぎょう',m:'overtime work'},
+      {w:'帰宅',r:'きたく',m:'returning home'},
+    ],
+    questions:[
+      {type:'mcq',question:'田中さんの朝の習慣は何ですか。',options:['A. 運動をする','B. コーヒーを飲みながら新聞を読む','C. 朝食を作る','D. テレビを見る'],answer:'B',explanation:'「コーヒーを一杯飲みながら新聞を読むのが習慣」とあります。'},
+      {type:'mcq',question:'田中さんが昼食を食べる場所はどこですか。',options:['A. 会社の食堂','B. 家','C. 近くの定食屋','D. コンビニ'],answer:'C',explanation:'「同僚と一緒に近くの定食屋で食べます」と書いてあります。'},
+      {type:'mcq',question:'田中さんが夜六時に帰れないことがある理由は何ですか。',options:['A. 電車が遅れるから','B. 残業があるから','C. 友達と会うから','D. 買い物をするから'],answer:'B',explanation:'「残業になることもよくあります」とあります。'},
+      {type:'open',question:'あなたの平日の一日を日本語で説明してください。'},
+    ]
+  },
+
+  {
+    id:'n4-3', level:'n4',
+    titleJp:'<ruby>引<rt>ひっ</rt></ruby><ruby>越<rt>こ</rt></ruby>しの<ruby>準<rt>じゅん</rt></ruby><ruby>備<rt>び</rt></ruby>',
+    titleEn:'Preparing to Move House',
+    topic:'daily life', chars:220,
+    text:`<ruby>佐<rt>さ</rt></ruby><ruby>藤<rt>とう</rt></ruby>さんは<ruby>来<rt>らい</rt></ruby><ruby>月<rt>げつ</rt></ruby>、<ruby>新<rt>しん</rt></ruby><ruby>しい<rt>しい</rt></ruby><ruby>アパート<rt>アパート</rt></ruby>に<ruby>引<rt>ひっ</rt></ruby><ruby>越<rt>こ</rt></ruby>す<ruby>予<rt>よ</rt></ruby><ruby>定<rt>てい</rt></ruby>です。<ruby>今<rt>いま</rt></ruby>、<ruby>引<rt>ひっ</rt></ruby><ruby>越<rt>こ</rt></ruby>しの<ruby>準<rt>じゅん</rt></ruby><ruby>備<rt>び</rt></ruby>で<ruby>忙<rt>いそが</rt></ruby>しいです。<ruby>まず<rt>まず</rt></ruby>、<ruby>不<rt>い</rt></ruby><ruby>要<rt>らな</rt></ruby>いものを<ruby>捨<rt>す</rt></ruby>てて、<ruby>荷<rt>に</rt></ruby><ruby>物<rt>もつ</rt></ruby>を<ruby>減<rt>へ</rt></ruby>らすことにしました。<ruby>古<rt>ふる</rt></ruby>い<ruby>本<rt>ほん</rt></ruby>や<ruby>服<rt>ふく</rt></ruby>などは<ruby>リサイクル<rt>リサイクル</rt></ruby>ショップに<ruby>持<rt>も</rt></ruby>って<ruby>行<rt>い</rt></ruby>くつもりです。<ruby>次<rt>つぎ</rt></ruby>に、<ruby>郵<rt>ゆう</rt></ruby><ruby>便<rt>びん</rt></ruby><ruby>局<rt>きょく</rt></ruby>や<ruby>銀<rt>ぎん</rt></ruby><ruby>行<rt>こう</rt></ruby>などに<ruby>住<rt>じゅう</rt></ruby><ruby>所<rt>しょ</rt></ruby><ruby>変<rt>へん</rt></ruby><ruby>更<rt>こう</rt></ruby>の<ruby>手<rt>て</rt></ruby><ruby>続<rt>つづ</rt></ruby>きをしなければなりません。<ruby>引<rt>ひっ</rt></ruby><ruby>越<rt>こ</rt></ruby>し<ruby>業<rt>ぎょう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>にはもう<ruby>連<rt>れん</rt></ruby><ruby>絡<rt>らく</rt></ruby>して、<ruby>見<rt>み</rt></ruby><ruby>積<rt>つも</rt></ruby>りを<ruby>取<rt>と</rt></ruby>ってもらいました。<ruby>新<rt>あたら</rt></ruby>しい<ruby>生<rt>せい</rt></ruby><ruby>活<rt>かつ</rt></ruby>が<ruby>楽<rt>たの</rt></ruby>しみですが、<ruby>準<rt>じゅん</rt></ruby><ruby>備<rt>び</rt></ruby>が<ruby>大<rt>たい</rt></ruby><ruby>変<rt>へん</rt></ruby>で<ruby>少<rt>すこ</rt></ruby>し<ruby>疲<rt>つか</rt></ruby>れています。`,
+    gloss:[
+      {w:'引越し',r:'ひっこし',m:'moving house'},
+      {w:'準備',r:'じゅんび',m:'preparation'},
+      {w:'不要',r:'ふよう',m:'unnecessary, unwanted'},
+      {w:'荷物',r:'にもつ',m:'luggage, belongings'},
+      {w:'住所変更',r:'じゅうしょへんこう',m:'change of address'},
+      {w:'手続き',r:'てつづき',m:'procedure, formalities'},
+      {w:'引越し業者',r:'ひっこしぎょうしゃ',m:'moving company'},
+      {w:'見積もり',r:'みつもり',m:'estimate, quote'},
+    ],
+    questions:[
+      {type:'mcq',question:'佐藤さんはなぜ荷物を減らすことにしましたか。',options:['A. 新しいアパートが小さいから','B. 引越しの前に不要なものを捨てるため','C. リサイクルショップにお金を払うため','D. 引越し業者に頼んだから'],answer:'B',explanation:'「不要なものを捨てて、荷物を減らすことにしました」とあります。'},
+      {type:'mcq',question:'佐藤さんが古い本や服をどうするつもりか、正しいものを選んでください。',options:['A. ゴミとして捨てる','B. 友達にあげる','C. リサイクルショップに持って行く','D. 新しいアパートに持って行く'],answer:'C',explanation:'「リサイクルショップに持って行くつもりです」と書いてあります。'},
+      {type:'mcq',question:'佐藤さんが引越し業者に頼んだことは何ですか。',options:['A. 住所変更の手続き','B. 荷物の整理','C. 見積もりを取ること','D. 郵便局への連絡'],answer:'C',explanation:'「見積もりを取ってもらいました」とあります。'},
+      {type:'open',question:'引越しをするとき、一番大変なことは何だと思いますか。理由も書いてください。'},
+    ]
+  },
+
+  {
+    id:'n4-4', level:'n4',
+    titleJp:'<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>の<ruby>学<rt>がっ</rt></ruby><ruby>校<rt>こう</rt></ruby><ruby>生<rt>せい</rt></ruby><ruby>活<rt>かつ</rt></ruby>',
+    titleEn:'School Life in Japan',
+    topic:'education', chars:230,
+    text:`<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>の<ruby>学<rt>しょう</rt></ruby><ruby>校<rt>がっこう</rt></ruby>では、<ruby>生<rt>せい</rt></ruby><ruby>徒<rt>と</rt></ruby>は<ruby>自<rt>じ</rt></ruby><ruby>分<rt>ぶん</rt></ruby>で<ruby>教<rt>きょう</rt></ruby><ruby>室<rt>しつ</rt></ruby>を<ruby>掃<rt>そう</rt></ruby><ruby>除<rt>じ</rt></ruby>します。<ruby>先<rt>せん</rt></ruby><ruby>生<rt>せい</rt></ruby>や<ruby>業<rt>ぎょう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>が<ruby>掃<rt>そう</rt></ruby><ruby>除<rt>じ</rt></ruby>するのではなく、<ruby>生<rt>せい</rt></ruby><ruby>徒<rt>と</rt></ruby>たちが<ruby>協<rt>きょう</rt></ruby><ruby>力<rt>りょく</rt></ruby>して<ruby>行<rt>おこな</rt></ruby>います。また、<ruby>給<rt>きゅう</rt></ruby><ruby>食<rt>しょく</rt></ruby>の<ruby>時<rt>じ</rt></ruby><ruby>間<rt>かん</rt></ruby>には<ruby>生<rt>せい</rt></ruby><ruby>徒<rt>と</rt></ruby>たちが<ruby>交<rt>こう</rt></ruby><ruby>代<rt>たい</rt></ruby>で<ruby>配<rt>はい</rt></ruby><ruby>膳<rt>ぜん</rt></ruby>を<ruby>担<rt>たん</rt></ruby><ruby>当<rt>とう</rt></ruby>します。<ruby>こうした<rt>こうした</rt></ruby><ruby>活<rt>かつ</rt></ruby><ruby>動<rt>どう</rt></ruby>は、<ruby>責<rt>せき</rt></ruby><ruby>任<rt>にん</rt></ruby><ruby>感<rt>かん</rt></ruby>や<ruby>協<rt>きょう</rt></ruby><ruby>調<rt>ちょう</rt></ruby><ruby>性<rt>せい</rt></ruby>を<ruby>育<rt>はぐく</rt></ruby>むために<ruby>大<rt>たい</rt></ruby><ruby>切<rt>せつ</rt></ruby>だと<ruby>考<rt>かんが</rt></ruby>えられています。<ruby>放<rt>ほう</rt></ruby><ruby>課<rt>か</rt></ruby><ruby>後<rt>ご</rt></ruby>は<ruby>部<rt>ぶ</rt></ruby><ruby>活<rt>かつ</rt></ruby><ruby>動<rt>どう</rt></ruby>に<ruby>参<rt>さん</rt></ruby><ruby>加<rt>か</rt></ruby>する<ruby>生<rt>せい</rt></ruby><ruby>徒<rt>と</rt></ruby>が<ruby>多<rt>おお</rt></ruby>く、<ruby>野<rt>や</rt></ruby><ruby>球<rt>きゅう</rt></ruby>や<ruby>バスケットボール<rt>バスケットボール</rt></ruby>などの<ruby>スポーツ<rt>スポーツ</rt></ruby><ruby>系<rt>けい</rt></ruby>から、<ruby>吹<rt>すい</rt></ruby><ruby>奏<rt>そう</rt></ruby><ruby>楽<rt>がく</rt></ruby>や<ruby>美<rt>び</rt></ruby><ruby>術<rt>じゅつ</rt></ruby><ruby>部<rt>ぶ</rt></ruby>まで<ruby>様<rt>さま</rt></ruby>ざまな<ruby>部<rt>ぶ</rt></ruby><ruby>活<rt>かつ</rt></ruby>があります。`,
+    gloss:[
+      {w:'掃除',r:'そうじ',m:'cleaning, sweeping'},
+      {w:'協力',r:'きょうりょく',m:'cooperation'},
+      {w:'給食',r:'きゅうしょく',m:'school lunch'},
+      {w:'配膳',r:'はいぜん',m:'serving food, distributing meals'},
+      {w:'責任感',r:'せきにんかん',m:'sense of responsibility'},
+      {w:'協調性',r:'きょうちょうせい',m:'cooperativeness, teamwork'},
+      {w:'放課後',r:'ほうかご',m:'after school'},
+      {w:'部活動',r:'ぶかつどう',m:'club activities'},
+      {w:'吹奏楽',r:'すいそうがく',m:'wind instrument music, concert band'},
+    ],
+    questions:[
+      {type:'mcq',question:'日本の学校で教室の掃除をするのは誰ですか。',options:['A. 先生','B. 業者','C. 生徒たち','D. 保護者'],answer:'C',explanation:'「生徒たちが協力して行います」と書いてあります。'},
+      {type:'mcq',question:'掃除や給食当番などの活動の目的は何ですか。',options:['A. お金を節約するため','B. 先生の仕事を減らすため','C. 責任感や協調性を育むため','D. 授業時間を短くするため'],answer:'C',explanation:'「責任感や協調性を育むために大切だと考えられています」とあります。'},
+      {type:'mcq',question:'部活動について、本文で述べられていないことはどれですか。',options:['A. スポーツ系の部活がある','B. 吹奏楽部がある','C. すべての生徒が参加しなければならない','D. 美術部がある'],answer:'C',explanation:'本文は「参加する生徒が多く」と書いていますが、全員が参加しなければならないとは書いていません。'},
+      {type:'open',question:'あなたが学生のとき、どんな活動や部活をしていましたか。'},
+    ]
+  },
+
+  {
+    id:'n4-5', level:'n4',
+    titleJp:'<ruby>健<rt>けん</rt></ruby><ruby>康<rt>こう</rt></ruby>のための<ruby>習<rt>しゅう</rt></ruby><ruby>慣<rt>かん</rt></ruby>',
+    titleEn:'Habits for Good Health',
+    topic:'health', chars:215,
+    text:`<ruby>最<rt>さい</rt></ruby><ruby>近<rt>きん</rt></ruby>、<ruby>健<rt>けん</rt></ruby><ruby>康<rt>こう</rt></ruby>に<ruby>気<rt>き</rt></ruby>をつける<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えています。<ruby>健<rt>けん</rt></ruby><ruby>康<rt>こう</rt></ruby>でいるためには、<ruby>食<rt>しょく</rt></ruby><ruby>事<rt>じ</rt></ruby>・<ruby>運<rt>うん</rt></ruby><ruby>動<rt>どう</rt></ruby>・<ruby>睡<rt>すい</rt></ruby><ruby>眠<rt>みん</rt></ruby>の<ruby>三<rt>み</rt></ruby><ruby>つ<rt>つ</rt></ruby>が<ruby>大<rt>たい</rt></ruby><ruby>切<rt>せつ</rt></ruby>だと<ruby>言<rt>い</rt></ruby>われています。<ruby>食<rt>しょく</rt></ruby><ruby>事<rt>じ</rt></ruby>は<ruby>栄<rt>えい</rt></ruby><ruby>養<rt>よう</rt></ruby>のバランスを<ruby>考<rt>かんが</rt></ruby>えて、<ruby>野<rt>や</rt></ruby><ruby>菜<rt>さい</rt></ruby>や<ruby>魚<rt>さかな</rt></ruby>を<ruby>多<rt>おお</rt></ruby>く<ruby>取<rt>と</rt></ruby>るようにするといいでしょう。<ruby>運<rt>うん</rt></ruby><ruby>動<rt>どう</rt></ruby>は<ruby>毎<rt>まい</rt></ruby><ruby>日<rt>にち</rt></ruby>でなくても、<ruby>週<rt>しゅう</rt></ruby>に<ruby>三<rt>さん</rt></ruby><ruby>回<rt>かい</rt></ruby>ほど<ruby>体<rt>からだ</rt></ruby>を<ruby>動<rt>うご</rt></ruby>かすだけで<ruby>効<rt>こう</rt></ruby><ruby>果<rt>か</rt></ruby>があります。<ruby>散<rt>さん</rt></ruby><ruby>歩<rt>ぽ</rt></ruby>や<ruby>ストレッチ<rt>ストレッチ</rt></ruby>など、<ruby>軽<rt>かる</rt></ruby>い<ruby>運<rt>うん</rt></ruby><ruby>動<rt>どう</rt></ruby>から<ruby>始<rt>はじ</rt></ruby>めると<ruby>続<rt>つづ</rt></ruby>けやすいです。<ruby>睡<rt>すい</rt></ruby><ruby>眠<rt>みん</rt></ruby>は<ruby>七<rt>なな</rt></ruby>〜<ruby>八<rt>はち</rt></ruby><ruby>時<rt>じ</rt></ruby><ruby>間<rt>かん</rt></ruby>が<ruby>理<rt>り</rt></ruby><ruby>想<rt>そう</rt></ruby>的<ruby>で<rt>で</rt></ruby>すが、<ruby>質<rt>しつ</rt></ruby>の<ruby>良<rt>よ</rt></ruby>い<ruby>睡<rt>すい</rt></ruby><ruby>眠<rt>みん</rt></ruby>をとることも<ruby>大<rt>たい</rt></ruby><ruby>切<rt>せつ</rt></ruby>です。`,
+    gloss:[
+      {w:'健康',r:'けんこう',m:'health'},
+      {w:'睡眠',r:'すいみん',m:'sleep'},
+      {w:'栄養',r:'えいよう',m:'nutrition'},
+      {w:'バランス',r:'バランス',m:'balance'},
+      {w:'効果',r:'こうか',m:'effect, result'},
+      {w:'ストレッチ',r:'ストレッチ',m:'stretching'},
+      {w:'理想的',r:'りそうてき',m:'ideal'},
+      {w:'質',r:'しつ',m:'quality'},
+    ],
+    questions:[
+      {type:'mcq',question:'健康でいるために大切な三つのことは何ですか。',options:['A. 食事・薬・医者','B. 食事・運動・睡眠','C. 運動・休憩・薬','D. 水・野菜・運動'],answer:'B',explanation:'「食事・運動・睡眠の三つが大切だと言われています」とあります。'},
+      {type:'mcq',question:'運動についての説明として正しいものはどれですか。',options:['A. 毎日しなければならない','B. 激しい運動だけが効果的だ','C. 週に三回ほど体を動かすだけでも効果がある','D. 運動は週末だけでよい'],answer:'C',explanation:'「週に三回ほど体を動かすだけで効果があります」と書いてあります。'},
+      {type:'mcq',question:'どのような運動から始めることが続けやすいですか。',options:['A. マラソン','B. 水泳','C. 散歩やストレッチなどの軽い運動','D. ジムでのトレーニング'],answer:'C',explanation:'「散歩やストレッチなど、軽い運動から始めると続けやすいです」とあります。'},
+      {type:'open',question:'あなたは健康のためにどんなことをしていますか。'},
+    ]
+  },
+
+  {
+    id:'n4-6', level:'n4',
+    titleJp:'<ruby>ペット<rt>ペット</rt></ruby>を<ruby>飼<rt>か</rt></ruby>うこと',
+    titleEn:'Keeping a Pet',
+    topic:'daily life', chars:205,
+    text:`<ruby>最<rt>さい</rt></ruby><ruby>近<rt>きん</rt></ruby>、<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>では<ruby>ペット<rt>ペット</rt></ruby>を<ruby>飼<rt>か</rt></ruby>う<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えています。<ruby>犬<rt>いぬ</rt></ruby>や<ruby>猫<rt>ねこ</rt></ruby>が<ruby>特<rt>とく</rt></ruby>に<ruby>人<rt>にん</rt></ruby><ruby>気<rt>き</rt></ruby>ですが、<ruby>鳥<rt>とり</rt></ruby>や<ruby>魚<rt>さかな</rt></ruby>を<ruby>飼<rt>か</rt></ruby>う<ruby>人<rt>ひと</rt></ruby>も<ruby>多<rt>おお</rt></ruby>くいます。<ruby>ペット<rt>ペット</rt></ruby>には<ruby>多<rt>おお</rt></ruby>くのメリットがあります。<ruby>例<rt>たと</rt></ruby>えば、<ruby>孤<rt>こ</rt></ruby><ruby>独<rt>どく</rt></ruby>を<ruby>感<rt>かん</rt></ruby>じにくくなったり、<ruby>生<rt>せい</rt></ruby><ruby>活<rt>かつ</rt></ruby>にリズムができたりします。<ruby>しかし<rt>しかし</rt></ruby>、<ruby>ペット<rt>ペット</rt></ruby>を<ruby>飼<rt>か</rt></ruby>うには<ruby>責<rt>せき</rt></ruby><ruby>任<rt>にん</rt></ruby>が<ruby>必<rt>ひつ</rt></ruby><ruby>要<rt>よう</rt></ruby>です。<ruby>毎<rt>まい</rt></ruby><ruby>日<rt>にち</rt></ruby>のエサやりや<ruby>世<rt>せ</rt></ruby><ruby>話<rt>わ</rt></ruby>は<ruby>もちろん<rt>もちろん</rt></ruby>、<ruby>病<rt>びょう</rt></ruby><ruby>気<rt>き</rt></ruby>のときには<ruby>動<rt>どう</rt></ruby><ruby>物<rt>ぶつ</rt></ruby><ruby>病<rt>びょう</rt></ruby><ruby>院<rt>いん</rt></ruby>に<ruby>連<rt>つ</rt></ruby>れて<ruby>行<rt>い</rt></ruby>かなければなりません。ペットが<ruby>長<rt>なが</rt></ruby>く<ruby>生<rt>い</rt></ruby>きられるように、<ruby>愛<rt>あい</rt></ruby><ruby>情<rt>じょう</rt></ruby>をもって<ruby>育<rt>そだ</rt></ruby>てることが<ruby>大<rt>たい</rt></ruby><ruby>切<rt>せつ</rt></ruby>です。`,
+    gloss:[
+      {w:'ペット',r:'ペット',m:'pet'},
+      {w:'飼う',r:'かう',m:'to keep (an animal)'},
+      {w:'メリット',r:'メリット',m:'merit, advantage'},
+      {w:'孤独',r:'こどく',m:'loneliness, solitude'},
+      {w:'リズム',r:'リズム',m:'rhythm, routine'},
+      {w:'責任',r:'せきにん',m:'responsibility'},
+      {w:'動物病院',r:'どうぶつびょういん',m:'veterinary clinic'},
+      {w:'愛情',r:'あいじょう',m:'affection, love'},
+    ],
+    questions:[
+      {type:'mcq',question:'日本で最も人気のあるペットはどれですか。',options:['A. 鳥と魚','B. うさぎとハムスター','C. 犬と猫','D. カメと蛇'],answer:'C',explanation:'「犬や猫が特に人気です」と書いてあります。'},
+      {type:'mcq',question:'ペットを飼うメリットとして本文に書かれていることはどれですか。',options:['A. お金が増える','B. 孤独を感じにくくなる','C. 友達がたくさんできる','D. 仕事がうまくいく'],answer:'B',explanation:'「孤独を感じにくくなったり、生活にリズムができたりします」とあります。'},
+      {type:'mcq',question:'ペットが病気になったとき、何をしなければなりませんか。',options:['A. 自分で治療する','B. ペットを捨てる','C. 動物病院に連れて行く','D. 友達に相談する'],answer:'C',explanation:'「病気のときには動物病院に連れて行かなければなりません」とあります。'},
+      {type:'open',question:'ペットを飼うことの良い点と悪い点を日本語で説明してください。'},
+    ]
+  },
+
+  {
+    id:'n4-7', level:'n4',
+    titleJp:'<ruby>旅<rt>りょ</rt></ruby><ruby>行<rt>こう</rt></ruby>の<ruby>思<rt>おも</rt></ruby>い<ruby>出<rt>で</rt></ruby>',
+    titleEn:'Travel Memories',
+    topic:'travel', chars:230,
+    text:`<ruby>先<rt>せん</rt></ruby><ruby>月<rt>げつ</rt></ruby>、<ruby>私<rt>わたし</rt></ruby>は<ruby>家<rt>か</rt></ruby><ruby>族<rt>ぞく</rt></ruby>と<ruby>一<rt>いっ</rt></ruby><ruby>緒<rt>しょ</rt></ruby>に<ruby>京<rt>きょう</rt></ruby><ruby>都<rt>と</rt></ruby>に<ruby>行<rt>い</rt></ruby>ってきました。<ruby>三<rt>み</rt></ruby><ruby>日<rt>っか</rt></ruby><ruby>間<rt>かん</rt></ruby>の<ruby>旅<rt>りょ</rt></ruby><ruby>行<rt>こう</rt></ruby>でしたが、<ruby>とても<rt>とても</rt></ruby><ruby>楽<rt>たの</rt></ruby>しかったです。<ruby>一<rt>いち</rt></ruby><ruby>日<rt>にち</rt></ruby><ruby>目<rt>め</rt></ruby>は<ruby>金<rt>きん</rt></ruby><ruby>閣<rt>かく</rt></ruby><ruby>寺<rt>じ</rt></ruby>と<ruby>嵐<rt>あらし</rt></ruby><ruby>山<rt>やま</rt></ruby>を<ruby>訪<rt>おとず</rt></ruby>れました。<ruby>金<rt>きん</rt></ruby><ruby>閣<rt>かく</rt></ruby><ruby>寺<rt>じ</rt></ruby>は<ruby>想<rt>そう</rt></ruby><ruby>像<rt>ぞう</rt></ruby>していたより<ruby>ずっと<rt>ずっと</rt></ruby><ruby>美<rt>うつく</rt></ruby>しく、<ruby>思<rt>おも</rt></ruby>わず<ruby>写<rt>しゃ</rt></ruby><ruby>真<rt>しん</rt></ruby>をたくさん<ruby>撮<rt>と</rt></ruby>ってしまいました。<ruby>二<rt>ふつ</rt></ruby><ruby>日<rt>か</rt></ruby><ruby>目<rt>め</rt></ruby>は<ruby>伏<rt>ふし</rt></ruby><ruby>見<rt>み</rt></ruby><ruby>稲<rt>いな</rt></ruby><ruby>荷<rt>り</rt></ruby><ruby>大<rt>たい</rt></ruby><ruby>社<rt>しゃ</rt></ruby>の<ruby>千<rt>せん</rt></ruby><ruby>本<rt>ぼん</rt></ruby><ruby>鳥<rt>とり</rt></ruby><ruby>居<rt>い</rt></ruby>を<ruby>歩<rt>ある</rt></ruby>きました。<ruby>鳥<rt>とり</rt></ruby><ruby>居<rt>い</rt></ruby>が<ruby>ずらっと<rt>ずらっと</rt></ruby><ruby>並<rt>なら</rt></ruby>んでいる<ruby>景<rt>けい</rt></ruby><ruby>色<rt>しき</rt></ruby>は<ruby>本<rt>ほん</rt></ruby><ruby>当<rt>とう</rt></ruby>に<ruby>圧<rt>あっ</rt></ruby><ruby>巻<rt>かん</rt></ruby>でした。<ruby>最<rt>さい</rt></ruby><ruby>終<rt>しゅう</rt></ruby><ruby>日<rt>び</rt></ruby>は<ruby>お<rt>お</rt></ruby><ruby>土<rt>みや</rt></ruby><ruby>産<rt>げ</rt></ruby>を<ruby>買<rt>か</rt></ruby>って、<ruby>帰<rt>かえ</rt></ruby>りの<ruby>新<rt>しん</rt></ruby><ruby>幹<rt>かん</rt></ruby><ruby>線<rt>せん</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>旅<rt>たび</rt></ruby>の<ruby>疲<rt>つか</rt></ruby>れを<ruby>取<rt>と</rt></ruby>りました。`,
+    gloss:[
+      {w:'訪れる',r:'おとずれる',m:'to visit, to come to'},
+      {w:'想像',r:'そうぞう',m:'imagination'},
+      {w:'思わず',r:'おもわず',m:'unintentionally, involuntarily'},
+      {w:'鳥居',r:'とりい',m:'Shinto shrine gate'},
+      {w:'ずらっと',r:'ずらっと',m:'in a row, lined up'},
+      {w:'圧巻',r:'あっかん',m:'highlight, most impressive part'},
+      {w:'お土産',r:'おみやげ',m:'souvenir'},
+      {w:'新幹線',r:'しんかんせん',m:'Shinkansen bullet train'},
+    ],
+    questions:[
+      {type:'mcq',question:'この旅行は何日間でしたか。',options:['A. 一日','B. 二日間','C. 三日間','D. 一週間'],answer:'C',explanation:'「三日間の旅行でした」と書いてあります。'},
+      {type:'mcq',question:'筆者が金閣寺について思ったことは何ですか。',options:['A. 小さくてがっかりした','B. 想像していたより美しかった','C. 人が多すぎて楽しめなかった','D. 写真が撮れなかった'],answer:'B',explanation:'「想像していたよりずっと美しく」と書いてあります。'},
+      {type:'mcq',question:'伏見稲荷大社で一番印象的だったものは何ですか。',options:['A. 金色の建物','B. 大きな池','C. ずらっと並んだ鳥居','D. 広い公園'],answer:'C',explanation:'「鳥居がずらっと並んでいる景色は本当に圧巻でした」とあります。'},
+      {type:'open',question:'あなたが行ってみたい日本の場所はどこですか。その理由も説明してください。'},
+    ]
+  },
+
+  {
+    id:'n4-8', level:'n4',
+    titleJp:'<ruby>便<rt>べん</rt></ruby><ruby>利<rt>り</rt></ruby>なコンビニ',
+    titleEn:'The Convenient Convenience Store',
+    topic:'culture', chars:240,
+    text:`<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>の<ruby>コンビニ<rt>コンビニ</rt></ruby>は、<ruby>世<rt>せ</rt></ruby><ruby>界<rt>かい</rt></ruby>で<ruby>最<rt>もっと</rt></ruby>も<ruby>便<rt>べん</rt></ruby><ruby>利<rt>り</rt></ruby>なコンビニの<ruby>一<rt>ひと</rt></ruby>つだと<ruby>言<rt>い</rt></ruby>われています。<ruby>二<rt>に</rt></ruby><ruby>十<rt>じゅう</rt></ruby><ruby>四<rt>し</rt></ruby><ruby>時<rt>じ</rt></ruby><ruby>間<rt>かん</rt></ruby><ruby>三<rt>さん</rt></ruby><ruby>百<rt>びゃく</rt></ruby><ruby>六<rt>ろく</rt></ruby><ruby>十<rt>じゅう</rt></ruby><ruby>五<rt>ご</rt></ruby><ruby>日<rt>にち</rt></ruby><ruby>営<rt>えい</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>しており、<ruby>食<rt>た</rt></ruby>べ<ruby>物<rt>もの</rt></ruby>や<ruby>飲<rt>の</rt></ruby>み<ruby>物<rt>もの</rt></ruby>だけでなく、<ruby>公<rt>こう</rt></ruby><ruby>共<rt>きょう</rt></ruby><ruby>料<rt>りょう</rt></ruby><ruby>金<rt>きん</rt></ruby>の<ruby>支<rt>し</rt></ruby><ruby>払<rt>はら</rt></ruby>いや<ruby>コピー<rt>コピー</rt></ruby>、<ruby>ATM<rt>エーティーエム</rt></ruby>なども<ruby>利<rt>り</rt></ruby><ruby>用<rt>よう</rt></ruby>できます。<ruby>また<rt>また</rt></ruby>、<ruby>季<rt>き</rt></ruby><ruby>節<rt>せつ</rt></ruby>ごとに<ruby>新<rt>しん</rt></ruby>しい<ruby>商<rt>しょう</rt></ruby><ruby>品<rt>ひん</rt></ruby>が<ruby>並<rt>なら</rt></ruby>び、<ruby>クリスマス<rt>クリスマス</rt></ruby>や<ruby>バレンタイン<rt>バレンタイン</rt></ruby>などの<ruby>イベント<rt>イベント</rt></ruby>に<ruby>合<rt>あ</rt></ruby>わせた<ruby>商<rt>しょう</rt></ruby><ruby>品<rt>ひん</rt></ruby>も<ruby>豊<rt>ゆたか</rt></ruby>に<ruby>揃<rt>そろ</rt></ruby>っています。<ruby>外<rt>がい</rt></ruby><ruby>国<rt>こく</rt></ruby>から<ruby>来<rt>き</rt></ruby>た<ruby>旅<rt>りょ</rt></ruby><ruby>行<rt>こう</rt></ruby><ruby>者<rt>しゃ</rt></ruby>の<ruby>多<rt>おお</rt></ruby>くが、<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>のコンビニのクオリティーの<ruby>高<rt>たか</rt></ruby>さに<ruby>驚<rt>おどろ</rt></ruby>くと<ruby>言<rt>い</rt></ruby>います。`,
+    gloss:[
+      {w:'コンビニ',r:'コンビニ',m:'convenience store'},
+      {w:'営業',r:'えいぎょう',m:'business operation'},
+      {w:'公共料金',r:'こうきょうりょうきん',m:'utility bills'},
+      {w:'支払い',r:'しはらい',m:'payment'},
+      {w:'季節',r:'きせつ',m:'season'},
+      {w:'豊に揃う',r:'ゆたかにそろう',m:'to be amply stocked'},
+      {w:'旅行者',r:'りょこうしゃ',m:'traveller, tourist'},
+      {w:'クオリティー',r:'クオリティー',m:'quality'},
+    ],
+    questions:[
+      {type:'mcq',question:'日本のコンビニは何時間営業していますか。',options:['A. 朝八時から夜十時まで','B. 二十四時間','C. 朝六時から深夜まで','D. 平日のみ営業'],answer:'B',explanation:'「二十四時間三百六十五日営業しており」と書いてあります。'},
+      {type:'mcq',question:'コンビニでできないことはどれですか。',options:['A. 公共料金の支払い','B. ATMの利用','C. コピー','D. 車の修理'],answer:'D',explanation:'本文には食品、公共料金、コピー、ATMは書かれていますが、車の修理は書かれていません。'},
+      {type:'mcq',question:'外国からの旅行者はコンビニについて何を思うと言いますか。',options:['A. 値段が高い','B. 品数が少ない','C. クオリティーの高さに驚く','D. 店内が狭い'],answer:'C',explanation:'「日本のコンビニのクオリティーの高さに驚くと言います」とあります。'},
+      {type:'open',question:'あなたの国にコンビニはありますか。日本のコンビニとどう違うと思いますか。'},
+    ]
+  },
+
+
+// ════════════════════════════════════════════════════════════
+  //  N3 PASSAGES
+  // ════════════════════════════════════════════════════════════
+
+  {
+    id:'n3-1', level:'n3',
+    titleJp:'<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>の<ruby>四<rt>し</rt></ruby><ruby>季<rt>き</rt></ruby>',
+    titleEn:'The Four Seasons of Japan',
+    topic:'culture', chars:195,
+    text:`<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>には<ruby>春<rt>はる</rt></ruby>・<ruby>夏<rt>なつ</rt></ruby>・<ruby>秋<rt>あき</rt></ruby>・<ruby>冬<rt>ふゆ</rt></ruby>の<ruby>四<rt>し</rt></ruby><ruby>季<rt>き</rt></ruby>があり、それぞれに<ruby>独<rt>どく</rt></ruby><ruby>特<rt>とく</rt></ruby>な<ruby>魅<rt>み</rt></ruby><ruby>力<rt>りょく</rt></ruby>があります。<ruby>春<rt>はる</rt></ruby>になると<ruby>桜<rt>さくら</rt></ruby>が<ruby>咲<rt>さ</rt></ruby>き、<ruby>多<rt>おお</rt></ruby>くの<ruby>人<rt>ひと</rt></ruby>が<ruby>花<rt>はな</rt></ruby><ruby>見<rt>み</rt></ruby>を<ruby>楽<rt>たの</rt></ruby>しみます。<ruby>夏<rt>なつ</rt></ruby>は<ruby>暑<rt>あつ</rt></ruby>くて<ruby>湿<rt>しつ</rt></ruby><ruby>気<rt>け</rt></ruby>が<ruby>多<rt>おお</rt></ruby>いですが、<ruby>花<rt>はな</rt></ruby><ruby>火<rt>び</rt></ruby><ruby>大<rt>たい</rt></ruby><ruby>会<rt>かい</rt></ruby>やお<ruby>祭<rt>まつ</rt></ruby>りで<ruby>賑<rt>にぎ</rt></ruby>わいます。<ruby>秋<rt>あき</rt></ruby>は<ruby>紅<rt>こう</rt></ruby><ruby>葉<rt>よう</rt></ruby>が<ruby>美<rt>うつく</rt></ruby>しく、<ruby>食<rt>しょく</rt></ruby><ruby>欲<rt>よく</rt></ruby>の<ruby>秋<rt>あき</rt></ruby>とも<ruby>呼<rt>よ</rt></ruby>ばれます。<ruby>冬<rt>ふゆ</rt></ruby>は<ruby>寒<rt>さむ</rt></ruby>いですが、<ruby>温<rt>おん</rt></ruby><ruby>泉<rt>せん</rt></ruby>や<ruby>雪<rt>ゆき</rt></ruby><ruby>景<rt>げ</rt></ruby><ruby>色<rt>しき</rt></ruby>が<ruby>楽<rt>たの</rt></ruby>しめます。`,
+    gloss:[
+      {w:'四季',r:'しき',m:'four seasons'},
+      {w:'独特',r:'どくとく',m:'unique, distinctive'},
+      {w:'魅力',r:'みりょく',m:'charm, appeal'},
+      {w:'花火大会',r:'はなびたいかい',m:'fireworks festival'},
+      {w:'紅葉',r:'こうよう',m:'autumn leaves'},
+      {w:'食欲',r:'しょくよく',m:'appetite'},
+      {w:'温泉',r:'おんせん',m:'hot spring'},
+    ],
+    questions:[
+      {type:'mcq',question:'春に多くの人が楽しむものは何ですか。',options:['A. 花火大会','B. 花見','C. 紅葉狩り','D. 温泉'],answer:'B',explanation:'「春になると桜が咲き、多くの人が花見を楽しみます」とあります。'},
+      {type:'mcq',question:'秋が「食欲の秋」と呼ばれる理由として、本文から読み取れることは何ですか。',options:['A. 秋は食べ物が少ないから','B. 秋は食べ物が豊かで食欲が増すことが知られているから','C. 秋は暑くて食欲がないから','D. 秋は祭りが多いから'],answer:'B',explanation:'「食欲の秋とも呼ばれます」とあり、これは秋に食べ物が豊かで食欲が増すことが広く知られているためです。'},
+      {type:'mcq',question:'夏の特徴として正しいものはどれですか。',options:['A. 寒くて乾燥している','B. 暑くて湿気が多く、花火大会やお祭りがある','C. 紅葉が美しい','D. 温泉が楽しめる'],answer:'B',explanation:'「夏は暑くて湿気が多いですが、花火大会やお祭りで賑わいます」とあります。'},
+      {type:'open',question:'四季の中でどの季節が好きですか。その理由を日本語で説明してください。'},
+    ]
+  },
+
+  {
+    id:'n3-2', level:'n3',
+    titleJp:'<ruby>ボランティア<rt>ボランティア</rt></ruby><ruby>活<rt>かつ</rt></ruby><ruby>動<rt>どう</rt></ruby>',
+    titleEn:'Volunteer Activities',
+    topic:'society', chars:240,
+    text:`<ruby>最<rt>さい</rt></ruby><ruby>近<rt>きん</rt></ruby>、<ruby>地<rt>ち</rt></ruby><ruby>域<rt>いき</rt></ruby>や<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby>のためにボランティア<ruby>活<rt>かつ</rt></ruby><ruby>動<rt>どう</rt></ruby>をする<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えています。ボランティアとは、<ruby>お<rt>お</rt></ruby><ruby>金<rt>かね</rt></ruby>をもらわずに<ruby>自<rt>し</rt></ruby><ruby>発<rt>はつ</rt></ruby><ruby>的<rt>てき</rt></ruby>に<ruby>他<rt>た</rt></ruby><ruby>者<rt>しゃ</rt></ruby>のために<ruby>働<rt>はたら</rt></ruby>くことです。<ruby>公<rt>こう</rt></ruby><ruby>園<rt>えん</rt></ruby>の<ruby>清<rt>せい</rt></ruby><ruby>掃<rt>そう</rt></ruby>や<ruby>子<rt>こ</rt></ruby><ruby>ども<rt>ども</rt></ruby><ruby>へ<rt>へ</rt></ruby>の<ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby><ruby>支<rt>し</rt></ruby><ruby>援<rt>えん</rt></ruby>、<ruby>災<rt>さい</rt></ruby><ruby>害<rt>がい</rt></ruby><ruby>時<rt>じ</rt></ruby>の<ruby>炊<rt>すい</rt></ruby><ruby>き<rt>き</rt></ruby><ruby>出<rt>だ</rt></ruby>しなど、<ruby>様<rt>さま</rt></ruby>ざまな<ruby>形<rt>かたち</rt></ruby>があります。ボランティアをすることで、<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby>のつながりを<ruby>感<rt>かん</rt></ruby><ruby>じ<rt>じ</rt></ruby>られたり、<ruby>新<rt>あたら</rt></ruby>しいスキルを<ruby>身<rt>み</rt></ruby>につけたりすることができます。<ruby>また<rt>また</rt></ruby>、<ruby>自<rt>じ</rt></ruby><ruby>分<rt>ぶん</rt></ruby>が<ruby>誰<rt>だれ</rt></ruby>かの<ruby>役<rt>やく</rt></ruby>に<ruby>立<rt>た</rt></ruby>っているという<ruby>充<rt>じゅう</rt></ruby><ruby>実<rt>じつ</rt></ruby><ruby>感<rt>かん</rt></ruby>も<ruby>得<rt>え</rt></ruby>られます。<ruby>しかし<rt>しかし</rt></ruby>、<ruby>継<rt>けい</rt></ruby><ruby>続<rt>ぞく</rt></ruby>するためには<ruby>無<rt>む</rt></ruby><ruby>理<rt>り</rt></ruby>なく<ruby>参<rt>さん</rt></ruby><ruby>加<rt>か</rt></ruby>できる<ruby>活<rt>かつ</rt></ruby><ruby>動<rt>どう</rt></ruby>を<ruby>選<rt>えら</rt></ruby>ぶことが<ruby>大<rt>たい</rt></ruby><ruby>切<rt>せつ</rt></ruby>です。`,
+    gloss:[
+      {w:'ボランティア',r:'ボランティア',m:'volunteer'},
+      {w:'自発的',r:'じはつてき',m:'voluntary, spontaneous'},
+      {w:'清掃',r:'せいそう',m:'cleaning, sweeping'},
+      {w:'学習支援',r:'がくしゅうしえん',m:'learning support, tutoring'},
+      {w:'炊き出し',r:'すいきだし',m:'serving food at disaster sites'},
+      {w:'充実感',r:'じゅうじつかん',m:'sense of fulfilment'},
+      {w:'継続',r:'けいぞく',m:'continuation'},
+    ],
+    questions:[
+      {type:'mcq',question:'ボランティアの定義として、本文で述べられているものはどれですか。',options:['A. 会社のために働くこと','B. お金をもらいながら他者を助けること','C. お金をもらわずに自発的に他者のために働くこと','D. 政府の命令で行う活動'],answer:'C',explanation:'「お金をもらわずに自発的に他者のために働くこと」と書いてあります。'},
+      {type:'mcq',question:'ボランティア活動をすることで得られないものはどれですか。',options:['A. 社会とのつながり','B. 新しいスキル','C. 充実感','D. 高い給料'],answer:'D',explanation:'ボランティアはお金をもらわない活動なので、高い給料は得られません。'},
+      {type:'mcq',question:'ボランティアを継続するために大切なことは何ですか。',options:['A. 毎日参加すること','B. 無理なく参加できる活動を選ぶこと','C. 多くの人に声をかけること','D. 専門的な知識を持つこと'],answer:'B',explanation:'「継続するためには無理なく参加できる活動を選ぶことが大切」とあります。'},
+      {type:'open',question:'ボランティア活動に参加したことがありますか。または、参加してみたい活動はありますか。'},
+    ]
+  },
+
+  {
+    id:'n3-3', level:'n3',
+    titleJp:'<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>の<ruby>食<rt>しょく</rt></ruby><ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby>',
+    titleEn:'Japanese Food Culture',
+    topic:'culture', chars:255,
+    text:`<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>料<rt>りょう</rt></ruby><ruby>理<rt>り</rt></ruby>は、<ruby>二<rt>に</rt></ruby><ruby>〇<rt>ゼロ</rt></ruby><ruby>一<rt>いち</rt></ruby><ruby>三<rt>さん</rt></ruby><ruby>年<rt>ねん</rt></ruby>にユネスコの<ruby>無<rt>む</rt></ruby><ruby>形<rt>けい</rt></ruby><ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby><ruby>遺<rt>い</rt></ruby><ruby>産<rt>さん</rt></ruby>に<ruby>登<rt>とう</rt></ruby><ruby>録<rt>ろく</rt></ruby>されました。その<ruby>特<rt>とく</rt></ruby><ruby>徴<rt>ちょう</rt></ruby>は、<ruby>季<rt>き</rt></ruby><ruby>節<rt>せつ</rt></ruby>の<ruby>食<rt>しょく</rt></ruby><ruby>材<rt>ざい</rt></ruby>を<ruby>大<rt>たい</rt></ruby><ruby>切<rt>せつ</rt></ruby>にし、<ruby>素<rt>そ</rt></ruby><ruby>材<rt>ざい</rt></ruby>の<ruby>味<rt>あじ</rt></ruby>を<ruby>生<rt>い</rt></ruby>かした<ruby>調<rt>ちょう</rt></ruby><ruby>理<rt>り</rt></ruby><ruby>法<rt>ほう</rt></ruby>にあります。「<ruby>だし<rt>だし</rt></ruby>」と<ruby>呼<rt>よ</rt></ruby>ばれる<ruby>出<rt>だ</rt></ruby><ruby>汁<rt>しる</rt></ruby>は<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>料<rt>りょう</rt></ruby><ruby>理<rt>り</rt></ruby>の<ruby>基<rt>き</rt></ruby><ruby>本<rt>ほん</rt></ruby>であり、<ruby>昆<rt>こん</rt></ruby><ruby>布<rt>ぶ</rt></ruby>や<ruby>鰹<rt>かつお</rt></ruby><ruby>節<rt>ぶし</rt></ruby>から<ruby>旨<rt>うま</rt></ruby><ruby>味<rt>み</rt></ruby>を<ruby>引<rt>ひ</rt></ruby>き<ruby>出<rt>だ</rt></ruby>します。また、<ruby>一<rt>いち</rt></ruby><ruby>汁<rt>じゅう</rt></ruby><ruby>三<rt>さん</rt></ruby><ruby>菜<rt>さい</rt></ruby>という<ruby>食<rt>しょく</rt></ruby><ruby>事<rt>じ</rt></ruby>スタイルは、<ruby>栄<rt>えい</rt></ruby><ruby>養<rt>よう</rt></ruby>バランスがよく、<ruby>健<rt>けん</rt></ruby><ruby>康<rt>こう</rt></ruby>的<ruby>な<rt>な</rt></ruby><ruby>食<rt>しょく</rt></ruby><ruby>生<rt>せい</rt></ruby><ruby>活<rt>かつ</rt></ruby>につながると<ruby>世<rt>せ</rt></ruby><ruby>界<rt>かい</rt></ruby>から<ruby>注<rt>ちゅう</rt></ruby><ruby>目<rt>もく</rt></ruby>されています。<ruby>食<rt>しょく</rt></ruby><ruby>事<rt>じ</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>に<ruby>「いただきます」<rt>いただきます</rt></ruby>、<ruby>後<rt>あと</rt></ruby>に<ruby>「ごちそうさまでした」<rt>ごちそうさまでした</rt></ruby>と<ruby>言<rt>い</rt></ruby>う<ruby>習<rt>しゅう</rt></ruby><ruby>慣<rt>かん</rt></ruby>も、<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>独<rt>どく</rt></ruby><ruby>自<rt>じ</rt></ruby>の<ruby>食<rt>しょく</rt></ruby><ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby>の<ruby>一<rt>ひと</rt></ruby>つです。`,
+    gloss:[
+      {w:'無形文化遺産',r:'むけいぶんかいさん',m:'intangible cultural heritage'},
+      {w:'食材',r:'しょくざい',m:'ingredients'},
+      {w:'素材',r:'そざい',m:'raw material, ingredient'},
+      {w:'だし（出汁）',r:'だし',m:'stock, broth (cooking base)'},
+      {w:'旨味',r:'うまみ',m:'umami, savouriness'},
+      {w:'一汁三菜',r:'いちじゅうさんさい',m:'one soup three dishes (traditional meal format)'},
+      {w:'注目',r:'ちゅうもく',m:'attention, focus'},
+    ],
+    questions:[
+      {type:'mcq',question:'日本料理がユネスコの無形文化遺産に登録された年はいつですか。',options:['A. 2000年','B. 2010年','C. 2013年','D. 2020年'],answer:'C',explanation:'「二〇一三年にユネスコの無形文化遺産に登録されました」とあります。'},
+      {type:'mcq',question:'「だし」の説明として正しいものはどれですか。',options:['A. 肉から作るスープ','B. 昆布や鰹節から旨味を引き出したもの','C. 野菜を煮たもの','D. 甘いソース'],answer:'B',explanation:'「昆布や鰹節から旨味を引き出します」と書いてあります。'},
+      {type:'mcq',question:'一汁三菜はなぜ世界から注目されていますか。',options:['A. 準備が簡単だから','B. 値段が安いから','C. 栄養バランスがよく健康的だから','D. 料理の種類が多いから'],answer:'C',explanation:'「栄養バランスがよく、健康的な食生活につながると世界から注目されています」とあります。'},
+      {type:'open',question:'「いただきます」「ごちそうさまでした」のような食事の挨拶は、あなたの文化にもありますか。'},
+    ]
+  },
+
+  {
+    id:'n3-4', level:'n3',
+    titleJp:'<ruby>仕<rt>し</rt></ruby><ruby>事<rt>ごと</rt></ruby>と<ruby>生<rt>せい</rt></ruby><ruby>活<rt>かつ</rt></ruby>のバランス',
+    titleEn:'Work-Life Balance',
+    topic:'society', chars:265,
+    text:`<ruby>近<rt>きん</rt></ruby><ruby>年<rt>ねん</rt></ruby>、<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>では<ruby>ワーク<rt>ワーク</rt></ruby>・<ruby>ライフ<rt>ライフ</rt></ruby>・バランスが<ruby>重<rt>じゅう</rt></ruby><ruby>視<rt>し</rt></ruby>されるようになってきました。<ruby>以<rt>い</rt></ruby><ruby>前<rt>ぜん</rt></ruby>は<ruby>長<rt>ちょう</rt></ruby><ruby>時<rt>じ</rt></ruby><ruby>間<rt>かん</rt></ruby><ruby>労<rt>ろう</rt></ruby><ruby>働<rt>どう</rt></ruby>が<ruby>当<rt>あたり</rt></ruby><ruby>前<rt>まえ</rt></ruby>とされていましたが、<ruby>過<rt>か</rt></ruby><ruby>労<rt>ろう</rt></ruby><ruby>死<rt>し</rt></ruby>などの<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>が<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby><ruby>的<rt>てき</rt></ruby>に<ruby>注<rt>ちゅう</rt></ruby><ruby>目<rt>もく</rt></ruby>されたことで、<ruby>働<rt>はたら</rt></ruby>き<ruby>方<rt>かた</rt></ruby>の<ruby>改<rt>かい</rt></ruby><ruby>革<rt>かく</rt></ruby>が<ruby>進<rt>すす</rt></ruby>んでいます。<ruby>テレワーク<rt>テレワーク</rt></ruby>の<ruby>普<rt>ふ</rt></ruby><ruby>及<rt>きゅう</rt></ruby>や<ruby>有<rt>ゆう</rt></ruby><ruby>給<rt>きゅう</rt></ruby><ruby>休<rt>きゅう</rt></ruby><ruby>暇<rt>か</rt></ruby>の<ruby>取<rt>と</rt></ruby>得<ruby>率<rt>りつ</rt></ruby>の<ruby>向<rt>こう</rt></ruby><ruby>上<rt>じょう</rt></ruby>など、<ruby>制<rt>せい</rt></ruby><ruby>度<rt>ど</rt></ruby>の<ruby>面<rt>めん</rt></ruby>でも<ruby>変<rt>へん</rt></ruby><ruby>化<rt>か</rt></ruby>が<ruby>起<rt>お</rt></ruby>きています。しかし、<ruby>意<rt>い</rt></ruby><ruby>識<rt>しき</rt></ruby>の<ruby>変<rt>へん</rt></ruby><ruby>化<rt>か</rt></ruby>には<ruby>時<rt>じ</rt></ruby><ruby>間<rt>かん</rt></ruby>がかかるものです。<ruby>大<rt>だい</rt></ruby><ruby>切<rt>せつ</rt></ruby>なのは、<ruby>仕<rt>し</rt></ruby><ruby>事<rt>ごと</rt></ruby>だけでなく、<ruby>家<rt>か</rt></ruby><ruby>族<rt>ぞく</rt></ruby>との<ruby>時<rt>じ</rt></ruby><ruby>間<rt>かん</rt></ruby>や<ruby>趣<rt>しゅ</rt></ruby><ruby>味<rt>み</rt></ruby>、<ruby>自<rt>じ</rt></ruby><ruby>分<rt>ぶん</rt></ruby>自<ruby>身<rt>しん</rt></ruby>のための<ruby>時<rt>じ</rt></ruby><ruby>間<rt>かん</rt></ruby>を<ruby>大<rt>たい</rt></ruby><ruby>切<rt>せつ</rt></ruby>にすることです。`,
+    gloss:[
+      {w:'ワーク・ライフ・バランス',r:'ワークライフバランス',m:'work-life balance'},
+      {w:'重視',r:'じゅうし',m:'placing importance on'},
+      {w:'長時間労働',r:'ちょうじかんろうどう',m:'long working hours'},
+      {w:'過労死',r:'かろうし',m:'death from overwork'},
+      {w:'働き方改革',r:'はたらきかたかいかく',m:'work style reform'},
+      {w:'テレワーク',r:'テレワーク',m:'remote work, telework'},
+      {w:'有給休暇',r:'ゆうきゅうきゅうか',m:'paid leave'},
+      {w:'取得率',r:'しゅとくりつ',m:'rate of utilisation/uptake'},
+    ],
+    questions:[
+      {type:'mcq',question:'日本で働き方改革が進んだきっかけの一つは何ですか。',options:['A. 経済成長のため','B. 過労死などの問題が社会的に注目されたから','C. 外国からの圧力があったから','D. 若者の人口が増えたから'],answer:'B',explanation:'「過労死などの問題が社会的に注目されたことで、働き方の改革が進んでいます」とあります。'},
+      {type:'mcq',question:'制度の面でどのような変化が起きていますか。',options:['A. 残業時間が増えた','B. テレワークの普及と有給休暇の取得率向上','C. 給料が下がった','D. 休日が減った'],answer:'B',explanation:'「テレワークの普及や有給休暇の取得率の向上など、制度の面でも変化が起きています」とあります。'},
+      {type:'mcq',question:'筆者が大切だと考えていることは何ですか。',options:['A. 仕事をできるだけ多くすること','B. 仕事、家族との時間、趣味など自分自身の時間を大切にすること','C. 残業をしないこと','D. テレワークを活用すること'],answer:'B',explanation:'「仕事だけでなく、家族との時間や趣味、自分自身のための時間を大切にすること」とあります。'},
+      {type:'open',question:'あなたにとって仕事と生活のバランスをとるために大切なことは何ですか。'},
+    ]
+  },
+
+  {
+    id:'n3-5', level:'n3',
+    titleJp:'<ruby>若<rt>わか</rt></ruby>い<ruby>人<rt>ひと</rt></ruby>たちの<ruby>読<rt>どく</rt></ruby><ruby>書<rt>しょ</rt></ruby><ruby>離<rt>ばな</rt></ruby>れ',
+    titleEn:'Young People Turning Away from Reading',
+    topic:'education', chars:255,
+    text:`<ruby>近<rt>きん</rt></ruby><ruby>年<rt>ねん</rt></ruby>、<ruby>若<rt>わか</rt></ruby>い<ruby>人<rt>ひと</rt></ruby>たちの<ruby>読<rt>どく</rt></ruby><ruby>書<rt>しょ</rt></ruby><ruby>量<rt>りょう</rt></ruby>が<ruby>減<rt>げん</rt></ruby><ruby>少<rt>しょう</rt></ruby>していると<ruby>言<rt>い</rt></ruby>われています。スマートフォンの<ruby>普<rt>ふ</rt></ruby><ruby>及<rt>きゅう</rt></ruby>により、<ruby>短<rt>たん</rt></ruby>い<ruby>文<rt>ぶん</rt></ruby><ruby>章<rt>しょう</rt></ruby>や<ruby>動<rt>どう</rt></ruby><ruby>画<rt>が</rt></ruby>を<ruby>消<rt>しょう</rt></ruby><ruby>費<rt>ひ</rt></ruby>することに<ruby>慣<rt>な</rt></ruby>れてしまい、<ruby>長<rt>なが</rt></ruby>い<ruby>文<rt>ぶん</rt></ruby><ruby>章<rt>しょう</rt></ruby>を<ruby>読<rt>よ</rt></ruby>む<ruby>集<rt>しゅう</rt></ruby><ruby>中<rt>ちゅう</rt></ruby><ruby>力<rt>りょく</rt></ruby>が<ruby>育<rt>そだ</rt></ruby>ちにくくなっているという<ruby>指<rt>し</rt></ruby><ruby>摘<rt>てき</rt></ruby>があります。<ruby>しかし<rt>しかし</rt></ruby>、<ruby>読<rt>どく</rt></ruby><ruby>書<rt>しょ</rt></ruby>には<ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby><ruby>力<rt>りょく</rt></ruby>や<ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby><ruby>力<rt>りょく</rt></ruby>、<ruby>想<rt>そう</rt></ruby><ruby>像<rt>ぞう</rt></ruby><ruby>力<rt>りょく</rt></ruby>を<ruby>高<rt>たか</rt></ruby>める<ruby>効<rt>こう</rt></ruby><ruby>果<rt>か</rt></ruby>があります。<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>むことで、<ruby>自<rt>じ</rt></ruby><ruby>分<rt>ぶん</rt></ruby>が<ruby>経<rt>けい</rt></ruby><ruby>験<rt>けん</rt></ruby>できないことを<ruby>追<rt>たい</rt></ruby><ruby>体<rt>たい</rt></ruby><ruby>験<rt>けん</rt></ruby>したり、<ruby>様<rt>さま</rt></ruby>ざまな<ruby>考<rt>かんが</rt></ruby>え<ruby>方<rt>かた</rt></ruby>に<ruby>触<rt>ふ</rt></ruby>れたりすることができます。<ruby>読<rt>どく</rt></ruby><ruby>書<rt>しょ</rt></ruby>の<ruby>習<rt>しゅう</rt></ruby><ruby>慣<rt>かん</rt></ruby>を<ruby>身<rt>み</rt></ruby>につけることは、<ruby>長<rt>なが</rt></ruby>い<ruby>目<rt>め</rt></ruby>で<ruby>見<rt>み</rt></ruby>れば<ruby>大<rt>おお</rt></ruby>きな<ruby>財<rt>ざい</rt></ruby><ruby>産<rt>さん</rt></ruby>となるでしょう。`,
+    gloss:[
+      {w:'読書離れ',r:'どくしょばなれ',m:'turning away from reading'},
+      {w:'読書量',r:'どくしょりょう',m:'amount of reading'},
+      {w:'集中力',r:'しゅうちゅうりょく',m:'concentration, focus'},
+      {w:'語彙力',r:'ごいりょく',m:'vocabulary ability'},
+      {w:'読解力',r:'どっかいりょく',m:'reading comprehension ability'},
+      {w:'追体験',r:'ついたいけん',m:'vicarious experience'},
+      {w:'財産',r:'ざいさん',m:'asset, treasure'},
+    ],
+    questions:[
+      {type:'mcq',question:'若い人の読書量が減っている原因として本文で挙げられているものは何ですか。',options:['A. 本が高くなったから','B. 図書館が減ったから','C. スマートフォンの普及で短い文章や動画に慣れたから','D. 学校の授業が増えたから'],answer:'C',explanation:'「スマートフォンの普及により、短い文章や動画を消費することに慣れてしまい」とあります。'},
+      {type:'mcq',question:'読書のメリットとして挙げられていないものはどれですか。',options:['A. 語彙力が高まる','B. 読解力が高まる','C. 運動能力が高まる','D. 想像力が高まる'],answer:'C',explanation:'本文には語彙力・読解力・想像力は書かれていますが、運動能力については述べられていません。'},
+      {type:'mcq',question:'「長い目で見れば大きな財産」とはどういう意味ですか。',options:['A. 本はお金より大切だということ','B. 読書習慣は長期的に見て大きな価値があるということ','C. 長い本を読むとお金が貯まること','D. 財産を増やすためには本を読む必要があること'],answer:'B',explanation:'「長い目で見れば」は長期的な視点を意味し、読書習慣が将来的に大きな価値をもたらすと述べています。'},
+      {type:'open',question:'あなたは本を読む習慣がありますか。どんな種類の本が好きですか。'},
+    ]
+  },
+
+  {
+    id:'n3-6', level:'n3',
+    titleJp:'<ruby>環<rt>かん</rt></ruby><ruby>境<rt>きょう</rt></ruby><ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>と<ruby>個<rt>こ</rt></ruby><ruby>人<rt>じん</rt></ruby>の<ruby>取<rt>と</rt></ruby>り<ruby>組<rt>く</rt></ruby>み',
+    titleEn:'Environmental Issues and Individual Action',
+    topic:'society', chars:260,
+    text:`<ruby>地<rt>ち</rt></ruby><ruby>球<rt>きゅう</rt></ruby><ruby>温<rt>おん</rt></ruby><ruby>暖<rt>だん</rt></ruby><ruby>化<rt>か</rt></ruby>やプラスチックごみなど、<ruby>環<rt>かん</rt></ruby><ruby>境<rt>きょう</rt></ruby>への<ruby>影<rt>えい</rt></ruby><ruby>響<rt>きょう</rt></ruby>が<ruby>深<rt>しん</rt></ruby><ruby>刻<rt>こく</rt></ruby>な<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>となっています。<ruby>こうした<rt>こうした</rt></ruby><ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>に<ruby>対<rt>たい</rt></ruby>して、<ruby>政<rt>せい</rt></ruby><ruby>府<rt>ふ</rt></ruby>や<ruby>企<rt>き</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>だけでなく、<ruby>一<rt>いち</rt></ruby><ruby>人<rt>ひとり</rt></ruby>ひとりが<ruby>行<rt>こう</rt></ruby><ruby>動<rt>どう</rt></ruby>することも<ruby>重<rt>じゅう</rt></ruby><ruby>要<rt>よう</rt></ruby>です。<ruby>例<rt>たと</rt></ruby>えば、マイバッグを<ruby>持<rt>も</rt></ruby>ち<ruby>歩<rt>ある</rt></ruby>いてレジ<ruby>袋<rt>ぶくろ</rt></ruby>を<ruby>断<rt>ことわ</rt></ruby>ったり、<ruby>食<rt>た</rt></ruby>べ<ruby>物<rt>もの</rt></ruby>を<ruby>残<rt>のこ</rt></ruby>さないようにしたり、<ruby>公<rt>こう</rt></ruby><ruby>共<rt>きょう</rt></ruby><ruby>交<rt>こう</rt></ruby><ruby>通<rt>つう</rt></ruby><ruby>機<rt>き</rt></ruby><ruby>関<rt>かん</rt></ruby>を<ruby>利<rt>り</rt></ruby><ruby>用<rt>よう</rt></ruby>したりするなど、<ruby>日<rt>ひ</rt></ruby><ruby>常<rt>じょう</rt></ruby><ruby>生<rt>せい</rt></ruby><ruby>活<rt>かつ</rt></ruby>の<ruby>中<rt>なか</rt></ruby>でできることはたくさんあります。「<ruby>自<rt>じ</rt></ruby><ruby>分<rt>ぶん</rt></ruby>一<ruby>人<rt>ひとり</rt></ruby>では<ruby>何<rt>なに</rt></ruby>も<ruby>変<rt>か</rt></ruby>わらない」と<ruby>思<rt>おも</rt></ruby>うかもしれませんが、<ruby>多<rt>おお</rt></ruby>くの<ruby>人<rt>ひと</rt></ruby>が<ruby>少<rt>すこ</rt></ruby>しずつ<ruby>努<rt>どり</rt></ruby><ruby>力<rt>ょく</rt></ruby>することで、<ruby>大<rt>おお</rt></ruby>きな<ruby>変<rt>へん</rt></ruby><ruby>化<rt>か</rt></ruby>につながります。`,
+    gloss:[
+      {w:'地球温暖化',r:'ちきゅうおんだんか',m:'global warming'},
+      {w:'プラスチックごみ',r:'プラスチックごみ',m:'plastic waste'},
+      {w:'深刻',r:'しんこく',m:'serious, grave'},
+      {w:'マイバッグ',r:'マイバッグ',m:'reusable bag (own bag)'},
+      {w:'レジ袋',r:'レジぶくろ',m:'plastic shopping bag'},
+      {w:'公共交通機関',r:'こうきょうこうつうきかん',m:'public transport'},
+      {w:'少しずつ',r:'すこしずつ',m:'little by little, gradually'},
+    ],
+    questions:[
+      {type:'mcq',question:'本文で挙げられている個人ができる環境への取り組みはどれですか。',options:['A. 新しい法律を作ること','B. 工場を閉めること','C. マイバッグを持ち歩いてレジ袋を断ること','D. 政府に手紙を書くこと'],answer:'C',explanation:'「マイバッグを持ち歩いてレジ袋を断ったり」と個人の取り組みの一例が挙げられています。'},
+      {type:'mcq',question:'「自分一人では何も変わらない」という考え方に対して、筆者はどのように答えていますか。',options:['A. その通りで、個人の行動は意味がないと述べている','B. 多くの人が少しずつ努力することで大きな変化につながると述べている','C. 政府だけが環境問題を解決できると述べている','D. 個人よりも企業の方が重要だと述べている'],answer:'B',explanation:'「多くの人が少しずつ努力することで、大きな変化につながります」と書いてあります。'},
+      {type:'mcq',question:'この文章の主なメッセージは何ですか。',options:['A. 環境問題は解決不可能だ','B. 政府だけが環境問題を解決できる','C. 個人も日常の中で環境のために行動できる','D. 企業がもっと努力すべきだ'],answer:'C',explanation:'「一人ひとりが行動することも重要」「日常生活の中でできることはたくさんあります」と個人の行動を促しています。'},
+      {type:'open',question:'あなたは環境のためにどんなことを実践していますか。または、これから始めたいことは何ですか。'},
+    ]
+  },
+
+  {
+    id:'n3-7', level:'n3',
+    titleJp:'<ruby>留<rt>りゅう</rt></ruby><ruby>学<rt>がく</rt></ruby>の<ruby>意<rt>い</rt></ruby><ruby>義<rt>ぎ</rt></ruby>',
+    titleEn:'The Meaning of Studying Abroad',
+    topic:'education', chars:265,
+    text:`<ruby>海<rt>かい</rt></ruby><ruby>外<rt>がい</rt></ruby>に<ruby>留<rt>りゅう</rt></ruby><ruby>学<rt>がく</rt></ruby>することは、<ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby>力<ruby>を<rt>を</rt></ruby><ruby>伸<rt>の</rt></ruby>ばすだけでなく、<ruby>様<rt>さま</rt></ruby>ざまな<ruby>点<rt>てん</rt></ruby>で<ruby>人<rt>じん</rt></ruby><ruby>生<rt>せい</rt></ruby>を<ruby>豊<rt>ゆた</rt></ruby>かにしてくれます。<ruby>異<rt>い</rt></ruby><ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>生<rt>せい</rt></ruby><ruby>活<rt>かつ</rt></ruby>することで、<ruby>自<rt>じ</rt></ruby><ruby>分<rt>ぶん</rt></ruby>とは<ruby>異<rt>こと</rt></ruby>なる<ruby>価<rt>か</rt></ruby><ruby>値<rt>ち</rt></ruby><ruby>観<rt>かん</rt></ruby>や<ruby>習<rt>しゅう</rt></ruby><ruby>慣<rt>かん</rt></ruby>に<ruby>触<rt>ふ</rt></ruby>れ、<ruby>視<rt>し</rt></ruby><ruby>野<rt>や</rt></ruby>が<ruby>広<rt>ひろ</rt></ruby>がります。<ruby>また<rt>また</rt></ruby>、<ruby>慣<rt>な</rt></ruby>れない<ruby>環<rt>かん</rt></ruby><ruby>境<rt>きょう</rt></ruby>で<ruby>様<rt>さま</rt></ruby>ざまな<ruby>困<rt>こん</rt></ruby><ruby>難<rt>なん</rt></ruby>を<ruby>乗<rt>の</rt></ruby>り<ruby>越<rt>こ</rt></ruby>えることで、<ruby>自<rt>じ</rt></ruby><ruby>立<rt>りつ</rt></ruby><ruby>心<rt>しん</rt></ruby>や<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby><ruby>解<rt>かい</rt></ruby><ruby>決<rt>けつ</rt></ruby><ruby>能<rt>のう</rt></ruby><ruby>力<rt>りょく</rt></ruby>が<ruby>育<rt>はぐく</rt></ruby>まれます。<ruby>世<rt>せ</rt></ruby><ruby>界<rt>かい</rt></ruby>各<ruby>地<rt>ち</rt></ruby>から<ruby>集<rt>あつ</rt></ruby>まる<ruby>留<rt>りゅう</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>生<rt>せい</rt></ruby>たちとの<ruby>交<rt>こう</rt></ruby><ruby>流<rt>りゅう</rt></ruby>は、<ruby>生<rt>しょう</rt></ruby><ruby>涯<rt>がい</rt></ruby>の<ruby>財<rt>たから</rt></ruby>となる<ruby>人<rt>ひと</rt></ruby><ruby>脈<rt>みゃく</rt></ruby>や<ruby>友<rt>ゆう</rt></ruby><ruby>人<rt>じん</rt></ruby><ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby>につながることも<ruby>多<rt>おお</rt></ruby>いです。<ruby>もちろん<rt>もちろん</rt></ruby>、<ruby>家<rt>か</rt></ruby><ruby>族<rt>ぞく</rt></ruby>や<ruby>友<rt>とも</rt></ruby><ruby>達<rt>だち</rt></ruby>と<ruby>離<rt>はな</rt></ruby>れる<ruby>寂<rt>さみ</rt></ruby><ruby>しさ<rt>しさ</rt></ruby>や<ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby>の<ruby>違<rt>ちが</rt></ruby>いからくるストレスもありますが、それらを<ruby>乗<rt>の</rt></ruby>り<ruby>越<rt>こ</rt></ruby>えた<ruby>先<rt>さき</rt></ruby>に<ruby>大<rt>おお</rt></ruby>きな<ruby>成<rt>せい</rt></ruby><ruby>長<rt>ちょう</rt></ruby>があります。`,
+    gloss:[
+      {w:'留学',r:'りゅうがく',m:'studying abroad'},
+      {w:'語学力',r:'ごがくりょく',m:'language ability'},
+      {w:'異文化',r:'いぶんか',m:'different culture'},
+      {w:'価値観',r:'かちかん',m:'values, sense of values'},
+      {w:'視野',r:'しや',m:'field of vision, perspective'},
+      {w:'自立心',r:'じりつしん',m:'independent spirit'},
+      {w:'問題解決能力',r:'もんだいかいけつのうりょく',m:'problem-solving ability'},
+      {w:'人脈',r:'じんみゃく',m:'personal network, connections'},
+    ],
+    questions:[
+      {type:'mcq',question:'留学の意義として挙げられていないものはどれですか。',options:['A. 語学力を伸ばす','B. 視野が広がる','C. 自立心が育まれる','D. 故郷に戻りたくなる'],answer:'D',explanation:'本文には語学力・視野・自立心・問題解決能力・人脈については書かれていますが、「故郷に戻りたくなる」については述べられていません。'},
+      {type:'mcq',question:'困難を乗り越えることで育まれるものは何ですか。',options:['A. 語学力と記憶力','B. 自立心と問題解決能力','C. 体力と忍耐力','D. 礼儀と規律'],answer:'B',explanation:'「様々な困難を乗り越えることで、自立心や問題解決能力が育まれます」とあります。'},
+      {type:'mcq',question:'留学の難しい点として本文で述べられていることはどれですか。',options:['A. 授業が難しいこと','B. お金がかかること','C. 家族や友達と離れる寂しさや文化の違いからくるストレス','D. 就職が難しくなること'],answer:'C',explanation:'「家族や友達と離れる寂しさや文化の違いからくるストレスもあります」と書いてあります。'},
+      {type:'open',question:'もし留学するとしたら、どの国に行きたいですか。その理由を説明してください。'},
+    ]
+  },
+
+  {
+    id:'n3-8', level:'n3',
+    titleJp:'<ruby>SNS<rt>エスエヌエス</rt></ruby>と<ruby>現<rt>げん</rt></ruby><ruby>代<rt>だい</rt></ruby>の<ruby>コミュニケーション<rt>コミュニケーション</rt></ruby>',
+    titleEn:'SNS and Modern Communication',
+    topic:'technology', chars:270,
+    text:`スマートフォンの<ruby>普<rt>ふ</rt></ruby><ruby>及<rt>きゅう</rt></ruby>により、SNSは<ruby>現<rt>げん</rt></ruby><ruby>代<rt>だい</rt></ruby>人の<ruby>生<rt>せい</rt></ruby><ruby>活<rt>かつ</rt></ruby>に<ruby>欠<rt>か</rt></ruby>かせないツールになっています。<ruby>離<rt>はな</rt></ruby>れた<ruby>場<rt>ば</rt></ruby><ruby>所<rt>しょ</rt></ruby>にいる<ruby>友<rt>とも</rt></ruby><ruby>達<rt>だち</rt></ruby>や<ruby>家<rt>か</rt></ruby><ruby>族<rt>ぞく</rt></ruby>と<ruby>簡<rt>かん</rt></ruby><ruby>単<rt>たん</rt></ruby>につながれたり、<ruby>世<rt>せ</rt></ruby><ruby>界<rt>かい</rt></ruby>中<ruby>の<rt>の</rt></ruby><ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby>を<ruby>瞬<rt>しゅん</rt></ruby><ruby>時<rt>じ</rt></ruby>に<ruby>入<rt>て</rt></ruby><ruby>手<rt>に</rt></ruby>できたりすることが<ruby>大<rt>おお</rt></ruby>きなメリットです。しかし、SNSには<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>点もあります。<ruby>誰<rt>だれ</rt></ruby>でも<ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby>を<ruby>発<rt>はっ</rt></ruby><ruby>信<rt>しん</rt></ruby>できるため、<ruby>フェイクニュース<rt>フェイクニュース</rt></ruby>や<ruby>不<rt>ふ</rt></ruby><ruby>正<rt>せい</rt></ruby><ruby>確<rt>かく</rt></ruby>な<ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby>が<ruby>広<rt>ひろ</rt></ruby>まりやすい<ruby>環<rt>かん</rt></ruby><ruby>境<rt>きょう</rt></ruby>でもあります。また、<ruby>常<rt>じょう</rt></ruby><ruby>に<rt>に</rt></ruby><ruby>他<rt>た</rt></ruby><ruby>者<rt>しゃ</rt></ruby>と<ruby>比<rt>くら</rt></ruby>べてしまうことで<ruby>自<rt>じ</rt></ruby><ruby>己<rt>こ</rt></ruby><ruby>肯<rt>こう</rt></ruby><ruby>定<rt>てい</rt></ruby><ruby>感<rt>かん</rt></ruby>が<ruby>下<rt>さ</rt></ruby>がるという<ruby>指<rt>し</rt></ruby><ruby>摘<rt>てき</rt></ruby>もあります。SNSを<ruby>上<rt>じょう</rt></ruby><ruby>手<rt>ず</rt></ruby>に<ruby>使<rt>つか</rt></ruby>うためには、<ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby>の<ruby>正<rt>せい</rt></ruby><ruby>確<rt>かく</rt></ruby>さを<ruby>確<rt>かく</rt></ruby><ruby>認<rt>にん</rt></ruby>する<ruby>習<rt>しゅう</rt></ruby><ruby>慣<rt>かん</rt></ruby>と、<ruby>適<rt>てき</rt></ruby><ruby>切<rt>せつ</rt></ruby>な<ruby>使<rt>し</rt></ruby><ruby>用<rt>よう</rt></ruby><ruby>時<rt>じ</rt></ruby><ruby>間<rt>かん</rt></ruby>を<ruby>守<rt>まも</rt></ruby>ることが<ruby>重<rt>じゅう</rt></ruby><ruby>要<rt>よう</rt></ruby>です。`,
+    gloss:[
+      {w:'SNS',r:'エスエヌエス',m:'social networking service'},
+      {w:'欠かせない',r:'かかせない',m:'indispensable, essential'},
+      {w:'瞬時に',r:'しゅんじに',m:'instantly, in an instant'},
+      {w:'発信',r:'はっしん',m:'transmitting, posting (information)'},
+      {w:'フェイクニュース',r:'フェイクニュース',m:'fake news'},
+      {w:'自己肯定感',r:'じここうていかん',m:'self-esteem, self-affirmation'},
+      {w:'適切',r:'てきせつ',m:'appropriate, suitable'},
+    ],
+    questions:[
+      {type:'mcq',question:'SNSのメリットとして挙げられているものはどれですか。',options:['A. 常に他者と比べられること','B. フェイクニュースが広まること','C. 離れた人と簡単につながれること','D. 使用時間が増えること'],answer:'C',explanation:'「離れた場所にいる友達や家族と簡単につながれたり」とメリットとして挙げられています。'},
+      {type:'mcq',question:'SNSのデメリットとして本文で述べられていないものはどれですか。',options:['A. フェイクニュースが広まりやすい','B. 自己肯定感が下がる','C. お金がかかりすぎる','D. 不正確な情報が広まりやすい'],answer:'C',explanation:'お金のことは本文では述べられていません。'},
+      {type:'mcq',question:'SNSを上手に使うために重要なこととして挙げられているものはどれですか。',options:['A. できるだけ多くの情報を発信すること','B. 友達をたくさん増やすこと','C. 情報の正確さを確認し、適切な使用時間を守ること','D. 毎日SNSをチェックすること'],answer:'C',explanation:'「情報の正確さを確認する習慣と、適切な使用時間を守ることが重要」とあります。'},
+      {type:'open',question:'SNSのメリットとデメリットについてあなたの意見を述べてください。'},
+    ]
+  },
+
+// ════════════════════════════════════════════════════════════
+  //  N2 PASSAGES
+  // ════════════════════════════════════════════════════════════
+
+  {
+    id:'n2-1', level:'n2',
+    titleJp:'<ruby>少<rt>しょう</rt></ruby><ruby>子<rt>し</rt></ruby><ruby>化<rt>か</rt></ruby>の<ruby>影<rt>えい</rt></ruby><ruby>響<rt>きょう</rt></ruby>',
+    titleEn:'The Impact of Declining Birth Rates',
+    topic:'society', chars:265,
+    text:`<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>では<ruby>少<rt>しょう</rt></ruby><ruby>子<rt>し</rt></ruby><ruby>化<rt>か</rt></ruby>が<ruby>深<rt>しん</rt></ruby><ruby>刻<rt>こく</rt></ruby>な<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby><ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>となっています。<ruby>出<rt>しゅっ</rt></ruby><ruby>生<rt>せい</rt></ruby><ruby>率<rt>りつ</rt></ruby>の<ruby>低<rt>てい</rt></ruby><ruby>下<rt>か</rt></ruby>により、<ruby>労<rt>ろう</rt></ruby><ruby>働<rt>どう</rt></ruby><ruby>力<rt>りょく</rt></ruby>の<ruby>不<rt>ふ</rt></ruby><ruby>足<rt>そく</rt></ruby>や<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby><ruby>保<rt>ほ</rt></ruby><ruby>障<rt>しょう</rt></ruby><ruby>制<rt>せい</rt></ruby><ruby>度<rt>ど</rt></ruby>の<ruby>維<rt>い</rt></ruby><ruby>持<rt>じ</rt></ruby>が<ruby>困<rt>こん</rt></ruby><ruby>難<rt>なん</rt></ruby>になりつつあります。<ruby>政<rt>せい</rt></ruby><ruby>府<rt>ふ</rt></ruby>は<ruby>子<rt>こ</rt></ruby><ruby>育<rt>そだ</rt></ruby>て<ruby>支<rt>し</rt></ruby><ruby>援<rt>えん</rt></ruby>の<ruby>充<rt>じゅう</rt></ruby><ruby>実<rt>じつ</rt></ruby>や、<ruby>女<rt>じょ</rt></ruby><ruby>性<rt>せい</rt></ruby>が<ruby>働<rt>はたら</rt></ruby>きやすい<ruby>環<rt>かん</rt></ruby><ruby>境<rt>きょう</rt></ruby><ruby>整<rt>せい</rt></ruby><ruby>備<rt>び</rt></ruby>など、<ruby>様<rt>さま</rt></ruby>ざまな<ruby>対<rt>たい</rt></ruby><ruby>策<rt>さく</rt></ruby>を<ruby>打<rt>う</rt></ruby>ち<ruby>出<rt>だ</rt></ruby>しています。しかし、<ruby>根<rt>こん</rt></ruby><ruby>本<rt>ぽん</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>解<rt>かい</rt></ruby><ruby>決<rt>けつ</rt></ruby>には<ruby>至<rt>いた</rt></ruby>っておらず、<ruby>経<rt>けい</rt></ruby><ruby>済<rt>ざい</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>不<rt>ふ</rt></ruby><ruby>安<rt>あん</rt></ruby>や<ruby>長<rt>なが</rt></ruby>い<ruby>労<rt>ろう</rt></ruby><ruby>働<rt>どう</rt></ruby><ruby>時<rt>じ</rt></ruby><ruby>間<rt>かん</rt></ruby>など、<ruby>若<rt>わか</rt></ruby>い<ruby>世<rt>せ</rt></ruby><ruby>代<rt>だい</rt></ruby>が<ruby>子<rt>こ</rt></ruby>どもを<ruby>持<rt>も</rt></ruby>ちにくい<ruby>構<rt>こう</rt></ruby><ruby>造<rt>ぞう</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>が<ruby>依<rt>い</rt></ruby><ruby>然<rt>ぜん</rt></ruby>として<ruby>残<rt>のこ</rt></ruby>っています。`,
+    gloss:[
+      {w:'少子化',r:'しょうしか',m:'declining birth rate'},
+      {w:'出生率',r:'しゅっせいりつ',m:'birth rate'},
+      {w:'労働力',r:'ろうどうりょく',m:'workforce, labour'},
+      {w:'社会保障制度',r:'しゃかいほしょうせいど',m:'social security system'},
+      {w:'維持',r:'いじ',m:'maintenance, upkeep'},
+      {w:'子育て支援',r:'こそだてしえん',m:'childcare support'},
+      {w:'構造的',r:'こうぞうてき',m:'structural'},
+      {w:'依然として',r:'いぜんとして',m:'still, as before'},
+    ],
+    questions:[
+      {type:'mcq',question:'少子化によって生じている問題として、本文で挙げられていないものはどれですか。',options:['A. 労働力の不足','B. 社会保障制度の維持困難','C. 都市部への人口集中','D. 経済的不安'],answer:'C',explanation:'都市部への人口集中は本文では触れられていません。挙げられているのは労働力不足、社会保障制度の問題、経済的不安などです。'},
+      {type:'mcq',question:'「根本的な解決には至っていない」とはどういう意味ですか。',options:['A. 問題が完全に解決された','B. 対策を何もしていない','C. 表面的な対策はあるが、問題の根本原因は解消されていない','D. 問題はそれほど深刻ではない'],answer:'C',explanation:'政府が対策を打ち出しているものの、構造的な問題が残っているとあり、根本的な解決には至っていないことを示しています。'},
+      {type:'mcq',question:'若い世代が子どもを持ちにくい構造的な問題として挙げられているものはどれですか。',options:['A. 住宅価格の上昇と教育費','B. 経済的な不安と長い労働時間','C. 保育所の不足と育児休業制度','D. 晩婚化と価値観の変化'],answer:'B',explanation:'「経済的な不安や長い労働時間など、若い世代が子どもを持ちにくい構造的な問題」と明記されています。'},
+      {type:'open',question:'少子化問題を解決するために、あなたはどのような政策が必要だと思いますか。'},
+    ]
+  },
+
+  {
+    id:'n2-2', level:'n2',
+    titleJp:'<ruby>人<rt>じん</rt></ruby><ruby>工<rt>こう</rt></ruby><ruby>知<rt>ち</rt></ruby><ruby>能<rt>のう</rt></ruby>と<ruby>労<rt>ろう</rt></ruby><ruby>働<rt>どう</rt></ruby>の<ruby>未<rt>み</rt></ruby><ruby>来<rt>らい</rt></ruby>',
+    titleEn:'Artificial Intelligence and the Future of Work',
+    topic:'technology', chars:275,
+    text:`<ruby>人<rt>じん</rt></ruby><ruby>工<rt>こう</rt></ruby><ruby>知<rt>ち</rt></ruby><ruby>能<rt>のう</rt></ruby>（AI）の<ruby>急<rt>きゅう</rt></ruby><ruby>速<rt>そく</rt></ruby>な<ruby>発<rt>はっ</rt></ruby><ruby>展<rt>てん</rt></ruby>は、<ruby>様<rt>さま</rt></ruby>ざまな<ruby>産<rt>さん</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>における<ruby>働<rt>はたら</rt></ruby>き<ruby>方<rt>かた</rt></ruby>を<ruby>根<rt>こん</rt></ruby><ruby>本<rt>ぽん</rt></ruby>から<ruby>変<rt>か</rt></ruby>えつつあります。<ruby>単<rt>たん</rt></ruby><ruby>純<rt>じゅん</rt></ruby>な<ruby>反<rt>はん</rt></ruby><ruby>復<rt>ぷく</rt></ruby><ruby>作<rt>さ</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>や<ruby>データ<rt>データ</rt></ruby><ruby>処<rt>しょ</rt></ruby><ruby>理<rt>り</rt></ruby>はAIによって<ruby>自<rt>じ</rt></ruby><ruby>動<rt>どう</rt></ruby><ruby>化<rt>か</rt></ruby>されつつあり、<ruby>一<rt>いち</rt></ruby><ruby>部<rt>ぶ</rt></ruby>の<ruby>職<rt>しょく</rt></ruby><ruby>種<rt>しゅ</rt></ruby>では<ruby>人<rt>ひと</rt></ruby>の<ruby>代<rt>か</rt></ruby>わりにAIが<ruby>業<rt>ぎょう</rt></ruby><ruby>務<rt>む</rt></ruby>を<ruby>担<rt>にな</rt></ruby>うようになっています。<ruby>一<rt>いっ</rt></ruby><ruby>方<rt>ぽう</rt></ruby>で、AIには<ruby>创<rt>そう</rt></ruby><ruby>造<rt>ぞう</rt></ruby><ruby>性<rt>せい</rt></ruby>や<ruby>感<rt>かん</rt></ruby><ruby>情<rt>じょう</rt></ruby>、<ruby>複<rt>ふく</rt></ruby><ruby>雑<rt>ざつ</rt></ruby>な<ruby>対<rt>たい</rt></ruby><ruby>人<rt>じん</rt></ruby><ruby>コミュニケーション<rt>コミュニケーション</rt></ruby>といった<ruby>人<rt>にん</rt></ruby><ruby>間<rt>げん</rt></ruby>固<ruby>有<rt>ゆう</rt></ruby>の<ruby>能<rt>のう</rt></ruby><ruby>力<rt>りょく</rt></ruby>を<ruby>完<rt>かん</rt></ruby><ruby>全<rt>ぜん</rt></ruby>に<ruby>代<rt>だい</rt></ruby><ruby>替<rt>たい</rt></ruby>することはできません。したがって、これからの<ruby>時<rt>じ</rt></ruby><ruby>代<rt>だい</rt></ruby>においては、AIと<ruby>協<rt>きょう</rt></ruby><ruby>働<rt>どう</rt></ruby>しながら<ruby>人<rt>にん</rt></ruby><ruby>間<rt>げん</rt></ruby>にしかできない<ruby>価<rt>か</rt></ruby><ruby>値<rt>ち</rt></ruby>を<ruby>生<rt>う</rt></ruby>み<ruby>出<rt>だ</rt></ruby>す<ruby>能<rt>のう</rt></ruby><ruby>力<rt>りょく</rt></ruby>が<ruby>求<rt>もと</rt></ruby>められるでしょう。`,
+    gloss:[
+      {w:'人工知能',r:'じんこうちのう',m:'artificial intelligence'},
+      {w:'急速',r:'きゅうそく',m:'rapid, swift'},
+      {w:'反復作業',r:'はんぷくさぎょう',m:'repetitive work'},
+      {w:'自動化',r:'じどうか',m:'automation'},
+      {w:'職種',r:'しょくしゅ',m:'type of occupation'},
+      {w:'創造性',r:'そうぞうせい',m:'creativity'},
+      {w:'代替',r:'だいたい',m:'replacement, substitution'},
+      {w:'協働',r:'きょうどう',m:'collaboration, working together'},
+    ],
+    questions:[
+      {type:'mcq',question:'AIが得意なこととして本文で述べられているものはどれですか。',options:['A. 創造性を発揮すること','B. 複雑な対人コミュニケーション','C. 単純な反復作業やデータ処理','D. 感情的な判断'],answer:'C',explanation:'「単純な反復作業やデータ処理はAIによって自動化されつつある」と述べられています。'},
+      {type:'mcq',question:'AIが人間を完全に代替できないとされている理由はどれですか。',options:['A. AIはまだ開発段階にあるから','B. 創造性・感情・複雑な対人コミュニケーションといった人間固有の能力があるから','C. AIを使うにはコストがかかりすぎるから','D. 法律でAIの利用が制限されているから'],answer:'B',explanation:'「創造性や感情、複雑な対人コミュニケーションといった人間固有の能力を完全に代替することはできない」とあります。'},
+      {type:'mcq',question:'これからの時代に求められる能力は何ですか。',options:['A. AIを完全に排除する能力','B. プログラミングだけの技術','C. AIと協働しながら人間にしかできない価値を生み出す能力','D. 身体的な労働力'],answer:'C',explanation:'「AIと協働しながら人間にしかできない価値を生み出す能力が求められる」と結論づけています。'},
+      {type:'open',question:'AIの発展はあなたの仕事や生活にどんな影響を与えると思いますか。'},
+    ]
+  },
+
+  {
+    id:'n2-3', level:'n2',
+    titleJp:'<ruby>都<rt>と</rt></ruby><ruby>市<rt>し</rt></ruby>と<ruby>地<rt>ち</rt></ruby><ruby>方<rt>ほう</rt></ruby>の<ruby>格<rt>かく</rt></ruby><ruby>差<rt>さ</rt></ruby>',
+    titleEn:'The Urban-Rural Divide',
+    topic:'society', chars:270,
+    text:`<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>では、<ruby>東<rt>とう</rt></ruby><ruby>京<rt>きょう</rt></ruby>をはじめとする<ruby>大<rt>だい</rt></ruby><ruby>都<rt>と</rt></ruby><ruby>市<rt>し</rt></ruby>への<ruby>人<rt>じん</rt></ruby><ruby>口<rt>こう</rt></ruby><ruby>集<rt>しゅう</rt></ruby><ruby>中<rt>ちゅう</rt></ruby>が<ruby>続<rt>つづ</rt></ruby>いており、<ruby>地<rt>ち</rt></ruby><ruby>方<rt>ほう</rt></ruby>の<ruby>過<rt>か</rt></ruby><ruby>疎<rt>そ</rt></ruby><ruby>化<rt>か</rt></ruby>が<ruby>深<rt>しん</rt></ruby><ruby>刻<rt>こく</rt></ruby>な<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>となっています。<ruby>若<rt>わか</rt></ruby>い<ruby>世<rt>せ</rt></ruby><ruby>代<rt>だい</rt></ruby>が<ruby>就<rt>しゅう</rt></ruby><ruby>職<rt>しょく</rt></ruby>や<ruby>進<rt>しん</rt></ruby><ruby>学<rt>がく</rt></ruby>を<ruby>機<rt>き</rt></ruby><ruby>に<rt>に</rt></ruby><ruby>都<rt>と</rt></ruby><ruby>市<rt>し</rt></ruby>へ<ruby>流<rt>りゅう</rt></ruby><ruby>出<rt>しゅつ</rt></ruby>し、<ruby>地<rt>ち</rt></ruby><ruby>方<rt>ほう</rt></ruby>では<ruby>高<rt>こう</rt></ruby><ruby>齢<rt>れい</rt></ruby><ruby>化<rt>か</rt></ruby>が<ruby>進<rt>すす</rt></ruby>む<ruby>一<rt>いっ</rt></ruby><ruby>方<rt>ぽう</rt></ruby>です。<ruby>地<rt>ち</rt></ruby><ruby>方<rt>ほう</rt></ruby>の<ruby>自<rt>じ</rt></ruby><ruby>治<rt>ち</rt></ruby><ruby>体<rt>たい</rt></ruby>の<ruby>中<rt>なか</rt></ruby>には、<ruby>財<rt>ざい</rt></ruby><ruby>政<rt>せい</rt></ruby>の<ruby>悪<rt>あっ</rt></ruby><ruby>化<rt>か</rt></ruby>や<ruby>公<rt>こう</rt></ruby><ruby>共<rt>きょう</rt></ruby><ruby>サービス<rt>サービス</rt></ruby>の<ruby>維<rt>い</rt></ruby><ruby>持<rt>じ</rt></ruby>が<ruby>困<rt>こん</rt></ruby><ruby>難<rt>なん</rt></ruby>になっているところも<ruby>多<rt>おお</rt></ruby>く<ruby>あります<rt>あります</rt></ruby>。<ruby>近<rt>きん</rt></ruby><ruby>年<rt>ねん</rt></ruby>は<ruby>テレワーク<rt>テレワーク</rt></ruby>の<ruby>普<rt>ふ</rt></ruby><ruby>及<rt>きゅう</rt></ruby>により<ruby>地<rt>ち</rt></ruby><ruby>方<rt>ほう</rt></ruby>への<ruby>移<rt>い</rt></ruby><ruby>住<rt>じゅう</rt></ruby>を<ruby>選<rt>えら</rt></ruby>ぶ<ruby>人<rt>ひと</rt></ruby>も<ruby>増<rt>ふ</rt></ruby>えてきており、<ruby>地<rt>ち</rt></ruby><ruby>方<rt>ほう</rt></ruby><ruby>創<rt>そう</rt></ruby><ruby>生<rt>せい</rt></ruby>への<ruby>新<rt>あたら</rt></ruby>たな<ruby>取<rt>と</rt></ruby>り<ruby>組<rt>く</rt></ruby>みとして<ruby>注<rt>ちゅう</rt></ruby><ruby>目<rt>もく</rt></ruby>されています。`,
+    gloss:[
+      {w:'人口集中',r:'じんこうしゅうちゅう',m:'concentration of population'},
+      {w:'過疎化',r:'かそか',m:'depopulation, population decline (rural)'},
+      {w:'流出',r:'りゅうしゅつ',m:'outflow, exodus'},
+      {w:'高齢化',r:'こうれいか',m:'ageing (of population)'},
+      {w:'自治体',r:'じちたい',m:'local government, municipality'},
+      {w:'財政',r:'ざいせい',m:'public finance'},
+      {w:'地方創生',r:'ちほうそうせい',m:'regional revitalisation'},
+    ],
+    questions:[
+      {type:'mcq',question:'地方の過疎化が進む主な原因として述べられているものはどれですか。',options:['A. 自然災害が多いこと','B. 若い世代が就職や進学を機に都市へ流出すること','C. 農業の衰退','D. 交通機関の不便さ'],answer:'B',explanation:'「若い世代が就職や進学を機に都市へ流出し、地方では高齢化が進む一方です」とあります。'},
+      {type:'mcq',question:'地方自治体が抱えている問題として本文で述べられているものはどれですか。',options:['A. 観光客の減少','B. 企業誘致の失敗','C. 財政の悪化と公共サービスの維持困難','D. 教育水準の低下'],answer:'C',explanation:'「財政の悪化や公共サービスの維持が困難になっているところも多くあります」と述べられています。'},
+      {type:'mcq',question:'テレワークの普及が地方にもたらしている変化は何ですか。',options:['A. 地方の財政が改善されている','B. 地方への移住を選ぶ人が増えている','C. 地方の産業が発展している','D. 若者が地方に戻っている'],answer:'B',explanation:'「テレワークの普及により地方への移住を選ぶ人も増えてきており」とあります。'},
+      {type:'open',question:'都市と地方の格差問題を解決するために、どのような取り組みが効果的だと思いますか。'},
+    ]
+  },
+
+  {
+    id:'n2-4', level:'n2',
+    titleJp:'<ruby>消<rt>しょう</rt></ruby><ruby>費<rt>ひ</rt></ruby><ruby>者<rt>しゃ</rt></ruby>の<ruby>行<rt>こう</rt></ruby><ruby>動<rt>どう</rt></ruby>と<ruby>企<rt>き</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>の<ruby>責<rt>せき</rt></ruby><ruby>任<rt>にん</rt></ruby>',
+    titleEn:'Consumer Behaviour and Corporate Responsibility',
+    topic:'economy', chars:270,
+    text:`<ruby>近<rt>きん</rt></ruby><ruby>年<rt>ねん</rt></ruby>、<ruby>消<rt>しょう</rt></ruby><ruby>費<rt>ひ</rt></ruby><ruby>者<rt>しゃ</rt></ruby>の<ruby>間<rt>あいだ</rt></ruby>で<ruby>倫<rt>りん</rt></ruby><ruby>理<rt>り</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>消<rt>しょう</rt></ruby><ruby>費<rt>ひ</rt></ruby>（エシカル<ruby>消<rt>しょう</rt></ruby><ruby>費<rt>ひ</rt></ruby>）への<ruby>関<rt>かん</rt></ruby><ruby>心<rt>しん</rt></ruby>が<ruby>高<rt>たか</rt></ruby>まっています。<ruby>環<rt>かん</rt></ruby><ruby>境<rt>きょう</rt></ruby>への<ruby>配<rt>はい</rt></ruby><ruby>慮<rt>りょ</rt></ruby>や<ruby>人<rt>じん</rt></ruby><ruby>権<rt>けん</rt></ruby>の<ruby>尊<rt>そん</rt></ruby><ruby>重<rt>ちょう</rt></ruby>、<ruby>公<rt>こう</rt></ruby><ruby>正<rt>せい</rt></ruby>な<ruby>取<rt>とり</rt></ruby><ruby>引<rt>ひき</rt></ruby>を<ruby>意<rt>い</rt></ruby><ruby>識<rt>しき</rt></ruby>した<ruby>商<rt>しょう</rt></ruby><ruby>品<rt>ひん</rt></ruby>選<ruby>択<rt>たく</rt></ruby>が<ruby>広<rt>ひろ</rt></ruby>まりつつあります。こうした<ruby>動<rt>どう</rt></ruby><ruby>向<rt>こう</rt></ruby>を<ruby>受<rt>う</rt></ruby>け、<ruby>企<rt>き</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>側<ruby>も<rt>も</rt></ruby>サプライ<ruby>チェーン<rt>チェーン</rt></ruby>の<ruby>透<rt>とう</rt></ruby><ruby>明<rt>めい</rt></ruby><ruby>性<rt>せい</rt></ruby>を<ruby>高<rt>たか</rt></ruby>め、<ruby>持<rt>じ</rt></ruby><ruby>続<rt>ぞく</rt></ruby><ruby>可<rt>か</rt></ruby><ruby>能<rt>のう</rt></ruby>な<ruby>事<rt>じ</rt></ruby><ruby>業<rt>ぎょう</rt></ruby><ruby>活<rt>かつ</rt></ruby><ruby>動<rt>どう</rt></ruby>への<ruby>移<rt>い</rt></ruby><ruby>行<rt>こう</rt></ruby>が<ruby>求<rt>もと</rt></ruby>められるようになっています。<ruby>利<rt>り</rt></ruby><ruby>益<rt>えき</rt></ruby>の<ruby>最<rt>さい</rt></ruby><ruby>大<rt>だい</rt></ruby><ruby>化<rt>か</rt></ruby>だけでなく、<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby>や<ruby>環<rt>かん</rt></ruby><ruby>境<rt>きょう</rt></ruby>への<ruby>影<rt>えい</rt></ruby><ruby>響<rt>きょう</rt></ruby>を<ruby>考<rt>かんが</rt></ruby>慮<ruby>した<rt>した</rt></ruby>経<ruby>営<rt>えい</rt></ruby>が、<ruby>現<rt>げん</rt></ruby><ruby>代<rt>だい</rt></ruby>企<ruby>業<rt>ぎょう</rt></ruby>に<ruby>求<rt>もと</rt></ruby>められる<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby><ruby>的<rt>てき</rt></ruby><ruby>責<rt>せき</rt></ruby><ruby>任<rt>にん</rt></ruby>の<ruby>一<rt>ひと</rt></ruby>つとなっています。`,
+    gloss:[
+      {w:'倫理的な消費',r:'りんりてきなしょうひ',m:'ethical consumption'},
+      {w:'人権',r:'じんけん',m:'human rights'},
+      {w:'公正な取引',r:'こうせいなとりひき',m:'fair trade'},
+      {w:'サプライチェーン',r:'サプライチェーン',m:'supply chain'},
+      {w:'透明性',r:'とうめいせい',m:'transparency'},
+      {w:'持続可能',r:'じぞくかのう',m:'sustainable'},
+      {w:'社会的責任',r:'しゃかいてきせきにん',m:'social responsibility (CSR)'},
+    ],
+    questions:[
+      {type:'mcq',question:'エシカル消費とは何を意識した消費行動ですか。',options:['A. 最も安い商品を選ぶこと','B. 環境への配慮・人権の尊重・公正な取引を意識した商品選択','C. 国産品のみを購入すること','D. 大量購入によってコストを下げること'],answer:'B',explanation:'「環境への配慮や人権の尊重、公正な取引を意識した商品選択が広まりつつあります」とあります。'},
+      {type:'mcq',question:'消費者の変化を受けて企業に求められることは何ですか。',options:['A. より多くの利益を出すこと','B. サプライチェーンの透明性を高め、持続可能な事業活動へ移行すること','C. 製品の値段を下げること','D. 広告活動を増やすこと'],answer:'B',explanation:'「サプライチェーンの透明性を高め、持続可能な事業活動への移行が求められる」とあります。'},
+      {type:'mcq',question:'現代企業の社会的責任について、本文が述べていることはどれですか。',options:['A. 利益の最大化が唯一の目標である','B. 社会や環境への影響を考慮した経営が求められる','C. 政府の規制に従うだけでよい','D. 社員の福祉だけを優先すればよい'],answer:'B',explanation:'「利益の最大化だけでなく、社会や環境への影響を考慮した経営が、現代企業に求められる社会的責任の一つ」と述べています。'},
+      {type:'open',question:'あなたは普段、商品を選ぶときにどんな点を考慮しますか。'},
+    ]
+  },
+
+  {
+    id:'n2-5', level:'n2',
+    titleJp:'<ruby>多<rt>た</rt></ruby><ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby><ruby>共<rt>きょう</rt></ruby><ruby>生<rt>せい</rt></ruby>社<ruby>会<rt>かい</rt></ruby>',
+    titleEn:'A Multicultural Society',
+    topic:'society', chars:270,
+    text:`<ruby>グローバル<rt>グローバル</rt></ruby><ruby>化<rt>か</rt></ruby>の<ruby>進<rt>しん</rt></ruby><ruby>展<rt>てん</rt></ruby>に<ruby>伴<rt>ともな</rt></ruby>い、<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>に<ruby>暮<rt>く</rt></ruby>らす<ruby>外<rt>がい</rt></ruby><ruby>国<rt>こく</rt></ruby><ruby>人<rt>じん</rt></ruby>の<ruby>数<rt>かず</rt></ruby>は<ruby>増<rt>ふ</rt></ruby>え<ruby>続<rt>つづ</rt></ruby>けています。<ruby>労<rt>ろう</rt></ruby><ruby>働<rt>どう</rt></ruby><ruby>力<rt>りょく</rt></ruby>不<ruby>足<rt>そく</rt></ruby>を<ruby>補<rt>おぎな</rt></ruby>う<ruby>観<rt>かん</rt></ruby><ruby>点<rt>てん</rt></ruby>からも、<ruby>外<rt>がい</rt></ruby><ruby>国<rt>こく</rt></ruby><ruby>人<rt>じん</rt></ruby><ruby>材<rt>ざい</rt></ruby>の<ruby>受<rt>う</rt></ruby>け<ruby>入<rt>い</rt></ruby>れが<ruby>積<rt>せっ</rt></ruby><ruby>極<rt>きょく</rt></ruby><ruby>的<rt>てき</rt></ruby>に<ruby>推<rt>すい</rt></ruby><ruby>進<rt>しん</rt></ruby>されるようになっています。<ruby>多<rt>た</rt></ruby><ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby><ruby>共<rt>きょう</rt></ruby><ruby>生<rt>せい</rt></ruby>社<ruby>会<rt>かい</rt></ruby>を<ruby>実<rt>じつ</rt></ruby><ruby>現<rt>げん</rt></ruby>するためには、<ruby>言<rt>げん</rt></ruby><ruby>語<rt>ご</rt></ruby>の<ruby>壁<rt>かべ</rt></ruby>を<ruby>越<rt>こ</rt></ruby>えた<ruby>コミュニケーション<rt>コミュニケーション</rt></ruby>や、<ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby>的<ruby>背<rt>はい</rt></ruby><ruby>景<rt>けい</rt></ruby>の<ruby>違<rt>ちが</rt></ruby>いへの<ruby>理<rt>り</rt></ruby><ruby>解<rt>かい</rt></ruby>と<ruby>尊<rt>そん</rt></ruby><ruby>重<rt>ちょう</rt></ruby>が<ruby>欠<rt>か</rt></ruby>かせません。また、<ruby>外<rt>がい</rt></ruby><ruby>国<rt>こく</rt></ruby><ruby>人<rt>じん</rt></ruby><ruby>住<rt>じゅう</rt></ruby><ruby>民<rt>みん</rt></ruby>が<ruby>孤<rt>こ</rt></ruby><ruby>立<rt>りつ</rt></ruby>せず、<ruby>地<rt>ち</rt></ruby><ruby>域<rt>いき</rt></ruby><ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby>の<ruby>一<rt>いち</rt></ruby><ruby>員<rt>いん</rt></ruby>として<ruby>活<rt>かつ</rt></ruby><ruby>躍<rt>やく</rt></ruby>できる<ruby>仕<rt>し</rt></ruby><ruby>組<rt>く</rt></ruby>みづくりが<ruby>重<rt>じゅう</rt></ruby><ruby>要<rt>よう</rt></ruby>です。`,
+    gloss:[
+      {w:'グローバル化',r:'グローバルか',m:'globalisation'},
+      {w:'労働力不足',r:'ろうどうりょくぶそく',m:'labour shortage'},
+      {w:'外国人材',r:'がいこくじんざい',m:'foreign human resources'},
+      {w:'多文化共生',r:'たぶんかきょうせい',m:'multicultural coexistence'},
+      {w:'言語の壁',r:'げんごのかべ',m:'language barrier'},
+      {w:'文化的背景',r:'ぶんかてきはいけい',m:'cultural background'},
+      {w:'孤立',r:'こりつ',m:'isolation, being alone'},
+      {w:'仕組みづくり',r:'しくみづくり',m:'building a system/structure'},
+    ],
+    questions:[
+      {type:'mcq',question:'日本で外国人の受け入れが推進されている背景として述べられているものはどれですか。',options:['A. 国際交流を深めるため','B. 労働力不足を補うため','C. 観光業を発展させるため','D. 文化を豊かにするため'],answer:'B',explanation:'「労働力不足を補う観点からも、外国人材の受け入れが積極的に推進されるようになっています」とあります。'},
+      {type:'mcq',question:'多文化共生社会を実現するために欠かせないこととして述べられているものはどれですか。',options:['A. 全員が同じ言語を話すこと','B. 外国人が日本の文化に完全に同化すること','C. 言語の壁を越えたコミュニケーションと文化的背景への理解と尊重','D. 外国人住民の数を制限すること'],answer:'C',explanation:'「言語の壁を越えたコミュニケーションや、文化的背景の違いへの理解と尊重が欠かせません」とあります。'},
+      {type:'mcq',question:'外国人住民に関して、本文が強調していることは何ですか。',options:['A. 外国人住民は別の地域に集めるべきだ','B. 外国人住民が孤立せず地域社会の一員として活躍できる仕組みが重要だ','C. 外国人住民は日本語を完璧に習得すべきだ','D. 外国人住民の数を減らすべきだ'],answer:'B',explanation:'「外国人住民が孤立せず、地域社会の一員として活躍できる仕組みづくりが重要です」と述べています。'},
+      {type:'open',question:'多文化共生社会を実現するために、個人レベルでできることは何だと思いますか。'},
+    ]
+  },
+
+  {
+    id:'n2-6', level:'n2',
+    titleJp:'<ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby><ruby>過<rt>か</rt></ruby><ruby>多<rt>た</rt></ruby>の<ruby>時<rt>じ</rt></ruby><ruby>代<rt>だい</rt></ruby>',
+    titleEn:'The Age of Information Overload',
+    topic:'technology', chars:270,
+    text:`<ruby>インターネット<rt>インターネット</rt></ruby>の<ruby>普<rt>ふ</rt></ruby><ruby>及<rt>きゅう</rt></ruby>により、<ruby>私<rt>わたし</rt></ruby>たちは<ruby>膨<rt>ぼう</rt></ruby><ruby>大<rt>だい</rt></ruby>な<ruby>量<rt>りょう</rt></ruby>の<ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby>に<ruby>囲<rt>かこ</rt></ruby>まれて<ruby>生<rt>い</rt></ruby>きるようになりました。<ruby>必<rt>ひつ</rt></ruby><ruby>要<rt>よう</rt></ruby>な<ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby>に<ruby>素<rt>す</rt></ruby><ruby>早<rt>ばや</rt></ruby>くアクセスできるという<ruby>利<rt>り</rt></ruby><ruby>点<rt>てん</rt></ruby>がある<ruby>一<rt>いっ</rt></ruby><ruby>方<rt>ぽう</rt></ruby>で、<ruby>大<rt>おお</rt></ruby>量<ruby>の<rt>の</rt></ruby><ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby>の<ruby>中<rt>なか</rt></ruby>から<ruby>正<rt>せい</rt></ruby><ruby>確<rt>かく</rt></ruby>なものを<ruby>選<rt>えら</rt></ruby>び<ruby>取<rt>と</rt></ruby>る<ruby>能<rt>のう</rt></ruby><ruby>力<rt>りょく</rt></ruby>、いわゆる<ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby><ruby>リテラシー<rt>リテラシー</rt></ruby>が<ruby>問<rt>と</rt></ruby>われる<ruby>時<rt>じ</rt></ruby><ruby>代<rt>だい</rt></ruby>となりました。<ruby>フィルター<rt>フィルター</rt></ruby>バブルや<ruby>エコーチェンバー<rt>エコーチェンバー</rt></ruby>と<ruby>呼<rt>よ</rt></ruby>ばれる<ruby>現<rt>げん</rt></ruby><ruby>象<rt>しょう</rt></ruby>により、<ruby>自<rt>じ</rt></ruby><ruby>分<rt>ぶん</rt></ruby>の<ruby>意<rt>い</rt></ruby><ruby>見<rt>けん</rt></ruby>や<ruby>価<rt>か</rt></ruby><ruby>値<rt>ち</rt></ruby><ruby>観<rt>かん</rt></ruby>に<ruby>合<rt>あ</rt></ruby>った<ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby>しか<ruby>目<rt>め</rt></ruby>に<ruby>入<rt>はい</rt></ruby>らなくなる<ruby>危<rt>き</rt></ruby><ruby>険<rt>けん</rt></ruby><ruby>性<rt>せい</rt></ruby>もあります。<ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby>を<ruby>批<rt>ひ</rt></ruby><ruby>判<rt>はん</rt></ruby><ruby>的<rt>てき</rt></ruby>に<ruby>読<rt>よ</rt></ruby>み<ruby>解<rt>と</rt></ruby>く<ruby>力<rt>ちから</rt></ruby>を<ruby>養<rt>やしな</rt></ruby>うことが、<ruby>民<rt>みん</rt></ruby><ruby>主<rt>しゅ</rt></ruby><ruby>主<rt>しゅ</rt></ruby><ruby>義<rt>ぎ</rt></ruby>社<ruby>会<rt>かい</rt></ruby>を<ruby>健<rt>けん</rt></ruby><ruby>全<rt>ぜん</rt></ruby>に<ruby>保<rt>たも</rt></ruby>つためにも<ruby>不<rt>ふ</rt></ruby><ruby>可<rt>か</rt></ruby><ruby>欠<rt>けつ</rt></ruby>です。`,
+    gloss:[
+      {w:'情報過多',r:'じょうほうかた',m:'information overload'},
+      {w:'膨大',r:'ぼうだい',m:'enormous, vast'},
+      {w:'情報リテラシー',r:'じょうほうリテラシー',m:'information literacy'},
+      {w:'フィルターバブル',r:'フィルターバブル',m:'filter bubble'},
+      {w:'エコーチェンバー',r:'エコーチェンバー',m:'echo chamber'},
+      {w:'批判的',r:'ひはんてき',m:'critical (thinking)'},
+      {w:'民主主義',r:'みんしゅしゅぎ',m:'democracy'},
+      {w:'不可欠',r:'ふかけつ',m:'indispensable, essential'},
+    ],
+    questions:[
+      {type:'mcq',question:'情報リテラシーとは何ですか。',options:['A. 速くタイピングする能力','B. インターネットをプログラミングする技術','C. 大量の情報の中から正確なものを選び取る能力','D. 情報を素早く記憶する力'],answer:'C',explanation:'「大量の情報の中から正確なものを選び取る能力、いわゆる情報リテラシー」と定義されています。'},
+      {type:'mcq',question:'フィルターバブルやエコーチェンバーによって生じる危険性は何ですか。',options:['A. インターネットが使えなくなること','B. 自分の意見や価値観に合った情報しか目に入らなくなること','C. 情報が少なくなりすぎること','D. 個人情報が漏洩すること'],answer:'B',explanation:'「自分の意見や価値観に合った情報しか目に入らなくなる危険性もあります」と述べられています。'},
+      {type:'mcq',question:'情報を批判的に読み解く力が必要な理由として述べられているものはどれですか。',options:['A. 仕事の生産性を上げるため','B. 民主主義社会を健全に保つため','C. より多くの情報を収集するため','D. インターネットを安全に使うため'],answer:'B',explanation:'「民主主義社会を健全に保つためにも不可欠です」と述べられています。'},
+      {type:'open',question:'信頼できる情報とそうでない情報を見分けるために、あなたはどのような方法を使っていますか。'},
+    ]
+  },
+
+  {
+    id:'n2-7', level:'n2',
+    titleJp:'<ruby>伝<rt>でん</rt></ruby><ruby>統<rt>とう</rt></ruby><ruby>工<rt>こう</rt></ruby><ruby>芸<rt>げい</rt></ruby>の<ruby>継<rt>けい</rt></ruby><ruby>承<rt>しょう</rt></ruby>',
+    titleEn:'Preserving Traditional Crafts',
+    topic:'culture', chars:270,
+    text:`<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>には<ruby>陶<rt>とう</rt></ruby><ruby>磁<rt>じ</rt></ruby><ruby>器<rt>き</rt></ruby>や<ruby>漆<rt>うるし</rt></ruby><ruby>器<rt>き</rt></ruby>、<ruby>織<rt>おり</rt></ruby><ruby>物<rt>もの</rt></ruby>など、<ruby>長<rt>なが</rt></ruby>い<ruby>歴<rt>れき</rt></ruby><ruby>史<rt>し</rt></ruby>を<ruby>持<rt>も</rt></ruby>つ<ruby>伝<rt>でん</rt></ruby><ruby>統<rt>とう</rt></ruby><ruby>工<rt>こう</rt></ruby><ruby>芸<rt>げい</rt></ruby>が<ruby>数<rt>かず</rt></ruby>多く<ruby>あります<rt>あります</rt></ruby>。しかし、<ruby>職<rt>しょく</rt></ruby><ruby>人<rt>にん</rt></ruby>の<ruby>高<rt>こう</rt></ruby><ruby>齢<rt>れい</rt></ruby><ruby>化<rt>か</rt></ruby>や<ruby>後<rt>こう</rt></ruby><ruby>継<rt>けい</rt></ruby><ruby>者<rt>しゃ</rt></ruby>不<ruby>足<rt>そく</rt></ruby>、<ruby>大<rt>たい</rt></ruby><ruby>量<rt>りょう</rt></ruby><ruby>生<rt>せい</rt></ruby><ruby>産<rt>さん</rt></ruby>された<ruby>安<rt>やす</rt></ruby>い<ruby>製<rt>せい</rt></ruby><ruby>品<rt>ひん</rt></ruby>との<ruby>競<rt>きょう</rt></ruby><ruby>争<rt>そう</rt></ruby>などにより、<ruby>多<rt>おお</rt></ruby>くの<ruby>伝<rt>でん</rt></ruby><ruby>統<rt>とう</rt></ruby><ruby>工<rt>こう</rt></ruby><ruby>芸<rt>げい</rt></ruby>が<ruby>存<rt>そん</rt></ruby><ruby>続<rt>ぞく</rt></ruby>の<ruby>危<rt>き</rt></ruby><ruby>機<rt>き</rt></ruby>に<ruby>立<rt>た</rt></ruby>たされています。こうした<ruby>状<rt>じょう</rt></ruby><ruby>況<rt>きょう</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で、<ruby>若<rt>わか</rt></ruby>い<ruby>世<rt>せ</rt></ruby><ruby>代<rt>だい</rt></ruby>の<ruby>職<rt>しょく</rt></ruby><ruby>人<rt>にん</rt></ruby>がモダンなデザインと<ruby>伝<rt>でん</rt></ruby><ruby>統<rt>とう</rt></ruby>的<ruby>な<rt>な</rt></ruby><ruby>技<rt>ぎ</rt></ruby><ruby>術<rt>じゅつ</rt></ruby>を<ruby>融<rt>ゆう</rt></ruby><ruby>合<rt>ごう</rt></ruby>させたり、SNSを<ruby>活<rt>かつ</rt></ruby><ruby>用<rt>よう</rt></ruby>して<ruby>海<rt>かい</rt></ruby><ruby>外<rt>がい</rt></ruby>に<ruby>発<rt>はっ</rt></ruby><ruby>信<rt>しん</rt></ruby>したりすることで、<ruby>新<rt>あたら</rt></ruby>たな<ruby>市<rt>し</rt></ruby><ruby>場<rt>じょう</rt></ruby>を<ruby>開<rt>ひら</rt></ruby>こうとする<ruby>動<rt>うご</rt></ruby>きが<ruby>見<rt>み</rt></ruby>られます。`,
+    gloss:[
+      {w:'伝統工芸',r:'でんとうこうげい',m:'traditional craft'},
+      {w:'陶磁器',r:'とうじき',m:'ceramics, pottery'},
+      {w:'漆器',r:'うるしき',m:'lacquerware'},
+      {w:'後継者不足',r:'こうけいしゃぶそく',m:'shortage of successors'},
+      {w:'存続の危機',r:'そんぞくのきき',m:'crisis of survival'},
+      {w:'融合',r:'ゆうごう',m:'fusion, integration'},
+      {w:'市場',r:'しじょう',m:'market'},
+    ],
+    questions:[
+      {type:'mcq',question:'伝統工芸が存続の危機に立たされている理由として述べられていないものはどれですか。',options:['A. 職人の高齢化','B. 後継者不足','C. 政府の支援不足','D. 安い大量生産品との競争'],answer:'C',explanation:'政府の支援不足については本文で述べられていません。挙げられているのは高齢化・後継者不足・安い製品との競争です。'},
+      {type:'mcq',question:'若い職人が新たな市場を開こうとしている方法として述べられているものはどれですか。',options:['A. 海外に工場を移すこと','B. 価格を大幅に下げること','C. モダンなデザインと伝統的な技術を融合させたり、SNSで海外に発信したりすること','D. 政府の補助金を申請すること'],answer:'C',explanation:'「モダンなデザインと伝統的な技術を融合させたり、SNSを活用して海外に発信したりすることで、新たな市場を開こうとする動き」とあります。'},
+      {type:'mcq',question:'この文章の主なテーマは何ですか。',options:['A. 日本の伝統工芸の歴史','B. 外国との文化交流','C. 伝統工芸が直面する課題と若い世代による新しい取り組み','D. 大量生産品の問題点'],answer:'C',explanation:'伝統工芸の存続危機（課題）と、若い職人による革新的な取り組みが本文の主なテーマです。'},
+      {type:'open',question:'伝統文化や工芸を次の世代に伝えるためにはどうすればいいと思いますか。'},
+    ]
+  },
+
+  {
+    id:'n2-8', level:'n2',
+    titleJp:'<ruby>科<rt>か</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>技<rt>ぎ</rt></ruby><ruby>術<rt>じゅつ</rt></ruby>と<ruby>倫<rt>りん</rt></ruby><ruby>理<rt>り</rt></ruby>',
+    titleEn:'Science, Technology and Ethics',
+    topic:'science', chars:275,
+    text:`<ruby>科<rt>か</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>技<rt>ぎ</rt></ruby><ruby>術<rt>じゅつ</rt></ruby>の<ruby>進<rt>しん</rt></ruby><ruby>歩<rt>ぽ</rt></ruby>は、<ruby>人<rt>じん</rt></ruby><ruby>類<rt>るい</rt></ruby>に<ruby>多<rt>おお</rt></ruby>くの<ruby>恩<rt>おん</rt></ruby><ruby>恵<rt>けい</rt></ruby>をもたらしてきた<ruby>一<rt>いっ</rt></ruby><ruby>方<rt>ぽう</rt></ruby>で、<ruby>新<rt>あたら</rt></ruby>たな<ruby>倫<rt>りん</rt></ruby><ruby>理<rt>り</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>を<ruby>生<rt>う</rt></ruby>み<ruby>出<rt>だ</rt></ruby>してきました。ゲノム<ruby>編<rt>へん</rt></ruby><ruby>集<rt>しゅう</rt></ruby><ruby>技<rt>ぎ</rt></ruby><ruby>術<rt>じゅつ</rt></ruby>や<ruby>生<rt>せい</rt></ruby><ruby>命<rt>めい</rt></ruby><ruby>の<rt>の</rt></ruby><ruby>誕<rt>たん</rt></ruby><ruby>生<rt>じょう</rt></ruby>に<ruby>関<rt>かん</rt></ruby>わる<ruby>研<rt>けん</rt></ruby><ruby>究<rt>きゅう</rt></ruby>は、<ruby>治<rt>ち</rt></ruby><ruby>療<rt>りょう</rt></ruby>の<ruby>可<rt>か</rt></ruby><ruby>能<rt>のう</rt></ruby><ruby>性<rt>せい</rt></ruby>を<ruby>広<rt>ひろ</rt></ruby>げる<ruby>反<rt>はん</rt></ruby><ruby>面<rt>めん</rt></ruby>、「<ruby>命<rt>いのち</rt></ruby>の<ruby>設<rt>せっ</rt></ruby><ruby>計<rt>けい</rt></ruby>」という<ruby>倫<rt>りん</rt></ruby><ruby>理<rt>り</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>を<ruby>引<rt>ひ</rt></ruby>き<ruby>起<rt>お</rt></ruby>こします。AIの<ruby>意<rt>い</rt></ruby><ruby>思<rt>し</rt></ruby><ruby>決<rt>けっ</rt></ruby><ruby>定<rt>てい</rt></ruby>における<ruby>公<rt>こう</rt></ruby><ruby>平<rt>へい</rt></ruby><ruby>性<rt>せい</rt></ruby>や、<ruby>個<rt>こ</rt></ruby><ruby>人<rt>じん</rt></ruby><ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby>の<ruby>プライバシー<rt>プライバシー</rt></ruby>保<ruby>護<rt>ご</rt></ruby>なども<ruby>現<rt>げん</rt></ruby><ruby>代<rt>だい</rt></ruby>の<ruby>重<rt>じゅう</rt></ruby><ruby>要<rt>よう</rt></ruby>な<ruby>課<rt>か</rt></ruby><ruby>題<rt>だい</rt></ruby>です。<ruby>科<rt>か</rt></ruby><ruby>学<rt>がく</rt></ruby>の<ruby>発<rt>はっ</rt></ruby><ruby>展<rt>てん</rt></ruby>を<ruby>人<rt>じん</rt></ruby><ruby>類<rt>るい</rt></ruby>の<ruby>幸<rt>こう</rt></ruby><ruby>福<rt>ふく</rt></ruby>に<ruby>結<rt>むす</rt></ruby>びつけるためには、<ruby>技<rt>ぎ</rt></ruby><ruby>術<rt>じゅつ</rt></ruby>の<ruby>開<rt>かい</rt></ruby><ruby>発<rt>はつ</rt></ruby>と<ruby>同<rt>どう</rt></ruby><ruby>時<rt>じ</rt></ruby>に、<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby><ruby>全<rt>ぜん</rt></ruby><ruby>体<rt>たい</rt></ruby>での<ruby>倫<rt>りん</rt></ruby><ruby>理<rt>り</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>議<rt>ぎ</rt></ruby><ruby>論<rt>ろん</rt></ruby>が<ruby>不<rt>ふ</rt></ruby><ruby>可<rt>か</rt></ruby><ruby>欠<rt>けつ</rt></ruby>です。`,
+    gloss:[
+      {w:'恩恵',r:'おんけい',m:'benefit, blessing'},
+      {w:'倫理的',r:'りんりてき',m:'ethical'},
+      {w:'ゲノム編集',r:'ゲノムへんしゅう',m:'genome editing'},
+      {w:'命の設計',r:'いのちのせっけい',m:'designing life'},
+      {w:'公平性',r:'こうへいせい',m:'fairness, equity'},
+      {w:'プライバシー保護',r:'プライバシーほご',m:'privacy protection'},
+      {w:'不可欠',r:'ふかけつ',m:'indispensable, essential'},
+    ],
+    questions:[
+      {type:'mcq',question:'ゲノム編集技術が生み出す倫理的な問題とは何ですか。',options:['A. 研究費用が高くなること','B. 「命の設計」という問題','C. 研究者が少なくなること','D. 治療法が複雑になること'],answer:'B',explanation:'「治療の可能性を広げる反面、「命の設計」という倫理的な問題を引き起こします」とあります。'},
+      {type:'mcq',question:'現代の重要な課題として本文で挙げられているものはどれですか。',options:['A. 宇宙開発と軍事利用','B. AIの公平性と個人情報のプライバシー保護','C. 核エネルギーの安全性','D. 遺伝子組み換え食品の普及'],answer:'B',explanation:'「AIの意思決定における公平性や、個人情報のプライバシー保護なども現代の重要な課題」と述べられています。'},
+      {type:'mcq',question:'科学の発展を人類の幸福に結びつけるために必要なこととして述べられているものはどれですか。',options:['A. 研究費をもっと増やすこと','B. 科学者だけで決定すること','C. 技術の開発と同時に社会全体での倫理的な議論','D. 国際的な競争を促進すること'],answer:'C',explanation:'「技術の開発と同時に、社会全体での倫理的な議論が不可欠です」と結論づけています。'},
+      {type:'open',question:'科学技術の進歩と倫理のバランスをとることについて、あなたはどう考えますか。'},
+    ]
+  },
+
+// ════════════════════════════════════════════════════════════
+  //  N1 PASSAGES
+  // ════════════════════════════════════════════════════════════
+
+  {
+    id:'n1-1', level:'n1',
+    titleJp:'<ruby>言<rt>げん</rt></ruby><ruby>語<rt>ご</rt></ruby>と<ruby>思<rt>し</rt></ruby><ruby>考<rt>こう</rt></ruby>',
+    titleEn:'Language and Thought',
+    topic:'philosophy', chars:280,
+    text:`<ruby>言<rt>げん</rt></ruby><ruby>語<rt>ご</rt></ruby>は<ruby>単<rt>たん</rt></ruby>なるコミュニケーションの<ruby>手<rt>て</rt></ruby><ruby>段<rt>だん</rt></ruby>にとどまらず、<ruby>私<rt>わたし</rt></ruby>たちの<ruby>思<rt>し</rt></ruby><ruby>考<rt>こう</rt></ruby>そのものを<ruby>形<rt>かたち</rt></ruby><ruby>作<rt>づく</rt></ruby>るという<ruby>見<rt>み</rt></ruby><ruby>方<rt>かた</rt></ruby>があります。<ruby>ある<rt>ある</rt></ruby><ruby>言<rt>げん</rt></ruby><ruby>語<rt>ご</rt></ruby>に<ruby>存<rt>そん</rt></ruby><ruby>在<rt>ざい</rt></ruby>する<ruby>概<rt>がい</rt></ruby><ruby>念<rt>ねん</rt></ruby>が<ruby>他<rt>た</rt></ruby>の<ruby>言<rt>げん</rt></ruby><ruby>語<rt>ご</rt></ruby>には<ruby>存<rt>そん</rt></ruby><ruby>在<rt>ざい</rt></ruby>しないことがあり、それが<ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>認<rt>にん</rt></ruby><ruby>識<rt>しき</rt></ruby>の<ruby>差<rt>さ</rt></ruby>を<ruby>生<rt>う</rt></ruby>み<ruby>出<rt>だ</rt></ruby>すとも<ruby>言<rt>い</rt></ruby>われています。<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby>の「<ruby>木<rt>こ</rt></ruby><ruby>漏<rt>も</rt></ruby><ruby>れ<rt>れ</rt></ruby><ruby>日<rt>び</rt></ruby>」や「<ruby>物<rt>もの</rt></ruby>の<ruby>哀<rt>あわ</rt></ruby>れ」のような<ruby>概<rt>がい</rt></ruby><ruby>念<rt>ねん</rt></ruby>は、<ruby>他<rt>た</rt></ruby>の<ruby>言<rt>げん</rt></ruby><ruby>語<rt>ご</rt></ruby>への<ruby>翻<rt>ほん</rt></ruby><ruby>訳<rt>やく</rt></ruby>が<ruby>困<rt>こん</rt></ruby><ruby>難<rt>なん</rt></ruby>なことで<ruby>知<rt>し</rt></ruby>られています。<ruby>言<rt>げん</rt></ruby><ruby>語<rt>ご</rt></ruby>を<ruby>学<rt>まな</rt></ruby>ぶことは、<ruby>新<rt>あたら</rt></ruby>しい<ruby>世<rt>せ</rt></ruby><ruby>界<rt>かい</rt></ruby><ruby>観<rt>かん</rt></ruby>を<ruby>身<rt>み</rt></ruby>につけることにほかならないのかもしれません。`,
+    gloss:[
+      {w:'思考',r:'しこう',m:'thought, thinking'},
+      {w:'概念',r:'がいねん',m:'concept, notion'},
+      {w:'認識',r:'にんしき',m:'recognition, perception'},
+      {w:'木漏れ日',r:'こもれび',m:'sunlight filtering through leaves'},
+      {w:'物の哀れ',r:'もののあわれ',m:'sensitivity to ephemera, pathos of things'},
+      {w:'翻訳',r:'ほんやく',m:'translation'},
+      {w:'世界観',r:'せかいかん',m:'worldview'},
+      {w:'にほかならない',r:'にほかならない',m:'is nothing other than, is precisely'},
+    ],
+    questions:[
+      {type:'mcq',question:'本文における「言語が思考を形作る」という見方はどのような考えに基づいていますか。',options:['A. すべての言語は同じ概念を持っている','B. ある言語に存在する概念が他の言語にはなく、それが認識の差を生む','C. 言語は文化とは無関係である','D. 翻訳によってすべての概念は伝達できる'],answer:'B',explanation:'「ある言語に存在する概念が他の言語には存在しないことがあり、それが文化的な認識の差を生み出す」と述べられており、これが「言語が思考を形作る」という見方の根拠です。'},
+      {type:'mcq',question:'「木漏れ日」や「物の哀れ」が例として挙げられているのはなぜですか。',options:['A. 美しい日本語の表現だから','B. 他の言語への翻訳が困難な日本語固有の概念だから','C. 外国語に影響を与えた概念だから','D. 哲学的に重要な概念だから'],answer:'B',explanation:'これらの概念が「他の言語への翻訳が困難なことで知られている」とあり、言語固有の概念が翻訳困難であることの具体例として挙げられています。'},
+      {type:'mcq',question:'「言語を学ぶことは新しい世界観を身につけることにほかならない」とはどういう意味ですか。',options:['A. 言語の学習はとても難しい','B. 言語を学ぶことは旅行することと同じだ','C. 新しい言語を習得することは、その言語に固有の思考様式や認識の枠組みを得ることだ','D. 世界観は言語によって決まるものではない'],answer:'C',explanation:'「にほかならない」は「まさに〜だ」を意味し、言語を学ぶことがそのまま新しい思考様式・世界観の獲得になるという筆者の主張を強調しています。'},
+      {type:'open',question:'あなたが日本語を学ぶことで気づいた、日本語に固有の概念や表現はありますか。'},
+    ]
+  },
+
+  {
+    id:'n1-2', level:'n1',
+    titleJp:'<ruby>記<rt>き</rt></ruby><ruby>憶<rt>おく</rt></ruby>と<ruby>アイデンティティ<rt>アイデンティティ</rt></ruby>',
+    titleEn:'Memory and Identity',
+    topic:'philosophy', chars:285,
+    text:`<ruby>私<rt>わたし</rt></ruby>たちは<ruby>記<rt>き</rt></ruby><ruby>憶<rt>おく</rt></ruby>によって<ruby>自<rt>じ</rt></ruby><ruby>分<rt>ぶん</rt></ruby>という<ruby>存<rt>そん</rt></ruby><ruby>在<rt>ざい</rt></ruby>を<ruby>形<rt>かたち</rt></ruby><ruby>成<rt>せい</rt></ruby>しています。<ruby>幼<rt>おさな</rt></ruby>い<ruby>頃<rt>ごろ</rt></ruby>の<ruby>経<rt>けい</rt></ruby><ruby>験<rt>けん</rt></ruby>、<ruby>喜<rt>よろこ</rt></ruby>びや<ruby>悲<rt>かな</rt></ruby>しみ、<ruby>他<rt>た</rt></ruby><ruby>者<rt>しゃ</rt></ruby>との<ruby>関<rt>かん</rt></ruby><ruby>わり<rt>わり</rt></ruby>—これらすべてが<ruby>積<rt>つ</rt></ruby>み<ruby>重<rt>かさ</rt></ruby>なって、「<ruby>私<rt>わたし</rt></ruby>」という<ruby>連<rt>れん</rt></ruby><ruby>続<rt>ぞく</rt></ruby>した<ruby>物<rt>もの</rt></ruby><ruby>語<rt>がたり</rt></ruby>を<ruby>作<rt>つく</rt></ruby>り<ruby>上<rt>あ</rt></ruby>げています。しかし、<ruby>認<rt>にん</rt></ruby><ruby>知<rt>ち</rt></ruby><ruby>症<rt>しょう</rt></ruby>や<ruby>事<rt>じ</rt></ruby><ruby>故<rt>こ</rt></ruby>による<ruby>記<rt>き</rt></ruby><ruby>憶<rt>おく</rt></ruby><ruby>喪<rt>そう</rt></ruby><ruby>失<rt>しつ</rt></ruby>が<ruby>起<rt>お</rt></ruby>きたとき、その<ruby>人<rt>ひと</rt></ruby>は<ruby>依<rt>い</rt></ruby><ruby>然<rt>ぜん</rt></ruby>として「<ruby>同<rt>どう</rt></ruby><ruby>じ<rt>じ</rt></ruby>人<ruby>物<rt>ぶつ</rt></ruby>」といえるのでしょうか。<ruby>哲<rt>てつ</rt></ruby><ruby>学<rt>がく</rt></ruby>者<ruby>たち<rt>たち</rt></ruby>はこの<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>を<ruby>古<rt>ふる</rt></ruby>くから<ruby>議<rt>ぎ</rt></ruby><ruby>論<rt>ろん</rt></ruby>してきました。<ruby>記<rt>き</rt></ruby><ruby>憶<rt>おく</rt></ruby>こそがアイデンティティの<ruby>核<rt>かく</rt></ruby>であるとする<ruby>見<rt>み</rt></ruby><ruby>方<rt>かた</rt></ruby>がある<ruby>一<rt>いっ</rt></ruby><ruby>方<rt>ぽう</rt></ruby>で、<ruby>身<rt>から</rt></ruby><ruby>体<rt>だ</rt></ruby>の<ruby>連<rt>れん</rt></ruby><ruby>続<rt>ぞく</rt></ruby>性<ruby>や<rt>や</rt></ruby><ruby>人<rt>たい</rt></ruby><ruby>格<rt>じん</rt></ruby>特<ruby>性<rt>かく</rt></ruby>こそが<ruby>同<rt>どう</rt></ruby><ruby>一<rt>いつ</rt></ruby><ruby>性<rt>せい</rt></ruby>を<ruby>支<rt>ささ</rt></ruby>えるという<ruby>議<rt>ぎ</rt></ruby><ruby>論<rt>ろん</rt></ruby>もあります。`,
+    gloss:[
+      {w:'記憶',r:'きおく',m:'memory'},
+      {w:'アイデンティティ',r:'アイデンティティ',m:'identity'},
+      {w:'形成',r:'けいせい',m:'formation, shaping'},
+      {w:'認知症',r:'にんちしょう',m:'dementia'},
+      {w:'記憶喪失',r:'きおくそうしつ',m:'memory loss, amnesia'},
+      {w:'哲学者',r:'てつがくしゃ',m:'philosopher'},
+      {w:'連続性',r:'れんぞくせい',m:'continuity'},
+      {w:'同一性',r:'どういつせい',m:'identity, sameness'},
+    ],
+    questions:[
+      {type:'mcq',question:'本文によると、「私」という物語はどのように作られていますか。',options:['A. 未来への計画によって','B. 社会的な地位によって','C. 幼い頃の経験・喜びや悲しみ・他者との関わりなどの記憶が積み重なって','D. 身体的な特徴によって'],answer:'C',explanation:'「幼い頃の経験、喜びや悲しみ、他者との関わり—これらすべてが積み重なって「私」という連続した物語を作り上げている」と述べられています。'},
+      {type:'mcq',question:'記憶喪失や認知症に関して、本文が提起している哲学的問いは何ですか。',options:['A. どうすれば記憶を回復できるか','B. 記憶を失った人はまだ同じ人物といえるのか','C. 記憶喪失はどのように予防できるか','D. 認知症は社会にどんな影響を与えるか'],answer:'B',explanation:'「その人は依然として「同じ人物」といえるのでしょうか」という問いが本文の哲学的核心です。'},
+      {type:'mcq',question:'アイデンティティについて、本文で紹介されている二つの立場を正しく説明しているものはどれですか。',options:['A. 記憶だけが重要 vs 身体だけが重要','B. 記憶がアイデンティティの核である vs 身体の連続性や人格特性こそが同一性を支える','C. 哲学者はアイデンティティを否定する vs 科学者は肯定する','D. 過去の記憶が重要 vs 未来の計画が重要'],answer:'B',explanation:'「記憶こそがアイデンティティの核」という見方と「身体の連続性や人格特性こそが同一性を支える」という見方の二つが紹介されています。'},
+      {type:'open',question:'あなたにとって「自分らしさ」を作っているものは何だと思いますか。'},
+    ]
+  },
+
+  {
+    id:'n1-3', level:'n1',
+    titleJp:'<ruby>近<rt>きん</rt></ruby><ruby>代<rt>だい</rt></ruby>化<ruby>と<rt>と</rt></ruby><ruby>伝<rt>でん</rt></ruby><ruby>統<rt>とう</rt></ruby>の<ruby>相<rt>そう</rt></ruby><ruby>克<rt>こく</rt></ruby>',
+    titleEn:'The Conflict Between Modernisation and Tradition',
+    topic:'society', chars:285,
+    text:`<ruby>明<rt>めい</rt></ruby><ruby>治<rt>じ</rt></ruby><ruby>以<rt>い</rt></ruby><ruby>降<rt>こう</rt></ruby>の<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby>は、<ruby>西<rt>せい</rt></ruby><ruby>洋<rt>よう</rt></ruby>の<ruby>近<rt>きん</rt></ruby><ruby>代<rt>だい</rt></ruby><ruby>文<rt>ぶん</rt></ruby><ruby>明<rt>めい</rt></ruby>を<ruby>急<rt>きゅう</rt></ruby><ruby>速<rt>そく</rt></ruby>に<ruby>取<rt>と</rt></ruby>り<ruby>入<rt>い</rt></ruby>れながらも、<ruby>固<rt>こ</rt></ruby><ruby>有<rt>ゆう</rt></ruby>の<ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby>や<ruby>価<rt>か</rt></ruby><ruby>値<rt>ち</rt></ruby><ruby>観<rt>かん</rt></ruby>を<ruby>保<rt>たも</rt></ruby>とうとする<ruby>緊<rt>きん</rt></ruby><ruby>張<rt>ちょう</rt></ruby><ruby>関<rt>かん</rt></ruby><ruby>係<rt>けい</rt></ruby>の<ruby>中<rt>なか</rt></ruby>を<ruby>歩<rt>ある</rt></ruby>んできました。この<ruby>相<rt>そう</rt></ruby><ruby>克<rt>こく</rt></ruby>は<ruby>今<rt>いま</rt></ruby>日<ruby>も<rt>も</rt></ruby><ruby>続<rt>つづ</rt></ruby>いており、<ruby>グローバル<rt>グローバル</rt></ruby>化の<ruby>波<rt>なみ</rt></ruby>に<ruby>乗<rt>の</rt></ruby>る<ruby>一<rt>いっ</rt></ruby><ruby>方<rt>ぽう</rt></ruby>で<ruby>伝<rt>でん</rt></ruby><ruby>統<rt>とう</rt></ruby>を<ruby>守<rt>まも</rt></ruby>ろうとする<ruby>動<rt>うご</rt></ruby>きとして<ruby>現<rt>あらわ</rt></ruby>れています。<ruby>重<rt>じゅう</rt></ruby><ruby>要<rt>よう</rt></ruby>なのは、<ruby>近<rt>きん</rt></ruby><ruby>代<rt>だい</rt></ruby><ruby>化<rt>か</rt></ruby>と<ruby>伝<rt>でん</rt></ruby><ruby>統<rt>とう</rt></ruby>とは<ruby>必<rt>かなら</rt></ruby>ずしも<ruby>対<rt>たい</rt></ruby><ruby>立<rt>りつ</rt></ruby>するものではなく、<ruby>それぞれ<rt>それぞれ</rt></ruby>の<ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby>が<ruby>固<rt>こ</rt></ruby><ruby>有<rt>ゆう</rt></ruby>の<ruby>強<rt>つよ</rt></ruby>みを<ruby>保<rt>たも</rt></ruby>ちながら<ruby>変<rt>へん</rt></ruby><ruby>化<rt>か</rt></ruby>に<ruby>適<rt>てき</rt></ruby><ruby>応<rt>おう</rt></ruby>することが、<ruby>真<rt>しん</rt></ruby>の<ruby>意<rt>い</rt></ruby><ruby>味<rt>み</rt></ruby>での<ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby>の<ruby>存<rt>そん</rt></ruby><ruby>続<rt>ぞく</rt></ruby>につながるという<ruby>視<rt>し</rt></ruby><ruby>点<rt>てん</rt></ruby>です。`,
+    gloss:[
+      {w:'相克',r:'そうこく',m:'conflict, antagonism, tension between opposites'},
+      {w:'明治以降',r:'めいじいこう',m:'since the Meiji period'},
+      {w:'固有',r:'こゆう',m:'inherent, unique, indigenous'},
+      {w:'緊張関係',r:'きんちょうかんけい',m:'state of tension'},
+      {w:'グローバル化の波',r:'グローバルかのなみ',m:'wave of globalisation'},
+      {w:'適応',r:'てきおう',m:'adaptation'},
+      {w:'存続',r:'そんぞく',m:'survival, continuation'},
+    ],
+    questions:[
+      {type:'mcq',question:'明治以降の日本が直面してきた「緊張関係」とは何ですか。',options:['A. 東西の政治対立','B. 西洋の近代文明を取り入れながら固有の文化・価値観を保とうとする矛盾','C. 経済成長と環境保護の矛盾','D. 個人の自由と社会の規範の対立'],answer:'B',explanation:'「西洋の近代文明を急速に取り入れながらも、固有の文化や価値観を保とうとする緊張関係」と明記されています。'},
+      {type:'mcq',question:'筆者が「重要な視点」として述べていることは何ですか。',options:['A. 近代化を全面的に受け入れるべきだ','B. 伝統だけを守り近代化を拒否すべきだ','C. 近代化と伝統は必ずしも対立せず、固有の強みを保ちながら変化に適応することが文化の存続につながる','D. グローバル化は文化を破壊するから止めるべきだ'],answer:'C',explanation:'「近代化と伝統とは必ずしも対立するものではなく、それぞれの文化が固有の強みを保ちながら変化に適応することが、真の意味での文化の存続につながる」と述べています。'},
+      {type:'mcq',question:'「相克」という言葉が示す内容として最も適切なものはどれですか。',options:['A. 二つのものが調和すること','B. 二つの対立する力が互いに拮抗していること','C. 一方が他方に完全に勝つこと','D. 対立が解消されること'],answer:'B',explanation:'「相克」は二つの異なる力が互いに対立・拮抗している状態を指し、近代化と伝統の両方が引き合う緊張状態を表しています。'},
+      {type:'open',question:'あなたの国や文化でも近代化と伝統の間に葛藤がありますか。具体例を挙げて説明してください。'},
+    ]
+  },
+
+  {
+    id:'n1-4', level:'n1',
+    titleJp:'<ruby>無<rt>む</rt></ruby><ruby>常<rt>じょう</rt></ruby>の<ruby>美<rt>び</rt></ruby><ruby>学<rt>がく</rt></ruby>',
+    titleEn:'The Aesthetics of Impermanence',
+    topic:'culture', chars:285,
+    text:`<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby>の<ruby>根<rt>こん</rt></ruby><ruby>底<rt>てい</rt></ruby>には、<ruby>無<rt>む</rt></ruby><ruby>常<rt>じょう</rt></ruby>という<ruby>仏<rt>ぶっ</rt></ruby><ruby>教<rt>きょう</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>概<rt>がい</rt></ruby><ruby>念<rt>ねん</rt></ruby>が<ruby>流<rt>なが</rt></ruby>れています。すべてのものは<ruby>移<rt>うつ</rt></ruby>ろい<ruby>消<rt>き</rt></ruby>えゆくという<ruby>諦<rt>てい</rt></ruby><ruby>観<rt>かん</rt></ruby>は、<ruby>悲<rt>ひ</rt></ruby><ruby>観<rt>かん</rt></ruby>ではなく、<ruby>はかなさ<rt>はかなさ</rt></ruby>の<ruby>中<rt>なか</rt></ruby>にこそ<ruby>美<rt>うつく</rt></ruby>しさを<ruby>見<rt>み</rt></ruby>出<ruby>す<rt>す</rt></ruby>という<ruby>独<rt>どく</rt></ruby><ruby>自<rt>じ</rt></ruby>の<ruby>感<rt>かん</rt></ruby><ruby>性<rt>せい</rt></ruby>を<ruby>育<rt>はぐく</rt></ruby>みました。<ruby>桜<rt>さくら</rt></ruby>の<ruby>花<rt>はな</rt></ruby>が<ruby>散<rt>ち</rt></ruby>るからこそ<ruby>美<rt>うつく</rt></ruby>しく、<ruby>茶<rt>ちゃ</rt></ruby><ruby>道<rt>どう</rt></ruby>の「<ruby>一<rt>いち</rt></ruby><ruby>期<rt>ご</rt></ruby><ruby>一<rt>いち</rt></ruby><ruby>会<rt>え</rt></ruby>」の<ruby>精<rt>せい</rt></ruby><ruby>神<rt>しん</rt></ruby>も<ruby>同<rt>どう</rt></ruby><ruby>じ<rt>じ</rt></ruby><ruby>根<rt>こん</rt></ruby><ruby>底<rt>てい</rt></ruby>から<ruby>生<rt>う</rt></ruby>まれています。こうした<ruby>美<rt>び</rt></ruby><ruby>意<rt>い</rt></ruby><ruby>識<rt>しき</rt></ruby>は、<ruby>完<rt>かん</rt></ruby><ruby>璧<rt>ぺき</rt></ruby>さよりも<ruby>余<rt>よ</rt></ruby><ruby>白<rt>はく</rt></ruby>や<ruby>不<rt>ふ</rt></ruby><ruby>完<rt>かん</rt></ruby><ruby>全<rt>ぜん</rt></ruby>さに<ruby>価<rt>か</rt></ruby><ruby>値<rt>ち</rt></ruby>を<ruby>見<rt>み</rt></ruby><ruby>出<rt>いだ</rt></ruby>す「<ruby>侘<rt>わ</rt></ruby><ruby>び<rt>び</rt></ruby>・<ruby>寂<rt>さ</rt></ruby><ruby>び<rt>び</rt></ruby>」の<ruby>美<rt>び</rt></ruby><ruby>学<rt>がく</rt></ruby>へと<ruby>昇<rt>しょう</rt></ruby><ruby>華<rt>か</rt></ruby>されています。`,
+    gloss:[
+      {w:'無常',r:'むじょう',m:'impermanence, transience (Buddhist concept)'},
+      {w:'諦観',r:'ていかん',m:'resigned acceptance, philosophical resignation'},
+      {w:'はかなさ',r:'はかなさ',m:'transience, ephemerality, fleetingness'},
+      {w:'一期一会',r:'いちごいちえ',m:'once in a lifetime encounter (tea ceremony concept)'},
+      {w:'余白',r:'よはく',m:'blank space, negative space, margin'},
+      {w:'侘び・寂び',r:'わびさび',m:'wabi-sabi: beauty of imperfection and transience'},
+      {w:'昇華',r:'しょうか',m:'sublimation, elevation to a higher form'},
+    ],
+    questions:[
+      {type:'mcq',question:'日本文化の「無常」の概念についての説明として正しいものはどれですか。',options:['A. すべてが永遠であるという楽観的な見方','B. 変化することへの怒りと抵抗','C. すべてのものが移ろい消えゆくという諦観であり、はかなさの中に美しさを見出す感性','D. 完璧さを追求する姿勢'],answer:'C',explanation:'「すべてのものは移ろい消えゆくという諦観は、悲観ではなく、はかなさの中にこそ美しさを見出すという独自の感性を育みました」とあります。'},
+      {type:'mcq',question:'「一期一会」の精神が生まれた根底にあるものは何ですか。',options:['A. お茶の製造技術','B. 無常という概念（はかなさの中に美しさを見出す感性）','C. 礼儀作法の厳しさ','D. 外国文化との交流'],answer:'B',explanation:'「茶道の「一期一会」の精神も同じ根底から生まれています」とあり、その根底とは無常という仏教的概念です。'},
+      {type:'mcq',question:'「侘び・寂び」の美学の特徴として最も適切なものはどれですか。',options:['A. 豪華さと完璧さを追求する','B. 西洋の美意識を取り入れた概念','C. 余白や不完全さに価値を見出す美意識','D. 自然を模倣した芸術様式'],answer:'C',explanation:'「完璧さよりも余白や不完全さに価値を見出す「侘び・寂び」の美学」と説明されています。'},
+      {type:'open',question:'「はかなさ」や「不完全さ」の中に美しさを見出すという考え方について、あなたはどう思いますか。'},
+    ]
+  },
+
+  {
+    id:'n1-5', level:'n1',
+    titleJp:'<ruby>集<rt>しゅう</rt></ruby><ruby>団<rt>だん</rt></ruby>主<ruby>義<rt>ぎ</rt></ruby>と<ruby>個<rt>こ</rt></ruby><ruby>人<rt>じん</rt></ruby>主<ruby>義<rt>ぎ</rt></ruby>',
+    titleEn:'Collectivism and Individualism',
+    topic:'society', chars:285,
+    text:`<ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby>はしばしば<ruby>集<rt>しゅう</rt></ruby><ruby>団<rt>だん</rt></ruby>主<ruby>義<rt>ぎ</rt></ruby>的だと<ruby>言<rt>い</rt></ruby>われますが、<ruby>若<rt>わか</rt></ruby>い<ruby>世<rt>せ</rt></ruby><ruby>代<rt>だい</rt></ruby>を<ruby>中<rt>ちゅう</rt></ruby><ruby>心<rt>しん</rt></ruby>に<ruby>個<rt>こ</rt></ruby><ruby>人<rt>じん</rt></ruby>の<ruby>価<rt>か</rt></ruby><ruby>値<rt>ち</rt></ruby><ruby>観<rt>かん</rt></ruby>や<ruby>生<rt>い</rt></ruby>き<ruby>方<rt>かた</rt></ruby>を<ruby>重<rt>おも</rt></ruby>んじる<ruby>傾<rt>けい</rt></ruby><ruby>向<rt>こう</rt></ruby>が<ruby>強<rt>つよ</rt></ruby>まっています。かつては<ruby>会<rt>かい</rt></ruby><ruby>社<rt>しゃ</rt></ruby>や<ruby>地<rt>ち</rt></ruby><ruby>域<rt>いき</rt></ruby>コミュニティへの<ruby>帰<rt>き</rt></ruby><ruby>属<rt>ぞく</rt></ruby><ruby>感<rt>かん</rt></ruby>が<ruby>個<rt>こ</rt></ruby><ruby>人<rt>じん</rt></ruby>の<ruby>アイデンティティ<rt>アイデンティティ</rt></ruby>を<ruby>規<rt>き</rt></ruby><ruby>定<rt>てい</rt></ruby>していましたが、<ruby>現<rt>げん</rt></ruby><ruby>代<rt>だい</rt></ruby>ではそうした<ruby>枠<rt>わく</rt></ruby><ruby>組<rt>ぐ</rt></ruby>みが<ruby>崩<rt>くず</rt></ruby>れつつあります。この<ruby>変<rt>へん</rt></ruby><ruby>容<rt>よう</rt></ruby>は<ruby>個<rt>こ</rt></ruby><ruby>人<rt>じん</rt></ruby>の<ruby>自<rt>じ</rt></ruby><ruby>由<rt>ゆう</rt></ruby>を<ruby>拡<rt>かく</rt></ruby><ruby>大<rt>だい</rt></ruby>する<ruby>一<rt>いっ</rt></ruby><ruby>方<rt>ぽう</rt></ruby>で、<ruby>孤<rt>こ</rt></ruby><ruby>独<rt>どく</rt></ruby>や<ruby>共<rt>きょう</rt></ruby><ruby>同<rt>どう</rt></ruby><ruby>体<rt>たい</rt></ruby>の<ruby>喪<rt>そう</rt></ruby><ruby>失<rt>しつ</rt></ruby>という<ruby>新<rt>あたら</rt></ruby>たな<ruby>課<rt>か</rt></ruby><ruby>題<rt>だい</rt></ruby>をも<ruby>生<rt>う</rt></ruby>み<ruby>出<rt>だ</rt></ruby>しています。<ruby>集<rt>しゅう</rt></ruby><ruby>団<rt>だん</rt></ruby>と<ruby>個<rt>こ</rt></ruby><ruby>人<rt>じん</rt></ruby>の<ruby>健<rt>けん</rt></ruby><ruby>全<rt>ぜん</rt></ruby>なバランスを<ruby>どう<rt>どう</rt></ruby><ruby>保<rt>たも</rt></ruby>つかが、<ruby>現<rt>げん</rt></ruby><ruby>代<rt>だい</rt></ruby><ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby>の<ruby>重<rt>じゅう</rt></ruby><ruby>要<rt>よう</rt></ruby>な<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>と<ruby>なっています<rt>なっています</rt></ruby>。`,
+    gloss:[
+      {w:'集団主義',r:'しゅうだんしゅぎ',m:'collectivism'},
+      {w:'個人主義',r:'こじんしゅぎ',m:'individualism'},
+      {w:'帰属感',r:'きぞくかん',m:'sense of belonging'},
+      {w:'規定',r:'きてい',m:'defining, determining'},
+      {w:'枠組み',r:'わくぐみ',m:'framework, structure'},
+      {w:'変容',r:'へんよう',m:'transformation, change in form'},
+      {w:'共同体',r:'きょうどうたい',m:'community'},
+      {w:'喪失',r:'そうしつ',m:'loss'},
+    ],
+    questions:[
+      {type:'mcq',question:'かつての日本社会でアイデンティティを規定していたものは何ですか。',options:['A. 個人の才能と業績','B. 家族の名声と伝統','C. 会社や地域コミュニティへの帰属感','D. 個人の信念と価値観'],answer:'C',explanation:'「かつては会社や地域コミュニティへの帰属感が個人のアイデンティティを規定していました」とあります。'},
+      {type:'mcq',question:'個人主義化が進むことで生まれる新たな課題として述べられているものはどれですか。',options:['A. 競争の激化と格差の拡大','B. 孤独や共同体の喪失','C. 労働生産性の低下','D. 伝統文化の衰退'],answer:'B',explanation:'「孤独や共同体の喪失という新たな課題をも生み出しています」と述べられています。'},
+      {type:'mcq',question:'筆者が現代社会の重要な問題として提起していることは何ですか。',options:['A. 日本が集団主義を完全に捨てること','B. 個人の自由を制限すること','C. 集団と個人の健全なバランスをどう保つか','D. 西洋式の個人主義を導入すること'],answer:'C',explanation:'「集団と個人の健全なバランスをどう保つかが、現代社会の重要な問題となっています」と結論づけています。'},
+      {type:'open',question:'集団の利益と個人の自由のどちらを優先すべきだと思いますか。あなたの考えを述べてください。'},
+    ]
+  },
+
+  {
+    id:'n1-6', level:'n1',
+    titleJp:'<ruby>経<rt>けい</rt></ruby><ruby>済<rt>ざい</rt></ruby><ruby>成<rt>せい</rt></ruby><ruby>長<rt>ちょう</rt></ruby>の<ruby>限<rt>かぎ</rt></ruby>り',
+    titleEn:'The Limits of Economic Growth',
+    topic:'economics', chars:290,
+    text:`<ruby>二<rt>に</rt></ruby><ruby>十<rt>じゅう</rt></ruby><ruby>世<rt>せい</rt></ruby><ruby>紀<rt>き</rt></ruby>の<ruby>資<rt>し</rt></ruby><ruby>本<rt>ほん</rt></ruby>主<ruby>義<rt>ぎ</rt></ruby>は、<ruby>経<rt>けい</rt></ruby><ruby>済<rt>ざい</rt></ruby><ruby>成<rt>せい</rt></ruby><ruby>長<rt>ちょう</rt></ruby>を<ruby>唯<rt>ゆい</rt></ruby><ruby>一<rt>いつ</rt></ruby>の<ruby>指<rt>し</rt></ruby><ruby>標<rt>ひょう</rt></ruby>として<ruby>追<rt>お</rt></ruby>い<ruby>求<rt>もと</rt></ruby>めてきました。しかし、<ruby>環<rt>かん</rt></ruby><ruby>境<rt>きょう</rt></ruby><ruby>破<rt>は</rt></ruby><ruby>壊<rt>かい</rt></ruby>や<ruby>資<rt>し</rt></ruby><ruby>源<rt>げん</rt></ruby><ruby>枯<rt>こ</rt></ruby><ruby>渇<rt>かつ</rt></ruby>、<ruby>格<rt>かく</rt></ruby><ruby>差<rt>さ</rt></ruby>の<ruby>拡<rt>かく</rt></ruby><ruby>大<rt>だい</rt></ruby>などの<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>が<ruby>深<rt>しん</rt></ruby><ruby>刻<rt>こく</rt></ruby>化<ruby>する<rt>する</rt></ruby>につれ、<ruby>成<rt>せい</rt></ruby><ruby>長<rt>ちょう</rt></ruby>に<ruby>依<rt>い</rt></ruby><ruby>存<rt>ぞん</rt></ruby>した<ruby>経<rt>けい</rt></ruby><ruby>済<rt>ざい</rt></ruby>モデルそのものが<ruby>問<rt>と</rt></ruby>い<ruby>直<rt>なお</rt></ruby>されています。「<ruby>脱<rt>だつ</rt></ruby><ruby>成<rt>せい</rt></ruby><ruby>長<rt>ちょう</rt></ruby>」や「<ruby>ドーナツ<rt>ドーナツ</rt></ruby><ruby>経<rt>けい</rt></ruby><ruby>済<rt>ざい</rt></ruby>」など、<ruby>人<rt>じん</rt></ruby><ruby>間<rt>げん</rt></ruby>の<ruby>福<rt>ふく</rt></ruby><ruby>祉<rt>し</rt></ruby>と<ruby>地<rt>ち</rt></ruby><ruby>球<rt>きゅう</rt></ruby>の<ruby>持<rt>じ</rt></ruby><ruby>続<rt>ぞく</rt></ruby><ruby>可<rt>か</rt></ruby><ruby>能<rt>のう</rt></ruby><ruby>性<rt>せい</rt></ruby>を<ruby>両<rt>りょう</rt></ruby><ruby>立<rt>りつ</rt></ruby>させる<ruby>新<rt>あたら</rt></ruby>しい<ruby>経<rt>けい</rt></ruby><ruby>済<rt>ざい</rt></ruby><ruby>パラダイム<rt>パラダイム</rt></ruby>が<ruby>模<rt>も</rt></ruby><ruby>索<rt>さく</rt></ruby>されています。<ruby>GDPという<rt>ジーディーピーという</rt></ruby><ruby>単<rt>たん</rt></ruby><ruby>一<rt>いつ</rt></ruby>の<ruby>尺<rt>しゃく</rt></ruby><ruby>度<rt>ど</rt></ruby>を<ruby>超<rt>こ</rt></ruby>えて、<ruby>幸<rt>しあわ</rt></ruby><ruby>福<rt>せ</rt></ruby>や<ruby>平<rt>びょう</rt></ruby><ruby>等<rt>どう</rt></ruby>、<ruby>環<rt>かん</rt></ruby><ruby>境<rt>きょう</rt></ruby>の<ruby>健<rt>けん</rt></ruby><ruby>全<rt>ぜん</rt></ruby><ruby>性<rt>せい</rt></ruby>を<ruby>総<rt>そう</rt></ruby><ruby>合<rt>ごう</rt></ruby><ruby>的<rt>てき</rt></ruby>に<ruby>評<rt>ひょう</rt></ruby><ruby>価<rt>か</rt></ruby>する<ruby>指<rt>し</rt></ruby><ruby>標<rt>ひょう</rt></ruby>の<ruby>確<rt>かく</rt></ruby><ruby>立<rt>りつ</rt></ruby>が<ruby>急<rt>きゅう</rt></ruby><ruby>務<rt>む</rt></ruby>となっています。`,
+    gloss:[
+      {w:'資本主義',r:'しほんしゅぎ',m:'capitalism'},
+      {w:'唯一の指標',r:'ゆいいつのしひょう',m:'sole indicator, single metric'},
+      {w:'資源枯渇',r:'しげんこかつ',m:'resource depletion'},
+      {w:'脱成長',r:'だつせいちょう',m:'degrowth'},
+      {w:'ドーナツ経済',r:'ドーナツけいざい',m:'doughnut economics'},
+      {w:'パラダイム',r:'パラダイム',m:'paradigm'},
+      {w:'模索',r:'もさく',m:'searching, groping for'},
+      {w:'急務',r:'きゅうむ',m:'urgent matter, pressing need'},
+    ],
+    questions:[
+      {type:'mcq',question:'二十世紀の資本主義が追い求めてきたものは何ですか。',options:['A. 環境の持続可能性','B. 経済成長を唯一の指標として','C. 人間の幸福と平等','D. 資源の公平な分配'],answer:'B',explanation:'「二十世紀の資本主義は、経済成長を唯一の指標として追い求めてきました」とあります。'},
+      {type:'mcq',question:'成長に依存した経済モデルが問い直されるようになった理由は何ですか。',options:['A. 経済成長が止まったから','B. 環境破壊・資源枯渇・格差の拡大などの問題が深刻化したから','C. 人々が豊かさに満足したから','D. 新しい技術が経済を変えたから'],answer:'B',explanation:'「環境破壊や資源枯渇、格差の拡大などの問題が深刻化するにつれ、成長に依存した経済モデルそのものが問い直されています」とあります。'},
+      {type:'mcq',question:'本文が「急務」として述べていることは何ですか。',options:['A. GDPをより正確に計算すること','B. 経済成長をさらに加速させること','C. 幸福・平等・環境の健全性を総合的に評価する指標を確立すること','D. 脱成長政策を世界中で採用すること'],answer:'C',explanation:'「幸福や平等、環境の健全性を総合的に評価する指標の確立が急務となっています」と述べられています。'},
+      {type:'open',question:'GDPだけでなく、どのような指標で社会の豊かさを測るべきだと思いますか。'},
+    ]
+  },
+
+  {
+    id:'n1-7', level:'n1',
+    titleJp:'<ruby>公<rt>こう</rt></ruby><ruby>正<rt>せい</rt></ruby>とは<ruby>何<rt>なに</rt></ruby>か',
+    titleEn:'What is Justice?',
+    topic:'philosophy', chars:285,
+    text:`<ruby>公<rt>こう</rt></ruby><ruby>正<rt>せい</rt></ruby>の<ruby>概<rt>がい</rt></ruby><ruby>念<rt>ねん</rt></ruby>は、<ruby>哲<rt>てつ</rt></ruby><ruby>学<rt>がく</rt></ruby>の<ruby>歴<rt>れき</rt></ruby><ruby>史<rt>し</rt></ruby>において<ruby>中<rt>ちゅう</rt></ruby><ruby>心<rt>しん</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>主<rt>テー</rt></ruby><ruby>題<rt>マ</rt></ruby>であり続けてきました。ロールズは「<ruby>無<rt>む</rt></ruby><ruby>知<rt>ち</rt></ruby>の<ruby>ヴェール<rt>ヴェール</rt></ruby>」という<ruby>思<rt>し</rt></ruby><ruby>考<rt>こう</rt></ruby><ruby>実<rt>じっ</rt></ruby><ruby>験<rt>けん</rt></ruby>を<ruby>用<rt>もち</rt></ruby>いて、<ruby>自<rt>じ</rt></ruby><ruby>分<rt>ぶん</rt></ruby>が<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby>のどの<ruby>立<rt>たち</rt></ruby><ruby>場<rt>ば</rt></ruby>に<ruby>置<rt>お</rt></ruby>かれるかを<ruby>知<rt>し</rt></ruby>らない<ruby>状<rt>じょう</rt></ruby><ruby>況<rt>きょう</rt></ruby>で<ruby>人<rt>ひと</rt></ruby>々が<ruby>選<rt>えら</rt></ruby>ぶ<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby>こそが<ruby>公<rt>こう</rt></ruby><ruby>正<rt>せい</rt></ruby>だと<ruby>論<rt>ろん</rt></ruby>じました。一方、<ruby>功<rt>こう</rt></ruby><ruby>利<rt>り</rt></ruby>主<ruby>義<rt>ぎ</rt></ruby>は<ruby>最<rt>さい</rt></ruby><ruby>大<rt>だい</rt></ruby><ruby>多<rt>た</rt></ruby><ruby>数<rt>すう</rt></ruby>の<ruby>最<rt>さい</rt></ruby><ruby>大<rt>だい</rt></ruby><ruby>幸<rt>こう</rt></ruby><ruby>福<rt>ふく</rt></ruby>を<ruby>追<rt>つい</rt></ruby><ruby>求<rt>きゅう</rt></ruby>することを<ruby>正<rt>せい</rt></ruby><ruby>義<rt>ぎ</rt></ruby>とみなします。これらの<ruby>立<rt>たち</rt></ruby><ruby>場<rt>ば</rt></ruby>はいずれも<ruby>重<rt>じゅう</rt></ruby><ruby>要<rt>よう</rt></ruby>な<ruby>洞<rt>どう</rt></ruby><ruby>察<rt>さつ</rt></ruby>を<ruby>含<rt>ふく</rt></ruby>んでいますが、<ruby>現<rt>げん</rt></ruby><ruby>実<rt>じつ</rt></ruby>の<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby>問<ruby>題<rt>だい</rt></ruby>においては<ruby>一<rt>いっ</rt></ruby><ruby>つ<rt>つ</rt></ruby>の<ruby>理<rt>り</rt></ruby><ruby>論<rt>ろん</rt></ruby>だけで<ruby>答<rt>こた</rt></ruby>えが<ruby>出<rt>で</rt></ruby>るわけではなく、<ruby>複<rt>ふく</rt></ruby><ruby>数<rt>すう</rt></ruby>の<ruby>倫<rt>りん</rt></ruby><ruby>理<rt>り</rt></ruby><ruby>的<rt>てき</rt></ruby><ruby>視<rt>し</rt></ruby><ruby>点<rt>てん</rt></ruby>から<ruby>対<rt>たい</rt></ruby><ruby>話<rt>わ</rt></ruby>を<ruby>重<rt>かさ</rt></ruby>ねることが<ruby>求<rt>もと</rt></ruby>められます。`,
+    gloss:[
+      {w:'公正',r:'こうせい',m:'justice, fairness'},
+      {w:'無知のヴェール',r:'むちのヴェール',m:'veil of ignorance (Rawls)'},
+      {w:'思考実験',r:'しこうじっけん',m:'thought experiment'},
+      {w:'功利主義',r:'こうりしゅぎ',m:'utilitarianism'},
+      {w:'最大多数の最大幸福',r:'さいだいたすうのさいだいこうふく',m:'greatest happiness of the greatest number'},
+      {w:'洞察',r:'どうさつ',m:'insight, discernment'},
+      {w:'倫理的視点',r:'りんりてきしてん',m:'ethical perspective'},
+    ],
+    questions:[
+      {type:'mcq',question:'ロールズの「無知のヴェール」という思考実験はどのような状況を想定していますか。',options:['A. すべての人が同じ能力を持つ社会','B. 自分が社会のどの立場に置かれるかを知らない状況で社会を設計すること','C. 過去の記憶をすべて失った状態','D. 完全な情報を持った状態での意思決定'],answer:'B',explanation:'「自分が社会のどの立場に置かれるかを知らない状況で人々が選ぶ社会こそが公正だと論じました」とあります。'},
+      {type:'mcq',question:'功利主義が「正義」とみなすものは何ですか。',options:['A. 個人の権利の絶対的な保護','B. 神の命令への従順','C. 最大多数の最大幸福の追求','D. 社会の伝統と慣習の維持'],answer:'C',explanation:'「功利主義は最大多数の最大幸福を追求することを正義とみなします」と述べられています。'},
+      {type:'mcq',question:'本文が社会問題への対処として求めているものは何ですか。',options:['A. 一つの倫理理論に従うこと','B. 民主主義的な投票で決めること','C. 複数の倫理的視点から対話を重ねること','D. 専門家による一方的な決定'],answer:'C',explanation:'「複数の倫理的視点から対話を重ねることが求められます」と結論づけています。'},
+      {type:'open',question:'「公正」とは何だと思いますか。具体的な例を挙げながらあなたの考えを述べてください。'},
+    ]
+  },
+
+  {
+    id:'n1-8', level:'n1',
+    titleJp:'<ruby>科<rt>か</rt></ruby><ruby>学<rt>がく</rt></ruby>と<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby>の<ruby>対<rt>たい</rt></ruby><ruby>話<rt>わ</rt></ruby>',
+    titleEn:'The Dialogue Between Science and Society',
+    topic:'science', chars:290,
+    text:`<ruby>科<rt>か</rt></ruby><ruby>学<rt>がく</rt></ruby>は<ruby>客<rt>きゃっ</rt></ruby><ruby>観<rt>かん</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>事<rt>じ</rt></ruby><ruby>実<rt>じつ</rt></ruby>を<ruby>探<rt>たん</rt></ruby><ruby>求<rt>きゅう</rt></ruby>するものですが、<ruby>科<rt>か</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>知<rt>ち</rt></ruby><ruby>見<rt>けん</rt></ruby>がどのように<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby>に<ruby>受<rt>う</rt></ruby>け<ruby>入<rt>い</rt></ruby>れられ、<ruby>政<rt>せい</rt></ruby><ruby>策<rt>さく</rt></ruby>や<ruby>行<rt>こう</rt></ruby><ruby>動<rt>どう</rt></ruby>に<ruby>反<rt>はん</rt></ruby><ruby>映<rt>えい</rt></ruby>されるかは、<ruby>純<rt>じゅん</rt></ruby><ruby>粋<rt>すい</rt></ruby>に<ruby>科<rt>か</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby>ではありません。<ruby>気<rt>き</rt></ruby><ruby>候<rt>こう</rt></ruby><ruby>変<rt>へん</rt></ruby><ruby>動<rt>どう</rt></ruby>や<ruby>ワクチン<rt>ワクチン</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>科<rt>か</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>的<rt>てき</rt></ruby>コンセンサスが<ruby>存<rt>そん</rt></ruby><ruby>在<rt>ざい</rt></ruby>しているにもかかわらず、<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby>的<ruby>な<rt>な</rt></ruby><ruby>信<rt>しん</rt></ruby><ruby>頼<rt>らい</rt></ruby>や<ruby>政<rt>せい</rt></ruby><ruby>治<rt>じ</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>思<rt>し</rt></ruby><ruby>惑<rt>わく</rt></ruby>によってその<ruby>受<rt>じゅ</rt></ruby><ruby>容<rt>よう</rt></ruby>が<ruby>妨<rt>さまた</rt></ruby>げられることがあります。<ruby>科<rt>か</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>者<rt>しゃ</rt></ruby>と<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby>の<ruby>間<rt>あいだ</rt></ruby>の<ruby>信<rt>しん</rt></ruby><ruby>頼<rt>らい</rt></ruby>を<ruby>築<rt>きず</rt></ruby>くためには、<ruby>専<rt>せん</rt></ruby><ruby>門<rt>もん</rt></ruby><ruby>的<rt>てき</rt></ruby>な<ruby>知<rt>ち</rt></ruby><ruby>識<rt>しき</rt></ruby>を<ruby>分<rt>わ</rt></ruby>かりやすく<ruby>伝<rt>つた</rt></ruby>える<ruby>努<rt>ど</rt></ruby><ruby>力<rt>りょく</rt></ruby>とともに、<ruby>不<rt>ふ</rt></ruby><ruby>確<rt>かく</rt></ruby><ruby>実<rt>じつ</rt></ruby><ruby>性<rt>せい</rt></ruby>や<ruby>限<rt>かぎ</rt></ruby>りを<ruby>正<rt>しょう</rt></ruby><ruby>直<rt>じき</rt></ruby>に<ruby>認<rt>みと</rt></ruby>める<ruby>謙<rt>けん</rt></ruby><ruby>虚<rt>きょ</rt></ruby>さが<ruby>求<rt>もと</rt></ruby>められます。`,
+    gloss:[
+      {w:'客観的',r:'きゃっかんてき',m:'objective'},
+      {w:'知見',r:'ちけん',m:'knowledge, findings, insight'},
+      {w:'コンセンサス',r:'コンセンサス',m:'consensus'},
+      {w:'思惑',r:'しわく',m:'motive, ulterior motive, calculation'},
+      {w:'受容',r:'じゅよう',m:'acceptance, reception'},
+      {w:'妨げる',r:'さまたげる',m:'to hinder, obstruct'},
+      {w:'不確実性',r:'ふかくじつせい',m:'uncertainty'},
+      {w:'謙虚さ',r:'けんきょさ',m:'humility, modesty'},
+    ],
+    questions:[
+      {type:'mcq',question:'科学的知見が社会に受け入れられるかどうかは、なぜ純粋に科学的な問題ではないと言えますか。',options:['A. 科学者の能力が不十分だから','B. 社会的な信頼や政治的な思惑によって受容が妨げられることがあるから','C. 科学は常に間違っているから','D. 一般市民は科学を理解できないから'],answer:'B',explanation:'「社会的な信頼や政治的な思惑によってその受容が妨げられることがあります」とあり、科学的事実の受け入れは社会的・政治的要因に左右されると述べています。'},
+      {type:'mcq',question:'科学者と社会の信頼を築くために必要なこととして述べられているものはどれですか。',options:['A. より多くの論文を発表すること','B. 科学の権威を強調すること','C. 専門知識を分かりやすく伝える努力と、不確実性・限界を正直に認める謙虚さ','D. 政治家と緊密に協力すること'],answer:'C',explanation:'「専門的な知識を分かりやすく伝える努力とともに、不確実性や限りを正直に認める謙虚さが求められます」とあります。'},
+      {type:'mcq',question:'気候変動やワクチンの例が挙げられているのはなぜですか。',options:['A. これらが最も重要な科学的テーマだから','B. 科学的コンセンサスがあるにもかかわらず社会的受容が妨げられている例として','C. 政府が解決すべき問題だから','D. 一般市民が最も関心を持つテーマだから'],answer:'B',explanation:'「科学的コンセンサスが存在しているにもかかわらず、社会的な信頼や政治的な思惑によってその受容が妨げられることがある」という論点の具体例として挙げられています。'},
+      {type:'open',question:'科学者は社会に対してどのような責任を持つべきだと思いますか。'},
+    ]
+  },
+];
+
+// ── State ─────────────────────────────────────────────────────
+let activeLevel = 'all';
+
+// ── Level filter ──────────────────────────────────────────────
+document.querySelectorAll('.filter-btn[data-level]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn[data-level]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeLevel = btn.dataset.level;
+    render();
+  });
+});
+
+// ── Render passage list ───────────────────────────────────────
+function render() {
+  const container = document.getElementById('passage-list');
+  container.innerHTML = '';
+  const visible = passages.filter(p => activeLevel === 'all' || p.level === activeLevel);
+
+  visible.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'passage-card';
+    card.id = 'card-' + p.id;
+
+    const glossHtml = p.gloss.map(g =>
+      `<span class="gloss-item"><span class="gw">${g.w}（${g.r}）</span><span class="gm">${g.m}</span></span>`
+    ).join('');
+
+    card.innerHTML = `
+      <div class="passage-header" onclick="toggleCard('${p.id}')">
+        <div class="passage-header-left">
+          <span class="level-badge level-${p.level}">${p.level.toUpperCase()}</span>
+          <div>
+            <div class="passage-title-jp">${p.titleJp}</div>
+            <div class="passage-title-en">${p.titleEn}</div>
+            <div class="passage-meta">
+              <span class="meta-chip">${p.topic}</span>
+              <span class="meta-chip">~${p.chars} chars</span>
+            </div>
+          </div>
+        </div>
+        <span class="expand-arrow">▼</span>
+      </div>
+      <div class="passage-body">
+        <div class="passage-text">${p.text}</div>
+        <div class="vocab-gloss">
+          <div class="gloss-title">Key Vocabulary</div>
+          <div class="gloss-grid">${glossHtml}</div>
+        </div>
+        <div class="questions-section" id="qs-${p.id}">
+          <div class="questions-header">
+            <span class="questions-label">Comprehension Questions</span>
+            <div style="display:flex;gap:0.5rem;align-items:center;">
+              <button class="vv-btn" style="width:auto;border-radius:4px;padding:0.2rem 0.6rem;font-size:0.72rem;" onclick="playPassage('${p.id}')" title="Play full passage">🔊 Play passage</button>
+            </div>
+          </div>
+          <div id="q-content-${p.id}">
+            <p style="font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;">Read the passage carefully and try to answer: who, what, when, where, and why.</p>
+          </div>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+
+    // Auto-render built-in questions if passage has them
+    if (p.questions && p.questions.length) {
+      renderQuestions(p.id, p.questions);
+    }
+  });
+
+  if (!visible.length) {
+    container.innerHTML = `<div style="text-align:center;padding:3rem;color:#7a6450;font-family:var(--serif-en);font-style:italic;">No passages for this level yet.</div>`;
+  }
+}
+
+// ── Toggle card ───────────────────────────────────────────────
+function toggleCard(id) {
+  const card = document.getElementById('card-' + id);
+  card.classList.toggle('open');
+}
+
+// ── Render questions ──────────────────────────────────────────
+function renderQuestions(pid, questions) {
+  const content = document.getElementById('q-content-' + pid);
+  content.innerHTML = '';
+
+  let mcqTotal   = 0;
+  let mcqCorrect = 0;
+  const scoreBar = document.createElement('div');
+  scoreBar.className = 'score-bar';
+  scoreBar.id = 'score-' + pid;
+
+  questions.forEach((q, qi) => {
+    const block = document.createElement('div');
+    block.className = 'question-block';
+
+    if (q.type === 'mcq') {
+      mcqTotal++;
+      const optHtml = q.options.map((opt, oi) => {
+        const letter = ['A','B','C','D'][oi];
+        return `<button class="q-option" data-letter="${letter}" onclick="checkMcq(this, '${q.answer}', '${pid}', ${qi})">${opt}</button>`;
+      }).join('');
+
+      block.innerHTML = `
+        <div class="q-text"><strong style="color:#4aaf9e">Q${qi+1}.</strong> ${q.question}</div>
+        <div class="q-options">${optHtml}</div>
+        <div class="q-explanation" id="exp-${pid}-${qi}">${q.explanation || ''}</div>
+      `;
+    } else {
+      block.innerHTML = `
+        <div class="q-text"><strong style="color:#4aaf9e">Q${qi+1}.</strong> ${q.question}</div>
+        <textarea class="open-q-area" placeholder="Write your answer here..."></textarea>
+      `;
+    }
+
+    content.appendChild(block);
+  });
+
+  content.appendChild(scoreBar);
+
+  // store for score tracking
+  content.dataset.mcqTotal   = mcqTotal;
+  content.dataset.mcqCorrect = 0;
+}
+
+// ── Check MCQ answer ──────────────────────────────────────────
+function checkMcq(btn, correct, pid, qi) {
+  const block = btn.closest('.question-block');
+  const opts  = block.querySelectorAll('.q-option');
+  const exp   = document.getElementById(`exp-${pid}-${qi}`);
+
+  opts.forEach(o => {
+    o.disabled = true;
+    if (o.dataset.letter === correct) o.classList.add('correct');
+  });
+
+  if (btn.dataset.letter === correct) {
+    btn.classList.remove('correct');
+    btn.classList.add('correct');
+    const content = document.getElementById('q-content-' + pid);
+    content.dataset.mcqCorrect = parseInt(content.dataset.mcqCorrect || 0) + 1;
+  } else {
+    btn.classList.add('incorrect');
+  }
+
+  exp.classList.add('visible');
+  updateScore(pid);
+}
+
+// ── Check open question with Claude ───────────────────────────
+async function checkOpen(btn, pid, qi) {
+  const block    = btn.closest('.question-block');
+  const textarea = block.querySelector('.open-q-area');
+  const exp      = document.getElementById(`exp-${pid}-${qi}`);
+  const answer   = textarea.value.trim();
+  const passage  = passages.find(p => p.id === pid);
+
+  if (!answer) { exp.textContent = 'Please write an answer first.'; exp.classList.add('visible'); return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Checking...';
+  exp.textContent = 'Claude is reviewing your answer...';
+  exp.classList.add('visible');
+
+  const plainText = passage.text.replace(/<[^>]+>/g, '');
+  const qText     = block.querySelector('.q-text').textContent.replace(/^Q\d+\.\s*/,'');
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 300,
+        messages: [{ role: 'user', content: `Japanese passage: "${plainText}"\n\nQuestion: "${qText}"\n\nStudent's answer: "${answer}"\n\nBriefly assess this answer in 2-3 sentences. Is it correct/partially correct/incorrect based on the passage? Be encouraging and specific.` }]
+      })
+    });
+    const data = await res.json();
+    exp.textContent = data.content?.map(b => b.text || '').join('') || 'No response.';
+  } catch {
+    exp.textContent = 'Could not connect to Claude. Please try again.';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Re-check ✦';
+}
+
+// ── Update score bar ──────────────────────────────────────────
+function updateScore(pid) {
+  const content = document.getElementById('q-content-' + pid);
+  const total   = parseInt(content.dataset.mcqTotal   || 0);
+  const correct = parseInt(content.dataset.mcqCorrect || 0);
+  const bar     = document.getElementById('score-' + pid);
+
+  bar.classList.add('visible');
+  const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+  bar.innerHTML = `
+    <span class="score-text">Score: <span class="score-teal">${correct} / ${total}</span> MCQ correct (${pct}%)</span>
+    <span class="score-text" style="font-size:0.75rem;">${pct >= 80 ? '✦ Excellent!' : pct >= 60 ? 'Good effort' : 'Keep practising'}</span>
+  `;
+
+  // Save to localStorage
+  const history = JSON.parse(localStorage.getItem('quizHistory') || '[]');
+  history.push({ date: new Date().toISOString(), type: 'reading', level: passages.find(p=>p.id===pid)?.level, correct, total });
+  localStorage.setItem('quizHistory', JSON.stringify(history));
+}
+
+// ── Play full passage ────────────────────────────────────────
+function playPassage(pid) {
+  const p = passages.find(x => x.id === pid);
+  if (!p) return;
+  // Strip ruby/html tags to get plain text for TTS
+  const plain = p.text.replace(/<rt>[^<]*<\/rt>/g, '').replace(/<[^>]+>/g, '');
+  const btn = document.querySelector(`#card-${pid} .vv-btn`);
+  if (typeof playJapanese === 'function') {
+    playJapanese(plain, btn || null);
+  } else {
+    // Fallback to Web Speech API if VoiceVox not available
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utt = new SpeechSynthesisUtterance(plain);
+      utt.lang = 'ja-JP';
+      utt.rate = 0.85;
+      window.speechSynthesis.speak(utt);
+    }
+  }
+}
+
+// ── Init ──────────────────────────────────────────────────────
+render();
+</script>
+  <script src="voicevox.js"></script>
+</body>
+</html>

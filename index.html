@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日本語学習 — Japanese Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;500;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:        #f0e6d6;
+      --ink-mid:    #d4c4a8;
+      --ink-soft:   #b09878;
+      --ink-faint:  #7a6450;
+      --washi:      #4a3728;
+      --washi-warm: #3d2d20;
+      --washi-deep: #2e2018;
+      --washi-card: #56402f;
+      --teal:       #4aaf9e;
+      --teal-light: #6dcebb;
+      --teal-pale:  rgba(74,175,158,0.15);
+      --serif-jp: 'Shippori Mincho', 'Noto Serif JP', serif;
+      --serif-en: 'IM Fell English', Georgia, serif;
+      --sans-jp:  'Noto Sans JP', sans-serif;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 16px;
+      --shadow-soft: 0 2px 16px rgba(0,0,0,0.3);
+      --shadow-card: 0 6px 32px rgba(0,0,0,0.4);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 19px; scroll-behavior: smooth; }
+
+    body {
+      background-color: #4a3728;
+      color: #f0e6d6;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    .site-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: #2e2018;
+      border-bottom: 1px solid #1e1208;
+      padding: 0.75rem 0;
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1100px; margin: 0 auto; padding: 0 2rem;
+    }
+    .nav-logo { display: flex; flex-direction: column; text-decoration: none; }
+    .nav-logo .jp { font-family: var(--serif-jp); font-size: 1.1rem; color: #f0e6d6; letter-spacing: 0.1em; line-height: 1.9; }
+    .nav-logo .jp ruby rt { font-size: 0.54em; color: #e8d8c0; font-family: var(--sans-jp); }
+    .nav-logo .en { font-family: var(--serif-en); font-style: italic; font-size: 0.68rem; color: #7a6450; }
+    .nav-links { display: flex; gap: 0.15rem; list-style: none; }
+    .nav-links a { display: flex; flex-direction: column; align-items: center; padding: 0.4rem 0.7rem; text-decoration: none; border-radius: 4px; transition: background 0.2s; }
+    .nav-links a .jp { font-family: var(--serif-jp); font-size: 0.85rem; color: #d4c4a8; line-height: 1.9; }
+    .nav-links a .jp ruby rt { font-size: 0.56em; color: #e8d8c0; font-family: var(--sans-jp); }
+    .nav-links a .en { font-family: var(--serif-en); font-style: italic; font-size: 0.62rem; color: #7a6450; }
+    .nav-links a:hover { background: rgba(74,175,158,0.15); }
+    .nav-links a:hover .jp { color: #4aaf9e; }
+
+    /* LAYOUT */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+    /* HERO */
+    .hero { min-height: 88vh; display: flex; flex-direction: column; justify-content: center; padding: 4rem 0 3rem; position: relative; }
+    .hero-kanji-bg {
+      position: absolute; right: 0; top: 50%; transform: translateY(-52%);
+      font-family: var(--serif-jp); font-size: clamp(180px, 24vw, 360px);
+      color: rgba(74,175,158,0.06); line-height: 1; user-select: none; pointer-events: none;
+    }
+    .hero-content { max-width: 620px; position: relative; z-index: 1; }
+    .hero-eyebrow {
+      font-family: var(--serif-en); font-style: italic; font-size: 0.88rem;
+      color: #4aaf9e; letter-spacing: 0.14em; margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: #4aaf9e; flex-shrink: 0; }
+    .hero-title {
+      font-family: var(--serif-jp); font-size: clamp(3.5rem, 8vw, 6rem);
+      font-weight: 400; line-height: 1.75; letter-spacing: 0.08em; color: #f0e6d6; margin-bottom: 0.5rem;
+    }
+    .hero-title ruby rt { font-size: 0.32em; color: #e8d8c0; font-family: var(--sans-jp); }
+    .hero-subtitle-en { font-family: var(--serif-en); font-style: italic; font-size: 1.1rem; color: #b09878; margin-bottom: 1.75rem; }
+    .hero-desc { font-size: 0.92rem; color: #b09878; line-height: 1.9; max-width: 460px; margin-bottom: 2.5rem; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      color: #7a6450; font-size: 0.68rem; font-family: var(--serif-en); font-style: italic; letter-spacing: 0.1em;
+    }
+    .scroll-line { width: 1px; height: 36px; background: linear-gradient(to bottom, #7a6450, transparent); animation: scrollPulse 2s ease-in-out infinite; }
+    @keyframes scrollPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.65rem 1.4rem; border: none; border-radius: 4px;
+      font-family: var(--sans-jp); font-size: 0.88rem; cursor: pointer;
+      transition: all 0.2s; text-decoration: none; line-height: 1.9;
+    }
+    .btn ruby rt { font-size: 0.56em; font-family: var(--sans-jp); }
+    .btn-primary { background: #4aaf9e; color: #1a1200; font-weight: 500; }
+    .btn-primary:hover { background: #6dcebb; }
+    .btn-outline { background: transparent; color: #4aaf9e; border: 1px solid #4aaf9e; }
+    .btn-outline:hover { background: rgba(74,175,158,0.15); }
+
+    /* LEVEL STRIP */
+    .level-strip { background: #3d2d20; border-top: 1px solid #2e2018; border-bottom: 1px solid #2e2018; padding: 1.25rem 0; margin-bottom: 4rem; }
+    .level-strip-inner { display: flex; align-items: center; gap: 2rem; max-width: 1100px; margin: 0 auto; padding: 0 2rem; overflow-x: auto; }
+    .level-item { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+    .level-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 2.2rem; height: 2.2rem; border-radius: 50%;
+      font-family: var(--serif-en); font-size: 0.72rem; font-weight: 500;
+    }
+    .level-n4 { background: rgba(58,107,46,0.3);  color: #8fd47a; border: 1px solid rgba(143,212,122,0.3); }
+    .level-n3 { background: rgba(42,82,128,0.3);  color: #7ab4e8; border: 1px solid rgba(122,180,232,0.3); }
+    .level-n2 { background: rgba(122,74,30,0.3);  color: #e8b47a; border: 1px solid rgba(232,180,122,0.3); }
+    .level-n1 { background: rgba(122,30,30,0.3);  color: #e87a7a; border: 1px solid rgba(232,122,122,0.3); }
+    .level-info { display: flex; flex-direction: column; line-height: 1.3; }
+    .level-name { font-family: var(--serif-jp); font-size: 0.82rem; color: #d4c4a8; line-height: 1.9; }
+    .level-name ruby rt { font-size: 0.58em; color: #e8d8c0; font-family: var(--sans-jp); }
+    .level-desc { font-family: var(--serif-en); font-style: italic; font-size: 0.68rem; color: #7a6450; }
+    .level-sep { width: 1px; height: 28px; background: #2e2018; flex-shrink: 0; }
+
+    /* STUDY GRID */
+    .study-areas { padding: 0 0 5rem; }
+    .section-label { font-family: var(--serif-en); font-style: italic; font-size: 0.78rem; color: #4aaf9e; letter-spacing: 0.14em; margin-bottom: 0.4rem; }
+    .section-header { display: flex; flex-direction: column; margin-bottom: 2rem; }
+    .section-header .jp-title { font-family: var(--serif-jp); font-size: 2.2rem; color: #f0e6d6; letter-spacing: 0.05em; line-height: 1.85; }
+    .section-header .jp-title ruby rt { font-size: 0.58em; color: #e8d8c0; font-family: var(--sans-jp); }
+    .section-header .en-title { font-family: var(--serif-en); font-style: italic; font-size: 0.9rem; color: #7a6450; }
+    .section-header .desc { margin-top: 0.6rem; color: #b09878; font-size: 0.88rem; max-width: 540px; }
+    .study-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 1.25rem; }
+    .study-card {
+      background: #56402f; border: 1px solid #2e2018; border-radius: 16px;
+      padding: 1.75rem; text-decoration: none; display: block; position: relative;
+      overflow: hidden; transition: transform 0.25s, box-shadow 0.25s;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+    }
+    .study-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 55%; background: linear-gradient(to bottom, #4aaf9e, transparent); }
+    .study-card:hover { transform: translateY(-3px); box-shadow: 0 6px 32px rgba(0,0,0,0.45); }
+    .card-icon { font-family: var(--serif-jp); font-size: 2.8rem; color: rgba(74,175,158,0.14); margin-bottom: 0.75rem; display: block; line-height: 1; }
+    .card-title-jp { font-family: var(--serif-jp); font-size: 1.4rem; color: #f0e6d6; display: block; line-height: 1.9; letter-spacing: 0.05em; }
+    .card-title-jp ruby rt { font-size: 0.5em; color: #e8d8c0; font-family: var(--sans-jp); }
+    .card-title-en { font-family: var(--serif-en); font-style: italic; font-size: 0.78rem; color: #7a6450; display: block; margin-bottom: 0.6rem; }
+    .card-desc { font-size: 0.85rem; color: #b09878; line-height: 1.7; }
+    .card-levels { display: flex; gap: 0.35rem; margin-top: 1.1rem; flex-wrap: wrap; }
+    .card-arrow { position: absolute; top: 1.5rem; right: 1.5rem; color: #7a6450; font-size: 1rem; transition: transform 0.2s, color 0.2s; }
+    .study-card:hover .card-arrow { transform: translate(3px,-3px); color: #4aaf9e; }
+
+    /* QUOTE */
+    .quote-block {
+      background: #3d2d20; border: 1px solid #2e2018; border-radius: 16px;
+      padding: 2.5rem; margin: 2.5rem 0; text-align: center; position: relative;
+    }
+    .quote-block::before { content: '「'; font-family: var(--serif-jp); font-size: 4rem; color: rgba(74,175,158,0.12); position: absolute; top: 0.5rem; left: 1.5rem; line-height: 1; }
+    .quote-block::after  { content: '」'; font-family: var(--serif-jp); font-size: 4rem; color: rgba(74,175,158,0.12); position: absolute; bottom: 0.5rem; right: 1.5rem; line-height: 1; }
+    .quote-text { font-family: var(--serif-jp); font-size: 1.6rem; color: #f0e6d6; letter-spacing: 0.12em; line-height: 2.4; margin-bottom: 0.5rem; }
+    .quote-text ruby rt { font-size: 0.54em; color: #e8d8c0; font-family: var(--sans-jp); }
+    .quote-source { font-family: var(--serif-en); font-style: italic; font-size: 0.8rem; color: #7a6450; }
+
+    /* PROGRESS */
+    .progress-section { padding: 3rem 0 5rem; border-top: 1px solid #2e2018; }
+    .progress-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(180px,1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .stat-card { background: #56402f; border: 1px solid #2e2018; border-radius: 8px; padding: 1.25rem; text-align: center; box-shadow: 0 2px 16px rgba(0,0,0,0.3); }
+    .stat-number { font-family: var(--serif-jp); font-size: 2.4rem; color: #4aaf9e; line-height: 1; margin-bottom: 0.4rem; }
+    .stat-label-jp { font-family: var(--serif-jp); font-size: 0.78rem; color: #b09878; display: block; line-height: 1.9; }
+    .stat-label-jp ruby rt { font-size: 0.5em; font-family: var(--sans-jp); }
+    .stat-label-en { font-family: var(--serif-en); font-style: italic; font-size: 0.68rem; color: #7a6450; display: block; }
+
+    /* FOOTER */
+    .site-footer { border-top: 1px solid #2e2018; background: #3d2d20; padding: 1.75rem 0; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; max-width: 1100px; margin: 0 auto; padding: 0 2rem; flex-wrap: wrap; gap: 1rem; }
+    .footer-jp { font-family: var(--serif-jp); font-size: 0.82rem; color: #b09878; line-height: 1.9; }
+    .footer-jp ruby rt { font-size: 0.5em; font-family: var(--sans-jp); }
+    .footer-en { font-family: var(--serif-en); font-style: italic; font-size: 0.72rem; color: #7a6450; margin-top: 0.2rem; }
+
+    /* RUBY */
+    ruby { display: inline-flex; flex-direction: column-reverse; align-items: center; vertical-align: bottom; line-height: 1; }
+    ruby rt { font-family: 'Noto Sans JP', sans-serif; font-size: 0.55em; color: #e8d8c0; text-align: center; letter-spacing: 0.04em; line-height: 1.5; user-select: none; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+    .fade-up { animation: fadeUp 0.5s ease forwards; }
+    .d1{animation-delay:0.1s;opacity:0} .d2{animation-delay:0.2s;opacity:0}
+    .d3{animation-delay:0.3s;opacity:0} .d4{animation-delay:0.4s;opacity:0}
+
+    /* RESPONSIVE */
+    @media(max-width:768px){ .nav-links{display:none} .container{padding:0 1rem} }
+
+    .mt-4 { margin-top: 2rem; }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="jp"><ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span>
+        <span class="en">Personal Japanese Study</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a></li>
+        <li><a href="vocabulary.html"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a></li>
+        <li><a href="kanji.html"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a></li>
+        <li><a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
+        <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+        <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-kanji-bg" aria-hidden="true">語</div>
+      <div class="hero-content">
+        <p class="hero-eyebrow fade-up">Personal Japanese Reference</p>
+        <h1 class="hero-title fade-up d1">
+          <ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><br>
+          <ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby>
+        </h1>
+        <p class="hero-subtitle-en fade-up d2">Japanese Language Study</p>
+        <p class="hero-desc fade-up d3">A personal reference and practice site covering grammar, vocabulary, kanji, and reading comprehension from N4 through N1. Designed for systematic review and self-directed study.</p>
+        <div class="hero-actions fade-up d4">
+          <a href="quiz.html" class="btn btn-primary"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby>を<ruby>始<rt>はじ</rt></ruby>める →</a>
+          <a href="grammar.html" class="btn btn-outline"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby>を<ruby>見<rt>み</rt></ruby>る</a>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint"><span>scroll</span><div class="scroll-line"></div></div>
+  </section>
+
+  <div class="level-strip">
+    <div class="level-strip-inner">
+      <div class="level-item">
+        <span class="level-badge level-n4">N4</span>
+        <div class="level-info">
+          <span class="level-name">N4 <ruby>初<rt>しょ</rt></ruby><ruby>級<rt>きゅう</rt></ruby></span>
+          <span class="level-desc">Elementary</span>
+        </div>
+      </div>
+      <div class="level-sep"></div>
+      <div class="level-item">
+        <span class="level-badge level-n3">N3</span>
+        <div class="level-info">
+          <span class="level-name">N3 <ruby>中<rt>ちゅう</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>下<rt>か</rt></ruby></span>
+          <span class="level-desc">Pre-intermediate</span>
+        </div>
+      </div>
+      <div class="level-sep"></div>
+      <div class="level-item">
+        <span class="level-badge level-n2">N2</span>
+        <div class="level-info">
+          <span class="level-name">N2 <ruby>中<rt>ちゅう</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>上<rt>じょう</rt></ruby></span>
+          <span class="level-desc">Upper-intermediate</span>
+        </div>
+      </div>
+      <div class="level-sep"></div>
+      <div class="level-item">
+        <span class="level-badge level-n1">N1</span>
+        <div class="level-info">
+          <span class="level-name">N1 <ruby>上<rt>じょう</rt></ruby><ruby>級<rt>きゅう</rt></ruby></span>
+          <span class="level-desc">Advanced</span>
+        </div>
+      </div>
+      <div class="level-sep"></div>
+      <span style="font-family:'IM Fell English',Georgia,serif;font-style:italic;font-size:0.78rem;color:#7a6450;flex-shrink:0;">Target: JLPT N1 certification</span>
+    </div>
+  </div>
+
+  <section class="study-areas">
+    <div class="container">
+      <p class="section-label">学習エリア</p>
+      <div class="section-header">
+        <span class="jp-title"><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby>コンテンツ</span>
+        <span class="en-title">Study Content</span>
+        <p class="desc">Select a section to begin reviewing. Each section covers N4 through N1 with bilingual explanations and example sentences.</p>
+      </div>
+      <div class="study-grid">
+        <a href="grammar.html" class="study-card">
+          <span class="card-arrow">↗</span>
+          <span class="card-icon">文</span>
+          <span class="card-title-jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span>
+          <span class="card-title-en">Grammar</span>
+          <p class="card-desc">Grammar patterns from N4 to N1, with bilingual explanations, example sentences, and nuance notes on similar-looking structures.</p>
+          <div class="card-levels">
+            <span class="level-badge level-n4">N4</span><span class="level-badge level-n3">N3</span><span class="level-badge level-n2">N2</span><span class="level-badge level-n1">N1</span>
+          </div>
+        </a>
+        <a href="vocabulary.html" class="study-card">
+          <span class="card-arrow">↗</span>
+          <span class="card-icon">語</span>
+          <span class="card-title-jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span>
+          <span class="card-title-en">Vocabulary</span>
+          <p class="card-desc">Word lists organized by JLPT level and theme — travel, business, daily life, and more. Includes readings and usage examples.</p>
+          <div class="card-levels">
+            <span class="level-badge level-n4">N4</span><span class="level-badge level-n3">N3</span><span class="level-badge level-n2">N2</span><span class="level-badge level-n1">N1</span>
+          </div>
+        </a>
+        <a href="kanji.html" class="study-card">
+          <span class="card-arrow">↗</span>
+          <span class="card-icon">漢</span>
+          <span class="card-title-jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span>
+          <span class="card-title-en">Kanji</span>
+          <p class="card-desc">On/kun readings, key compounds, and stroke order notes for JLPT kanji. Organized by level with radical breakdowns.</p>
+          <div class="card-levels">
+            <span class="level-badge level-n4">N4</span><span class="level-badge level-n3">N3</span><span class="level-badge level-n2">N2</span><span class="level-badge level-n1">N1</span>
+          </div>
+        </a>
+        <a href="reading.html" class="study-card">
+          <span class="card-arrow">↗</span>
+          <span class="card-icon">読</span>
+          <span class="card-title-jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span>
+          <span class="card-title-en">Reading</span>
+          <p class="card-desc">Graded reading passages with vocabulary annotations and comprehension questions at each level.</p>
+          <div class="card-levels">
+            <span class="level-badge level-n4">N4</span><span class="level-badge level-n3">N3</span><span class="level-badge level-n2">N2</span><span class="level-badge level-n1">N1</span>
+          </div>
+        </a>
+        <a href="quiz.html" class="study-card">
+          <span class="card-arrow">↗</span>
+          <span class="card-icon">練</span>
+          <span class="card-title-jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby><ruby>問<rt>もん</rt></ruby><ruby>題<rt>だい</rt></ruby></span>
+          <span class="card-title-en">Quiz & Practice</span>
+          <p class="card-desc">Practice quizzes across grammar, vocabulary, kanji readings, and reading comprehension. Filter by level and topic.</p>
+          <div class="card-levels">
+            <span class="level-badge level-n4">N4</span><span class="level-badge level-n3">N3</span><span class="level-badge level-n2">N2</span><span class="level-badge level-n1">N1</span>
+          </div>
+        </a>
+        <a href="progress.html" class="study-card">
+          <span class="card-arrow">↗</span>
+          <span class="card-icon">進</span>
+          <span class="card-title-jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span>
+          <span class="card-title-en">Progress</span>
+          <p class="card-desc">Track quiz scores and study history over time. See which areas need attention and monitor improvement by level.</p>
+          <div class="card-levels">
+            <span class="level-badge level-n1">N1</span><span class="level-badge level-n2">N2</span><span class="level-badge level-n3">N3</span><span class="level-badge level-n4">N4</span>
+          </div>
+        </a>
+      </div>
+      <div class="quote-block mt-4">
+        <p class="quote-text"><ruby>継<rt>けい</rt></ruby><ruby>続<rt>ぞく</rt></ruby>は<ruby>力<rt>ちから</rt></ruby>なり</p>
+        <p class="quote-source">Perseverance is power — Japanese proverb</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="progress-section">
+    <div class="container">
+      <p class="section-label"><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby>の<ruby>記<rt>き</rt></ruby><ruby>録<rt>ろく</rt></ruby></p>
+      <div class="section-header">
+        <span class="jp-title"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby><ruby>状<rt>じょう</rt></ruby><ruby>況<rt>きょう</rt></ruby></span>
+        <span class="en-title">Study Progress</span>
+      </div>
+      <div class="progress-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="stat-quizzes">0</div>
+          <span class="stat-label-jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby><ruby>回<rt>かい</rt></ruby><ruby>数<rt>すう</rt></ruby></span>
+          <span class="stat-label-en">Quizzes taken</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-correct">—</div>
+          <span class="stat-label-jp"><ruby>正<rt>せい</rt></ruby><ruby>解<rt>かい</rt></ruby><ruby>率<rt>りつ</rt></ruby></span>
+          <span class="stat-label-en">Accuracy</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-streak">0</div>
+          <span class="stat-label-jp"><ruby>連<rt>れん</rt></ruby><ruby>続<rt>ぞく</rt></ruby><ruby>日<rt>にっ</rt></ruby><ruby>数<rt>すう</rt></ruby></span>
+          <span class="stat-label-en">Day streak</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-level">N2</div>
+          <span class="stat-label-jp"><ruby>現<rt>げん</rt></ruby><ruby>在<rt>ざい</rt></ruby>のレベル</span>
+          <span class="stat-label-en">Current focus</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <p class="footer-jp"><ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby>　<ruby>個<rt>こ</rt></ruby><ruby>人<rt>じん</rt></ruby><ruby>参<rt>さん</rt></ruby><ruby>考<rt>こう</rt></ruby>サイト</p>
+        <p class="footer-en">Personal Japanese Study Reference</p>
+      </div>
+      <div style="text-align:right">
+        <p class="footer-en">N4 → N1 · JLPT preparation</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function loadStats() {
+      const history = JSON.parse(localStorage.getItem('quizHistory') || '[]');
+      document.getElementById('stat-quizzes').textContent = history.length;
+      document.getElementById('stat-streak').textContent  = localStorage.getItem('studyStreak') || '0';
+      document.getElementById('stat-level').textContent   = localStorage.getItem('currentLevel') || 'N2';
+      if (history.length > 0) {
+        const tQ = history.reduce((a,b)=>a+b.total,0);
+        const tC = history.reduce((a,b)=>a+b.correct,0);
+        document.getElementById('stat-correct').textContent = Math.round(tC/tQ*100)+'%';
+      }
+    }
+    const obs = new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.style.animationPlayState='running';}),{threshold:0.1});
+    document.querySelectorAll('.fade-up').forEach(el=>{el.style.animationPlayState='paused';obs.observe(el);});
+    loadStats();
+  </script>
+  <script src="voicevox.js"></script>
+</body>
+</html>
