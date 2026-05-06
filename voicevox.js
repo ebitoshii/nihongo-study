@@ -1,7 +1,4 @@
 // ── Web Speech API Engine ─────────────────────────────────────
-// Drop-in replacement for voicevox.js — identical API surface.
-// Uses the browser's built-in SpeechSynthesis (works online, no local server).
-// Prefers male Japanese voices on Chrome/Edge.
 
 let currentUtterance = null;
 let preferredVoice = null;
@@ -9,20 +6,21 @@ let preferredVoice = null;
 function getJapaneseVoice() {
   if (preferredVoice) return preferredVoice;
   const voices = window.speechSynthesis.getVoices();
-  const priority = [
-    v => v.name.includes('Keita'),
-    v => v.name.includes('Ichiro'),
-    v => v.name.includes('Microsoft') && v.lang.startsWith('ja') && v.name.includes('Male'),
-    v => v.name.toLowerCase().includes('male') && v.lang.startsWith('ja'),
-    v => v.name.includes('Google') && v.lang.startsWith('ja'),
-    v => v.name.includes('Microsoft') && v.lang.startsWith('ja'),
-    v => v.lang.startsWith('ja-JP'),
-    v => v.lang.startsWith('ja'),
+  // Hardcoded preference: Ichiro (male) first, then any JP fallback
+  const preferred = [
+    'Microsoft Ichiro - Japanese (Japan)',
+    'Google 日本語',
+    'Microsoft Haruka - Japanese (Japan)',
+    'Microsoft Ayumi - Japanese (Japan)',
+    'Microsoft Sayaka - Japanese (Japan)',
   ];
-  for (const fn of priority) {
-    const match = voices.find(fn);
+  for (const name of preferred) {
+    const match = voices.find(v => v.name === name);
     if (match) { preferredVoice = match; return match; }
   }
+  // Last resort: any Japanese voice
+  const any = voices.find(v => v.lang.startsWith('ja'));
+  if (any) { preferredVoice = any; return any; }
   return null;
 }
 
@@ -61,27 +59,38 @@ function playJapanese(text, btnEl) {
     btnEl.textContent = '⏹';
   }
 
-  const utt = new SpeechSynthesisUtterance(plain);
-  utt.lang  = 'ja-JP';
-  utt.rate  = 1.0;   // natural speed
-  utt.pitch = 0.9;   // slightly lower = more male-sounding
+  const speak = () => {
+    const utt = new SpeechSynthesisUtterance(plain);
+    utt.lang  = 'ja-JP';
+    utt.rate  = 1.0;
+    utt.pitch = 1.0;
 
-  const voice = getJapaneseVoice();
-  if (voice) utt.voice = voice;
+    const voice = getJapaneseVoice();
+    if (voice) utt.voice = voice;
 
-  utt.onend = () => {
-    if (btnEl) { btnEl.classList.remove('playing'); btnEl.textContent = '🔊'; }
-    currentUtterance = null;
+    utt.onend = () => {
+      if (btnEl) { btnEl.classList.remove('playing'); btnEl.textContent = '🔊'; }
+      currentUtterance = null;
+    };
+    utt.onerror = (e) => {
+      if (btnEl) { btnEl.classList.remove('playing'); btnEl.textContent = '🔊'; }
+      currentUtterance = null;
+      if (e.error !== 'interrupted') showVvError('音声の再生に失敗しました。');
+    };
+
+    currentUtterance = utt;
+    window.speechSynthesis.speak(utt);
   };
 
-  utt.onerror = (e) => {
-    if (btnEl) { btnEl.classList.remove('playing'); btnEl.textContent = '🔊'; }
-    currentUtterance = null;
-    if (e.error !== 'interrupted') showVvError('音声の再生に失敗しました。');
-  };
-
-  currentUtterance = utt;
-  window.speechSynthesis.speak(utt);
+  // Ensure voices are loaded before speaking
+  if (window.speechSynthesis.getVoices().length > 0) {
+    speak();
+  } else {
+    window.speechSynthesis.onvoiceschanged = () => {
+      preferredVoice = null;
+      speak();
+    };
+  }
 }
 
 function playJP(text, btn) {
@@ -105,7 +114,6 @@ if ('speechSynthesis' in window) {
   window.speechSynthesis.getVoices();
   window.speechSynthesis.onvoiceschanged = () => {
     preferredVoice = null;
-    getJapaneseVoice();
   };
 }
 
