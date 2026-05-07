@@ -219,6 +219,15 @@
     :root[data-theme="light"] .font-btn { color:#1a6a5c; border-color:rgba(26,106,92,0.3); }
     :root[data-theme="light"] .font-btn:hover { background:rgba(26,106,92,0.1); }
     :root[data-theme="light"] .font-btn.active { background:rgba(26,106,92,0.15); }
+
+    /* ── Speed control ── */
+    .speed-controls{display:flex;align-items:center;gap:0.35rem;margin-left:auto;}
+    .speed-label{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;margin-right:0.1rem;}
+    .speed-btn{padding:0.25rem 0.55rem;background:transparent;border:1px solid #2e2018;
+      border-radius:3px;color:#7a6450;font-family:var(--serif-en);font-size:0.72rem;
+      cursor:pointer;transition:all 0.2s;}
+    .speed-btn:hover{border-color:#4aaf9e;color:#4aaf9e;}
+    .speed-btn.active{background:rgba(74,175,158,0.15);border-color:#4aaf9e;color:#4aaf9e;}
   </style>
   <script>
   // ── Theme toggle ─────────────────────────────────────────────
@@ -1281,6 +1290,19 @@ const listeningData = [
 
 // ── State ─────────────────────────────────────────────────────
 let currentPlayId = null;
+let playbackSpeed = parseFloat(localStorage.getItem('listenSpeed') || '1.0');
+
+function setSpeed(s) {
+  playbackSpeed = s;
+  localStorage.setItem('listenSpeed', s);
+  // Re-render to update active button
+  document.querySelectorAll('.speed-btn').forEach(b => {
+    b.classList.toggle('active', parseFloat(b.textContent) === s ||
+      (b.textContent === '1×' && s === 1.0) ||
+      (b.textContent === '0.75×' && s === 0.75) ||
+      (b.textContent === '1.25×' && s === 1.25));
+  });
+}
 
 // ── TTS ───────────────────────────────────────────────────────
 function playScript(id, btnEl) {
@@ -1323,6 +1345,8 @@ function playScript(id, btnEl) {
     if (indicator) indicator.classList.remove('visible');
   };
 
+  // Expose speed to voicevox.js before calling
+  window._listenSpeed = playbackSpeed;
   // Use playJapanese from voicevox.js
   playJapanese(p.scriptPlain, {
     classList: {
@@ -1466,7 +1490,15 @@ function render() {
       </div>
       <div class="card-body">
         <div class="audio-section">
-          <div class="audio-hint">🎧 Listen without the script. You may replay as many times as needed before answering.</div>
+          <div class="audio-hint" style="display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+            <span>🎧 Listen without the script. Replay as needed before answering.</span>
+            <div class="speed-controls">
+              <span class="speed-label">Speed:</span>
+              <button class="speed-btn `+ (playbackSpeed===0.75?'active':'') +`" onclick="setSpeed(0.75)">0.75×</button>
+              <button class="speed-btn `+ (playbackSpeed===1.0?'active':'') +`" onclick="setSpeed(1.0)">1×</button>
+              <button class="speed-btn `+ (playbackSpeed===1.25?'active':'') +`" onclick="setSpeed(1.25)">1.25×</button>
+            </div>
+          </div>
           <div class="audio-controls">
             <button class="play-btn" id="play-btn-${p.id}" onclick="playScript('${p.id}', this)">▶ Play</button>
             <button class="replay-btn" onclick="replayScript('${p.id}')">↺ Replay</button>
