@@ -35,7 +35,29 @@
     .nav-links a .en{font-family:var(--serif-en);font-style:italic;font-size:0.62rem;color:#7a6450;}
     .nav-links a:hover,.nav-links a.active{background:rgba(74,175,158,0.15);}
     .nav-links a:hover .jp,.nav-links a.active .jp{color:#4aaf9e;}
-    @media(max-width:768px){.nav-links{display:none;}}
+
+    /* ── Hamburger ── */
+    .hamburger{display:none;flex-direction:column;justify-content:space-between;
+      width:1.4rem;height:1.1rem;cursor:pointer;background:none;border:none;padding:0;z-index:200;}
+    .hamburger span{display:block;height:2px;background:#d4c4a8;border-radius:2px;
+      transition:transform 0.25s,opacity 0.25s;}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+    /* ── Mobile dropdown ── */
+    .mobile-nav{display:none;position:absolute;top:100%;left:0;right:0;
+      background:#2e2018;border-bottom:1px solid #1e1208;
+      padding:0.5rem 0 0.75rem;z-index:150;flex-direction:column;}
+    .mobile-nav.open{display:flex;}
+    .mobile-nav a{display:flex;align-items:center;gap:0.75rem;
+      padding:0.55rem 1.5rem;text-decoration:none;transition:background 0.2s;}
+    .mobile-nav a:hover,.mobile-nav a.active{background:rgba(74,175,158,0.12);}
+    .mobile-nav a .jp{font-family:var(--serif-jp);font-size:0.95rem;color:#d4c4a8;line-height:1.9;}
+    .mobile-nav a .jp ruby rt{font-size:0.5em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .mobile-nav a .en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .mobile-nav a:hover .jp,.mobile-nav a.active .jp{color:#4aaf9e;}
+        @media(max-width:768px){.nav-links{display:none;}.hamburger{display:flex;}.site-nav{position:relative;}}
 
     /* LAYOUT */
     .container{max-width:860px;margin:0 auto;padding:2rem;}
@@ -131,7 +153,95 @@
 
     ruby{display:inline-flex;flex-direction:column-reverse;align-items:center;vertical-align:bottom;line-height:1;}
     ruby rt{font-family:'Noto Sans JP',sans-serif;font-size:0.55em;color:#e8d8c0;text-align:center;letter-spacing:0.04em;line-height:1.5;user-select:none;}
+
+    /* ── Light mode ── */
+        [data-theme="light"] {
+      --ink:        #1a0e00;
+      --ink-mid:    #2e1a08;
+      --ink-soft:   #4a3018;
+      --ink-faint:  #6b4c28;
+      --washi:      #f5ede0;
+      --washi-warm: #ede0cc;
+      --washi-deep: #e0d0b8;
+      --washi-card: #faf3e8;
+      --teal:       #1a6a5c;
+      --teal-light: #2a8a7a;
+      --teal-pale:  rgba(26,106,92,0.12);
+      --shadow-soft: 0 2px 16px rgba(100,60,20,0.12);
+      --shadow-card: 0 6px 32px rgba(100,60,20,0.18);
+    }
+    [data-theme="light"] body { background-color: #f5ede0; color: #1a0e00; }
+    :root[data-theme="light"] { background-color: #f5ede0; }
+    [data-theme="light"] .site-nav { background: #e8d8c0; border-bottom-color: #c8b090; }
+    [data-theme="light"] .mobile-nav { background: #e8d8c0; border-bottom-color: #c8b090; }
+    [data-theme="light"] .site-footer { background: #e8d8c0; border-top-color: #c8b090; }
+    [data-theme="light"] ruby rt { color: #4a3018; }
+    [data-theme="light"] .nav-logo .jp { color: #1a0e00; }
+    [data-theme="light"] .nav-logo .en { color: #6b4c28; }
+    [data-theme="light"] .nav-links a .jp { color: #2e1a08; }
+    [data-theme="light"] .nav-links a .en { color: #6b4c28; }
+    [data-theme="light"] .nav-links a:hover .jp,
+    [data-theme="light"] .nav-links a.active .jp { color: #1a6a5c; }
+    [data-theme="light"] .mobile-nav a .jp { color: #2e1a08; }
+    [data-theme="light"] .mobile-nav a .en { color: #6b4c28; }
+    [data-theme="light"] .hamburger span { background: #2e1a08; }
+    [data-theme="light"] .en-title,
+    [data-theme="light"] .card-title-en,
+    [data-theme="light"] .desc,
+    [data-theme="light"] .card-desc { color: #4a3018; }
+    [data-theme="light"] .section-label { color: #1a6a5c; }
+
+    /* ── Theme toggle button ── */
+    .nav-controls { display:flex; align-items:center; gap:0.4rem; }
+    .theme-toggle {
+      display:flex;align-items:center;justify-content:center;
+      width:1.9rem;height:1.9rem;
+      background:transparent;border:1px solid rgba(74,175,158,0.3);
+      border-radius:50%;cursor:pointer;font-size:0.85rem;
+      transition:all 0.2s;color:#4aaf9e;flex-shrink:0;
+    }
+    .theme-toggle:hover { background:rgba(74,175,158,0.15); border-color:#4aaf9e; }
+    :root[data-theme="light"] .theme-toggle { border-color:rgba(42,138,122,0.3); color:#2a8a7a; }
+    :root[data-theme="light"] .theme-toggle:hover { background:rgba(42,138,122,0.12); }
+
+    /* ── Font size control ── */
+    .font-controls { display:flex; align-items:center; gap:0.2rem; }
+    .font-btn {
+      display:flex;align-items:center;justify-content:center;
+      height:1.9rem;padding:0 0.5rem;min-width:1.9rem;
+      background:transparent;border:1px solid rgba(74,175,158,0.3);
+      border-radius:4px;cursor:pointer;
+      font-family:var(--serif-en);font-size:0.72rem;
+      transition:all 0.2s;color:#4aaf9e;flex-shrink:0;
+    }
+    .font-btn:hover { background:rgba(74,175,158,0.15); border-color:#4aaf9e; }
+    .font-btn.active { background:rgba(74,175,158,0.2); border-color:#4aaf9e; }
+    :root[data-theme="light"] .font-btn { color:#1a6a5c; border-color:rgba(26,106,92,0.3); }
+    :root[data-theme="light"] .font-btn:hover { background:rgba(26,106,92,0.1); }
+    :root[data-theme="light"] .font-btn.active { background:rgba(26,106,92,0.15); }
   </style>
+  <script>
+  // ── Theme toggle ─────────────────────────────────────────────
+  (function() {
+    const saved = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+  })();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    const apply = (theme) => {
+      document.documentElement.setAttribute('data-theme', theme);
+      btn.textContent = theme === 'dark' ? '☀' : '🌙';
+      localStorage.setItem('theme', theme);
+    };
+    apply(localStorage.getItem('theme') || 'dark');
+    btn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      apply(next);
+    });
+  });
+  </script>
 </head>
 <body>
 
@@ -149,9 +259,31 @@
       <li><a href="listening.html" class="active"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a></li>
       <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
       <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
+      <li><a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a></li>
     </ul>
   </div>
+    <div class="nav-controls">
+      <div class="font-controls">
+        <button class="font-btn" id="font-sm" onclick="setFont('sm')" title="Small text">A−</button>
+        <button class="font-btn active" id="font-md" onclick="setFont('md')" title="Normal text">A</button>
+        <button class="font-btn" id="font-lg" onclick="setFont('lg')" title="Large text">A+</button>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☀</button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
 </nav>
+  <nav id="mobile-nav" class="mobile-nav">
+    <a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a>
+    <a href="vocabulary.html"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a>
+    <a href="kanji.html"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a>
+    <a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a>
+    <a href="listening.html" class="active"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a>
+    <a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a>
+    <a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a>
+    <a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a>
+  </nav>
 
 <div class="container">
   <div class="page-header">
@@ -1148,77 +1280,58 @@ const listeningData = [
 ];
 
 // ── State ─────────────────────────────────────────────────────
-let currentUtterance = null;
-let currentPlayId    = null;
+let currentPlayId = null;
 
 // ── TTS ───────────────────────────────────────────────────────
-function getJapaneseVoice() {
-  const voices = window.speechSynthesis.getVoices();
-  const preferred = [
-    'Microsoft Ichiro - Japanese (Japan)',
-    'Google 日本語',
-    'Microsoft Haruka - Japanese (Japan)',
-    'Microsoft Ayumi - Japanese (Japan)',
-    'Microsoft Sayaka - Japanese (Japan)',
-  ];
-  for (const name of preferred) {
-    const v = voices.find(v => v.name === name);
-    if (v) return v;
-  }
-  return voices.find(v => v.lang.startsWith('ja')) || null;
-}
-
 function playScript(id, btnEl) {
   const p = listeningData.find(x => x.id === id);
   if (!p) return;
 
-  // Stop if already playing this one
-  if (currentPlayId === id && currentUtterance) {
-    window.speechSynthesis.cancel();
-    currentUtterance = null;
-    currentPlayId = null;
+  const indicator = document.getElementById(`indicator-${id}`);
+
+  // If already playing this one, stop it
+  if (currentPlayId === id) {
+    // voicevox.js handles stop on second click via playJapanese toggle
+    // but we also need to reset our state
+    if (indicator) indicator.classList.remove('visible');
     resetPlayButton(id);
+    currentPlayId = null;
     return;
   }
 
-  // Stop any other audio
-  if (currentUtterance) {
-    window.speechSynthesis.cancel();
-    if (currentPlayId) resetPlayButton(currentPlayId);
+  // Stop any other script
+  if (currentPlayId) {
+    resetPlayButton(currentPlayId);
+    if (document.getElementById(`indicator-${currentPlayId}`))
+      document.getElementById(`indicator-${currentPlayId}`).classList.remove('visible');
   }
+  currentPlayId = id;
 
-  const indicator = document.getElementById(`indicator-${id}`);
   if (btnEl) { btnEl.textContent = '⏹ Stop'; btnEl.classList.add('playing'); }
   if (indicator) indicator.classList.add('visible');
 
-  const utt = new SpeechSynthesisUtterance(p.scriptPlain);
-  utt.lang  = 'ja-JP';
-  utt.rate  = 1.0;
-  utt.pitch = 1.0;
-  const voice = getJapaneseVoice();
-  if (voice) utt.voice = voice;
+  // Create a synthetic button for voicevox.js to manage state on
+  const fakeBtn = {
+    classList: { add: ()=>{}, remove: ()=>{} },
+    textContent: ''
+  };
 
-  utt.onend = () => {
-    currentUtterance = null;
+  // Wrap to catch end and reset our indicator
+  const origOnEnd = () => {
     currentPlayId = null;
     resetPlayButton(id);
-  };
-  utt.onerror = (e) => {
-    if (e.error !== 'interrupted') {
-      currentUtterance = null;
-      currentPlayId = null;
-      resetPlayButton(id);
-    }
+    if (indicator) indicator.classList.remove('visible');
   };
 
-  currentUtterance = utt;
-  currentPlayId = id;
-
-  if (window.speechSynthesis.getVoices().length > 0) {
-    window.speechSynthesis.speak(utt);
-  } else {
-    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.speak(utt);
-  }
+  // Use playJapanese from voicevox.js
+  playJapanese(p.scriptPlain, {
+    classList: {
+      add: (c) => {},
+      remove: (c) => { if (c === 'playing') origOnEnd(); }
+    },
+    get textContent() { return ''; },
+    set textContent(v) { if (v === '🔊') origOnEnd(); }
+  });
 }
 
 function resetPlayButton(id) {
@@ -1229,11 +1342,7 @@ function resetPlayButton(id) {
 }
 
 function replayScript(id) {
-  if (currentUtterance) {
-    window.speechSynthesis.cancel();
-    currentUtterance = null;
-    currentPlayId = null;
-  }
+  currentPlayId = null;
   const btn = document.getElementById(`play-btn-${id}`);
   playScript(id, btn);
 }
@@ -1291,8 +1400,9 @@ function toggleCard(id) {
   const isOpen = card.classList.toggle('open');
   // Stop audio when closing
   if (!isOpen && currentPlayId === id) {
-    window.speechSynthesis.cancel();
-    currentUtterance = null;
+    if (typeof window.currentAudio !== 'undefined' && window.currentAudio) {
+      window.currentAudio.pause();
+    }
     currentPlayId = null;
     resetPlayButton(id);
   }
@@ -1380,10 +1490,53 @@ function render() {
 }
 
 // Load voices
-if ('speechSynthesis' in window) window.speechSynthesis.getVoices();
+
 
 render();
 </script>
 <script src="voicevox.js"></script>
+
+  // ── Mobile nav ───────────────────────────────────────────────
+  const hamburger  = document.getElementById('hamburger');
+  const mobileNav  = document.getElementById('mobile-nav');
+  if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      });
+    });
+    document.addEventListener('click', e => {
+      if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      }
+    });
+  }
+  <script>
+  // ── Font size control ─────────────────────────────────────────
+  const fontSizes = { sm: '17px', md: '19px', lg: '22px' };
+  function setFont(size) {
+    document.documentElement.style.fontSize = fontSizes[size];
+    localStorage.setItem('fontSize', size);
+    document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+    const btn = document.getElementById('font-' + size);
+    if (btn) btn.classList.add('active');
+  }
+  // Apply saved font size on load
+  (function() {
+    const saved = localStorage.getItem('fontSize') || 'md';
+    document.documentElement.style.fontSize = fontSizes[saved];
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById('font-' + saved);
+      if (btn) btn.classList.add('active');
+    });
+  })();
+  </script>
 </body>
 </html>

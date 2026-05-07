@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>間違い Mistakes — 日本語学習</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;500;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <script>
+  (function() {
+    const saved = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+  })();
+  </script>
+  <style>
+    :root {
+      --ink:#f0e6d6;--ink-mid:#d4c4a8;--ink-soft:#b09878;--ink-faint:#7a6450;
+      --washi:#4a3728;--washi-warm:#3d2d20;--washi-deep:#2e2018;--washi-card:#56402f;
+      --teal:#4aaf9e;--teal-light:#6dcebb;--teal-pale:rgba(74,175,158,0.15);
+      --serif-jp:'Shippoki Mincho','Noto Serif JP',serif;
+      --serif-en:'IM Fell English',Georgia,serif;
+      --sans-jp:'Noto Sans JP',sans-serif;
+      --radius-sm:4px;--radius-md:8px;--radius-lg:16px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:19px;}
+    body{background:#4a3728;color:#f0e6d6;font-family:var(--sans-jp);font-weight:300;line-height:1.8;min-height:100vh;}
+
+    /* Light mode */
+    [data-theme="light"]{--ink:#1a0e00;--ink-mid:#2e1a08;--ink-soft:#4a3018;--ink-faint:#6b4c28;--washi:#f5ede0;--washi-warm:#ede0cc;--washi-deep:#e0d0b8;--washi-card:#faf3e8;--teal:#1a6a5c;--teal-light:#2a8a7a;}
+    [data-theme="light"] body{background:#f5ede0;color:#1a0e00;}
+    [data-theme="light"] .site-nav{background:#e8d8c0;border-bottom-color:#c8b090;}
+    [data-theme="light"] .mobile-nav{background:#e8d8c0;border-bottom-color:#c8b090;}
+    [data-theme="light"] .site-footer{background:#e8d8c0;border-top-color:#c8b090;}
+    [data-theme="light"] ruby rt{color:#4a3018;}
+    [data-theme="light"] .nav-logo .jp{color:#1a0e00;}
+    [data-theme="light"] .nav-links a .jp{color:#2e1a08;}
+    [data-theme="light"] .nav-links a .en{color:#6b4c28;}
+    [data-theme="light"] .nav-links a:hover .jp,[data-theme="light"] .nav-links a.active .jp{color:#1a6a5c;}
+    [data-theme="light"] .hamburger span{background:#2e1a08;}
+
+    /* NAV */
+    .site-nav{position:sticky;top:0;z-index:100;background:#2e2018;border-bottom:1px solid #1e1208;padding:0.75rem 0;}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;}
+    .nav-logo{display:flex;flex-direction:column;text-decoration:none;}
+    .nav-logo .jp{font-family:var(--serif-jp);font-size:1.1rem;color:#f0e6d6;letter-spacing:0.1em;line-height:1.9;}
+    .nav-logo .jp ruby rt{font-size:0.54em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-logo .en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .nav-links{display:flex;gap:0.15rem;list-style:none;}
+    .nav-links a{display:flex;flex-direction:column;align-items:center;padding:0.4rem 0.7rem;text-decoration:none;border-radius:4px;transition:background 0.2s;}
+    .nav-links a .jp{font-family:var(--serif-jp);font-size:0.85rem;color:#d4c4a8;line-height:1.9;}
+    .nav-links a .jp ruby rt{font-size:0.56em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-links a .en{font-family:var(--serif-en);font-style:italic;font-size:0.62rem;color:#7a6450;}
+    .nav-links a:hover,.nav-links a.active{background:rgba(74,175,158,0.15);}
+    .nav-links a:hover .jp,.nav-links a.active .jp{color:#4aaf9e;}
+
+    /* Controls */
+    .nav-controls{display:flex;align-items:center;gap:0.4rem;}
+    .font-controls{display:flex;align-items:center;gap:0.2rem;}
+    .font-btn{display:flex;align-items:center;justify-content:center;height:1.9rem;padding:0 0.5rem;min-width:1.9rem;background:transparent;border:1px solid rgba(74,175,158,0.3);border-radius:4px;cursor:pointer;font-family:var(--serif-en);font-size:0.72rem;transition:all 0.2s;color:#4aaf9e;flex-shrink:0;}
+    .font-btn:hover,.font-btn.active{background:rgba(74,175,158,0.2);border-color:#4aaf9e;}
+    .theme-toggle{display:flex;align-items:center;justify-content:center;width:1.9rem;height:1.9rem;background:transparent;border:1px solid rgba(74,175,158,0.3);border-radius:50%;cursor:pointer;font-size:0.85rem;transition:all 0.2s;color:#4aaf9e;flex-shrink:0;}
+    .theme-toggle:hover{background:rgba(74,175,158,0.15);border-color:#4aaf9e;}
+    .hamburger{display:none;flex-direction:column;justify-content:space-between;width:1.4rem;height:1.1rem;cursor:pointer;background:none;border:none;padding:0;}
+    .hamburger span{display:block;height:2px;background:#d4c4a8;border-radius:2px;transition:transform 0.25s,opacity 0.25s;}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mobile-nav{display:none;position:absolute;top:100%;left:0;right:0;background:#2e2018;border-bottom:1px solid #1e1208;padding:0.5rem 0 0.75rem;z-index:150;flex-direction:column;}
+    .mobile-nav.open{display:flex;}
+    .mobile-nav a{display:flex;align-items:center;gap:0.75rem;padding:0.55rem 1.5rem;text-decoration:none;transition:background 0.2s;}
+    .mobile-nav a:hover,.mobile-nav a.active{background:rgba(74,175,158,0.12);}
+    .mobile-nav a .jp{font-family:var(--serif-jp);font-size:0.95rem;color:#d4c4a8;line-height:1.9;}
+    .mobile-nav a .en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .mobile-nav a:hover .jp,.mobile-nav a.active .jp{color:#4aaf9e;}
+    @media(max-width:768px){.nav-links{display:none;}.hamburger{display:flex;}.site-nav{position:relative;}}
+
+    /* LAYOUT */
+    .container{max-width:900px;margin:0 auto;padding:2rem;}
+    @media(max-width:768px){.container{padding:1rem;}}
+
+    /* HEADER */
+    .page-header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid #2e2018;}
+    .jp-title{font-family:var(--serif-jp);font-size:2.4rem;color:#f0e6d6;letter-spacing:0.05em;line-height:1.85;}
+    .jp-title ruby rt{font-size:0.58em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .en-title{font-family:var(--serif-en);font-style:italic;font-size:0.9rem;color:#7a6450;}
+    .desc{margin-top:0.4rem;color:#b09878;font-size:0.85rem;}
+
+    /* FILTER BAR */
+    .filter-bar{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;align-items:center;}
+    .filter-btn{padding:0.3rem 0.85rem;border:1px solid #2e2018;border-radius:20px;background:transparent;color:#7a6450;font-family:var(--sans-jp);font-size:0.78rem;cursor:pointer;transition:all 0.2s;}
+    .filter-btn:hover{border-color:#4aaf9e;color:#4aaf9e;}
+    .filter-btn.active{background:rgba(74,175,158,0.15);border-color:#4aaf9e;color:#4aaf9e;}
+    .filter-sep{width:1px;height:1.2rem;background:#2e2018;flex-shrink:0;}
+    .badge-n4{color:#8fd47a;}.badge-n3{color:#7ab4e8;}.badge-n2{color:#e8b47a;}.badge-n1{color:#e87a7a;}
+
+    /* STATS */
+    .stats-row{display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+    .stat-pill{padding:0.35rem 0.85rem;background:#56402f;border:1px solid #2e2018;border-radius:20px;font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#b09878;}
+    .stat-pill strong{color:#4aaf9e;font-style:normal;}
+
+    /* MISTAKE CARDS */
+    .mistake-list{display:flex;flex-direction:column;gap:0.75rem;}
+    .mistake-card{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-md);padding:1.1rem 1.25rem;}
+    .mistake-card.hidden{display:none;}
+    .mistake-meta{display:flex;gap:0.5rem;margin-bottom:0.6rem;flex-wrap:wrap;align-items:center;}
+    .m-badge{font-family:var(--serif-en);font-size:0.65rem;padding:0.15rem 0.45rem;border-radius:3px;}
+    .m-n4{background:rgba(58,107,46,0.3);color:#8fd47a;}
+    .m-n3{background:rgba(42,82,128,0.3);color:#7ab4e8;}
+    .m-n2{background:rgba(122,74,30,0.3);color:#e8b47a;}
+    .m-n1{background:rgba(122,30,30,0.3);color:#e87a7a;}
+    .m-type{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .m-date{font-family:var(--serif-en);font-style:italic;font-size:0.65rem;color:#7a6450;margin-left:auto;}
+    .m-question{font-family:var(--serif-jp);font-size:0.95rem;color:#f0e6d6;line-height:1.9;margin-bottom:0.5rem;}
+    .m-answers{display:flex;flex-direction:column;gap:0.25rem;margin-bottom:0.6rem;}
+    .m-wrong{font-size:0.8rem;color:#e87a7a;padding:0.3rem 0.6rem;background:rgba(232,122,122,0.08);border-radius:3px;}
+    .m-correct{font-size:0.8rem;color:#8fd47a;padding:0.3rem 0.6rem;background:rgba(143,212,122,0.08);border-radius:3px;}
+    .m-exp{font-size:0.78rem;color:#b09878;line-height:1.6;border-top:1px solid #2e2018;padding-top:0.5rem;margin-top:0.3rem;}
+
+    /* EMPTY & ACTIONS */
+    .empty-state{text-align:center;padding:4rem 2rem;color:#7a6450;}
+    .empty-state .icon{font-size:2.5rem;margin-bottom:1rem;opacity:0.4;}
+    .empty-state .msg{font-family:var(--serif-en);font-style:italic;font-size:0.9rem;margin-bottom:1.5rem;}
+    .empty-state a{display:inline-block;padding:0.6rem 1.4rem;background:#4aaf9e;border-radius:var(--radius-md);color:#1a1200;text-decoration:none;font-size:0.88rem;font-weight:500;}
+    .danger-zone{margin-top:2rem;padding-top:1.5rem;border-top:1px solid #2e2018;display:flex;justify-content:flex-end;}
+    .clear-btn{padding:0.35rem 0.9rem;background:transparent;border:1px solid rgba(232,122,122,0.3);border-radius:4px;color:#e87a7a;font-family:var(--sans-jp);font-size:0.75rem;cursor:pointer;transition:all 0.2s;}
+    .clear-btn:hover{background:rgba(232,122,122,0.1);border-color:#e87a7a;}
+    .show-more-btn{width:100%;padding:0.55rem;background:transparent;border:1px solid #2e2018;border-radius:var(--radius-sm);color:#7a6450;font-family:var(--sans-jp);font-size:0.78rem;cursor:pointer;transition:all 0.2s;margin-top:0.5rem;}
+    .show-more-btn:hover{border-color:#4aaf9e;color:#4aaf9e;}
+
+    /* FOOTER */
+    .site-footer{border-top:1px solid #2e2018;background:#3d2d20;padding:1.25rem 0;margin-top:2rem;}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;flex-wrap:wrap;gap:1rem;}
+    .footer-jp{font-family:var(--serif-jp);font-size:0.8rem;color:#b09878;}
+    .footer-en{font-family:var(--serif-en);font-style:italic;font-size:0.7rem;color:#7a6450;}
+
+    ruby{display:inline-flex;flex-direction:column-reverse;align-items:center;vertical-align:bottom;line-height:1;}
+    ruby rt{font-family:'Noto Sans JP',sans-serif;font-size:0.55em;color:#e8d8c0;text-align:center;letter-spacing:0.04em;line-height:1.5;user-select:none;}
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="jp"><ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span>
+      <span class="en">Personal Japanese Study</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a></li>
+      <li><a href="vocabulary.html"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a></li>
+      <li><a href="kanji.html"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a></li>
+      <li><a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
+      <li><a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a></li>
+      <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
+      <li><a href="mistakes.html" class="active"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a></li>
+    </ul>
+    <div class="nav-controls">
+      <div class="font-controls">
+        <button class="font-btn" id="font-sm" onclick="setFont('sm')" title="Small">A−</button>
+        <button class="font-btn active" id="font-md" onclick="setFont('md')" title="Normal">A</button>
+        <button class="font-btn" id="font-lg" onclick="setFont('lg')" title="Large">A+</button>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☀</button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<nav id="mobile-nav" class="mobile-nav">
+  <a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a>
+  <a href="vocabulary.html"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a>
+  <a href="kanji.html"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a>
+  <a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a>
+  <a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a>
+  <a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a>
+  <a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a>
+  <a href="mistakes.html" class="active"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <div class="jp-title"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い<ruby>一<rt>いち</rt></ruby><ruby>覧<rt>らん</rt></ruby></div>
+    <div class="en-title">Mistake Review</div>
+    <p class="desc">Every question you've answered incorrectly. Filter by level or type to focus your review.</p>
+  </div>
+
+  <div id="main-content"></div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <p class="footer-jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い<ruby>一<rt>いち</rt></ruby><ruby>覧<rt>らん</rt></ruby> — <ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></p>
+      <p class="footer-en">Mistake Review · N4 → N1</p>
+    </div>
+    <a href="progress.html" style="font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;text-decoration:none;">← Progress</a>
+  </div>
+</footer>
+
+<script>
+const mistakes = JSON.parse(localStorage.getItem('mistakeLog') || '[]');
+const main = document.getElementById('main-content');
+
+if (mistakes.length === 0) {
+  main.innerHTML = `
+    <div class="empty-state">
+      <div class="icon">✓</div>
+      <div class="msg">No mistakes recorded yet. Take a quiz to start tracking.</div>
+      <a href="quiz.html"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby>を始める — Start a Quiz</a>
+    </div>`;
+} else {
+  renderMistakes();
+}
+
+function renderMistakes() {
+  // Deduplicate — keep most recent occurrence per question text
+  const seen = new Map();
+  for (const m of [...mistakes].reverse()) {
+    if (!seen.has(m.question)) seen.set(m.question, m);
+  }
+  const unique = [...seen.values()];
+
+  // Sort newest first
+  unique.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+  // State
+  let activeLevel = 'all';
+  let activeType  = 'all';
+  let showAll     = false;
+  const PAGE_SIZE = 20;
+
+  const typeLabels = {
+    grammar:'文法 Grammar', vocabulary:'語彙 Vocabulary',
+    kanji:'漢字 Kanji', reading:'読解 Reading'
+  };
+
+  function filtered() {
+    return unique.filter(m => {
+      const lvl = activeLevel === 'all' || m.level === activeLevel;
+      const typ = activeType  === 'all' || m.type  === activeType;
+      return lvl && typ;
+    });
+  }
+
+  function formatDate(iso) {
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'});
+  }
+
+  function render() {
+    const data = filtered();
+    const visible = showAll ? data : data.slice(0, PAGE_SIZE);
+
+    // Stats
+    const byLevel = {};
+    unique.forEach(m => { byLevel[m.level] = (byLevel[m.level]||0)+1; });
+
+    let html = `
+      <div class="filter-bar">
+        <button class="filter-btn ${activeLevel==='all'?'active':''}" onclick="setLevel('all')">All levels</button>
+        <button class="filter-btn badge-n4 ${activeLevel==='n4'?'active':''}" onclick="setLevel('n4')">N4</button>
+        <button class="filter-btn badge-n3 ${activeLevel==='n3'?'active':''}" onclick="setLevel('n3')">N3</button>
+        <button class="filter-btn badge-n2 ${activeLevel==='n2'?'active':''}" onclick="setLevel('n2')">N2</button>
+        <button class="filter-btn badge-n1 ${activeLevel==='n1'?'active':''}" onclick="setLevel('n1')">N1</button>
+        <div class="filter-sep"></div>
+        <button class="filter-btn ${activeType==='all'?'active':''}" onclick="setType('all')">All types</button>
+        <button class="filter-btn ${activeType==='grammar'?'active':''}" onclick="setType('grammar')">文法</button>
+        <button class="filter-btn ${activeType==='vocabulary'?'active':''}" onclick="setType('vocabulary')">語彙</button>
+        <button class="filter-btn ${activeType==='kanji'?'active':''}" onclick="setType('kanji')">漢字</button>
+        <button class="filter-btn ${activeType==='reading'?'active':''}" onclick="setType('reading')">読解</button>
+      </div>
+      <div class="stats-row">
+        <div class="stat-pill">Total unique mistakes: <strong>${unique.length}</strong></div>
+        <div class="stat-pill">Showing: <strong>${data.length}</strong></div>
+        ${Object.entries(byLevel).sort().map(([l,c])=>`<div class="stat-pill">${l.toUpperCase()}: <strong>${c}</strong></div>`).join('')}
+      </div>`;
+
+    if (data.length === 0) {
+      html += `<div style="text-align:center;padding:3rem;color:#7a6450;font-family:var(--serif-en);font-style:italic;">No mistakes for this filter.</div>`;
+    } else {
+      html += `<div class="mistake-list">`;
+      visible.forEach(m => {
+        const levelClass = `m-${m.level}`;
+        const typeLabel  = typeLabels[m.type] || m.type;
+        html += `
+          <div class="mistake-card">
+            <div class="mistake-meta">
+              <span class="m-badge ${levelClass}">${m.level.toUpperCase()}</span>
+              <span class="m-type">${typeLabel}</span>
+              <span class="m-date">${formatDate(m.date)}</span>
+            </div>
+            <div class="m-question">${m.question}</div>
+            <div class="m-answers">
+              <div class="m-wrong">✗ You answered: ${m.selected || '—'}</div>
+              <div class="m-correct">✓ Correct: ${m.answer || '—'}</div>
+            </div>
+            ${m.explanation ? `<div class="m-exp">${m.explanation}</div>` : ''}
+          </div>`;
+      });
+      html += `</div>`;
+
+      if (!showAll && data.length > PAGE_SIZE) {
+        html += `<button class="show-more-btn" onclick="showMore()">Show all ${data.length} mistakes</button>`;
+      }
+    }
+
+    html += `
+      <div class="danger-zone">
+        <button class="clear-btn" onclick="clearMistakes()">Clear mistake log</button>
+      </div>`;
+
+    main.innerHTML = html;
+  }
+
+  window.setLevel = (l) => { activeLevel = l; showAll = false; render(); };
+  window.setType  = (t) => { activeType  = t; showAll = false; render(); };
+  window.showMore = ()  => { showAll = true; render(); };
+  window.clearMistakes = () => {
+    if (!confirm('Clear all mistake history? This cannot be undone.')) return;
+    localStorage.removeItem('mistakeLog');
+    location.reload();
+  };
+
+  render();
+}
+
+// ── Theme toggle ──────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+  const apply = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    btn.textContent = theme === 'dark' ? '☀' : '🌙';
+    localStorage.setItem('theme', theme);
+  };
+  apply(localStorage.getItem('theme') || 'dark');
+  btn.addEventListener('click', () => {
+    apply(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobile-nav');
+  if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    document.addEventListener('click', e => {
+      if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      }
+    });
+  }
+
+  // Font size
+  const fontSizes = { sm:'17px', md:'19px', lg:'22px' };
+  const savedFont = localStorage.getItem('fontSize') || 'md';
+  document.documentElement.style.fontSize = fontSizes[savedFont];
+  document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+  const fb = document.getElementById('font-' + savedFont);
+  if (fb) fb.classList.add('active');
+});
+
+function setFont(size) {
+  const fontSizes = { sm:'17px', md:'19px', lg:'22px' };
+  document.documentElement.style.fontSize = fontSizes[size];
+  localStorage.setItem('fontSize', size);
+  document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('font-' + size);
+  if (btn) btn.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -39,7 +39,29 @@
     .nav-links a:hover .jp,.nav-links a.active .jp{color:#4aaf9e;}
 
     .container{max-width:760px;margin:0 auto;padding:2rem;}
-    @media(max-width:768px){.nav-links{display:none;}.container{padding:1rem;}}
+
+    /* ── Hamburger ── */
+    .hamburger{display:none;flex-direction:column;justify-content:space-between;
+      width:1.4rem;height:1.1rem;cursor:pointer;background:none;border:none;padding:0;z-index:200;}
+    .hamburger span{display:block;height:2px;background:#d4c4a8;border-radius:2px;
+      transition:transform 0.25s,opacity 0.25s;}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+    /* ── Mobile dropdown ── */
+    .mobile-nav{display:none;position:absolute;top:100%;left:0;right:0;
+      background:#2e2018;border-bottom:1px solid #1e1208;
+      padding:0.5rem 0 0.75rem;z-index:150;flex-direction:column;}
+    .mobile-nav.open{display:flex;}
+    .mobile-nav a{display:flex;align-items:center;gap:0.75rem;
+      padding:0.55rem 1.5rem;text-decoration:none;transition:background 0.2s;}
+    .mobile-nav a:hover,.mobile-nav a.active{background:rgba(74,175,158,0.12);}
+    .mobile-nav a .jp{font-family:var(--serif-jp);font-size:0.95rem;color:#d4c4a8;line-height:1.9;}
+    .mobile-nav a .jp ruby rt{font-size:0.5em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .mobile-nav a .en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .mobile-nav a:hover .jp,.mobile-nav a.active .jp{color:#4aaf9e;}
+        @media(max-width:768px){.nav-links{display:none;}.hamburger{display:flex;}.site-nav{position:relative;}.container{padding:1rem;}}
 
     /* SETUP SCREEN */
     .setup-screen{animation:fadeUp 0.4s ease both;}
@@ -148,7 +170,105 @@
     .footer-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;flex-wrap:wrap;gap:1rem;}
     .footer-jp{font-family:var(--serif-jp);font-size:0.8rem;color:#b09878;}
     .footer-en{font-family:var(--serif-en);font-style:italic;font-size:0.7rem;color:#7a6450;}
+
+    /* ── Light mode ── */
+        [data-theme="light"] {
+      --ink:        #1a0e00;
+      --ink-mid:    #2e1a08;
+      --ink-soft:   #4a3018;
+      --ink-faint:  #6b4c28;
+      --washi:      #f5ede0;
+      --washi-warm: #ede0cc;
+      --washi-deep: #e0d0b8;
+      --washi-card: #faf3e8;
+      --teal:       #1a6a5c;
+      --teal-light: #2a8a7a;
+      --teal-pale:  rgba(26,106,92,0.12);
+      --shadow-soft: 0 2px 16px rgba(100,60,20,0.12);
+      --shadow-card: 0 6px 32px rgba(100,60,20,0.18);
+    }
+    [data-theme="light"] body { background-color: #f5ede0; color: #1a0e00; }
+    :root[data-theme="light"] { background-color: #f5ede0; }
+    [data-theme="light"] .site-nav { background: #e8d8c0; border-bottom-color: #c8b090; }
+    [data-theme="light"] .mobile-nav { background: #e8d8c0; border-bottom-color: #c8b090; }
+    [data-theme="light"] .site-footer { background: #e8d8c0; border-top-color: #c8b090; }
+    [data-theme="light"] ruby rt { color: #4a3018; }
+    [data-theme="light"] .nav-logo .jp { color: #1a0e00; }
+    [data-theme="light"] .nav-logo .en { color: #6b4c28; }
+    [data-theme="light"] .nav-links a .jp { color: #2e1a08; }
+    [data-theme="light"] .nav-links a .en { color: #6b4c28; }
+    [data-theme="light"] .nav-links a:hover .jp,
+    [data-theme="light"] .nav-links a.active .jp { color: #1a6a5c; }
+    [data-theme="light"] .mobile-nav a .jp { color: #2e1a08; }
+    [data-theme="light"] .mobile-nav a .en { color: #6b4c28; }
+    [data-theme="light"] .hamburger span { background: #2e1a08; }
+    [data-theme="light"] .en-title,
+    [data-theme="light"] .card-title-en,
+    [data-theme="light"] .desc,
+    [data-theme="light"] .card-desc { color: #4a3018; }
+    [data-theme="light"] .section-label { color: #1a6a5c; }
+
+    /* ── Theme toggle button ── */
+    .nav-controls { display:flex; align-items:center; gap:0.4rem; }
+    .theme-toggle {
+      display:flex;align-items:center;justify-content:center;
+      width:1.9rem;height:1.9rem;
+      background:transparent;border:1px solid rgba(74,175,158,0.3);
+      border-radius:50%;cursor:pointer;font-size:0.85rem;
+      transition:all 0.2s;color:#4aaf9e;flex-shrink:0;
+    }
+    .theme-toggle:hover { background:rgba(74,175,158,0.15); border-color:#4aaf9e; }
+    :root[data-theme="light"] .theme-toggle { border-color:rgba(42,138,122,0.3); color:#2a8a7a; }
+    :root[data-theme="light"] .theme-toggle:hover { background:rgba(42,138,122,0.12); }
+
+    /* ── Font size control ── */
+    .font-controls { display:flex; align-items:center; gap:0.2rem; }
+    .font-btn {
+      display:flex;align-items:center;justify-content:center;
+      height:1.9rem;padding:0 0.5rem;min-width:1.9rem;
+      background:transparent;border:1px solid rgba(74,175,158,0.3);
+      border-radius:4px;cursor:pointer;
+      font-family:var(--serif-en);font-size:0.72rem;
+      transition:all 0.2s;color:#4aaf9e;flex-shrink:0;
+    }
+    .font-btn:hover { background:rgba(74,175,158,0.15); border-color:#4aaf9e; }
+    .font-btn.active { background:rgba(74,175,158,0.2); border-color:#4aaf9e; }
+    :root[data-theme="light"] .font-btn { color:#1a6a5c; border-color:rgba(26,106,92,0.3); }
+    :root[data-theme="light"] .font-btn:hover { background:rgba(26,106,92,0.1); }
+    :root[data-theme="light"] .font-btn.active { background:rgba(26,106,92,0.15); }
+
+    /* ── Spaced repetition indicator ── */
+    .sr-indicator{display:none;align-items:center;gap:0.5rem;padding:0.45rem 0.85rem;
+      background:rgba(74,175,158,0.1);border:1px solid rgba(74,175,158,0.25);
+      border-radius:20px;font-family:var(--serif-en);font-style:italic;
+      font-size:0.72rem;color:#4aaf9e;margin-bottom:1rem;}
+    .sr-indicator.visible{display:flex;}
+    .sr-dot{width:6px;height:6px;border-radius:50%;background:#4aaf9e;
+      animation:srPulse 2s ease-in-out infinite;}
+    @keyframes srPulse{0%,100%{opacity:0.4}50%{opacity:1}}
   </style>
+  <script>
+  // ── Theme toggle ─────────────────────────────────────────────
+  (function() {
+    const saved = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+  })();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    const apply = (theme) => {
+      document.documentElement.setAttribute('data-theme', theme);
+      btn.textContent = theme === 'dark' ? '☀' : '🌙';
+      localStorage.setItem('theme', theme);
+    };
+    apply(localStorage.getItem('theme') || 'dark');
+    btn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      apply(next);
+    });
+  });
+  </script>
 </head>
 <body>
 
@@ -166,9 +286,31 @@
       <li><a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a></li>
       <li><a href="quiz.html" class="active"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
       <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
+      <li><a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a></li>
     </ul>
   </div>
+    <div class="nav-controls">
+      <div class="font-controls">
+        <button class="font-btn" id="font-sm" onclick="setFont('sm')" title="Small text">A−</button>
+        <button class="font-btn active" id="font-md" onclick="setFont('md')" title="Normal text">A</button>
+        <button class="font-btn" id="font-lg" onclick="setFont('lg')" title="Large text">A+</button>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☀</button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
 </nav>
+  <nav id="mobile-nav" class="mobile-nav">
+    <a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a>
+    <a href="vocabulary.html"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a>
+    <a href="kanji.html"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a>
+    <a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a>
+    <a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a>
+    <a href="quiz.html" class="active"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a>
+    <a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a>
+    <a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a>
+  </nav>
 
 <div class="container">
 
@@ -348,6 +490,60 @@ function startQuiz() {
 }
 
 // ── Draw questions from local bank ───────────────────────
+// ── Spaced Repetition ────────────────────────────────────────
+const SR_KEY = 'srWeights';
+const SR_MAX = 8;   // max weight (shown most often)
+const SR_MIN = 1;   // min weight (shown least often)
+
+function getWeights() {
+  try { return JSON.parse(localStorage.getItem(SR_KEY) || '{}'); }
+  catch { return {}; }
+}
+
+function saveWeights(w) {
+  localStorage.setItem(SR_KEY, JSON.stringify(w));
+}
+
+function updateWeights(questionId, isCorrect) {
+  const w = getWeights();
+  const current = w[questionId] || SR_MIN;
+  if (isCorrect) {
+    // Correct: reduce weight (min SR_MIN)
+    w[questionId] = Math.max(SR_MIN, current - 1);
+  } else {
+    // Wrong: increase weight (max SR_MAX)
+    w[questionId] = Math.min(SR_MAX, current + 2);
+  }
+  saveWeights(w);
+}
+
+function hasWeakSpots(pool) {
+  const w = getWeights();
+  return pool.some(q => (w[q.id] || SR_MIN) > SR_MIN);
+}
+
+function weightedShuffle(pool) {
+  const w = getWeights();
+  // Build weighted array — each question appears w[id] times
+  const weighted = [];
+  pool.forEach(q => {
+    const weight = w[q.id] || SR_MIN;
+    for (let i = 0; i < weight; i++) weighted.push(q);
+  });
+  // Shuffle weighted array
+  for (let i = weighted.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [weighted[i], weighted[j]] = [weighted[j], weighted[i]];
+  }
+  // Deduplicate while preserving weighted order
+  const seen = new Set();
+  const result = [];
+  for (const q of weighted) {
+    if (!seen.has(q.id)) { seen.add(q.id); result.push(q); }
+  }
+  return result;
+}
+
 function generateAllQuestions() {
   // Filter by level
   let pool = selectedLevel === 'mixed'
@@ -356,8 +552,7 @@ function generateAllQuestions() {
 
   // Filter by type
   if (selectedType !== 'mixed') {
-    const typeKey = selectedType; // 'grammar', 'vocabulary', 'kanji'
-    pool = pool.filter(q => q.type === typeKey);
+    pool = pool.filter(q => q.type === selectedType);
   }
 
   if (pool.length === 0) {
@@ -365,8 +560,13 @@ function generateAllQuestions() {
     return;
   }
 
-  // Shuffle pool
-  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+  // Show SR indicator if there are weak spots
+  const srOn = hasWeakSpots(pool);
+  const srEl = document.getElementById('sr-indicator');
+  if (srEl) srEl.classList.toggle('visible', srOn);
+
+  // Weighted shuffle (SR) — weak questions surface more often
+  const shuffled = weightedShuffle(pool);
 
   // For mixed type, balance across question types
   if (selectedType === 'mixed') {
@@ -380,7 +580,6 @@ function generateAllQuestions() {
       const take = perType + (i < remainder ? 1 : 0);
       picked.push(...buckets[t].slice(0, take));
     });
-    // Fill any shortfall from remaining pool
     if (picked.length < questionCount) {
       const pickedIds = new Set(picked.map(q => q.id));
       const extras = shuffled.filter(q => !pickedIds.has(q.id));
@@ -467,7 +666,7 @@ function checkAnswer(btn, correctLetter, idx) {
 
   if (isCorrect) correct++;
 
-  // Record result
+  // Record result + update SR weight
   results.push({
     question: q.question,
     type:     q.type,
@@ -477,6 +676,7 @@ function checkAnswer(btn, correctLetter, idx) {
     answer:   q.options[['A','B','C','D'].indexOf(correctLetter)],
     explanation: q.explanation
   });
+  if (q.id) updateWeights(q.id, isCorrect);
 
   // Feedback
   fb.classList.add('visible');
@@ -536,7 +736,7 @@ function renderResults() {
     list.appendChild(item);
   });
 
-  // Save to localStorage
+  // Save session to localStorage
   const history = JSON.parse(localStorage.getItem('quizHistory') || '[]');
   history.push({
     date:    new Date().toISOString(),
@@ -547,6 +747,22 @@ function renderResults() {
     total:   questionCount
   });
   localStorage.setItem('quizHistory', JSON.stringify(history));
+
+  // Save individual wrong questions to mistake log
+  const mistakes = JSON.parse(localStorage.getItem('mistakeLog') || '[]');
+  const newMistakes = results.filter(r => !r.correct).map(r => ({
+    date:        new Date().toISOString(),
+    question:    r.question,
+    type:        r.type,
+    level:       r.level,
+    selected:    r.selected,
+    answer:      r.answer,
+    explanation: r.explanation
+  }));
+  // Keep last 500 mistakes max
+  const combined = [...mistakes, ...newMistakes].slice(-500);
+  localStorage.setItem('mistakeLog', JSON.stringify(combined));
+
   updateStreak();
 }
 
@@ -589,5 +805,48 @@ showSetup();
 </script>
   <script src="quiz-bank.js"></script>
   <script src="voicevox.js"></script>
+
+  // ── Mobile nav ───────────────────────────────────────────────
+  const hamburger  = document.getElementById('hamburger');
+  const mobileNav  = document.getElementById('mobile-nav');
+  if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      });
+    });
+    document.addEventListener('click', e => {
+      if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      }
+    });
+  }
+  <script>
+  // ── Font size control ─────────────────────────────────────────
+  const fontSizes = { sm: '17px', md: '19px', lg: '22px' };
+  function setFont(size) {
+    document.documentElement.style.fontSize = fontSizes[size];
+    localStorage.setItem('fontSize', size);
+    document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+    const btn = document.getElementById('font-' + size);
+    if (btn) btn.classList.add('active');
+  }
+  // Apply saved font size on load
+  (function() {
+    const saved = localStorage.getItem('fontSize') || 'md';
+    document.documentElement.style.fontSize = fontSizes[saved];
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById('font-' + saved);
+      if (btn) btn.classList.add('active');
+    });
+  })();
+  </script>
 </body>
 </html>
