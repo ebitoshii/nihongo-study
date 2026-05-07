@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学習計画 Schedule — 日本語学習</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;500;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <script>
+  (function() {
+    document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+  })();
+  </script>
+  <style>
+    :root {
+      --ink:#f0e6d6;--ink-mid:#d4c4a8;--ink-soft:#b09878;--ink-faint:#7a6450;
+      --washi:#4a3728;--washi-warm:#3d2d20;--washi-deep:#2e2018;--washi-card:#56402f;
+      --teal:#4aaf9e;--teal-light:#6dcebb;--teal-pale:rgba(74,175,158,0.15);
+      --serif-jp:'Shippori Mincho','Noto Serif JP',serif;
+      --serif-en:'IM Fell English',Georgia,serif;
+      --sans-jp:'Noto Sans JP',sans-serif;
+      --radius-sm:4px;--radius-md:8px;--radius-lg:16px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:19px;}
+    body{background:#4a3728;color:#f0e6d6;font-family:var(--sans-jp);font-weight:300;line-height:1.8;min-height:100vh;}
+
+    [data-theme="light"]{--ink:#1a0e00;--ink-mid:#2e1a08;--ink-soft:#4a3018;--ink-faint:#6b4c28;--washi:#f5ede0;--washi-warm:#ede0cc;--washi-deep:#e0d0b8;--washi-card:#faf3e8;--teal:#1a6a5c;--teal-light:#2a8a7a;}
+    [data-theme="light"] body{background:#f5ede0;color:#1a0e00;}
+    [data-theme="light"] .site-nav{background:#e8d8c0;border-bottom-color:#c8b090;}
+    [data-theme="light"] .mobile-nav{background:#e8d8c0;border-bottom-color:#c8b090;}
+    [data-theme="light"] .site-footer{background:#e8d8c0;border-top-color:#c8b090;}
+    [data-theme="light"] ruby rt{color:#4a3018;}
+    [data-theme="light"] .nav-logo .jp{color:#1a0e00;}
+    [data-theme="light"] .nav-links a .jp{color:#2e1a08;}
+    [data-theme="light"] .nav-links a .en{color:#6b4c28;}
+    [data-theme="light"] .nav-links a:hover .jp,[data-theme="light"] .nav-links a.active .jp{color:#1a6a5c;}
+    [data-theme="light"] .hamburger span{background:#2e1a08;}
+    [data-theme="light"] .card{background:#faf3e8;border-color:#e0d0b8;}
+    [data-theme="light"] .day-cell{background:#f0e6d6;border-color:#e0d0b8;}
+    [data-theme="light"] .day-cell.done{background:rgba(26,106,92,0.15);}
+    [data-theme="light"] .day-cell.today{border-color:#1a6a5c;}
+
+    /* NAV */
+    .site-nav{position:sticky;top:0;z-index:100;background:#2e2018;border-bottom:1px solid #1e1208;padding:0.75rem 0;}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;}
+    .nav-logo{display:flex;flex-direction:column;text-decoration:none;}
+    .nav-logo .jp{font-family:var(--serif-jp);font-size:1.1rem;color:#f0e6d6;letter-spacing:0.1em;line-height:1.9;}
+    .nav-logo .jp ruby rt{font-size:0.54em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-logo .en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .nav-links{display:flex;gap:0.15rem;list-style:none;}
+    .nav-links a{display:flex;flex-direction:column;align-items:center;padding:0.4rem 0.7rem;text-decoration:none;border-radius:4px;transition:background 0.2s;}
+    .nav-links a .jp{font-family:var(--serif-jp);font-size:0.85rem;color:#d4c4a8;line-height:1.9;}
+    .nav-links a .jp ruby rt{font-size:0.56em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-links a .en{font-family:var(--serif-en);font-style:italic;font-size:0.62rem;color:#7a6450;}
+    .nav-links a:hover,.nav-links a.active{background:rgba(74,175,158,0.15);}
+    .nav-links a:hover .jp,.nav-links a.active .jp{color:#4aaf9e;}
+    .nav-controls{display:flex;align-items:center;gap:0.4rem;}
+    .font-controls{display:flex;align-items:center;gap:0.2rem;}
+    .font-btn{display:flex;align-items:center;justify-content:center;height:1.9rem;padding:0 0.5rem;min-width:1.9rem;background:transparent;border:1px solid rgba(74,175,158,0.3);border-radius:4px;cursor:pointer;font-family:var(--serif-en);font-size:0.72rem;transition:all 0.2s;color:#4aaf9e;}
+    .font-btn:hover,.font-btn.active{background:rgba(74,175,158,0.2);border-color:#4aaf9e;}
+    .theme-toggle{display:flex;align-items:center;justify-content:center;width:1.9rem;height:1.9rem;background:transparent;border:1px solid rgba(74,175,158,0.3);border-radius:50%;cursor:pointer;font-size:0.85rem;transition:all 0.2s;color:#4aaf9e;}
+    .theme-toggle:hover{background:rgba(74,175,158,0.15);border-color:#4aaf9e;}
+    .hamburger{display:none;flex-direction:column;justify-content:space-between;width:1.4rem;height:1.1rem;cursor:pointer;background:none;border:none;padding:0;}
+    .hamburger span{display:block;height:2px;background:#d4c4a8;border-radius:2px;transition:transform 0.25s,opacity 0.25s;}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mobile-nav{display:none;position:absolute;top:100%;left:0;right:0;background:#2e2018;border-bottom:1px solid #1e1208;padding:0.5rem 0 0.75rem;z-index:150;flex-direction:column;}
+    .mobile-nav.open{display:flex;}
+    .mobile-nav a{display:flex;align-items:center;gap:0.75rem;padding:0.55rem 1.5rem;text-decoration:none;transition:background 0.2s;}
+    .mobile-nav a:hover,.mobile-nav a.active{background:rgba(74,175,158,0.12);}
+    .mobile-nav a .jp{font-family:var(--serif-jp);font-size:0.95rem;color:#d4c4a8;line-height:1.9;}
+    .mobile-nav a .en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .mobile-nav a:hover .jp,.mobile-nav a.active .jp{color:#4aaf9e;}
+    @media(max-width:768px){.nav-links{display:none;}.hamburger{display:flex;}.site-nav{position:relative;}}
+
+    /* LAYOUT */
+    .container{max-width:860px;margin:0 auto;padding:2rem;}
+    @media(max-width:768px){.container{padding:1rem;}}
+
+    /* HEADER */
+    .page-header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid #2e2018;}
+    .jp-title{font-family:var(--serif-jp);font-size:2.4rem;color:#f0e6d6;letter-spacing:0.05em;line-height:1.85;}
+    .en-title{font-family:var(--serif-en);font-style:italic;font-size:0.9rem;color:#7a6450;}
+    .desc{margin-top:0.4rem;color:#b09878;font-size:0.85rem;}
+
+    /* CARDS */
+    .card{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.25rem;}
+    .card-title{font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#4aaf9e;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1rem;}
+
+    /* TODAY STATUS */
+    .today-row{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;}
+    .streak-display{text-align:center;}
+    .streak-num{font-family:var(--serif-jp);font-size:3rem;color:#4aaf9e;line-height:1;}
+    .streak-label{font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#7a6450;}
+    .today-info{flex:1;}
+    .today-date{font-family:var(--serif-en);font-style:italic;font-size:0.82rem;color:#b09878;margin-bottom:0.4rem;}
+    .goal-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:0.75rem;}
+    .goal-label{font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;}
+    .goal-select{padding:0.3rem 0.65rem;background:#3d2d20;border:1px solid #2e2018;border-radius:var(--radius-sm);color:#d4c4a8;font-family:var(--sans-jp);font-size:0.82rem;cursor:pointer;outline:none;}
+    .goal-select:focus{border-color:#4aaf9e;}
+    .progress-ring-area{display:flex;align-items:center;gap:0.75rem;}
+    .ring-label{font-family:var(--serif-jp);font-size:0.85rem;color:#b09878;line-height:1.9;}
+    .done-today-btn{padding:0.55rem 1.25rem;background:#4aaf9e;border:none;border-radius:var(--radius-md);color:#1a1200;font-family:var(--sans-jp);font-size:0.85rem;font-weight:500;cursor:pointer;transition:background 0.2s;}
+    .done-today-btn:hover{background:#6dcebb;}
+    .done-today-btn.marked{background:#3d2d20;border:1px solid #8fd47a;color:#8fd47a;cursor:default;}
+
+    /* GOAL BAR */
+    .goal-bar-wrap{margin-top:0.85rem;}
+    .goal-bar-track{height:6px;background:#2e2018;border-radius:3px;overflow:hidden;}
+    .goal-bar-fill{height:100%;background:linear-gradient(to right,#4aaf9e,#6dcebb);border-radius:3px;transition:width 0.5s ease;}
+    .goal-bar-label{font-family:var(--serif-en);font-style:italic;font-size:0.7rem;color:#7a6450;margin-top:0.3rem;}
+
+    /* CALENDAR */
+    .calendar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;}
+    .cal-title{font-family:var(--serif-en);font-style:italic;font-size:0.88rem;color:#d4c4a8;}
+    .cal-nav{display:flex;gap:0.35rem;}
+    .cal-nav-btn{padding:0.2rem 0.55rem;background:transparent;border:1px solid #2e2018;border-radius:var(--radius-sm);color:#7a6450;font-size:0.75rem;cursor:pointer;transition:all 0.2s;}
+    .cal-nav-btn:hover{border-color:#4aaf9e;color:#4aaf9e;}
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+    .cal-day-label{font-family:var(--serif-en);font-size:0.62rem;color:#7a6450;text-align:center;padding:0.2rem 0;}
+    .day-cell{aspect-ratio:1;border:1px solid #2e2018;border-radius:var(--radius-sm);background:#3d2d20;display:flex;align-items:center;justify-content:center;font-family:var(--serif-en);font-size:0.72rem;color:#7a6450;position:relative;cursor:default;}
+    .day-cell.other-month{opacity:0.3;}
+    .day-cell.today{border-color:#4aaf9e;color:#4aaf9e;font-weight:600;}
+    .day-cell.done{background:rgba(74,175,158,0.2);border-color:rgba(74,175,158,0.4);color:#4aaf9e;}
+    .day-cell.done::after{content:'✓';position:absolute;bottom:1px;right:2px;font-size:0.5rem;color:#4aaf9e;}
+
+    /* WEEKLY SUMMARY */
+    .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:0.4rem;}
+    .week-day{text-align:center;}
+    .week-day-label{font-family:var(--serif-en);font-size:0.62rem;color:#7a6450;margin-bottom:0.25rem;}
+    .week-dot{width:100%;aspect-ratio:1;border-radius:50%;background:#2e2018;max-width:2rem;margin:0 auto;}
+    .week-dot.done{background:#4aaf9e;}
+    .week-dot.today{border:2px solid #4aaf9e;background:#3d2d20;}
+
+    /* STATS ROW */
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.85rem;}
+    .stat-box{background:#3d2d20;border:1px solid #2e2018;border-radius:var(--radius-md);padding:1rem;text-align:center;}
+    .stat-num{font-family:var(--serif-jp);font-size:2rem;color:#4aaf9e;line-height:1;margin-bottom:0.2rem;}
+    .stat-lbl{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+
+    /* QUICK LINKS */
+    .quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.75rem;}
+    .quick-link{display:flex;flex-direction:column;align-items:center;padding:1rem 0.75rem;background:#3d2d20;border:1px solid #2e2018;border-radius:var(--radius-md);text-decoration:none;transition:all 0.2s;text-align:center;}
+    .quick-link:hover{background:rgba(74,175,158,0.1);border-color:#4aaf9e;}
+    .quick-link .icon{font-family:var(--serif-jp);font-size:1.5rem;color:rgba(74,175,158,0.5);margin-bottom:0.35rem;line-height:1;}
+    .quick-link .jp-lbl{font-family:var(--serif-jp);font-size:0.82rem;color:#d4c4a8;line-height:1.9;}
+    .quick-link .en-lbl{font-family:var(--serif-en);font-style:italic;font-size:0.65rem;color:#7a6450;}
+    .quick-link:hover .jp-lbl{color:#4aaf9e;}
+
+    /* FOOTER */
+    .site-footer{border-top:1px solid #2e2018;background:#3d2d20;padding:1.25rem 0;margin-top:2rem;}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;flex-wrap:wrap;gap:1rem;}
+    .footer-jp{font-family:var(--serif-jp);font-size:0.8rem;color:#b09878;}
+    .footer-en{font-family:var(--serif-en);font-style:italic;font-size:0.7rem;color:#7a6450;}
+
+    ruby{display:inline-flex;flex-direction:column-reverse;align-items:center;vertical-align:bottom;line-height:1;}
+    ruby rt{font-family:'Noto Sans JP',sans-serif;font-size:0.55em;color:#e8d8c0;text-align:center;line-height:1.5;user-select:none;}
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="jp"><ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span>
+      <span class="en">Personal Japanese Study</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a></li>
+      <li><a href="vocabulary.html"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a></li>
+      <li><a href="kanji.html"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a></li>
+      <li><a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
+      <li><a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a></li>
+      <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
+      <li><a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a></li>
+      <li><a href="flashcards.html"><span class="jp">カード</span><span class="en">Flashcards</span></a></li>
+      <li><a href="writing.html"><span class="jp"><ruby>書<rt>か</rt></ruby>き</span><span class="en">Writing</span></a></li>
+      <li><a href="schedule.html" class="active"><span class="jp"><ruby>計<rt>けい</rt></ruby><ruby>画<rt>かく</rt></ruby></span><span class="en">Schedule</span></a></li>
+    </ul>
+    <div class="nav-controls">
+      <div class="font-controls">
+        <button class="font-btn" id="font-sm" onclick="setFont('sm')">A−</button>
+        <button class="font-btn active" id="font-md" onclick="setFont('md')">A</button>
+        <button class="font-btn" id="font-lg" onclick="setFont('lg')">A+</button>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☀</button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<nav id="mobile-nav" class="mobile-nav">
+  <a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a>
+  <a href="vocabulary.html"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a>
+  <a href="kanji.html"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a>
+  <a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a>
+  <a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a>
+  <a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a>
+  <a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a>
+  <a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a>
+  <a href="flashcards.html"><span class="jp">カード</span><span class="en">Flashcards</span></a>
+  <a href="writing.html"><span class="jp"><ruby>書<rt>か</rt></ruby>き</span><span class="en">Writing</span></a>
+  <a href="schedule.html" class="active"><span class="jp"><ruby>計<rt>けい</rt></ruby><ruby>画<rt>かく</rt></ruby></span><span class="en">Schedule</span></a>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <div class="jp-title"><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby><ruby>計<rt>けい</rt></ruby><ruby>画<rt>かく</rt></ruby></div>
+    <div class="en-title">Study Schedule</div>
+    <p class="desc">Set a daily goal, track your streak, and see your study history at a glance.</p>
+  </div>
+
+  <!-- TODAY -->
+  <div class="card">
+    <div class="card-title">Today</div>
+    <div class="today-row">
+      <div class="streak-display">
+        <div class="streak-num" id="streak-num">0</div>
+        <div class="streak-label">day streak</div>
+      </div>
+      <div class="today-info">
+        <div class="today-date" id="today-date"></div>
+        <div class="goal-row">
+          <span class="goal-label">Daily goal:</span>
+          <select class="goal-select" id="goal-select" onchange="saveGoal()">
+            <option value="1">1 session / day</option>
+            <option value="2">2 sessions / day</option>
+            <option value="3">3 sessions / day</option>
+            <option value="5">5 sessions / day</option>
+          </select>
+        </div>
+        <div class="goal-bar-wrap">
+          <div class="goal-bar-track"><div class="goal-bar-fill" id="goal-bar" style="width:0%"></div></div>
+          <div class="goal-bar-label" id="goal-bar-label"></div>
+        </div>
+      </div>
+      <button class="done-today-btn" id="done-btn" onclick="markToday()">✓ Mark today done</button>
+    </div>
+  </div>
+
+  <!-- THIS WEEK -->
+  <div class="card">
+    <div class="card-title">This week</div>
+    <div class="week-grid" id="week-grid"></div>
+  </div>
+
+  <!-- CALENDAR -->
+  <div class="card">
+    <div class="calendar-header">
+      <span class="cal-title" id="cal-title"></span>
+      <div class="cal-nav">
+        <button class="cal-nav-btn" onclick="prevMonth()">←</button>
+        <button class="cal-nav-btn" onclick="nextMonth()">→</button>
+      </div>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+  </div>
+
+  <!-- STATS -->
+  <div class="card">
+    <div class="card-title">Statistics</div>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-num" id="stat-total-days">0</div><div class="stat-lbl">days studied</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-streak">0</div><div class="stat-lbl">current streak</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-best">0</div><div class="stat-lbl">best streak</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-month">0</div><div class="stat-lbl">days this month</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-sessions">0</div><div class="stat-lbl">quiz sessions</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-accuracy">—</div><div class="stat-lbl">quiz accuracy</div></div>
+    </div>
+  </div>
+
+  <!-- QUICK LINKS -->
+  <div class="card">
+    <div class="card-title">Start studying</div>
+    <div class="quick-grid">
+      <a href="quiz.html" class="quick-link"><span class="icon">練</span><span class="jp-lbl"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en-lbl">Quiz</span></a>
+      <a href="flashcards.html" class="quick-link"><span class="icon">カ</span><span class="jp-lbl">フラッシュカード</span><span class="en-lbl">Flashcards</span></a>
+      <a href="writing.html" class="quick-link"><span class="icon">書</span><span class="jp-lbl"><ruby>書<rt>か</rt></ruby>き<ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en-lbl">Writing</span></a>
+      <a href="listening.html" class="quick-link"><span class="icon">聴</span><span class="jp-lbl"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en-lbl">Listening</span></a>
+      <a href="reading.html" class="quick-link"><span class="icon">読</span><span class="jp-lbl"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en-lbl">Reading</span></a>
+      <a href="grammar.html" class="quick-link"><span class="icon">文</span><span class="jp-lbl"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en-lbl">Grammar</span></a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <p class="footer-jp"><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby><ruby>計<rt>けい</rt></ruby><ruby>画<rt>かく</rt></ruby> — <ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></p>
+      <p class="footer-en">Study Schedule · Daily Tracking</p>
+    </div>
+    <a href="progress.html" style="font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;text-decoration:none;">← Progress</a>
+  </div>
+</footer>
+
+<script>
+// ── Data keys ─────────────────────────────────────────────────
+const KEY_DONE  = 'scheduleDone';   // Set of YYYY-MM-DD strings
+const KEY_GOAL  = 'scheduleGoal';   // number 1-5
+const KEY_STREAK = 'studyStreak';
+const KEY_BEST   = 'bestStreak';
+
+function today() {
+  return new Date().toISOString().split('T')[0];
+}
+function fmtDate(iso) {
+  return new Date(iso + 'T12:00:00').toLocaleDateString('en-GB', {weekday:'long',day:'numeric',month:'long',year:'numeric'});
+}
+function getDone() {
+  try { return new Set(JSON.parse(localStorage.getItem(KEY_DONE) || '[]')); } catch { return new Set(); }
+}
+function saveDone(set) {
+  localStorage.setItem(KEY_DONE, JSON.stringify([...set]));
+}
+
+// ── Calendar state ────────────────────────────────────────────
+let calYear  = new Date().getFullYear();
+let calMonth = new Date().getMonth();
+
+// ── Mark today ────────────────────────────────────────────────
+function markToday() {
+  const done = getDone();
+  const t = today();
+  if (done.has(t)) return;
+  done.add(t);
+  saveDone(done);
+  updateStreak(done);
+  render();
+}
+
+function updateStreak(done) {
+  const t = today();
+  let streak = 0;
+  let d = new Date(t + 'T12:00:00');
+  while (done.has(d.toISOString().split('T')[0])) {
+    streak++;
+    d.setDate(d.getDate() - 1);
+  }
+  localStorage.setItem(KEY_STREAK, streak);
+  const best = parseInt(localStorage.getItem(KEY_BEST) || '0');
+  if (streak > best) localStorage.setItem(KEY_BEST, streak);
+}
+
+function saveGoal() {
+  const v = document.getElementById('goal-select').value;
+  localStorage.setItem(KEY_GOAL, v);
+  render();
+}
+
+// ── Render ────────────────────────────────────────────────────
+function render() {
+  const done   = getDone();
+  const t      = today();
+  const streak = parseInt(localStorage.getItem(KEY_STREAK) || '0');
+  const goal   = parseInt(localStorage.getItem(KEY_GOAL) || '1');
+  const history = JSON.parse(localStorage.getItem('quizHistory') || '[]');
+
+  // Today
+  document.getElementById('today-date').textContent = fmtDate(t);
+  document.getElementById('streak-num').textContent = streak;
+  document.getElementById('stat-streak').textContent = streak;
+  document.getElementById('stat-best').textContent  = localStorage.getItem(KEY_BEST) || '0';
+
+  // Goal select
+  document.getElementById('goal-select').value = goal;
+
+  // Sessions today
+  const todaySessions = history.filter(h => h.date && h.date.startsWith(t)).length;
+  const pct = Math.min(100, Math.round(todaySessions / goal * 100));
+  document.getElementById('goal-bar').style.width = pct + '%';
+  document.getElementById('goal-bar-label').textContent =
+    `${todaySessions} / ${goal} session${goal>1?'s':''} today`;
+
+  // Done button
+  const btn = document.getElementById('done-btn');
+  if (done.has(t)) {
+    btn.textContent = '✓ Done today';
+    btn.className = 'done-today-btn marked';
+  } else {
+    btn.textContent = '✓ Mark today done';
+    btn.className = 'done-today-btn';
+  }
+
+  // This week
+  renderWeek(done);
+
+  // Calendar
+  renderCalendar(done);
+
+  // Stats
+  document.getElementById('stat-total-days').textContent = done.size;
+  const thisMonth = [...done].filter(d => d.startsWith(t.slice(0,7))).length;
+  document.getElementById('stat-month').textContent = thisMonth;
+  document.getElementById('stat-sessions').textContent = history.length;
+  if (history.length > 0) {
+    const tQ = history.reduce((a,b)=>a+(b.total||0),0);
+    const tC = history.reduce((a,b)=>a+(b.correct||0),0);
+    document.getElementById('stat-accuracy').textContent = tQ > 0 ? Math.round(tC/tQ*100)+'%' : '—';
+  }
+}
+
+function renderWeek(done) {
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const now  = new Date();
+  const dow  = now.getDay(); // 0=Sun
+  const grid = document.getElementById('week-grid');
+  grid.innerHTML = '';
+
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(now);
+    d.setDate(d.getDate() - dow + i);
+    const iso = d.toISOString().split('T')[0];
+    const isToday = iso === today();
+    const isDone  = done.has(iso);
+
+    const col = document.createElement('div');
+    col.className = 'week-day';
+    col.innerHTML = `
+      <div class="week-day-label">${days[i]}</div>
+      <div class="week-dot${isDone?' done':isToday?' today':''}"></div>`;
+    grid.appendChild(col);
+  }
+}
+
+function renderCalendar(done) {
+  const months = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December'];
+  document.getElementById('cal-title').textContent = `${months[calMonth]} ${calYear}`;
+
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = '';
+
+  // Day labels
+  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'cal-day-label';
+    el.textContent = d;
+    grid.appendChild(el);
+  });
+
+  const firstDay = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  const t = today();
+
+  // Leading blanks
+  for (let i = 0; i < firstDay; i++) {
+    const el = document.createElement('div');
+    el.className = 'day-cell other-month';
+    grid.appendChild(el);
+  }
+
+  // Days
+  for (let d = 1; d <= daysInMonth; d++) {
+    const iso = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const el = document.createElement('div');
+    let cls = 'day-cell';
+    if (iso === t) cls += ' today';
+    if (done.has(iso)) cls += ' done';
+    el.className = cls;
+    el.textContent = d;
+    grid.appendChild(el);
+  }
+}
+
+function prevMonth() {
+  calMonth--;
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  renderCalendar(getDone());
+}
+function nextMonth() {
+  calMonth++;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  renderCalendar(getDone());
+}
+
+// ── Auto-mark from quiz history ───────────────────────────────
+function syncFromQuizHistory() {
+  const history = JSON.parse(localStorage.getItem('quizHistory') || '[]');
+  const done = getDone();
+  history.forEach(h => {
+    if (h.date) done.add(h.date.split('T')[0]);
+  });
+  saveDone(done);
+  updateStreak(done);
+}
+
+// ── Init ──────────────────────────────────────────────────────
+syncFromQuizHistory();
+render();
+
+// ── Theme, font, nav ──────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('theme-toggle');
+  const apply = t => {
+    document.documentElement.setAttribute('data-theme', t);
+    btn.textContent = t === 'dark' ? '☀' : '🌙';
+    localStorage.setItem('theme', t);
+  };
+  apply(localStorage.getItem('theme') || 'dark');
+  btn.addEventListener('click', () => {
+    apply(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobile-nav');
+  if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open'); mobileNav.classList.toggle('open');
+    });
+    document.addEventListener('click', e => {
+      if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+        hamburger.classList.remove('open'); mobileNav.classList.remove('open');
+      }
+    });
+  }
+
+  const fontSizes = { sm:'17px', md:'19px', lg:'22px' };
+  const sf = localStorage.getItem('fontSize') || 'md';
+  document.documentElement.style.fontSize = fontSizes[sf];
+  document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+  const fb = document.getElementById('font-' + sf);
+  if (fb) fb.classList.add('active');
+});
+
+function setFont(size) {
+  const fontSizes = { sm:'17px', md:'19px', lg:'22px' };
+  document.documentElement.style.fontSize = fontSizes[size];
+  localStorage.setItem('fontSize', size);
+  document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+  const b = document.getElementById('font-' + size);
+  if (b) b.classList.add('active');
+}
+</script>
+</body>
+</html>

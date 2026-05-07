@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>フラッシュカード Flashcards — 日本語学習</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;500;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <script>
+  (function() {
+    const saved = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+  })();
+  </script>
+  <style>
+    :root {
+      --ink:#f0e6d6;--ink-mid:#d4c4a8;--ink-soft:#b09878;--ink-faint:#7a6450;
+      --washi:#4a3728;--washi-warm:#3d2d20;--washi-deep:#2e2018;--washi-card:#56402f;
+      --teal:#4aaf9e;--teal-light:#6dcebb;--teal-pale:rgba(74,175,158,0.15);
+      --serif-jp:'Shippori Mincho','Noto Serif JP',serif;
+      --serif-en:'IM Fell English',Georgia,serif;
+      --sans-jp:'Noto Sans JP',sans-serif;
+      --radius-sm:4px;--radius-md:8px;--radius-lg:16px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:19px;}
+    body{background:#4a3728;color:#f0e6d6;font-family:var(--sans-jp);font-weight:300;line-height:1.8;min-height:100vh;}
+
+    [data-theme="light"]{--ink:#1a0e00;--ink-mid:#2e1a08;--ink-soft:#4a3018;--ink-faint:#6b4c28;--washi:#f5ede0;--washi-warm:#ede0cc;--washi-deep:#e0d0b8;--washi-card:#faf3e8;--teal:#1a6a5c;--teal-light:#2a8a7a;}
+    [data-theme="light"] body{background:#f5ede0;color:#1a0e00;}
+    [data-theme="light"] .site-nav{background:#e8d8c0;border-bottom-color:#c8b090;}
+    [data-theme="light"] .mobile-nav{background:#e8d8c0;border-bottom-color:#c8b090;}
+    [data-theme="light"] .site-footer{background:#e8d8c0;border-top-color:#c8b090;}
+    [data-theme="light"] ruby rt{color:#4a3018;}
+    [data-theme="light"] .nav-logo .jp{color:#1a0e00;}
+    [data-theme="light"] .nav-links a .jp{color:#2e1a08;}
+    [data-theme="light"] .nav-links a .en{color:#6b4c28;}
+    [data-theme="light"] .nav-links a:hover .jp,[data-theme="light"] .nav-links a.active .jp{color:#1a6a5c;}
+    [data-theme="light"] .hamburger span{background:#2e1a08;}
+    [data-theme="light"] .card-inner{background:#faf3e8;}
+    [data-theme="light"] .card-front,[data-theme="light"] .card-back{background:#faf3e8;border-color:#e0d0b8;}
+    [data-theme="light"] .word-main{color:#1a0e00;}
+    [data-theme="light"] .word-reading{color:#4a3018;}
+    [data-theme="light"] .word-meaning{color:#2e1a08;}
+    [data-theme="light"] .example-jp{color:#4a3018;}
+    [data-theme="light"] .example-en{color:#6b4c28;}
+
+    /* NAV */
+    .site-nav{position:sticky;top:0;z-index:100;background:#2e2018;border-bottom:1px solid #1e1208;padding:0.75rem 0;}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;}
+    .nav-logo{display:flex;flex-direction:column;text-decoration:none;}
+    .nav-logo .jp{font-family:var(--serif-jp);font-size:1.1rem;color:#f0e6d6;letter-spacing:0.1em;line-height:1.9;}
+    .nav-logo .jp ruby rt{font-size:0.54em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-logo .en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .nav-links{display:flex;gap:0.15rem;list-style:none;}
+    .nav-links a{display:flex;flex-direction:column;align-items:center;padding:0.4rem 0.7rem;text-decoration:none;border-radius:4px;transition:background 0.2s;}
+    .nav-links a .jp{font-family:var(--serif-jp);font-size:0.85rem;color:#d4c4a8;line-height:1.9;}
+    .nav-links a .jp ruby rt{font-size:0.56em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-links a .en{font-family:var(--serif-en);font-style:italic;font-size:0.62rem;color:#7a6450;}
+    .nav-links a:hover,.nav-links a.active{background:rgba(74,175,158,0.15);}
+    .nav-links a:hover .jp,.nav-links a.active .jp{color:#4aaf9e;}
+    .nav-controls{display:flex;align-items:center;gap:0.4rem;}
+    .font-controls{display:flex;align-items:center;gap:0.2rem;}
+    .font-btn{display:flex;align-items:center;justify-content:center;height:1.9rem;padding:0 0.5rem;min-width:1.9rem;background:transparent;border:1px solid rgba(74,175,158,0.3);border-radius:4px;cursor:pointer;font-family:var(--serif-en);font-size:0.72rem;transition:all 0.2s;color:#4aaf9e;}
+    .font-btn:hover,.font-btn.active{background:rgba(74,175,158,0.2);border-color:#4aaf9e;}
+    .theme-toggle{display:flex;align-items:center;justify-content:center;width:1.9rem;height:1.9rem;background:transparent;border:1px solid rgba(74,175,158,0.3);border-radius:50%;cursor:pointer;font-size:0.85rem;transition:all 0.2s;color:#4aaf9e;}
+    .theme-toggle:hover{background:rgba(74,175,158,0.15);border-color:#4aaf9e;}
+    .hamburger{display:none;flex-direction:column;justify-content:space-between;width:1.4rem;height:1.1rem;cursor:pointer;background:none;border:none;padding:0;}
+    .hamburger span{display:block;height:2px;background:#d4c4a8;border-radius:2px;transition:transform 0.25s,opacity 0.25s;}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mobile-nav{display:none;position:absolute;top:100%;left:0;right:0;background:#2e2018;border-bottom:1px solid #1e1208;padding:0.5rem 0 0.75rem;z-index:150;flex-direction:column;}
+    .mobile-nav.open{display:flex;}
+    .mobile-nav a{display:flex;align-items:center;gap:0.75rem;padding:0.55rem 1.5rem;text-decoration:none;transition:background 0.2s;}
+    .mobile-nav a:hover,.mobile-nav a.active{background:rgba(74,175,158,0.12);}
+    .mobile-nav a .jp{font-family:var(--serif-jp);font-size:0.95rem;color:#d4c4a8;line-height:1.9;}
+    .mobile-nav a .en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .mobile-nav a:hover .jp,.mobile-nav a.active .jp{color:#4aaf9e;}
+    @media(max-width:768px){.nav-links{display:none;}.hamburger{display:flex;}.site-nav{position:relative;}}
+
+    /* LAYOUT */
+    .container{max-width:700px;margin:0 auto;padding:2rem;}
+    @media(max-width:768px){.container{padding:1rem;}}
+
+    /* HEADER */
+    .page-header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid #2e2018;}
+    .jp-title{font-family:var(--serif-jp);font-size:2.4rem;color:#f0e6d6;letter-spacing:0.05em;line-height:1.85;}
+    .en-title{font-family:var(--serif-en);font-style:italic;font-size:0.9rem;color:#7a6450;}
+    .desc{margin-top:0.4rem;color:#b09878;font-size:0.85rem;}
+
+    /* SETUP */
+    .setup-panel{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-lg);padding:1.75rem;margin-bottom:1.5rem;}
+    .setup-title{font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#4aaf9e;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1rem;}
+    .option-row{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.85rem;}
+    .opt-btn{padding:0.35rem 0.85rem;border:1px solid #2e2018;border-radius:20px;background:transparent;color:#7a6450;font-family:var(--sans-jp);font-size:0.78rem;cursor:pointer;transition:all 0.2s;}
+    .opt-btn:hover{border-color:#4aaf9e;color:#4aaf9e;}
+    .opt-btn.sel{background:rgba(74,175,158,0.15);border-color:#4aaf9e;color:#4aaf9e;}
+    .opt-label{font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#7a6450;margin-bottom:0.35rem;display:block;}
+    .start-fc-btn{width:100%;padding:0.85rem;background:#4aaf9e;border:none;border-radius:var(--radius-md);color:#1a1200;font-family:var(--sans-jp);font-size:0.95rem;font-weight:500;cursor:pointer;transition:background 0.2s;margin-top:0.5rem;letter-spacing:0.05em;}
+    .start-fc-btn:hover{background:#6dcebb;}
+
+    /* FLASHCARD */
+    .fc-area{display:none;}
+    .fc-area.visible{display:block;}
+    .fc-progress-bar{height:3px;background:#2e2018;border-radius:2px;margin-bottom:1.25rem;overflow:hidden;}
+    .fc-progress-fill{height:100%;background:linear-gradient(to right,#4aaf9e,#6dcebb);border-radius:2px;transition:width 0.4s ease;}
+    .fc-counter{font-family:var(--serif-en);font-style:italic;font-size:0.75rem;color:#7a6450;text-align:center;margin-bottom:1rem;}
+
+    /* CARD FLIP */
+    .card-scene{perspective:1000px;width:100%;height:340px;cursor:pointer;margin-bottom:1.25rem;}
+    @media(max-width:480px){.card-scene{height:280px;}}
+    .card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 0.5s ease;}
+    .card-inner.flipped{transform:rotateY(180deg);}
+    .card-front,.card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-lg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center;}
+    .card-back{transform:rotateY(180deg);}
+    .card-hint{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;position:absolute;top:1rem;left:50%;transform:translateX(-50%);white-space:nowrap;}
+    .card-level{position:absolute;top:1rem;right:1.25rem;font-family:var(--serif-en);font-size:0.65rem;padding:0.15rem 0.45rem;border-radius:3px;}
+    .lvl-n4{background:rgba(58,107,46,0.3);color:#8fd47a;}
+    .lvl-n3{background:rgba(42,82,128,0.3);color:#7ab4e8;}
+    .lvl-n2{background:rgba(122,74,30,0.3);color:#e8b47a;}
+    .lvl-n1{background:rgba(122,30,30,0.3);color:#e87a7a;}
+
+    /* FRONT CONTENT */
+    .word-main{font-family:var(--serif-jp);font-size:3.5rem;color:#f0e6d6;line-height:1;margin-bottom:0.5rem;}
+    @media(max-width:480px){.word-main{font-size:2.8rem;}}
+    .word-pos{font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#7a6450;margin-top:0.3rem;}
+
+    /* BACK CONTENT */
+    .word-reading{font-family:var(--serif-jp);font-size:1.4rem;color:#4aaf9e;margin-bottom:0.4rem;line-height:1.9;}
+    .word-meaning{font-family:var(--serif-en);font-size:1rem;color:#d4c4a8;margin-bottom:0.85rem;font-style:italic;}
+    .example-jp{font-family:var(--serif-jp);font-size:0.82rem;color:#b09878;line-height:1.9;margin-bottom:0.2rem;}
+    .example-en{font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#7a6450;}
+
+    /* RATING BUTTONS */
+    .rating-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.6rem;margin-bottom:1rem;}
+    .rate-btn{padding:0.65rem;border:1px solid #2e2018;border-radius:var(--radius-md);background:transparent;font-family:var(--sans-jp);font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:0.2rem;}
+    .rate-btn .label{font-size:0.68rem;font-family:var(--serif-en);font-style:italic;}
+    .rate-again{color:#e87a7a;border-color:rgba(232,122,122,0.3);}
+    .rate-again:hover{background:rgba(232,122,122,0.12);border-color:#e87a7a;}
+    .rate-good{color:#e8b47a;border-color:rgba(232,180,122,0.3);}
+    .rate-good:hover{background:rgba(232,180,122,0.12);border-color:#e8b47a;}
+    .rate-easy{color:#8fd47a;border-color:rgba(143,212,122,0.3);}
+    .rate-easy:hover{background:rgba(143,212,122,0.12);border-color:#8fd47a;}
+
+    .nav-row{display:flex;gap:0.75rem;justify-content:center;}
+    .nav-fc-btn{padding:0.5rem 1.25rem;background:transparent;border:1px solid #2e2018;border-radius:var(--radius-sm);color:#7a6450;font-family:var(--sans-jp);font-size:0.82rem;cursor:pointer;transition:all 0.2s;}
+    .nav-fc-btn:hover{border-color:#4aaf9e;color:#4aaf9e;}
+
+    /* SESSION END */
+    .session-end{display:none;text-align:center;padding:3rem 1rem;}
+    .session-end.visible{display:block;}
+    .end-icon{font-size:2.5rem;margin-bottom:1rem;}
+    .end-title{font-family:var(--serif-jp);font-size:1.6rem;color:#f0e6d6;margin-bottom:0.5rem;line-height:1.9;}
+    .end-stats{display:flex;justify-content:center;gap:1.5rem;margin:1.25rem 0;flex-wrap:wrap;}
+    .end-stat{text-align:center;}
+    .end-stat-num{font-family:var(--serif-jp);font-size:2rem;color:#4aaf9e;line-height:1;}
+    .end-stat-label{font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#7a6450;}
+    .end-actions{display:flex;gap:0.75rem;justify-content:center;margin-top:1.5rem;flex-wrap:wrap;}
+    .btn-again{padding:0.65rem 1.5rem;background:#4aaf9e;border:none;border-radius:var(--radius-md);color:#1a1200;font-family:var(--sans-jp);font-size:0.88rem;font-weight:500;cursor:pointer;transition:background 0.2s;}
+    .btn-again:hover{background:#6dcebb;}
+    .btn-setup{padding:0.65rem 1.5rem;background:transparent;border:1px solid #4aaf9e;border-radius:var(--radius-md);color:#4aaf9e;font-family:var(--sans-jp);font-size:0.88rem;cursor:pointer;transition:all 0.2s;}
+    .btn-setup:hover{background:rgba(74,175,158,0.15);}
+
+    /* FOOTER */
+    .site-footer{border-top:1px solid #2e2018;background:#3d2d20;padding:1.25rem 0;margin-top:2rem;}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;flex-wrap:wrap;gap:1rem;}
+    .footer-jp{font-family:var(--serif-jp);font-size:0.8rem;color:#b09878;}
+    .footer-en{font-family:var(--serif-en);font-style:italic;font-size:0.7rem;color:#7a6450;}
+
+    ruby{display:inline-flex;flex-direction:column-reverse;align-items:center;vertical-align:bottom;line-height:1;}
+    ruby rt{font-family:'Noto Sans JP',sans-serif;font-size:0.55em;color:#e8d8c0;text-align:center;letter-spacing:0.04em;line-height:1.5;user-select:none;}
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="jp"><ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span>
+      <span class="en">Personal Japanese Study</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a></li>
+      <li><a href="vocabulary.html"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a></li>
+      <li><a href="kanji.html"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a></li>
+      <li><a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
+      <li><a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a></li>
+      <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
+      <li><a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a></li>
+      <li><a href="flashcards.html" class="active"><span class="jp">カード</span><span class="en">Flashcards</span></a></li>
+    </ul>
+    <div class="nav-controls">
+      <div class="font-controls">
+        <button class="font-btn" id="font-sm" onclick="setFont('sm')">A−</button>
+        <button class="font-btn active" id="font-md" onclick="setFont('md')">A</button>
+        <button class="font-btn" id="font-lg" onclick="setFont('lg')">A+</button>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☀</button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<nav id="mobile-nav" class="mobile-nav">
+  <a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a>
+  <a href="vocabulary.html"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a>
+  <a href="kanji.html"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a>
+  <a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a>
+  <a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a>
+  <a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a>
+  <a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a>
+  <a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a>
+  <a href="flashcards.html" class="active"><span class="jp">カード</span><span class="en">Flashcards</span></a>
+</nav>
+
+<div class="container">
+  <div class="page-header">
+    <div class="jp-title">フラッシュカード</div>
+    <div class="en-title">Flashcard Study</div>
+    <p class="desc">Flip to reveal the reading and meaning. Rate each card to track your progress.</p>
+  </div>
+
+  <!-- SETUP -->
+  <div class="setup-panel" id="setup-panel">
+    <div class="setup-title">Configure your session</div>
+
+    <span class="opt-label">Content</span>
+    <div class="option-row" id="content-opts">
+      <button class="opt-btn sel" data-content="vocab">語彙 Vocabulary</button>
+      <button class="opt-btn" data-content="kanji">漢字 Kanji</button>
+    </div>
+
+    <span class="opt-label">Level</span>
+    <div class="option-row" id="level-opts">
+      <button class="opt-btn sel" data-level="mixed">Mixed</button>
+      <button class="opt-btn" data-level="n4">N4</button>
+      <button class="opt-btn" data-level="n3">N3</button>
+      <button class="opt-btn" data-level="n2">N2</button>
+      <button class="opt-btn" data-level="n1">N1</button>
+    </div>
+
+    <span class="opt-label">Cards per session</span>
+    <div class="option-row" id="count-opts">
+      <button class="opt-btn" data-count="10">10</button>
+      <button class="opt-btn sel" data-count="20">20</button>
+      <button class="opt-btn" data-count="30">30</button>
+      <button class="opt-btn" data-count="50">50</button>
+    </div>
+
+    <span class="opt-label">Front side shows</span>
+    <div class="option-row" id="front-opts">
+      <button class="opt-btn sel" data-front="word">Japanese word</button>
+      <button class="opt-btn" data-front="meaning">English meaning</button>
+    </div>
+
+    <button class="start-fc-btn" onclick="startSession()">Start →</button>
+  </div>
+
+  <!-- FLASHCARD AREA -->
+  <div class="fc-area" id="fc-area">
+    <div class="fc-progress-bar"><div class="fc-progress-fill" id="fc-progress"></div></div>
+    <div class="fc-counter" id="fc-counter"></div>
+
+    <div class="card-scene" id="card-scene" onclick="flipCard()">
+      <div class="card-inner" id="card-inner">
+        <div class="card-front" id="card-front">
+          <span class="card-hint">tap to flip</span>
+          <span class="card-level" id="card-level-badge"></span>
+          <div class="word-main" id="front-main"></div>
+          <div class="word-pos" id="front-sub"></div>
+        </div>
+        <div class="card-back" id="card-back">
+          <span class="card-hint">tap to flip back</span>
+          <span class="card-level" id="card-level-badge-back"></span>
+          <div class="word-reading" id="back-reading"></div>
+          <div class="word-meaning" id="back-meaning"></div>
+          <div class="example-jp" id="back-example-jp"></div>
+          <div class="example-en" id="back-example-en"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rating-row" id="rating-row" style="display:none;">
+      <button class="rate-btn rate-again" onclick="rate('again')">
+        <span>✗</span><span class="label">Again</span>
+      </button>
+      <button class="rate-btn rate-good" onclick="rate('good')">
+        <span>△</span><span class="label">Good</span>
+      </button>
+      <button class="rate-btn rate-easy" onclick="rate('easy')">
+        <span>✓</span><span class="label">Easy</span>
+      </button>
+    </div>
+
+    <div class="nav-row">
+      <button class="nav-fc-btn" onclick="skipCard()">Skip →</button>
+      <button class="nav-fc-btn" onclick="endSession()">End session</button>
+    </div>
+  </div>
+
+  <!-- SESSION END -->
+  <div class="session-end" id="session-end">
+    <div class="end-icon">✓</div>
+    <div class="end-title">セッション完了</div>
+    <div class="end-stats">
+      <div class="end-stat">
+        <div class="end-stat-num" id="end-easy">0</div>
+        <div class="end-stat-label">Easy</div>
+      </div>
+      <div class="end-stat">
+        <div class="end-stat-num" id="end-good">0</div>
+        <div class="end-stat-label">Good</div>
+      </div>
+      <div class="end-stat">
+        <div class="end-stat-num" id="end-again">0</div>
+        <div class="end-stat-label">Again</div>
+      </div>
+    </div>
+    <div class="end-actions">
+      <button class="btn-again" onclick="restartSession()">Review mistakes</button>
+      <button class="btn-setup" onclick="backToSetup()">New session</button>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <p class="footer-jp">フラッシュカード — <ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></p>
+      <p class="footer-en">Flashcard Study · N4 → N1</p>
+    </div>
+    <a href="index.html" style="font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;text-decoration:none;">← Home</a>
+  </div>
+</footer>
+
+<script src="quiz-bank.js"></script>
+<script src="voicevox.js"></script>
+<script>
+// ── Settings ──────────────────────────────────────────────────
+let cfg = {
+  content: 'vocab',
+  level:   'mixed',
+  count:   20,
+  front:   'word'
+};
+
+// ── Setup UI ──────────────────────────────────────────────────
+function setupOpts(groupId, key) {
+  document.getElementById(groupId).querySelectorAll('.opt-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById(groupId).querySelectorAll('.opt-btn').forEach(b => b.classList.remove('sel'));
+      btn.classList.add('sel');
+      cfg[key] = btn.dataset[key];
+      if (key === 'count') cfg.count = parseInt(btn.dataset.count);
+    });
+  });
+}
+setupOpts('content-opts', 'content');
+setupOpts('level-opts',   'level');
+setupOpts('count-opts',   'count');
+setupOpts('front-opts',   'front');
+
+// ── Session State ─────────────────────────────────────────────
+let deck = [], idx = 0, flipped = false;
+let stats = { easy:0, good:0, again:0 };
+let againCards = [];
+
+// ── Build deck from vocab data ─────────────────────────────────
+function buildDeck() {
+  // Vocab data is embedded inline below
+  let pool = vocabData;
+  if (cfg.content === 'kanji') pool = kanjiData;
+  if (cfg.level !== 'mixed') pool = pool.filter(c => c.level === cfg.level);
+
+  // Shuffle
+  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, cfg.count);
+}
+
+// ── Start session ─────────────────────────────────────────────
+function startSession() {
+  deck = buildDeck();
+  idx = 0; flipped = false;
+  stats = { easy:0, good:0, again:0 };
+  againCards = [];
+
+  document.getElementById('setup-panel').style.display = 'none';
+  document.getElementById('session-end').classList.remove('visible');
+  document.getElementById('fc-area').classList.add('visible');
+
+  showCard();
+}
+
+function showCard() {
+  if (idx >= deck.length) { endSession(); return; }
+
+  const card = deck[idx];
+  flipped = false;
+  document.getElementById('card-inner').classList.remove('flipped');
+  document.getElementById('rating-row').style.display = 'none';
+
+  // Progress
+  const pct = (idx / deck.length) * 100;
+  document.getElementById('fc-progress').style.width = pct + '%';
+  document.getElementById('fc-counter').textContent = `${idx + 1} / ${deck.length}`;
+
+  // Level badge
+  const lvlClass = `lvl-${card.level}`;
+  ['card-level-badge','card-level-badge-back'].forEach(id => {
+    const el = document.getElementById(id);
+    el.className = `card-level ${lvlClass}`;
+    el.textContent = card.level.toUpperCase();
+  });
+
+  // Front
+  if (cfg.front === 'word') {
+    document.getElementById('front-main').textContent = card.word || card.char;
+    document.getElementById('front-sub').textContent  = card.pos || card.on || '';
+  } else {
+    document.getElementById('front-main').textContent = card.meaning;
+    document.getElementById('front-sub').textContent  = card.pos || '';
+  }
+
+  // Back
+  if (cfg.front === 'word') {
+    document.getElementById('back-reading').textContent  = card.reading || '';
+    document.getElementById('back-meaning').textContent  = card.meaning || '';
+    document.getElementById('back-example-jp').textContent = card.example_jp || card.compounds?.[0]?.word || '';
+    document.getElementById('back-example-en').textContent = card.example_en || card.compounds?.[0]?.mean || '';
+  } else {
+    document.getElementById('back-reading').textContent  = card.word || card.char || '';
+    document.getElementById('back-meaning').textContent  = card.reading || '';
+    document.getElementById('back-example-jp').textContent = card.example_jp || '';
+    document.getElementById('back-example-en').textContent = card.example_en || '';
+  }
+}
+
+function flipCard() {
+  flipped = !flipped;
+  document.getElementById('card-inner').classList.toggle('flipped', flipped);
+  if (flipped) {
+    document.getElementById('rating-row').style.display = 'grid';
+  }
+}
+
+function rate(r) {
+  stats[r]++;
+  if (r === 'again') againCards.push(deck[idx]);
+  idx++;
+  showCard();
+}
+
+function skipCard() {
+  idx++;
+  showCard();
+}
+
+function endSession() {
+  document.getElementById('fc-area').classList.remove('visible');
+  document.getElementById('fc-progress').style.width = '100%';
+
+  document.getElementById('end-easy').textContent  = stats.easy;
+  document.getElementById('end-good').textContent  = stats.good;
+  document.getElementById('end-again').textContent = stats.again;
+  document.getElementById('session-end').classList.add('visible');
+}
+
+function restartSession() {
+  if (againCards.length === 0) { backToSetup(); return; }
+  deck = [...againCards].sort(() => Math.random() - 0.5);
+  idx = 0; flipped = false;
+  stats = { easy:0, good:0, again:0 };
+  againCards = [];
+  document.getElementById('session-end').classList.remove('visible');
+  document.getElementById('fc-area').classList.add('visible');
+  showCard();
+}
+
+function backToSetup() {
+  document.getElementById('session-end').classList.remove('visible');
+  document.getElementById('fc-area').classList.remove('visible');
+  document.getElementById('setup-panel').style.display = 'block';
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('fc-area').classList.contains('visible')) return;
+  if (e.key === ' ' || e.key === 'ArrowUp') { e.preventDefault(); flipCard(); }
+  if (flipped) {
+    if (e.key === '1') rate('again');
+    if (e.key === '2') rate('good');
+    if (e.key === '3') rate('easy');
+  }
+  if (e.key === 'ArrowRight') skipCard();
+});
+
+// ── Vocab & Kanji data (loaded from external scripts) ─────────
+// vocabData and kanjiData are built from the page data
+let vocabData = [];
+let kanjiData = [];
+
+// Build from quizBank questions — extract unique vocab
+(function buildData() {
+  // We'll source from the quiz bank for vocab
+  // and supplement with inline compact data
+  const seen = new Set();
+  quizBank.filter(q => q.type === 'vocabulary').forEach(q => {
+    // Extract word from question text
+    const m = q.question.match(/「([^」]+)」/);
+    if (m && !seen.has(m[1])) {
+      seen.add(m[1]);
+      vocabData.push({
+        level: q.level,
+        word: m[1],
+        reading: '',
+        meaning: q.explanation.split(' means ')[1]?.split('.')[0] || q.explanation.split(' = ')[1]?.split(' ')[0] || '',
+        pos: '',
+        example_jp: q.question,
+        example_en: q.explanation
+      });
+    }
+  });
+
+  // Also source kanji from quiz bank
+  const seenK = new Set();
+  quizBank.filter(q => q.type === 'kanji').forEach(q => {
+    const m = q.question.match(/「([^」]+)」/);
+    if (m && !seenK.has(m[1])) {
+      seenK.add(m[1]);
+      const reading = q.options.find(o => o.startsWith('A. '))?.replace('A. ','') || '';
+      kanjiData.push({
+        level: q.level,
+        word: m[1],
+        char: m[1],
+        reading: q.answer === 'A' ? reading : '',
+        meaning: q.explanation.split('(')[1]?.replace(')','').trim() || '',
+        pos: 'kanji',
+        example_jp: q.question,
+        example_en: q.explanation
+      });
+    }
+  });
+})();
+
+// ── Theme, font, hamburger ────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('theme-toggle');
+  const apply = (t) => {
+    document.documentElement.setAttribute('data-theme', t);
+    btn.textContent = t === 'dark' ? '☀' : '🌙';
+    localStorage.setItem('theme', t);
+  };
+  apply(localStorage.getItem('theme') || 'dark');
+  btn.addEventListener('click', () => {
+    apply(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobile-nav');
+  if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    document.addEventListener('click', e => {
+      if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      }
+    });
+  }
+
+  const fontSizes = { sm:'17px', md:'19px', lg:'22px' };
+  const savedFont = localStorage.getItem('fontSize') || 'md';
+  document.documentElement.style.fontSize = fontSizes[savedFont];
+  document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+  const fb = document.getElementById('font-' + savedFont);
+  if (fb) fb.classList.add('active');
+});
+
+function setFont(size) {
+  const fontSizes = { sm:'17px', md:'19px', lg:'22px' };
+  document.documentElement.style.fontSize = fontSizes[size];
+  localStorage.setItem('fontSize', size);
+  document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+  const b = document.getElementById('font-' + size);
+  if (b) b.classList.add('active');
+}
+</script>
+</body>
+</html>

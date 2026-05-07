@@ -1,4 +1,5 @@
 // ── Web Speech API Engine ─────────────────────────────────────
+// Reads window._listenSpeed for variable playback rate (set by listening.html)
 
 let currentUtterance = null;
 let preferredVoice = null;
@@ -6,7 +7,6 @@ let preferredVoice = null;
 function getJapaneseVoice() {
   if (preferredVoice) return preferredVoice;
   const voices = window.speechSynthesis.getVoices();
-  // Hardcoded preference: Ichiro (male) first, then any JP fallback
   const preferred = [
     'Microsoft Ichiro - Japanese (Japan)',
     'Google 日本語',
@@ -18,10 +18,7 @@ function getJapaneseVoice() {
     const match = voices.find(v => v.name === name);
     if (match) { preferredVoice = match; return match; }
   }
-  // Last resort: any Japanese voice
-  const any = voices.find(v => v.lang.startsWith('ja'));
-  if (any) { preferredVoice = any; return any; }
-  return null;
+  return voices.find(v => v.lang.startsWith('ja')) || null;
 }
 
 function cleanJapanese(text) {
@@ -62,7 +59,9 @@ function playJapanese(text, btnEl) {
   const speak = () => {
     const utt = new SpeechSynthesisUtterance(plain);
     utt.lang  = 'ja-JP';
-    utt.rate  = 1.0;
+    // Use speed override from listening.html, or saved preference, or default
+    utt.rate  = window._listenSpeed
+      || parseFloat(localStorage.getItem('listenSpeed') || '1.0');
     utt.pitch = 1.0;
 
     const voice = getJapaneseVoice();
@@ -82,7 +81,6 @@ function playJapanese(text, btnEl) {
     window.speechSynthesis.speak(utt);
   };
 
-  // Ensure voices are loaded before speaking
   if (window.speechSynthesis.getVoices().length > 0) {
     speak();
   } else {
@@ -112,9 +110,7 @@ function showVvError(msg) {
 
 if ('speechSynthesis' in window) {
   window.speechSynthesis.getVoices();
-  window.speechSynthesis.onvoiceschanged = () => {
-    preferredVoice = null;
-  };
+  window.speechSynthesis.onvoiceschanged = () => { preferredVoice = null; };
 }
 
 (function injectVvStyles() {
