@@ -231,6 +231,17 @@
     :root[data-theme="light"] .font-btn { color:#1a6a5c; border-color:rgba(26,106,92,0.3); }
     :root[data-theme="light"] .font-btn:hover { background:rgba(26,106,92,0.1); }
     :root[data-theme="light"] .font-btn.active { background:rgba(26,106,92,0.15); }
+
+    .diff-badge{display:inline-block;font-family:var(--serif-en);font-style:italic;
+      font-size:0.62rem;padding:0.1rem 0.45rem;border-radius:3px;margin-left:0.3rem;}
+    .diff-standard{background:rgba(74,175,158,0.15);color:#4aaf9e;}
+    .diff-medium{background:rgba(232,180,122,0.15);color:#e8b47a;}
+    .diff-hard{background:rgba(232,122,122,0.15);color:#e87a7a;}
+    .diff-filter-btn{padding:0.3rem 0.85rem;border:1px solid #2e2018;border-radius:20px;
+      background:transparent;color:#7a6450;font-family:var(--sans-jp);font-size:0.75rem;
+      cursor:pointer;transition:all 0.2s;}
+    .diff-filter-btn:hover{border-color:#4aaf9e;color:#4aaf9e;}
+    .diff-filter-btn.active{background:rgba(74,175,158,0.15);border-color:#4aaf9e;color:#4aaf9e;}
   </style>
   <script>
   // ── Theme toggle ─────────────────────────────────────────────
@@ -270,11 +281,13 @@
       <li><a href="reading.html" class="active"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
       <li><a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a></li>
       <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="mocktest.html"><span class="jp"><ruby>模擬<rt>もぎ</rt></ruby></span><span class="en">Mock Test</span></a></li>
       <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
       <li><a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a></li>
       <li><a href="flashcards.html"><span class="jp">カード</span><span class="en">Flashcards</span></a></li>
       <li><a href="writing.html"><span class="jp"><ruby>書<rt>か</rt></ruby>き</span><span class="en">Writing</span></a></li>
       <li><a href="schedule.html"><span class="jp"><ruby>計<rt>けい</rt></ruby><ruby>画<rt>かく</rt></ruby></span><span class="en">Schedule</span></a></li>
+      <li><a href="glossary.html"><span class="jp"><ruby>一<rt>いち</rt></ruby><ruby>覧<rt>らん</rt></ruby></span><span class="en">Glossary</span></a></li>
     </ul>
   </div>
     <div class="nav-controls">
@@ -296,11 +309,13 @@
     <a href="reading.html" class="active"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a>
     <a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a>
     <a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a>
+    <a href="mocktest.html"><span class="jp"><ruby>模擬<rt>もぎ</rt></ruby></span><span class="en">Mock Test</span></a>
     <a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a>
     <a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a>
     <a href="flashcards.html"><span class="jp">カード</span><span class="en">Flashcards</span></a>
     <a href="writing.html"><span class="jp"><ruby>書<rt>か</rt></ruby>き</span><span class="en">Writing</span></a>
     <a href="schedule.html"><span class="jp"><ruby>計<rt>けい</rt></ruby><ruby>画<rt>かく</rt></ruby></span><span class="en">Schedule</span></a>
+    <a href="glossary.html"><span class="jp"><ruby>一<rt>いち</rt></ruby><ruby>覧<rt>らん</rt></ruby></span><span class="en">Glossary</span></a>
   </nav>
 
 <div class="page-wrap">
@@ -312,6 +327,11 @@
       <button class="filter-btn" data-level="n3"><span class="dot dot-n3"></span>N3 <ruby>中<rt>ちゅう</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>下<rt>か</rt></ruby></button>
       <button class="filter-btn" data-level="n2"><span class="dot dot-n2"></span>N2 <ruby>中<rt>ちゅう</rt></ruby><ruby>級<rt>きゅう</rt></ruby><ruby>上<rt>じょう</rt></ruby></button>
       <button class="filter-btn" data-level="n1"><span class="dot dot-n1"></span>N1 <ruby>上<rt>じょう</rt></ruby><ruby>級<rt>きゅう</rt></ruby></button>
+      <div style="width:1px;height:1.5rem;background:#2e2018;margin:0 0.35rem;align-self:center;"></div>
+      <button class="diff-filter-btn active" data-diff="all" onclick="setDiff('all')">All</button>
+      <button class="diff-filter-btn" data-diff="standard" onclick="setDiff('standard')" style="color:#4aaf9e;">Standard</button>
+      <button class="diff-filter-btn" data-diff="medium" onclick="setDiff('medium')" style="color:#e8b47a;">Medium</button>
+      <button class="diff-filter-btn" data-diff="hard" onclick="setDiff('hard')" style="color:#e87a7a;">Hard</button>
     </div>
     <div class="sidebar-section">
       <p class="sidebar-title">How to use</p>
@@ -739,7 +759,7 @@ const passages = [
   // ════════════════════════════════════════════════════════════
 
   {
-    id:'n2-1', level:'n2',
+    id:'n2-1', difficulty:'standard', level:'n2',
     titleJp:'<ruby>少<rt>しょう</rt></ruby><ruby>子<rt>し</rt></ruby><ruby>化<rt>か</rt></ruby>の<ruby>影<rt>えい</rt></ruby><ruby>響<rt>きょう</rt></ruby>',
     titleEn:'The Impact of Declining Birth Rates',
     topic:'society', chars:265,
@@ -763,7 +783,7 @@ const passages = [
   },
 
   {
-    id:'n2-2', level:'n2',
+    id:'n2-2', difficulty:'standard', level:'n2',
     titleJp:'<ruby>人<rt>じん</rt></ruby><ruby>工<rt>こう</rt></ruby><ruby>知<rt>ち</rt></ruby><ruby>能<rt>のう</rt></ruby>と<ruby>労<rt>ろう</rt></ruby><ruby>働<rt>どう</rt></ruby>の<ruby>未<rt>み</rt></ruby><ruby>来<rt>らい</rt></ruby>',
     titleEn:'Artificial Intelligence and the Future of Work',
     topic:'technology', chars:275,
@@ -787,7 +807,7 @@ const passages = [
   },
 
   {
-    id:'n2-3', level:'n2',
+    id:'n2-3', difficulty:'medium', level:'n2',
     titleJp:'<ruby>都<rt>と</rt></ruby><ruby>市<rt>し</rt></ruby>と<ruby>地<rt>ち</rt></ruby><ruby>方<rt>ほう</rt></ruby>の<ruby>格<rt>かく</rt></ruby><ruby>差<rt>さ</rt></ruby>',
     titleEn:'The Urban-Rural Divide',
     topic:'society', chars:270,
@@ -810,7 +830,7 @@ const passages = [
   },
 
   {
-    id:'n2-4', level:'n2',
+    id:'n2-4', difficulty:'medium', level:'n2',
     titleJp:'<ruby>消<rt>しょう</rt></ruby><ruby>費<rt>ひ</rt></ruby><ruby>者<rt>しゃ</rt></ruby>の<ruby>行<rt>こう</rt></ruby><ruby>動<rt>どう</rt></ruby>と<ruby>企<rt>き</rt></ruby><ruby>業<rt>ぎょう</rt></ruby>の<ruby>責<rt>せき</rt></ruby><ruby>任<rt>にん</rt></ruby>',
     titleEn:'Consumer Behaviour and Corporate Responsibility',
     topic:'economy', chars:270,
@@ -833,7 +853,7 @@ const passages = [
   },
 
   {
-    id:'n2-5', level:'n2',
+    id:'n2-5', difficulty:'medium', level:'n2',
     titleJp:'<ruby>多<rt>た</rt></ruby><ruby>文<rt>ぶん</rt></ruby><ruby>化<rt>か</rt></ruby><ruby>共<rt>きょう</rt></ruby><ruby>生<rt>せい</rt></ruby>社<ruby>会<rt>かい</rt></ruby>',
     titleEn:'A Multicultural Society',
     topic:'society', chars:270,
@@ -857,7 +877,7 @@ const passages = [
   },
 
   {
-    id:'n2-6', level:'n2',
+    id:'n2-6', difficulty:'medium', level:'n2',
     titleJp:'<ruby>情<rt>じょう</rt></ruby><ruby>報<rt>ほう</rt></ruby><ruby>過<rt>か</rt></ruby><ruby>多<rt>た</rt></ruby>の<ruby>時<rt>じ</rt></ruby><ruby>代<rt>だい</rt></ruby>',
     titleEn:'The Age of Information Overload',
     topic:'technology', chars:270,
@@ -881,7 +901,7 @@ const passages = [
   },
 
   {
-    id:'n2-7', level:'n2',
+    id:'n2-7', difficulty:'standard', level:'n2',
     titleJp:'<ruby>伝<rt>でん</rt></ruby><ruby>統<rt>とう</rt></ruby><ruby>工<rt>こう</rt></ruby><ruby>芸<rt>げい</rt></ruby>の<ruby>継<rt>けい</rt></ruby><ruby>承<rt>しょう</rt></ruby>',
     titleEn:'Preserving Traditional Crafts',
     topic:'culture', chars:270,
@@ -904,7 +924,7 @@ const passages = [
   },
 
   {
-    id:'n2-8', level:'n2',
+    id:'n2-8', difficulty:'hard', level:'n2',
     titleJp:'<ruby>科<rt>か</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>技<rt>ぎ</rt></ruby><ruby>術<rt>じゅつ</rt></ruby>と<ruby>倫<rt>りん</rt></ruby><ruby>理<rt>り</rt></ruby>',
     titleEn:'Science, Technology and Ethics',
     topic:'science', chars:275,
@@ -931,7 +951,7 @@ const passages = [
   // ════════════════════════════════════════════════════════════
 
   {
-    id:'n1-1', level:'n1',
+    id:'n1-1', difficulty:'medium', level:'n1',
     titleJp:'<ruby>言<rt>げん</rt></ruby><ruby>語<rt>ご</rt></ruby>と<ruby>思<rt>し</rt></ruby><ruby>考<rt>こう</rt></ruby>',
     titleEn:'Language and Thought',
     topic:'philosophy', chars:280,
@@ -955,7 +975,7 @@ const passages = [
   },
 
   {
-    id:'n1-2', level:'n1',
+    id:'n1-2', difficulty:'medium', level:'n1',
     titleJp:'<ruby>記<rt>き</rt></ruby><ruby>憶<rt>おく</rt></ruby>と<ruby>アイデンティティ<rt>アイデンティティ</rt></ruby>',
     titleEn:'Memory and Identity',
     topic:'philosophy', chars:285,
@@ -979,7 +999,7 @@ const passages = [
   },
 
   {
-    id:'n1-3', level:'n1',
+    id:'n1-3', difficulty:'hard', level:'n1',
     titleJp:'<ruby>近<rt>きん</rt></ruby><ruby>代<rt>だい</rt></ruby>化<ruby>と<rt>と</rt></ruby><ruby>伝<rt>でん</rt></ruby><ruby>統<rt>とう</rt></ruby>の<ruby>相<rt>そう</rt></ruby><ruby>克<rt>こく</rt></ruby>',
     titleEn:'The Conflict Between Modernisation and Tradition',
     topic:'society', chars:285,
@@ -1002,7 +1022,7 @@ const passages = [
   },
 
   {
-    id:'n1-4', level:'n1',
+    id:'n1-4', difficulty:'hard', level:'n1',
     titleJp:'<ruby>無<rt>む</rt></ruby><ruby>常<rt>じょう</rt></ruby>の<ruby>美<rt>び</rt></ruby><ruby>学<rt>がく</rt></ruby>',
     titleEn:'The Aesthetics of Impermanence',
     topic:'culture', chars:285,
@@ -1025,7 +1045,7 @@ const passages = [
   },
 
   {
-    id:'n1-5', level:'n1',
+    id:'n1-5', difficulty:'medium', level:'n1',
     titleJp:'<ruby>集<rt>しゅう</rt></ruby><ruby>団<rt>だん</rt></ruby>主<ruby>義<rt>ぎ</rt></ruby>と<ruby>個<rt>こ</rt></ruby><ruby>人<rt>じん</rt></ruby>主<ruby>義<rt>ぎ</rt></ruby>',
     titleEn:'Collectivism and Individualism',
     topic:'society', chars:285,
@@ -1049,7 +1069,7 @@ const passages = [
   },
 
   {
-    id:'n1-6', level:'n1',
+    id:'n1-6', difficulty:'hard', level:'n1',
     titleJp:'<ruby>経<rt>けい</rt></ruby><ruby>済<rt>ざい</rt></ruby><ruby>成<rt>せい</rt></ruby><ruby>長<rt>ちょう</rt></ruby>の<ruby>限<rt>かぎ</rt></ruby>り',
     titleEn:'The Limits of Economic Growth',
     topic:'economics', chars:290,
@@ -1073,7 +1093,7 @@ const passages = [
   },
 
   {
-    id:'n1-7', level:'n1',
+    id:'n1-7', difficulty:'hard', level:'n1',
     titleJp:'<ruby>公<rt>こう</rt></ruby><ruby>正<rt>せい</rt></ruby>とは<ruby>何<rt>なに</rt></ruby>か',
     titleEn:'What is Justice?',
     topic:'philosophy', chars:285,
@@ -1096,7 +1116,7 @@ const passages = [
   },
 
   {
-    id:'n1-8', level:'n1',
+    id:'n1-8', difficulty:'hard', level:'n1',
     titleJp:'<ruby>科<rt>か</rt></ruby><ruby>学<rt>がく</rt></ruby>と<ruby>社<rt>しゃ</rt></ruby><ruby>会<rt>かい</rt></ruby>の<ruby>対<rt>たい</rt></ruby><ruby>話<rt>わ</rt></ruby>',
     titleEn:'The Dialogue Between Science and Society',
     topic:'science', chars:290,
@@ -1118,6 +1138,238 @@ const passages = [
       {type:'open',question:'科学者は社会に対してどのような責任を持つべきだと思いますか。'},
     ]
   },
+
+// ══════════════════════════════════════════════════════════════
+  //  N2 PASSAGES (9–16)
+  // ══════════════════════════════════════════════════════════════
+
+  {
+    id:'n2-9', difficulty:'medium', level:'n2',
+    titleJp:'<ruby>情報<rt>じょうほう</rt></ruby>リテラシーの<ruby>重要性<rt>じゅうようせい</rt></ruby>',
+    titleEn:'The Importance of Information Literacy',
+    topic:'media', chars:310,
+    text:`インターネットの<ruby>普及<rt>ふきゅう</rt></ruby>により、<ruby>誰<rt>だれ</rt></ruby>もが<ruby>大量<rt>たいりょう</rt></ruby>の<ruby>情報<rt>じょうほう</rt></ruby>にアクセスできる<ruby>時代<rt>じだい</rt></ruby>となった。しかし、<ruby>情報<rt>じょうほう</rt></ruby>の<ruby>量<rt>りょう</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>える<ruby>一方<rt>いっぽう</rt></ruby>で、その<ruby>信<rt>しん</rt></ruby><ruby>憑<rt>ぴょう</rt></ruby><ruby>性<rt>せい</rt></ruby>を<ruby>判断<rt>はんだん</rt></ruby>する<ruby>能力<rt>のうりょく</rt></ruby>が<ruby>問<rt>と</rt></ruby>われている。フェイクニュースや<ruby>誤<rt>ご</rt></ruby><ruby>情報<rt>じょうほう</rt></ruby>が<ruby>拡散<rt>かくさん</rt></ruby>しやすい<ruby>環境<rt>かんきょう</rt></ruby>において、<ruby>情報<rt>じょうほう</rt></ruby>を<ruby>批判的<rt>ひはんてき</rt></ruby>に<ruby>読<rt>よ</rt></ruby>み<ruby>解<rt>と</rt></ruby>く<ruby>力<rt>ちから</rt></ruby>、すなわち<ruby>情報<rt>じょうほう</rt></ruby>リテラシーは<ruby>現代人<rt>げんだいじん</rt></ruby>に<ruby>不可欠<rt>ふかけつ</rt></ruby>なスキルとなっている。<ruby>情報源<rt>じょうほうげん</rt></ruby>を<ruby>確認<rt>かくにん</rt></ruby>し、<ruby>複数<rt>ふくすう</rt></ruby>の<ruby>視点<rt>してん</rt></ruby>から<ruby>物事<rt>ものごと</rt></ruby>を<ruby>捉<rt>とら</rt></ruby>える<ruby>習慣<rt>しゅうかん</rt></ruby>を<ruby>身<rt>み</rt></ruby>につけることが<ruby>求<rt>もと</rt></ruby>められる。`,
+    gloss:[{w:'信憑性',r:'しんぴょうせい',m:'credibility, reliability'},{w:'拡散',r:'かくさん',m:'spread, diffusion'},{w:'批判的',r:'ひはんてき',m:'critical'},{w:'情報源',r:'じょうほうげん',m:'source of information'}],
+    questions:[
+      {type:'mc',question:'この文章が最も伝えたいことは何ですか。',options:['A. インターネットの危険性','B. 情報を批判的に読み解く能力の重要性','C. フェイクニュースの増加','D. 情報量の多さ'],answer:'B',explanation:'「情報リテラシーは現代人に不可欠なスキル」という主張が中心です。'},
+      {type:'mc',question:'「信憑性」とは何を意味しますか。',options:['A. 情報の量','B. 情報が信頼できるかどうか','C. 情報のスピード','D. 情報の難しさ'],answer:'B',explanation:'信憑性（しんぴょうせい）は信頼性・信用できるかどうかを意味します。'},
+      {type:'open',question:'情報リテラシーを高めるために、あなたが実践していることや心がけていることは何ですか。'},
+    ]
+  },
+
+  {
+    id:'n2-10', difficulty:'medium', level:'n2',
+    titleJp:'<ruby>少子化<rt>しょうしか</rt></ruby>の<ruby>原因<rt>げんいん</rt></ruby>と<ruby>対策<rt>たいさく</rt></ruby>',
+    titleEn:'Causes and Countermeasures for the Declining Birth Rate',
+    topic:'society', chars:320,
+    text:`<ruby>日本<rt>にほん</rt></ruby>の<ruby>少子化<rt>しょうしか</rt></ruby>は<ruby>深刻<rt>しんこく</rt></ruby>な<ruby>社会問題<rt>しゃかいもんだい</rt></ruby>となっている。<ruby>出生率<rt>しゅっしょうりつ</rt></ruby>の<ruby>低下<rt>ていか</rt></ruby>の<ruby>背景<rt>はいけい</rt></ruby>には、<ruby>子育<rt>こそだ</rt></ruby>ての<ruby>経済的<rt>けいざいてき</rt></ruby><ruby>負担<rt>ふたん</rt></ruby>、<ruby>女性<rt>じょせい</rt></ruby>の<ruby>社会<rt>しゃかい</rt></ruby><ruby>進出<rt>しんしゅつ</rt></ruby>に<ruby>伴<rt>ともな</rt></ruby>う<ruby>仕事<rt>しごと</rt></ruby>と<ruby>育児<rt>いくじ</rt></ruby>の<ruby>両立<rt>りょうりつ</rt></ruby>の<ruby>困難<rt>こんなん</rt></ruby>さ、さらには<ruby>未婚率<rt>みこんりつ</rt></ruby>の<ruby>上昇<rt>じょうしょう</rt></ruby>などが<ruby>挙<rt>あ</rt></ruby>げられる。<ruby>政府<rt>せいふ</rt></ruby>は<ruby>保育所<rt>ほいくじょ</rt></ruby>の<ruby>拡充<rt>かくじゅう</rt></ruby>や<ruby>育児休業<rt>いくじきゅうぎょう</rt></ruby>の<ruby>取得<rt>しゅとく</rt></ruby><ruby>促進<rt>そくしん</rt></ruby>などの<ruby>対策<rt>たいさく</rt></ruby>を<ruby>講<rt>こう</rt></ruby>じているが、<ruby>根本的<rt>こんぽんてき</rt></ruby>な<ruby>解決<rt>かいけつ</rt></ruby>には<ruby>社会全体<rt>しゃかいぜんたい</rt></ruby>の<ruby>意識改革<rt>いしきかいかく</rt></ruby>が<ruby>必要<rt>ひつよう</rt></ruby>だという<ruby>指摘<rt>してき</rt></ruby>もある。`,
+    gloss:[{w:'出生率',r:'しゅっしょうりつ',m:'birth rate'},{w:'少子化',r:'しょうしか',m:'declining birth rate'},{w:'両立',r:'りょうりつ',m:'compatibility, balancing two things'},{w:'未婚率',r:'みこんりつ',m:'unmarried rate'}],
+    questions:[
+      {type:'mc',question:'少子化の原因として挙げられていないものはどれですか。',options:['A. 子育ての経済的負担','B. 仕事と育児の両立の困難','C. 未婚率の上昇','D. 移民の増加'],answer:'D',explanation:'移民については言及されていません。'},
+      {type:'mc',question:'「根本的な解決には社会全体の意識改革が必要」とはどういう意味ですか。',options:['A. 政府の政策だけでは不十分','B. 個人の努力が大切','C. 教育制度を変えるべき','D. 経済支援が最重要'],answer:'A',explanation:'政府の対策を述べた後、それだけでは不十分で社会全体の変化が必要だという指摘です。'},
+      {type:'open',question:'少子化問題の解決のために、社会はどのように変わるべきだと思いますか。'},
+    ]
+  },
+
+  {
+    id:'n2-11', difficulty:'standard', level:'n2',
+    titleJp:'<ruby>働<rt>はたら</rt></ruby>き<ruby>方<rt>かた</rt></ruby>の<ruby>変化<rt>へんか</rt></ruby>',
+    titleEn:'Changes in Work Style',
+    topic:'work', chars:295,
+    text:`コロナ<ruby>禍<rt>か</rt></ruby>を<ruby>契機<rt>けいき</rt></ruby>に、<ruby>日本<rt>にほん</rt></ruby>では<ruby>テレワーク<rt>テレワーク</rt></ruby>が<ruby>急速<rt>きゅうそく</rt></ruby>に<ruby>普及<rt>ふきゅう</rt></ruby>した。<ruby>通勤<rt>つうきん</rt></ruby>の<ruby>負担<rt>ふたん</rt></ruby>が<ruby>減<rt>へ</rt></ruby>り、<ruby>柔軟<rt>じゅうなん</rt></ruby>な<ruby>働<rt>はたら</rt></ruby>き<ruby>方<rt>かた</rt></ruby>が<ruby>可能<rt>かのう</rt></ruby>になった一方、<ruby>社員<rt>しゃいん</rt></ruby>間のコミュニケーション<ruby>不足<rt>ぶそく</rt></ruby>や<ruby>業務効率<rt>ぎょうむこうりつ</rt></ruby>の<ruby>低下<rt>ていか</rt></ruby>を<ruby>懸念<rt>けねん</rt></ruby>する<ruby>声<rt>こえ</rt></ruby>もある。また、<ruby>自宅<rt>じたく</rt></ruby>での<ruby>仕事<rt>しごと</rt></ruby>環境<ruby>整備<rt>せいび</rt></ruby>に<ruby>個人差<rt>こじんさ</rt></ruby>があり、<ruby>公平性<rt>こうへいせい</rt></ruby>の<ruby>問題<rt>もんだい</rt></ruby>も<ruby>浮上<rt>ふじょう</rt></ruby>している。<ruby>各企業<rt>かくきぎょう</rt></ruby>は、テレワークとオフィス<ruby>勤務<rt>きんむ</rt></ruby>を<ruby>組<rt>く</rt></ruby>み<ruby>合<rt>あ</rt></ruby>わせたハイブリッドな<ruby>働<rt>はたら</rt></ruby>き<ruby>方<rt>かた</rt></ruby>の<ruby>模索<rt>もさく</rt></ruby>を<ruby>続<rt>つづ</rt></ruby>けている。`,
+    gloss:[{w:'テレワーク',r:'テレワーク',m:'remote work'},{w:'柔軟',r:'じゅうなん',m:'flexible'},{w:'公平性',r:'こうへいせい',m:'fairness, equity'},{w:'ハイブリッド',r:'ハイブリッド',m:'hybrid'}],
+    questions:[
+      {type:'mc',question:'テレワークのメリットとして挙げられているものはどれですか。',options:['A. 社員間のコミュニケーションが増える','B. 通勤の負担が減る','C. 業務効率が上がる','D. 公平性が高まる'],answer:'B',explanation:'「通勤の負担が減り、柔軟な働き方が可能になった」と述べています。'},
+      {type:'mc',question:'「公平性の問題が浮上している」とはどういう意味ですか。',options:['A. 給与格差が生じた','B. 自宅環境の差により不公平が生じた','C. テレワークできない職種がある','D. 評価基準が不明確'],answer:'B',explanation:'「自宅での仕事環境整備に個人差があり、公平性の問題も浮上」とあります。'},
+      {type:'open',question:'あなたにとって理想的な働き方はどのようなものですか。'},
+    ]
+  },
+
+  {
+    id:'n2-12', difficulty:'standard', level:'n2',
+    titleJp:'<ruby>消費者<rt>しょうひしゃ</rt></ruby>の<ruby>権利<rt>けんり</rt></ruby>',
+    titleEn:'Consumer Rights',
+    topic:'society', chars:300,
+    text:`<ruby>消費者<rt>しょうひしゃ</rt></ruby>は<ruby>商品<rt>しょうひん</rt></ruby>やサービスを<ruby>購入<rt>こうにゅう</rt></ruby>する<ruby>際<rt>さい</rt></ruby>に、さまざまな<ruby>権利<rt>けんり</rt></ruby>を<ruby>持<rt>も</rt></ruby>っている。<ruby>安全<rt>あんぜん</rt></ruby>な<ruby>商品<rt>しょうひん</rt></ruby>を<ruby>受<rt>う</rt></ruby>ける<ruby>権利<rt>けんり</rt></ruby>、<ruby>正確<rt>せいかく</rt></ruby>な<ruby>情報<rt>じょうほう</rt></ruby>を<ruby>得<rt>え</rt></ruby>る<ruby>権利<rt>けんり</rt></ruby>、そして<ruby>苦情<rt>くじょう</rt></ruby>を<ruby>申<rt>もう</rt></ruby>し<ruby>立<rt>た</rt></ruby>てる<ruby>権利<rt>けんり</rt></ruby>などがある。しかし、<ruby>消費者<rt>しょうひしゃ</rt></ruby>自<ruby>身<rt>しん</rt></ruby>がこれらの<ruby>権利<rt>けんり</rt></ruby>を<ruby>十分<rt>じゅうぶん</rt></ruby>に<ruby>認識<rt>にんしき</rt></ruby>していないことも<ruby>多<rt>おお</rt></ruby>い。<ruby>悪徳<rt>あくとく</rt></ruby><ruby>商法<rt>しょうほう</rt></ruby>や<ruby>詐欺<rt>さぎ</rt></ruby>の<ruby>被害<rt>ひがい</rt></ruby>を<ruby>防<rt>ふせ</rt></ruby>ぐためにも、<ruby>消費者<rt>しょうひしゃ</rt></ruby>教育の<ruby>充実<rt>じゅうじつ</rt></ruby>と、<ruby>企業<rt>きぎょう</rt></ruby><ruby>側<rt>がわ</rt></ruby>の<ruby>透明性<rt>とうめいせい</rt></ruby>の<ruby>確保<rt>かくほ</rt></ruby>が<ruby>重要<rt>じゅうよう</rt></ruby>である。`,
+    gloss:[{w:'消費者',r:'しょうひしゃ',m:'consumer'},{w:'信憑性',r:'しんぴょうせい',m:'credibility'},{w:'悪徳商法',r:'あくとくしょうほう',m:'fraudulent business practices'},{w:'透明性',r:'とうめいせい',m:'transparency'}],
+    questions:[
+      {type:'mc',question:'消費者の権利として挙げられていないものはどれですか。',options:['A. 安全な商品を受ける権利','B. 正確な情報を得る権利','C. 返品する権利','D. 苦情を申し立てる権利'],answer:'C',explanation:'返品する権利については言及されていません。'},
+      {type:'mc',question:'消費者被害を防ぐために必要なこととして述べられているものは？',options:['A. 法律の強化と罰則','B. 消費者教育と企業の透明性','C. 政府の監視強化','D. 消費者団体の設立'],answer:'B',explanation:'「消費者教育の充実と、企業側の透明性の確保が重要」と述べています。'},
+      {type:'open',question:'消費者として、権利を守るためにどのような行動ができると思いますか。'},
+    ]
+  },
+
+  {
+    id:'n2-13', difficulty:'medium', level:'n2',
+    titleJp:'<ruby>外来語<rt>がいらいご</rt></ruby>の<ruby>増加<rt>ぞうか</rt></ruby>',
+    titleEn:'The Increase of Loanwords',
+    topic:'language', chars:285,
+    text:`<ruby>現代<rt>げんだい</rt></ruby>の<ruby>日本語<rt>にほんご</rt></ruby>には、<ruby>英語<rt>えいご</rt></ruby>をはじめとする<ruby>外国語<rt>がいこくご</rt></ruby>から<ruby>取<rt>と</rt></ruby>り<ruby>入<rt>い</rt></ruby>れた<ruby>外来語<rt>がいらいご</rt></ruby>が<ruby>急増<rt>きゅうぞう</rt></ruby>している。ビジネスや<ruby>科学技術<rt>かがくぎじゅつ</rt></ruby>の<ruby>分野<rt>ぶんや</rt></ruby>では<ruby>特<rt>とく</rt></ruby>に<ruby>顕著<rt>けんちょ</rt></ruby>で、<ruby>日本語<rt>にほんご</rt></ruby>の<ruby>対応<rt>たいおう</rt></ruby><ruby>語<rt>ご</rt></ruby>があるにもかかわらずカタカナ<ruby>語<rt>ご</rt></ruby>が<ruby>使<rt>つか</rt></ruby>われることも<ruby>多<rt>おお</rt></ruby>い。これを<ruby>言語<rt>げんご</rt></ruby>の<ruby>豊<rt>ゆた</rt></ruby>かさととらえる<ruby>見方<rt>みかた</rt></ruby>もあれば、<ruby>日本語<rt>にほんご</rt></ruby>の<ruby>乱<rt>みだ</rt></ruby>れとして<ruby>危惧<rt>きぐ</rt></ruby>する<ruby>声<rt>こえ</rt></ruby>もある。<ruby>大切<rt>たいせつ</rt></ruby>なのは、<ruby>外来語<rt>がいらいご</rt></ruby>の<ruby>意味<rt>いみ</rt></ruby>を<ruby>正確<rt>せいかく</rt></ruby>に<ruby>理解<rt>りかい</rt></ruby>したうえで<ruby>適切<rt>てきせつ</rt></ruby>に<ruby>使用<rt>しよう</rt></ruby>することではないだろうか。`,
+    gloss:[{w:'外来語',r:'がいらいご',m:'loanword, foreign word'},{w:'顕著',r:'けんちょ',m:'remarkable, conspicuous'},{w:'危惧',r:'きぐ',m:'apprehension, concern'},{w:'適切',r:'てきせつ',m:'appropriate, suitable'}],
+    questions:[
+      {type:'mc',question:'外来語の増加について、文章中で述べられていない立場はどれですか。',options:['A. 言語の豊かさ','B. 日本語の乱れ','C. 経済発展の証拠','D. 対応語があってもカタカナ語を使う'],answer:'C',explanation:'経済発展との関連は述べられていません。'},
+      {type:'mc',question:'筆者は外来語についてどのような立場をとっていますか。',options:['A. 外来語の使用に反対','B. 外来語を正確に理解して適切に使うことが大切','C. 外来語よりも日本語を優先すべき','D. 外来語の増加は問題ない'],answer:'B',explanation:'「大切なのは、外来語の意味を正確に理解したうえで適切に使用すること」と述べています。'},
+      {type:'open',question:'外来語の増加について、あなたはどのように考えますか。'},
+    ]
+  },
+
+  {
+    id:'n2-14', difficulty:'standard', level:'n2',
+    titleJp:'<ruby>地域<rt>ちいき</rt></ruby>コミュニティの<ruby>再生<rt>さいせい</rt></ruby>',
+    titleEn:'Revitalisation of Local Communities',
+    topic:'society', chars:305,
+    text:`<ruby>都市化<rt>としか</rt></ruby>の<ruby>進展<rt>しんてん</rt></ruby>とともに、<ruby>地域<rt>ちいき</rt></ruby>コミュニティの<ruby>結<rt>むす</rt></ruby>びつきが<ruby>弱<rt>よわ</rt></ruby>まっている。<ruby>隣人<rt>りんじん</rt></ruby>の<ruby>顔<rt>かお</rt></ruby>も<ruby>知<rt>し</rt></ruby>らないという<ruby>状況<rt>じょうきょう</rt></ruby>が<ruby>珍<rt>めずら</rt></ruby>しくなく、<ruby>孤立<rt>こりつ</rt></ruby>した<ruby>高齢者<rt>こうれいしゃ</rt></ruby>や<ruby>子育<rt>こそだ</rt></ruby て<ruby>世帯<rt>せたい</rt></ruby>が<ruby>増加<rt>ぞうか</rt></ruby>している。こうした<ruby>課題<rt>かだい</rt></ruby>に<ruby>対応<rt>たいおう</rt></ruby>するため、<ruby>地域<rt>ちいき</rt></ruby>の<ruby>祭<rt>まつ</rt></ruby>りや<ruby>行事<rt>ぎょうじ</rt></ruby>を<ruby>通<rt>とお</rt></ruby>じて<ruby>交流<rt>こうりゅう</rt></ruby>を<ruby>深<rt>ふか</rt></ruby>める<ruby>取<rt>と</rt></ruby>り<ruby>組<rt>く</rt></ruby>みや、<ruby>空<rt>あ</rt></ruby>き<ruby>家<rt>や</rt></ruby>を<ruby>活用<rt>かつよう</rt></ruby>したコミュニティスペースの<ruby>設置<rt>せっち</rt></ruby>など、さまざまな<ruby>試<rt>こころ</rt></ruby>みが<ruby>各地<rt>かくち</rt></ruby>で<ruby>行<rt>おこな</rt></ruby>われている。`,
+    gloss:[{w:'孤立',r:'こりつ',m:'isolation'},{w:'老老介護',r:'ろうろうかいご',m:'elderly caring for elderly'},{w:'コミュニティ',r:'コミュニティ',m:'community'},{w:'空き家',r:'あきや',m:'vacant house'}],
+    questions:[
+      {type:'mc',question:'地域コミュニティが弱まっている原因として述べられているものは？',options:['A. 経済的格差','B. 都市化の進展','C. 若者の地方離れ','D. 高齢化社会'],answer:'B',explanation:'「都市化の進展とともに、地域コミュニティの結びつきが弱まっている」とあります。'},
+      {type:'mc',question:'地域コミュニティ再生の取り組みとして挙げられていないものは？',options:['A. 地域の祭りや行事','B. 空き家の活用','C. SNSを使った交流','D. コミュニティスペースの設置'],answer:'C',explanation:'SNSを使った交流については言及されていません。'},
+      {type:'open',question:'地域コミュニティを強化するために、個人としてどのような貢献ができると思いますか。'},
+    ]
+  },
+
+  {
+    id:'n2-15', difficulty:'medium', level:'n2',
+    titleJp:'<ruby>環境<rt>かんきょう</rt></ruby>ラベルと<ruby>消費者<rt>しょうひしゃ</rt></ruby>',
+    titleEn:'Environmental Labels and Consumers',
+    topic:'environment', chars:290,
+    text:`<ruby>近年<rt>きんねん</rt></ruby>、<ruby>環境<rt>かんきょう</rt></ruby>に<ruby>配慮<rt>はいりょ</rt></ruby>した<ruby>商品<rt>しょうひん</rt></ruby>であることを<ruby>示<rt>しめ</rt></ruby>す「<ruby>環境<rt>かんきょう</rt></ruby>ラベル」を<ruby>目<rt>め</rt></ruby>にすることが<ruby>増<rt>ふ</rt></ruby>えた。これは<ruby>消費者<rt>しょうひしゃ</rt></ruby>が<ruby>商品<rt>しょうひん</rt></ruby><ruby>選択<rt>せんたく</rt></ruby>を<ruby>通<rt>つう</rt></ruby>じて<ruby>環境<rt>かんきょう</rt></ruby><ruby>問題<rt>もんだい</rt></ruby>に<ruby>参加<rt>さんか</rt></ruby>できる<ruby>仕組<rt>しく</rt></ruby>みだが、<ruby>中<rt>なか</rt></ruby>にはラベルの<ruby>基準<rt>きじゅん</rt></ruby>が<ruby>曖昧<rt>あいまい</rt></ruby>で「グリーンウォッシング」と<ruby>批判<rt>ひはん</rt></ruby>されるケースもある。<ruby>消費者<rt>しょうひしゃ</rt></ruby>は<ruby>環境<rt>かんきょう</rt></ruby>ラベルの<ruby>意味<rt>いみ</rt></ruby>を<ruby>正確<rt>せいかく</rt></ruby>に<ruby>理解<rt>りかい</rt></ruby>し、<ruby>信頼性<rt>しんらいせい</rt></ruby>の<ruby>高<rt>たか</rt></ruby>い<ruby>認証<rt>にんしょう</rt></ruby>を<ruby>見極<rt>みきわ</rt></ruby>める<ruby>力<rt>ちから</rt></ruby>が<ruby>求<rt>もと</rt></ruby>められる。`,
+    gloss:[{w:'環境ラベル',r:'かんきょうラベル',m:'environmental label'},{w:'グリーンウォッシング',r:'グリーンウォッシング',m:'greenwashing'},{w:'認証',r:'にんしょう',m:'certification'},{w:'信頼性',r:'しんらいせい',m:'reliability, credibility'}],
+    questions:[
+      {type:'mc',question:'「グリーンウォッシング」とは何ですか。',options:['A. 環境に優しい洗剤','B. 基準が曖昧な環境ラベルへの批判','C. 環境保護活動','D. 緑の商品パッケージ'],answer:'B',explanation:'「ラベルの基準が曖昧でグリーンウォッシングと批判されるケース」とあり、実態が伴わない環境への配慮のアピールを指します。'},
+      {type:'mc',question:'消費者に求められることとして述べられているものは？',options:['A. 環境ラベルのある商品だけを買う','B. 環境ラベルの意味を理解し信頼性の高い認証を見極める力','C. 政府に基準の強化を要求する','D. 環境ラベルを無視する'],answer:'B',explanation:'「消費者は環境ラベルの意味を正確に理解し、信頼性の高い認証を見極める力が求められる」とあります。'},
+      {type:'open',question:'環境に配慮した消費行動として、あなたが実践していることはありますか。'},
+    ]
+  },
+
+  {
+    id:'n2-16', difficulty:'standard', level:'n2',
+    titleJp:'<ruby>読書<rt>どくしょ</rt></ruby>の<ruby>効用<rt>こうよう</rt></ruby>',
+    titleEn:'The Benefits of Reading',
+    topic:'education', chars:280,
+    text:`<ruby>読書<rt>どくしょ</rt></ruby>は<ruby>知識<rt>ちしき</rt></ruby>を<ruby>得<rt>え</rt></ruby>るだけでなく、<ruby>想像力<rt>そうぞうりょく</rt></ruby>や<ruby>共感<rt>きょうかん</rt></ruby><ruby>力<rt>りょく</rt></ruby>を<ruby>育<rt>はぐく</rt></ruby>むという<ruby>研究結果<rt>けんきゅうけっか</rt></ruby>がある。<ruby>物語<rt>ものがたり</rt></ruby>を<ruby>読<rt>よ</rt></ruby>むことで、<ruby>異<rt>こと</rt></ruby>なる<ruby>文化<rt>ぶんか</rt></ruby>や<ruby>価値観<rt>かちかん</rt></ruby>を<ruby>疑似体験<rt>ぎじたいけん</rt></ruby>し、<ruby>他者<rt>たしゃ</rt></ruby>の<ruby>立場<rt>たちば</rt></ruby>を<ruby>理解<rt>りかい</rt></ruby>する<ruby>力<rt>ちから</rt></ruby>が<ruby>養<rt>やしな</rt></ruby>われる。<ruby>デジタル化<rt>デジタルか</rt></ruby>が<ruby>進<rt>すす</rt></ruby>む<ruby>現代<rt>げんだい</rt></ruby>において、<ruby>長文<rt>ちょうぶん</rt></ruby>を<ruby>集中<rt>しゅうちゅう</rt></ruby>して<ruby>読<rt>よ</rt></ruby>む<ruby>習慣<rt>しゅうかん</rt></ruby>は<ruby>思考力<rt>しこうりょく</rt></ruby>の<ruby>維持<rt>いじ</rt></ruby>・<ruby>向上<rt>こうじょう</rt></ruby>に<ruby>役立<rt>やくだ</rt></ruby>つとも<ruby>言<rt>い</rt></ruby>われている。`,
+    gloss:[{w:'効用',r:'こうよう',m:'benefit, utility'},{w:'共感力',r:'きょうかんりょく',m:'empathy'},{w:'疑似体験',r:'ぎじたいけん',m:'simulated experience'},{w:'思考力',r:'しこうりょく',m:'thinking ability'}],
+    questions:[
+      {type:'mc',question:'読書の効用として述べられていないものはどれですか。',options:['A. 知識を得る','B. 想像力を育む','C. 語学力が向上する','D. 共感力を育む'],answer:'C',explanation:'語学力の向上については言及されていません。'},
+      {type:'mc',question:'物語を読むことで養われる力として述べられているものは？',options:['A. 計算力','B. 他者の立場を理解する力','C. 批判的思考力','D. 表現力'],answer:'B',explanation:'「他者の立場を理解する力が養われる」と述べています。'},
+      {type:'open',question:'あなたが最近読んで印象に残った本や文章について教えてください。'},
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════════
+  //  N1 PASSAGES (9–16)
+  // ══════════════════════════════════════════════════════════════
+
+  {
+    id:'n1-9', difficulty:'hard', level:'n1',
+    titleJp:'<ruby>民主主義<rt>みんしゅしゅぎ</rt></ruby>の<ruby>逆説<rt>ぎゃくせつ</rt></ruby>',
+    titleEn:'The Paradox of Democracy',
+    topic:'politics', chars:350,
+    text:`<ruby>民主主義<rt>みんしゅしゅぎ</rt></ruby>は、<ruby>市民<rt>しみん</rt></ruby>が<ruby>自<rt>みずか</rt></ruby>ら<ruby>統治<rt>とうち</rt></ruby>に<ruby>参加<rt>さんか</rt></ruby>するという<ruby>理念<rt>りねん</rt></ruby>に<ruby>基<rt>もとづ</rt></ruby>く<ruby>政治<rt>せいじ</rt></ruby><ruby>体制<rt>たいせい</rt></ruby>である。しかしその<ruby>実践<rt>じっせん</rt></ruby>においては<ruby>逆説<rt>ぎゃくせつ</rt></ruby>が<ruby>内在<rt>ないざい</rt></ruby>している。<ruby>多数決<rt>たすうけつ</rt></ruby>の<ruby>原理<rt>げんり</rt></ruby>は、ときとして<ruby>少数派<rt>しょうすうは</rt></ruby>の<ruby>権利<rt>けんり</rt></ruby>を<ruby>侵害<rt>しんがい</rt></ruby>しうる。また、<ruby>情報<rt>じょうほう</rt></ruby>を<ruby>十分<rt>じゅうぶん</rt></ruby>に<ruby>持<rt>も</rt></ruby>たない<ruby>有権者<rt>ゆうけんしゃ</rt></ruby>が<ruby>感情<rt>かんじょう</rt></ruby>に<ruby>流<rt>なが</rt></ruby>されて<ruby>選択<rt>せんたく</rt></ruby>する「<ruby>衆愚<rt>しゅうぐ</rt></ruby><ruby>政治<rt>せいじ</rt></ruby>」のリスクも<ruby>指摘<rt>してき</rt></ruby>されてきた。<ruby>真<rt>しん</rt></ruby>の<ruby>民主主義<rt>みんしゅしゅぎ</rt></ruby>を<ruby>維持<rt>いじ</rt></ruby>するためには、<ruby>制度<rt>せいど</rt></ruby>の<ruby>設計<rt>せっけい</rt></ruby>と<ruby>並<rt>なら</rt></ruby>んで、<ruby>市民<rt>しみん</rt></ruby>の<ruby>教育<rt>きょういく</rt></ruby>・<ruby>情報<rt>じょうほう</rt></ruby>リテラシー・<ruby>批判的<rt>ひはんてき</rt></ruby><ruby>思考<rt>しこう</rt></ruby>の<ruby>涵養<rt>かんよう</rt></ruby>が<ruby>不可欠<rt>ふかけつ</rt></ruby>であるとされる。`,
+    gloss:[{w:'逆説',r:'ぎゃくせつ',m:'paradox'},{w:'多数決',r:'たすうけつ',m:'majority vote'},{w:'衆愚政治',r:'しゅうぐせいじ',m:'ochlocracy, mob rule'},{w:'涵養',r:'かんよう',m:'cultivation, fostering'}],
+    questions:[
+      {type:'mc',question:'「衆愚政治」のリスクとはどのようなことを指しますか。',options:['A. 専門家が政治を独占すること','B. 情報が不十分な市民が感情で選択すること','C. 多数派が少数派を支配すること','D. 選挙が正しく機能しないこと'],answer:'B',explanation:'「情報を十分に持たない有権者が感情に流されて選択する」ことが衆愚政治と述べています。'},
+      {type:'mc',question:'真の民主主義を維持するために不可欠とされているものは何ですか。',options:['A. 制度設計のみ','B. 強力なリーダーシップ','C. 市民の教育・情報リテラシー・批判的思考の涵養','D. 経済的豊かさ'],answer:'C',explanation:'「制度の設計と並んで、市民の教育・情報リテラシー・批判的思考の涵養が不可欠」と述べています。'},
+      {type:'open',question:'民主主義の「逆説」についてどのように考えますか。どうすれば克服できると思いますか。'},
+    ]
+  },
+
+  {
+    id:'n1-10', difficulty:'medium', level:'n1',
+    titleJp:'<ruby>記憶<rt>きおく</rt></ruby>と<ruby>アイデンティティ<rt>アイデンティティ</rt></ruby>',
+    titleEn:'Memory and Identity',
+    topic:'psychology', chars:340,
+    text:`<ruby>人間<rt>にんげん</rt></ruby>のアイデンティティは、<ruby>記憶<rt>きおく</rt></ruby>によって<ruby>形成<rt>けいせい</rt></ruby>されるとも<ruby>言<rt>い</rt></ruby>える。<ruby>過去<rt>かこ</rt></ruby>の<ruby>経験<rt>けいけん</rt></ruby>や<ruby>思<rt>おも</rt></ruby>い<ruby>出<rt>で</rt></ruby>が<ruby>積<rt>つ</rt></ruby>み<ruby>重<rt>かさ</rt></ruby>なり、「<ruby>私<rt>わたし</rt></ruby>は<ruby>何者<rt>なにもの</rt></ruby>か」という<ruby>感覚<rt>かんかく</rt></ruby>を<ruby>生<rt>う</rt></ruby>み<ruby>出<rt>だ</rt></ruby>す。しかし<ruby>記憶<rt>きおく</rt></ruby>は<ruby>客観的<rt>きゃっかんてき</rt></ruby>な<ruby>事実<rt>じじつ</rt></ruby>の<ruby>記録<rt>きろく</rt></ruby>ではなく、<ruby>感情<rt>かんじょう</rt></ruby>や<ruby>文脈<rt>ぶんみゃく</rt></ruby>によって<ruby>再構成<rt>さいこうせい</rt></ruby>されるものだという<ruby>認識<rt>にんしき</rt></ruby>が<ruby>広<rt>ひろ</rt></ruby>まっている。つまり、<ruby>私<rt>わたし</rt></ruby>たちが「<ruby>自分<rt>じぶん</rt></ruby>の<ruby>過去<rt>かこ</rt></ruby>」と<ruby>信<rt>しん</rt></ruby>じているものは、ある<ruby>意味<rt>いみ</rt></ruby>で<ruby>現在<rt>げんざい</rt></ruby>の<ruby>自己<rt>じこ</rt></ruby>が<ruby>作<rt>つく</rt></ruby>り<ruby>上<rt>あ</rt></ruby>げた「<ruby>物語<rt>ものがたり</rt></ruby>」なのかもしれない。`,
+    gloss:[{w:'アイデンティティ',r:'アイデンティティ',m:'identity'},{w:'再構成',r:'さいこうせい',m:'reconstruction'},{w:'省察',r:'せいさつ',m:'reflection, introspection'},{w:'文脈',r:'ぶんみゃく',m:'context'}],
+    questions:[
+      {type:'mc',question:'この文章の主張として最も適切なものはどれですか。',options:['A. 記憶は完全に客観的である','B. アイデンティティは遺伝によって決まる','C. 記憶は感情や文脈で再構成されアイデンティティを形成する','D. 過去の経験は将来を決定する'],answer:'C',explanation:'記憶が再構成されるものであり、それがアイデンティティを形成するという主張が核心です。'},
+      {type:'mc',question:'「自分の過去が現在の自己が作り上げた物語」とはどういう意味ですか。',options:['A. 過去は嘘である','B. 記憶は現在の感情や視点によって形作られる','C. 自己は過去に決定される','D. 物語を読むことが重要'],answer:'B',explanation:'記憶は客観的事実ではなく、現在の自己の感情・文脈によって再構成された「物語」であるという意味です。'},
+      {type:'open',question:'記憶とアイデンティティの関係について、あなた自身の経験を踏まえて考えを述べてください。'},
+    ]
+  },
+
+  {
+    id:'n1-11', difficulty:'hard', level:'n1',
+    titleJp:'<ruby>功利主義<rt>こうりしゅぎ</rt></ruby>の<ruby>限界<rt>げんかい</rt></ruby>',
+    titleEn:'The Limits of Utilitarianism',
+    topic:'philosophy', chars:345,
+    text:`<ruby>功利主義<rt>こうりしゅぎ</rt></ruby>とは、<ruby>最大多数<rt>さいだいたすう</rt></ruby>の<ruby>最大幸福<rt>さいだいこうふく</rt></ruby>を<ruby>実現<rt>じつげん</rt></ruby>することが<ruby>道徳的<rt>どうとくてき</rt></ruby>に<ruby>正<rt>ただ</rt></ruby>しいという<ruby>立場<rt>たちば</rt></ruby>である。<ruby>功利主義<rt>こうりしゅぎ</rt></ruby>は<ruby>政策<rt>せいさく</rt></ruby><ruby>立案<rt>りつあん</rt></ruby>や<ruby>経済学<rt>けいざいがく</rt></ruby>に<ruby>広<rt>ひろ</rt></ruby>く<ruby>応用<rt>おうよう</rt></ruby>されてきたが、いくつかの<ruby>批判<rt>ひはん</rt></ruby>がある。<ruby>多数派<rt>たすうは</rt></ruby>の<ruby>幸福<rt>こうふく</rt></ruby>のために<ruby>少数派<rt>しょうすうは</rt></ruby>を<ruby>犠牲<rt>ぎせい</rt></ruby>にすることを<ruby>正当化<rt>せいとうか</rt></ruby>しうること、また<ruby>個人<rt>こじん</rt></ruby>の<ruby>権利<rt>けんり</rt></ruby>や<ruby>尊厳<rt>そんげん</rt></ruby>よりも<ruby>結果<rt>けっか</rt></ruby>を<ruby>優先<rt>ゆうせん</rt></ruby>するという<ruby>問題<rt>もんだい</rt></ruby>がある。これに<ruby>対<rt>たい</rt></ruby>してカントの<ruby>義務論<rt>ぎむろん</rt></ruby>は、<ruby>結果<rt>けっか</rt></ruby>にかかわらず<ruby>普遍的<rt>ふへんてき</rt></ruby>な<ruby>道徳的<rt>どうとくてき</rt></ruby><ruby>法則<rt>ほうそく</rt></ruby>に<ruby>従<rt>したが</rt></ruby>うことを<ruby>求<rt>もと</rt></ruby>める。`,
+    gloss:[{w:'功利主義',r:'こうりしゅぎ',m:'utilitarianism'},{w:'義務論',r:'ぎむろん',m:'deontology'},{w:'正当化',r:'せいとうか',m:'justification'},{w:'尊厳',r:'そんげん',m:'dignity'}],
+    questions:[
+      {type:'mc',question:'功利主義に対する批判として述べられていないものはどれですか。',options:['A. 少数派を犠牲にしうる','B. 個人の権利より結果を優先する','C. 実践が難しい','D. 多数派の幸福を優先する'],answer:'C',explanation:'「実践が難しい」という批判は述べられていません。'},
+      {type:'mc',question:'カントの義務論はどのような立場ですか。',options:['A. 最大多数の幸福を追求する','B. 結果に関わらず普遍的な道徳法則に従う','C. 個人の自由を最優先する','D. 感情に基づいて判断する'],answer:'B',explanation:'「結果にかかわらず普遍的な道徳的法則に従うことを求める」と述べています。'},
+      {type:'open',question:'功利主義と義務論、あなたはどちらの考え方に共感しますか。具体例を挙げて述べてください。'},
+    ]
+  },
+
+  {
+    id:'n1-12', difficulty:'hard', level:'n1',
+    titleJp:'グローバル化と<ruby>文化的<rt>ぶんかてき</rt></ruby><ruby>同質化<rt>どうしつか</rt></ruby>',
+    titleEn:'Globalisation and Cultural Homogenisation',
+    topic:'culture', chars:355,
+    text:`グローバル化の<ruby>進展<rt>しんてん</rt></ruby>は、<ruby>経済的<rt>けいざいてき</rt></ruby><ruby>相互依存<rt>そうごいぞん</rt></ruby>を<ruby>深<rt>ふか</rt></ruby>め、<ruby>人<rt>ひと</rt></ruby>・<ruby>物<rt>もの</rt></ruby>・<ruby>情報<rt>じょうほう</rt></ruby>の<ruby>移動<rt>いどう</rt></ruby>を<ruby>加速<rt>かそく</rt></ruby>させた。しかし<ruby>同時<rt>どうじ</rt></ruby>に、<ruby>画一的<rt>かくいつてき</rt></ruby>な<ruby>消費<rt>しょうひ</rt></ruby><ruby>文化<rt>ぶんか</rt></ruby>の<ruby>拡散<rt>かくさん</rt></ruby>による<ruby>文化的<rt>ぶんかてき</rt></ruby><ruby>同質化<rt>どうしつか</rt></ruby>が<ruby>懸念<rt>けねん</rt></ruby>されている。<ruby>世界中<rt>せかいじゅう</rt></ruby>で<ruby>同<rt>おな</rt></ruby>じファーストフードを<ruby>食<rt>た</rt></ruby>べ、<ruby>同<rt>おな</rt></ruby>じ<ruby>音楽<rt>おんがく</rt></ruby>を<ruby>聴<rt>き</rt></ruby>く<ruby>状況<rt>じょうきょう</rt></ruby>は、<ruby>地域<rt>ちいき</rt></ruby>固有の<ruby>文化<rt>ぶんか</rt></ruby>・<ruby>言語<rt>げんご</rt></ruby>・<ruby>伝統<rt>でんとう</rt></ruby>の<ruby>消滅<rt>しょうめつ</rt></ruby>をもたらしうる。一方で、グローバル化が<ruby>文化<rt>ぶんか</rt></ruby>の<ruby>交差<rt>こうさ</rt></ruby>と<ruby>融合<rt>ゆうごう</rt></ruby>を<ruby>生<rt>う</rt></ruby>み<ruby>出<rt>だ</rt></ruby>し、<ruby>新<rt>あたら</rt></ruby>しい<ruby>創造性<rt>そうぞうせい</rt></ruby>をもたらすという<ruby>見方<rt>みかた</rt></ruby>もある。`,
+    gloss:[{w:'同質化',r:'どうしつか',m:'homogenisation'},{w:'画一的',r:'かくいつてき',m:'uniform, standardised'},{w:'融合',r:'ゆうごう',m:'fusion, merger'},{w:'創造性',r:'そうぞうせい',m:'creativity'}],
+    questions:[
+      {type:'mc',question:'グローバル化の懸念として述べられているものはどれですか。',options:['A. 経済格差の拡大','B. 文化的同質化と地域固有の文化の消滅','C. 環境問題の悪化','D. 政治的不安定'],answer:'B',explanation:'「文化的同質化が懸念されている」「地域固有の文化・言語・伝統の消滅をもたらしうる」と述べています。'},
+      {type:'mc',question:'グローバル化の肯定的な見方として述べられているものは？',options:['A. 経済成長の促進','B. 文化の交差と融合による新しい創造性','C. 政治的安定','D. 環境問題の解決'],answer:'B',explanation:'「グローバル化が文化の交差と融合を生み出し、新しい創造性をもたらす」という肯定的な見方も紹介されています。'},
+      {type:'open',question:'文化的多様性を守りながらグローバル化を進めるにはどうすればよいと思いますか。'},
+    ]
+  },
+
+  {
+    id:'n1-13', difficulty:'medium', level:'n1',
+    titleJp:'<ruby>言語<rt>げんご</rt></ruby>の<ruby>消滅<rt>しょうめつ</rt></ruby>と<ruby>知識<rt>ちしき</rt></ruby>の<ruby>損失<rt>そんしつ</rt></ruby>',
+    titleEn:'Language Death and the Loss of Knowledge',
+    topic:'linguistics', chars:340,
+    text:`<ruby>現在<rt>げんざい</rt></ruby>、<ruby>世界<rt>せかい</rt></ruby>には<ruby>約<rt>やく</rt></ruby>7000の<ruby>言語<rt>げんご</rt></ruby>が<ruby>存在<rt>そんざい</rt></ruby>するとされるが、その<ruby>半数<rt>はんすう</rt></ruby>以上が<ruby>今世紀中<rt>こんせいきちゅう</rt></ruby>に<ruby>消滅<rt>しょうめつ</rt></ruby>すると<ruby>予測<rt>よそく</rt></ruby>される。<ruby>言語<rt>げんご</rt></ruby>の<ruby>消滅<rt>しょうめつ</rt></ruby>は<ruby>単<rt>たん</rt></ruby>なるコミュニケーション<ruby>手段<rt>しゅだん</rt></ruby>の<ruby>喪失<rt>そうしつ</rt></ruby>にとどまらない。その<ruby>言語<rt>げんご</rt></ruby>でのみ<ruby>表現<rt>ひょうげん</rt></ruby>できる<ruby>概念<rt>がいねん</rt></ruby>、<ruby>思考<rt>しこう</rt></ruby><ruby>様式<rt>ようしき</rt></ruby>、<ruby>自然<rt>しぜん</rt></ruby>に<ruby>関<rt>かん</rt></ruby>する<ruby>知識<rt>ちしき</rt></ruby>なども<ruby>失<rt>うしな</rt></ruby>われる。これは<ruby>人類<rt>じんるい</rt></ruby>の<ruby>知的<rt>ちてき</rt></ruby><ruby>遺産<rt>いさん</rt></ruby>の<ruby>一部<rt>いちぶ</rt></ruby>が<ruby>永遠<rt>えいえん</rt></ruby>に<ruby>失<rt>うしな</rt></ruby>われることを<ruby>意味<rt>いみ</rt></ruby>する。<ruby>言語学者<rt>げんごがくしゃ</rt></ruby>たちは<ruby>記録<rt>きろく</rt></ruby><ruby>保存<rt>ほぞん</rt></ruby>の<ruby>取<rt>と</rt></ruby>り<ruby>組<rt>く</rt></ruby>みを<ruby>急<rt>いそ</rt></ruby>いでいるが、<ruby>話者<rt>わしゃ</rt></ruby>なき<ruby>言語<rt>げんご</rt></ruby>は<ruby>博物館<rt>はくぶつかん</rt></ruby>の<ruby>展示物<rt>てんじもの</rt></ruby>に<ruby>過<rt>す</rt></ruby>ぎないとも<ruby>言<rt>い</rt></ruby>われる。`,
+    gloss:[{w:'消滅',r:'しょうめつ',m:'extinction, disappearance'},{w:'蓄積',r:'ちくせき',m:'accumulation'},{w:'話者',r:'わしゃ',m:'speaker (of a language)'},{w:'遺産',r:'いさん',m:'heritage, legacy'}],
+    questions:[
+      {type:'mc',question:'言語の消滅が問題とされる理由として述べられていないものは？',options:['A. コミュニケーション手段の喪失','B. その言語でのみ表現できる概念の消滅','C. 経済的損失','D. 人類の知的遺産の損失'],answer:'C',explanation:'経済的損失については言及されていません。'},
+      {type:'mc',question:'「話者なき言語は博物館の展示物に過ぎない」とはどういう意味ですか。',options:['A. 博物館で言語を保存すべきだ','B. 記録だけでは生きた言語は保存できない','C. 言語は展示すれば残せる','D. 博物館の役割は重要だ'],answer:'B',explanation:'話者（使う人）がいない言語は記録されても生きた文化としては失われる、という意味です。'},
+      {type:'open',question:'少数言語の保存は重要だと思いますか。その理由を述べてください。'},
+    ]
+  },
+
+  {
+    id:'n1-14', difficulty:'hard', level:'n1',
+    titleJp:'<ruby>人工知能<rt>じんこうちのう</rt></ruby>と<ruby>創造性<rt>そうぞうせい</rt></ruby>',
+    titleEn:'Artificial Intelligence and Creativity',
+    topic:'technology', chars:350,
+    text:`<ruby>人工知能<rt>じんこうちのう</rt></ruby>（AI）が<ruby>芸術<rt>げいじゅつ</rt></ruby><ruby>作品<rt>さくひん</rt></ruby>を<ruby>生成<rt>せいせい</rt></ruby>し、<ruby>音楽<rt>おんがく</rt></ruby>を<ruby>作曲<rt>さっきょく</rt></ruby>し、<ruby>小説<rt>しょうせつ</rt></ruby>を<ruby>書<rt>か</rt></ruby>く<ruby>時代<rt>じだい</rt></ruby>となった。これは<ruby>創造性<rt>そうぞうせい</rt></ruby>が<ruby>人間<rt>にんげん</rt></ruby>の<ruby>専有物<rt>せんゆうもつ</rt></ruby>ではなくなりつつあることを<ruby>示唆<rt>しさ</rt></ruby>する。しかし<ruby>批判<rt>ひはん</rt></ruby>もある。AIは<ruby>既存<rt>きそん</rt></ruby>のデータから<ruby>パターン<rt>パターン</rt></ruby>を<ruby>学習<rt>がくしゅう</rt></ruby>して<ruby>生成<rt>せいせい</rt></ruby>するに<ruby>過<rt>す</rt></ruby>ぎず、<ruby>真<rt>しん</rt></ruby>の<ruby>独創性<rt>どくそうせい</rt></ruby>や<ruby>感情<rt>かんじょう</rt></ruby>に<ruby>根<rt>ね</rt></ruby>ざした<ruby>表現<rt>ひょうげん</rt></ruby>はできないという<ruby>見方<rt>みかた</rt></ruby>だ。<ruby>創造性<rt>そうぞうせい</rt></ruby>とは<ruby>何<rt>なに</rt></ruby>か、<ruby>芸術<rt>げいじゅつ</rt></ruby>の<ruby>価値<rt>かち</rt></ruby>はどこにあるのかという<ruby>根本的<rt>こんぽんてき</rt></ruby>な<ruby>問<rt>と</rt></ruby>いが、AIの<ruby>台頭<rt>たいとう</rt></ruby>によって<ruby>改<rt>あらた</rt></ruby>めて<ruby>問<rt>と</rt></ruby>われている。`,
+    gloss:[{w:'創造性',r:'そうぞうせい',m:'creativity'},{w:'独創性',r:'どくそうせい',m:'originality'},{w:'生成',r:'せいせい',m:'generation, creation'},{w:'台頭',r:'たいとう',m:'rise, emergence'}],
+    questions:[
+      {type:'mc',question:'AIの創造性に対する批判として述べられているものは？',options:['A. AIは高価すぎる','B. AIは既存データのパターン学習に過ぎず真の独創性がない','C. AIは人間の仕事を奪う','D. AIは法的に認められていない'],answer:'B',explanation:'「AIは既存のデータからパターンを学習して生成するに過ぎず、真の独創性や感情に根ざした表現はできない」と述べています。'},
+      {type:'mc',question:'AIの台頭によって改めて問われていることは何ですか。',options:['A. 技術的な安全性','B. 経済的な影響','C. 創造性とは何か、芸術の価値はどこにあるか','D. 著作権の問題'],answer:'C',explanation:'「創造性とは何か、芸術の価値はどこにあるのかという根本的な問いが改めて問われている」と述べています。'},
+      {type:'open',question:'AIが作った芸術作品は人間が作ったものと同様に価値があると思いますか。理由も含めて述べてください。'},
+    ]
+  },
+
+  {
+    id:'n1-15', difficulty:'medium', level:'n1',
+    titleJp:'<ruby>核家族化<rt>かくかぞくか</rt></ruby>と<ruby>介護問題<rt>かいごもんだい</rt></ruby>',
+    titleEn:'The Nuclear Family and Care Issues',
+    topic:'society', chars:335,
+    text:`<ruby>日本<rt>にほん</rt></ruby>の<ruby>家族<rt>かぞく</rt></ruby><ruby>構造<rt>こうぞう</rt></ruby>は、<ruby>高度経済成長期<rt>こうどけいざいせいちょうき</rt></ruby>以降、<ruby>三世代同居<rt>さんせだいどうきょ</rt></ruby>から<ruby>核家族化<rt>かくかぞくか</rt></ruby>へと<ruby>変容<rt>へんよう</rt></ruby>してきた。これに<ruby>高齢化<rt>こうれいか</rt></ruby>が<ruby>重<rt>かさ</rt></ruby>なることで、<ruby>老老介護<rt>ろうろうかいご</rt></ruby>や<ruby>孤独死<rt>こどくし</rt></ruby>という<ruby>深刻<rt>しんこく</rt></ruby>な<ruby>問題<rt>もんだい</rt></ruby>が<ruby>生<rt>う</rt></ruby>まれている。<ruby>介護<rt>かいご</rt></ruby>の<ruby>担<rt>にな</rt></ruby>い<ruby>手<rt>て</rt></ruby>不足は<ruby>慢性的<rt>まんせいてき</rt></ruby>であり、<ruby>介護離職<rt>かいごりしょく</rt></ruby>も<ruby>社会問題<rt>しゃかいもんだい</rt></ruby>となっている。<ruby>地域<rt>ちいき</rt></ruby>包括ケアシステムの<ruby>構築<rt>こうちく</rt></ruby>や、テクノロジーを<ruby>活用<rt>かつよう</rt></ruby>した<ruby>介護支援<rt>かいごしえん</rt></ruby>など、<ruby>新<rt>あたら</rt></ruby>しいアプローチが<ruby>模索<rt>もさく</rt></ruby>されているが、<ruby>根本<rt>こんぽん</rt></ruby>には<ruby>社会全体<rt>しゃかいぜんたい</rt></ruby>で<ruby>高齢者<rt>こうれいしゃ</rt></ruby>を<ruby>支<rt>ささ</rt></ruby>える<ruby>意識<rt>いしき</rt></ruby>の<ruby>醸成<rt>じょうせい</rt></ruby>が<ruby>必要<rt>ひつよう</rt></ruby>だ。`,
+    gloss:[{w:'核家族化',r:'かくかぞくか',m:'nuclearisation of the family'},{w:'老老介護',r:'ろうろうかいご',m:'elderly caring for elderly'},{w:'介護離職',r:'かいごりしょく',m:'leaving work to care for family'},{w:'醸成',r:'じょうせい',m:'cultivation, fostering'}],
+    questions:[
+      {type:'mc',question:'「老老介護」とは何ですか。',options:['A. 老人が若者を介護すること','B. 高齢者が高齢者を介護すること','C. 施設での介護','D. 在宅での介護'],answer:'B',explanation:'老老介護とは、高齢の配偶者や家族が高齢者を介護することを指します。'},
+      {type:'mc',question:'介護問題への新しいアプローチとして述べられていないものは？',options:['A. 地域包括ケアシステム','B. テクノロジーを活用した介護支援','C. 外国人介護士の導入','D. 根本には社会全体の意識醸成が必要'],answer:'C',explanation:'外国人介護士の導入については言及されていません。'},
+      {type:'open',question:'高齢化社会における介護問題の解決策として、どのようなアプローチが有効だと思いますか。'},
+    ]
+  },
+
+  {
+    id:'n1-16', difficulty:'medium', level:'n1',
+    titleJp:'<ruby>知識<rt>ちしき</rt></ruby>と<ruby>知恵<rt>ちえ</rt></ruby>の<ruby>違<rt>ちが</rt></ruby>い',
+    titleEn:'The Difference Between Knowledge and Wisdom',
+    topic:'philosophy', chars:330,
+    text:`<ruby>知識<rt>ちしき</rt></ruby>と<ruby>知恵<rt>ちえ</rt></ruby>は、しばしば<ruby>混同<rt>こんどう</rt></ruby>されるが、<ruby>本質的<rt>ほんしつてき</rt></ruby>に<ruby>異<rt>こと</rt></ruby>なる。<ruby>知識<rt>ちしき</rt></ruby>とは<ruby>情報<rt>じょうほう</rt></ruby>や<ruby>事実<rt>じじつ</rt></ruby>の<ruby>蓄積<rt>ちくせき</rt></ruby>であり、<ruby>学習<rt>がくしゅう</rt></ruby>によって<ruby>獲得<rt>かくとく</rt></ruby>できる。しかし<ruby>知恵<rt>ちえ</rt></ruby>とは、<ruby>知識<rt>ちしき</rt></ruby>を<ruby>適切<rt>てきせつ</rt></ruby>な<ruby>状況<rt>じょうきょう</rt></ruby>で<ruby>適切<rt>てきせつ</rt></ruby>に<ruby>応用<rt>おうよう</rt></ruby>する<ruby>能力<rt>のうりょく</rt></ruby>であり、<ruby>経験<rt>けいけん</rt></ruby>と<ruby>省察<rt>せいさつ</rt></ruby>を<ruby>通<rt>つう</rt></ruby>じて<ruby>培<rt>つちか</rt></ruby>われるものだ。<ruby>現代<rt>げんだい</rt></ruby>の<ruby>情報<rt>じょうほう</rt></ruby><ruby>社会<rt>しゃかい</rt></ruby>では<ruby>知識<rt>ちしき</rt></ruby>へのアクセスは<ruby>容易<rt>ようい</rt></ruby>になったが、それをいかに<ruby>使<rt>つか</rt></ruby>うかという<ruby>判断力<rt>はんだんりょく</rt></ruby>、すなわち<ruby>知恵<rt>ちえ</rt></ruby>の<ruby>重要性<rt>じゅうようせい</rt></ruby>はむしろ<ruby>高<rt>たか</rt></ruby>まっている。`,
+    gloss:[{w:'知恵',r:'ちえ',m:'wisdom'},{w:'蓄積',r:'ちくせき',m:'accumulation'},{w:'省察',r:'せいさつ',m:'reflection'},{w:'判断力',r:'はんだんりょく',m:'judgement, discernment'}],
+    questions:[
+      {type:'mc',question:'「知恵」と「知識」の違いとして述べられているものはどれですか。',options:['A. 知識は経験から、知恵は学習から得られる','B. 知識は情報の蓄積、知恵は状況に応じた応用能力','C. 知恵は学習で得られ、知識は経験で培われる','D. 両者は同じもの'],answer:'B',explanation:'「知識とは情報や事実の蓄積」「知恵とは、知識を適切な状況で適切に応用する能力」と明確に区別しています。'},
+      {type:'mc',question:'現代社会で知恵の重要性が高まっている理由は何ですか。',options:['A. 情報量が減ったから','B. 知識へのアクセスが容易になり、その使い方の判断力がより重要になったから','C. 教育水準が下がったから','D. テクノロジーが発展したから'],answer:'B',explanation:'「知識へのアクセスは容易になったが、それをいかに使うかという判断力の重要性はむしろ高まっている」と述べています。'},
+      {type:'open',question:'あなた自身の経験の中で、「知識」だけでなく「知恵」が必要だと感じた場面はありますか。'},
+    ]
+  },
 ];
 
 // ── State ─────────────────────────────────────────────────────
@@ -1134,10 +1386,20 @@ document.querySelectorAll('.filter-btn[data-level]').forEach(btn => {
 });
 
 // ── Render passage list ───────────────────────────────────────
+let activeDiff = 'all';
+
+function setDiff(d) {
+  activeDiff = d;
+  document.querySelectorAll('.diff-filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.diff === d);
+  });
+  render();
+}
+
 function render() {
   const container = document.getElementById('passage-list');
   container.innerHTML = '';
-  const visible = passages.filter(p => activeLevel === 'all' || p.level === activeLevel);
+  const visible = passages.filter(p => (activeLevel === 'all' || p.level === activeLevel) && (activeDiff === 'all' || p.difficulty === activeDiff));
 
   visible.forEach(p => {
     const card = document.createElement('div');

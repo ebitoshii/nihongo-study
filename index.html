@@ -285,6 +285,32 @@
     :root[data-theme="light"] .font-btn { color:#1a6a5c; border-color:rgba(26,106,92,0.3); }
     :root[data-theme="light"] .font-btn:hover { background:rgba(26,106,92,0.1); }
     :root[data-theme="light"] .font-btn.active { background:rgba(26,106,92,0.15); }
+
+    .global-search-wrap{max-width:500px;margin:2rem auto 0;position:relative;}
+    .global-search-input{width:100%;padding:0.75rem 1.25rem;background:rgba(46,32,24,0.6);
+      border:1px solid rgba(74,175,158,0.3);border-radius:30px;color:#f0e6d6;
+      font-family:var(--sans-jp);font-size:0.88rem;outline:none;
+      transition:border-color 0.2s,background 0.2s;}
+    .global-search-input::placeholder{color:#7a6450;}
+    .global-search-input:focus{border-color:#4aaf9e;background:rgba(46,32,24,0.9);}
+    .global-search-results{position:absolute;top:calc(100% + 0.5rem);left:0;right:0;
+      background:#3d2d20;border:1px solid #2e2018;border-radius:12px;z-index:200;
+      max-height:350px;overflow-y:auto;display:none;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+    .global-search-results.open{display:block;}
+    .search-result-item{display:flex;align-items:center;gap:0.75rem;padding:0.65rem 1rem;
+      cursor:pointer;text-decoration:none;transition:background 0.15s;}
+    .search-result-item:hover{background:rgba(74,175,158,0.1);}
+    .sr-badge{font-family:var(--serif-en);font-size:0.62rem;padding:0.1rem 0.4rem;border-radius:3px;flex-shrink:0;}
+    .sr-type-grammar{background:rgba(74,175,158,0.2);color:#4aaf9e;}
+    .sr-type-vocab{background:rgba(122,180,232,0.2);color:#7ab4e8;}
+    .sr-type-kanji{background:rgba(232,122,122,0.2);color:#e87a7a;}
+    .sr-word{font-family:var(--serif-jp);font-size:0.9rem;color:#f0e6d6;line-height:1.9;}
+    .sr-meaning{font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#7a6450;}
+    .sr-empty{padding:1.25rem;text-align:center;font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;}
+    [data-theme="light"] .global-search-input{background:rgba(240,230,220,0.8);color:#1a0e00;}
+    [data-theme="light"] .global-search-results{background:#faf3e8;border-color:#e0d0b8;}
+    [data-theme="light"] .search-result-item:hover{background:rgba(26,106,92,0.08);}
+    [data-theme="light"] .sr-word{color:#1a0e00;}
   </style>
   <script>
   // ── Theme toggle ─────────────────────────────────────────────
@@ -345,11 +371,14 @@
     <a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a>
     <a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a>
     <a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a>
+  <a href="mocktest.html"><span class="jp"><ruby>模擬<rt>もぎ</rt></ruby></span><span class="en">Mock Test</span></a>
+    <a href="mocktest.html"><span class="jp"><ruby>模擬<rt>もぎ</rt></ruby></span><span class="en">Mock Test</span></a>
     <a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a>
     <a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a>
     <a href="flashcards.html"><span class="jp">カード</span><span class="en">Flashcards</span></a>
     <a href="writing.html"><span class="jp"><ruby>書<rt>か</rt></ruby>き</span><span class="en">Writing</span></a>
     <a href="schedule.html"><span class="jp"><ruby>計<rt>けい</rt></ruby><ruby>画<rt>かく</rt></ruby></span><span class="en">Schedule</span></a>
+    <a href="glossary.html"><span class="jp"><ruby>一<rt>いち</rt></ruby><ruby>覧<rt>らん</rt></ruby></span><span class="en">Glossary</span></a>
   </nav>
 
   <section class="hero">
@@ -591,5 +620,49 @@
     });
   })();
   </script>
+
+// ── Global search ─────────────────────────────────────────────
+const searchData = [];
+// We'll populate from a minimal inline dataset
+const quickGrammar = [
+  {type:'grammar',word:'〜てもいい',meaning:'May… / Permission'},
+  {type:'grammar',word:'〜なければならない',meaning:'Must… / Obligation'},
+  {type:'grammar',word:'〜のに',meaning:'Despite… / Unexpectedly'},
+  {type:'grammar',word:'〜ために',meaning:'In order to… / Purpose'},
+  {type:'grammar',word:'〜ようになる',meaning:'Come to be able to… / Change of state'},
+  {type:'grammar',word:'〜ないといけない',meaning:'Have to… / Must do'},
+  {type:'grammar',word:'〜にもかかわらず',meaning:'Despite… / In spite of'},
+  {type:'grammar',word:'〜ばよかった',meaning:'Should have… / Regret'},
+  {type:'grammar',word:'〜はずだ',meaning:'Should be… / Expected'},
+  {type:'grammar',word:'〜かもしれない',meaning:'Might… / Possibility'},
+];
+
+function globalSearch(q) {
+  const results = document.getElementById('global-results');
+  if (!q.trim()) { results.classList.remove('open'); return; }
+  q = q.toLowerCase();
+  const hits = quickGrammar
+    .filter(d => d.word.includes(q) || d.meaning.toLowerCase().includes(q))
+    .slice(0, 8);
+
+  if (!hits.length) {
+    results.innerHTML = '<div class="sr-empty">No results — try the Grammar or Vocabulary pages for full search</div>';
+  } else {
+    results.innerHTML = hits.map(h => `
+      <a class="search-result-item" href="grammar.html" onclick="sessionStorage.setItem('grammarHighlight','${h.word}')">
+        <span class="sr-badge sr-type-${h.type}">${h.type}</span>
+        <span class="sr-word">${h.word}</span>
+        <span class="sr-meaning">${h.meaning}</span>
+      </a>`).join('');
+  }
+  results.classList.add('open');
+}
+function closeSearch() {
+  document.getElementById('global-results').classList.remove('open');
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeSearch();
+});
+
 </body>
 </html>

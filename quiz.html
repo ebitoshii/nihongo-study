@@ -285,11 +285,13 @@
       <li><a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
       <li><a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a></li>
       <li><a href="quiz.html" class="active"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="mocktest.html"><span class="jp"><ruby>模擬<rt>もぎ</rt></ruby></span><span class="en">Mock Test</span></a></li>
       <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
       <li><a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a></li>
       <li><a href="flashcards.html"><span class="jp">カード</span><span class="en">Flashcards</span></a></li>
       <li><a href="writing.html"><span class="jp"><ruby>書<rt>か</rt></ruby>き</span><span class="en">Writing</span></a></li>
       <li><a href="schedule.html"><span class="jp"><ruby>計<rt>けい</rt></ruby><ruby>画<rt>かく</rt></ruby></span><span class="en">Schedule</span></a></li>
+      <li><a href="glossary.html"><span class="jp"><ruby>一<rt>いち</rt></ruby><ruby>覧<rt>らん</rt></ruby></span><span class="en">Glossary</span></a></li>
     </ul>
   </div>
     <div class="nav-controls">
@@ -316,6 +318,7 @@
     <a href="flashcards.html"><span class="jp">カード</span><span class="en">Flashcards</span></a>
     <a href="writing.html"><span class="jp"><ruby>書<rt>か</rt></ruby>き</span><span class="en">Writing</span></a>
     <a href="schedule.html"><span class="jp"><ruby>計<rt>けい</rt></ruby><ruby>画<rt>かく</rt></ruby></span><span class="en">Schedule</span></a>
+    <a href="glossary.html"><span class="jp"><ruby>一<rt>いち</rt></ruby><ruby>覧<rt>らん</rt></ruby></span><span class="en">Glossary</span></a>
   </nav>
 
 <div class="container">
@@ -854,5 +857,29 @@ showSetup();
     });
   })();
   </script>
+
+// ── Keyboard shortcuts ────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  // Only active during quiz
+  if (!document.getElementById('q-card').innerHTML) return;
+
+  // A/B/C/D or 1/2/3/4 to select option
+  const keyMap = {'a':'A','b':'B','c':'C','d':'D','1':'A','2':'B','3':'C','4':'D'};
+  if (keyMap[e.key.toLowerCase()] && !e.ctrlKey && !e.metaKey) {
+    const opts = document.querySelectorAll('.option-btn:not(.disabled)');
+    const letters = ['A','B','C','D'];
+    const targetLetter = keyMap[e.key.toLowerCase()];
+    const idx = letters.indexOf(targetLetter);
+    if (idx >= 0 && opts[idx]) opts[idx].click();
+    return;
+  }
+  // Enter / Space — next question
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.tagName !== 'INPUT') {
+    e.preventDefault();
+    const nextBtn = document.querySelector('.next-btn:not([style*="display:none"])');
+    if (nextBtn) nextBtn.click();
+  }
+});
+
 </body>
 </html>

@@ -263,11 +263,13 @@
       <li><a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
       <li><a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a></li>
       <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="mocktest.html"><span class="jp"><ruby>模擬<rt>もぎ</rt></ruby></span><span class="en">Mock Test</span></a></li>
       <li><a href="progress.html" class="active"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
       <li><a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a></li>
       <li><a href="flashcards.html"><span class="jp">カード</span><span class="en">Flashcards</span></a></li>
       <li><a href="writing.html"><span class="jp"><ruby>書<rt>か</rt></ruby>き</span><span class="en">Writing</span></a></li>
       <li><a href="schedule.html"><span class="jp"><ruby>計<rt>けい</rt></ruby><ruby>画<rt>かく</rt></ruby></span><span class="en">Schedule</span></a></li>
+      <li><a href="glossary.html"><span class="jp"><ruby>一<rt>いち</rt></ruby><ruby>覧<rt>らん</rt></ruby></span><span class="en">Glossary</span></a></li>
     </ul>
   </div>
     <div class="nav-controls">
@@ -294,6 +296,7 @@
     <a href="flashcards.html"><span class="jp">カード</span><span class="en">Flashcards</span></a>
     <a href="writing.html"><span class="jp"><ruby>書<rt>か</rt></ruby>き</span><span class="en">Writing</span></a>
     <a href="schedule.html"><span class="jp"><ruby>計<rt>けい</rt></ruby><ruby>画<rt>かく</rt></ruby></span><span class="en">Schedule</span></a>
+    <a href="glossary.html"><span class="jp"><ruby>一<rt>いち</rt></ruby><ruby>覧<rt>らん</rt></ruby></span><span class="en">Glossary</span></a>
   </nav>
 
 <div class="container">
@@ -381,6 +384,22 @@
         </div>
         <button class="sr-reset-btn" onclick="resetSR()">Reset weak spots</button>
       </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-all-sessions" style="color:#4aaf9e;">0</div>
+        <div class="stat-lbl">total sessions</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-flashcard-sessions" style="color:#6dcebb;">0</div>
+        <div class="stat-lbl">flashcard sessions</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-writing-sessions" style="color:#e8b47a;">0</div>
+        <div class="stat-lbl">writing sessions</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-listen-sessions" style="color:#7ab4e8;">0</div>
+        <div class="stat-lbl">listening sessions</div>
+      </div>
       <button class="clear-btn" onclick="clearHistory()">Clear History</button>
     </div>
     <div id="history-container" style="margin-top:1rem;"></div>
@@ -414,19 +433,33 @@ const streak  = parseInt(localStorage.getItem('studyStreak') || '0');
 
 // ── Summary stats ─────────────────────────────────────────────
 function loadStats() {
-  const totalQ   = history.reduce((a,b) => a + (b.total   || 0), 0);
-  const totalC   = history.reduce((a,b) => a + (b.correct || 0), 0);
+  const quizSessions      = history.filter(h => h.type === 'quiz' || h.type === 'mocktest');
+  const flashcardSessions = history.filter(h => h.type === 'flashcard');
+  const writingSessions   = history.filter(h => h.type === 'writing');
+  const listenSessions    = history.filter(h => h.type === 'listening');
+
+  const totalQ   = quizSessions.reduce((a,b) => a + (b.total   || 0), 0);
+  const totalC   = quizSessions.reduce((a,b) => a + (b.correct || 0), 0);
   const sessions = history.length;
-  const bestPct  = history.length
-    ? Math.max(...history.map(h => h.total > 0 ? Math.round((h.correct/h.total)*100) : 0))
+  const bestPct  = quizSessions.length
+    ? Math.max(...quizSessions.map(h => h.total > 0 ? Math.round((h.correct/h.total)*100) : 0))
     : null;
 
-  document.getElementById('stat-total').textContent   = totalQ;
-  document.getElementById('stat-sessions').textContent= sessions;
-  document.getElementById('stat-streak').textContent  = streak;
-  document.getElementById('stat-best').textContent    = bestPct !== null ? bestPct + '%' : '—';
-  document.getElementById('stat-correct').textContent = totalQ > 0
+  document.getElementById('stat-total').textContent    = totalQ;
+  document.getElementById('stat-sessions').textContent = quizSessions.length;
+  document.getElementById('stat-streak').textContent   = streak;
+  document.getElementById('stat-best').textContent     = bestPct !== null ? bestPct + '%' : '—';
+  document.getElementById('stat-correct').textContent  = totalQ > 0
     ? Math.round((totalC / totalQ) * 100) + '%' : '—';
+
+  const fcEl  = document.getElementById('stat-flashcard-sessions');
+  const wrEl  = document.getElementById('stat-writing-sessions');
+  const liEl  = document.getElementById('stat-listen-sessions');
+  const allEl = document.getElementById('stat-all-sessions');
+  if (fcEl)  fcEl.textContent  = flashcardSessions.length;
+  if (wrEl)  wrEl.textContent  = writingSessions.length;
+  if (liEl)  liEl.textContent  = listenSessions.length;
+  if (allEl) allEl.textContent = sessions;
 }
 
 // ── Accuracy by level ─────────────────────────────────────────

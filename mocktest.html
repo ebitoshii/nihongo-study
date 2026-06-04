@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模擬試験 Mock Test — 日本語学習</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&family=Shippori+Mincho:wght@400;500;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <script>
+  (function() {
+    document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
+  })();
+  </script>
+  <style>
+    :root {
+      --ink:#f0e6d6;--ink-mid:#d4c4a8;--ink-soft:#b09878;--ink-faint:#7a6450;
+      --washi:#4a3728;--washi-warm:#3d2d20;--washi-deep:#2e2018;--washi-card:#56402f;
+      --teal:#4aaf9e;--teal-light:#6dcebb;--teal-pale:rgba(74,175,158,0.15);
+      --red:#e87a7a;--green:#8fd47a;--amber:#e8b47a;
+      --serif-jp:'Shippori Mincho','Noto Serif JP',serif;
+      --serif-en:'IM Fell English',Georgia,serif;
+      --sans-jp:'Noto Sans JP',sans-serif;
+      --radius-sm:4px;--radius-md:8px;--radius-lg:16px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:19px;}
+    body{background:#4a3728;color:#f0e6d6;font-family:var(--sans-jp);font-weight:300;line-height:1.8;min-height:100vh;}
+
+    [data-theme="light"]{--ink:#1a0e00;--ink-mid:#2e1a08;--ink-soft:#4a3018;--ink-faint:#6b4c28;--washi:#f5ede0;--washi-warm:#ede0cc;--washi-deep:#e0d0b8;--washi-card:#faf3e8;--teal:#1a6a5c;--teal-light:#2a8a7a;}
+    [data-theme="light"] body{background:#f5ede0;color:#1a0e00;}
+    [data-theme="light"] .site-nav{background:#e8d8c0;border-bottom-color:#c8b090;}
+    [data-theme="light"] .mobile-nav{background:#e8d8c0;border-bottom-color:#c8b090;}
+    [data-theme="light"] .nav-logo .jp{color:#1a0e00;}
+    [data-theme="light"] .nav-links a .jp{color:#2e1a08;}
+    [data-theme="light"] .nav-links a .en{color:#6b4c28;}
+    [data-theme="light"] .nav-links a:hover .jp,[data-theme="light"] .nav-links a.active .jp{color:#1a6a5c;}
+    [data-theme="light"] .hamburger span{background:#2e1a08;}
+    [data-theme="light"] .setup-card{background:#faf3e8;border-color:#e0d0b8;}
+    [data-theme="light"] .q-card{background:#faf3e8;border-color:#e0d0b8;}
+    [data-theme="light"] .opt-btn{background:#f0e6d6;border-color:#c8b090;color:#2e1a08;}
+    [data-theme="light"] .opt-btn:hover:not(:disabled){border-color:#1a6a5c;background:rgba(26,106,92,0.08);}
+    [data-theme="light"] .timer-bar-track{background:#e0d0b8;}
+    [data-theme="light"] .progress-track{background:#e0d0b8;}
+
+    /* NAV */
+    .site-nav{position:sticky;top:0;z-index:100;background:#2e2018;border-bottom:1px solid #1e1208;padding:0.75rem 0;}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;}
+    .nav-logo{display:flex;flex-direction:column;text-decoration:none;}
+    .nav-logo .jp{font-family:var(--serif-jp);font-size:1.1rem;color:#f0e6d6;letter-spacing:0.1em;line-height:1.9;}
+    .nav-logo .jp ruby rt{font-size:0.54em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-logo .en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .nav-links{display:flex;gap:0.15rem;list-style:none;}
+    .nav-links a{display:flex;flex-direction:column;align-items:center;padding:0.35rem 0.55rem;text-decoration:none;border-radius:4px;transition:background 0.2s;}
+    .nav-links a .jp{font-family:var(--serif-jp);font-size:0.82rem;color:#d4c4a8;line-height:1.9;}
+    .nav-links a .jp ruby rt{font-size:0.56em;color:#e8d8c0;font-family:var(--sans-jp);}
+    .nav-links a .en{font-family:var(--serif-en);font-style:italic;font-size:0.6rem;color:#7a6450;}
+    .nav-links a:hover,.nav-links a.active{background:rgba(74,175,158,0.15);}
+    .nav-links a:hover .jp,.nav-links a.active .jp{color:#4aaf9e;}
+    .nav-controls{display:flex;align-items:center;gap:0.4rem;}
+    .font-controls{display:flex;align-items:center;gap:0.2rem;}
+    .font-btn{display:flex;align-items:center;justify-content:center;height:1.9rem;padding:0 0.5rem;min-width:1.9rem;background:transparent;border:1px solid rgba(74,175,158,0.3);border-radius:4px;cursor:pointer;font-family:var(--serif-en);font-size:0.72rem;transition:all 0.2s;color:#4aaf9e;}
+    .font-btn:hover,.font-btn.active{background:rgba(74,175,158,0.2);border-color:#4aaf9e;}
+    .theme-toggle{display:flex;align-items:center;justify-content:center;width:1.9rem;height:1.9rem;background:transparent;border:1px solid rgba(74,175,158,0.3);border-radius:50%;cursor:pointer;font-size:0.85rem;transition:all 0.2s;color:#4aaf9e;}
+    .theme-toggle:hover{background:rgba(74,175,158,0.15);border-color:#4aaf9e;}
+    .hamburger{display:none;flex-direction:column;justify-content:space-between;width:1.4rem;height:1.1rem;cursor:pointer;background:none;border:none;padding:0;}
+    .hamburger span{display:block;height:2px;background:#d4c4a8;border-radius:2px;transition:transform 0.25s,opacity 0.25s;}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mobile-nav{display:none;position:absolute;top:100%;left:0;right:0;background:#2e2018;border-bottom:1px solid #1e1208;padding:0.5rem 0 0.75rem;z-index:150;flex-direction:column;}
+    .mobile-nav.open{display:flex;}
+    .mobile-nav a{display:flex;align-items:center;gap:0.75rem;padding:0.55rem 1.5rem;text-decoration:none;transition:background 0.2s;}
+    .mobile-nav a:hover,.mobile-nav a.active{background:rgba(74,175,158,0.12);}
+    .mobile-nav a .jp{font-family:var(--serif-jp);font-size:0.95rem;color:#d4c4a8;line-height:1.9;}
+    .mobile-nav a .en{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+    .mobile-nav a:hover .jp,.mobile-nav a.active .jp{color:#4aaf9e;}
+    @media(max-width:768px){.nav-links{display:none;}.hamburger{display:flex;}.site-nav{position:relative;}}
+
+    /* LAYOUT */
+    .container{max-width:780px;margin:0 auto;padding:2rem;}
+    @media(max-width:768px){.container{padding:1rem;}}
+
+    /* HEADER */
+    .page-header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid #2e2018;}
+    .jp-title{font-family:var(--serif-jp);font-size:2.4rem;color:#f0e6d6;letter-spacing:0.05em;line-height:1.85;}
+    .en-title{font-family:var(--serif-en);font-style:italic;font-size:0.9rem;color:#7a6450;}
+    .desc{margin-top:0.4rem;color:#b09878;font-size:0.85rem;}
+
+    /* SETUP CARD */
+    .setup-card{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-lg);padding:1.75rem;margin-bottom:1.5rem;}
+    .setup-title{font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#4aaf9e;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1.25rem;}
+    .opt-label{font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#7a6450;margin-bottom:0.4rem;display:block;}
+    .option-row{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem;}
+    .sel-btn{padding:0.35rem 0.9rem;border:1px solid #2e2018;border-radius:20px;background:transparent;color:#7a6450;font-family:var(--sans-jp);font-size:0.78rem;cursor:pointer;transition:all 0.2s;}
+    .sel-btn:hover{border-color:#4aaf9e;color:#4aaf9e;}
+    .sel-btn.sel{background:rgba(74,175,158,0.15);border-color:#4aaf9e;color:#4aaf9e;}
+    .badge-n4{color:#8fd47a;}.badge-n3{color:#7ab4e8;}.badge-n2{color:#e8b47a;}.badge-n1{color:#e87a7a;}
+
+    .info-box{background:#3d2d20;border-radius:var(--radius-md);padding:0.85rem 1rem;margin:1rem 0;font-size:0.8rem;color:#b09878;line-height:1.7;}
+    .info-box strong{color:#4aaf9e;}
+
+    .start-test-btn{width:100%;padding:0.9rem;background:#e87a7a;border:none;border-radius:var(--radius-md);color:#fff;font-family:var(--sans-jp);font-size:0.95rem;font-weight:500;cursor:pointer;transition:background 0.2s;margin-top:0.5rem;letter-spacing:0.05em;}
+    .start-test-btn:hover{background:#f09090;}
+
+    /* TEST AREA */
+    .test-area{display:none;}
+    .test-area.active{display:block;}
+
+    /* TIMER BAR */
+    .timer-bar-wrap{margin-bottom:1.25rem;}
+    .timer-bar-track{height:5px;background:#2e2018;border-radius:3px;overflow:hidden;}
+    .timer-bar-fill{height:100%;background:linear-gradient(to right,#4aaf9e,#6dcebb);border-radius:3px;transition:width 1s linear;}
+    .timer-bar-fill.warning{background:linear-gradient(to right,#e8b47a,#f0c080);}
+    .timer-bar-fill.danger{background:linear-gradient(to right,#e87a7a,#f09090);}
+
+    /* TEST STATUS ROW */
+    .test-status{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap;}
+    .timer-display{font-family:var(--serif-en);font-size:1.3rem;color:#4aaf9e;font-weight:600;min-width:5rem;}
+    .timer-display.warning{color:#e8b47a;}
+    .timer-display.danger{color:#e87a7a;animation:timerPulse 1s ease-in-out infinite;}
+    @keyframes timerPulse{0%,100%{opacity:1}50%{opacity:0.5}}
+    .q-counter{font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;}
+    .progress-track{height:3px;flex:1;background:#2e2018;border-radius:2px;overflow:hidden;}
+    .progress-fill{height:100%;background:#4aaf9e;border-radius:2px;transition:width 0.3s;}
+    .end-test-btn{padding:0.4rem 0.9rem;background:transparent;border:1px solid rgba(232,122,122,0.4);border-radius:var(--radius-sm);color:#e87a7a;font-family:var(--sans-jp);font-size:0.75rem;cursor:pointer;transition:all 0.2s;}
+    .end-test-btn:hover{background:rgba(232,122,122,0.1);border-color:#e87a7a;}
+
+    /* QUESTION CARD */
+    .q-card{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-lg);padding:1.75rem;margin-bottom:1.25rem;}
+    .q-type-badge{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;margin-bottom:0.75rem;display:block;}
+    .q-text{font-family:var(--serif-jp);font-size:1.05rem;color:#f0e6d6;line-height:2.1;margin-bottom:1.25rem;}
+    .q-passage{font-family:var(--serif-jp);font-size:0.88rem;color:#d4c4a8;line-height:2.1;background:#3d2d20;border-radius:var(--radius-sm);padding:1rem;margin-bottom:1rem;border-left:3px solid rgba(74,175,158,0.3);}
+
+    /* OPTIONS */
+    .opts{display:flex;flex-direction:column;gap:0.5rem;}
+    .opt-btn{padding:0.65rem 1rem;background:#3d2d20;border:1px solid #2e2018;border-radius:var(--radius-md);color:#d4c4a8;font-family:var(--serif-jp);font-size:0.92rem;text-align:left;cursor:pointer;transition:all 0.15s;line-height:1.9;}
+    .opt-btn:hover:not(:disabled){border-color:#4aaf9e;color:#f0e6d6;background:rgba(74,175,158,0.08);}
+    .opt-btn:disabled{cursor:not-allowed;opacity:0.7;}
+    .opt-btn.selected{border-color:#4aaf9e;background:rgba(74,175,158,0.15);color:#f0e6d6;}
+    .opt-btn.correct{border-color:#8fd47a;background:rgba(143,212,122,0.12);color:#8fd47a;}
+    .opt-btn.incorrect{border-color:#e87a7a;background:rgba(232,122,122,0.1);color:#e87a7a;}
+    .opt-btn.reveal{border-color:#7ab4e8;background:rgba(122,180,232,0.1);color:#7ab4e8;}
+
+    /* NAVIGATION */
+    .q-nav{display:flex;gap:0.75rem;align-items:center;margin-top:1rem;}
+    .nav-btn{padding:0.55rem 1.4rem;background:transparent;border:1px solid #2e2018;border-radius:var(--radius-md);color:#7a6450;font-family:var(--sans-jp);font-size:0.85rem;cursor:pointer;transition:all 0.2s;}
+    .nav-btn:hover{border-color:#4aaf9e;color:#4aaf9e;}
+    .nav-btn.primary{background:#4aaf9e;border-color:#4aaf9e;color:#1a1200;font-weight:500;}
+    .nav-btn.primary:hover{background:#6dcebb;}
+    .skip-indicator{font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#7a6450;margin-left:auto;}
+
+    /* QUESTION MAP */
+    .q-map{display:grid;grid-template-columns:repeat(auto-fill,minmax(2.2rem,1fr));gap:0.3rem;margin-bottom:1.5rem;}
+    .q-map-btn{height:2.2rem;border:1px solid #2e2018;border-radius:var(--radius-sm);background:#3d2d20;color:#7a6450;font-family:var(--serif-en);font-size:0.72rem;cursor:pointer;transition:all 0.15s;}
+    .q-map-btn:hover{border-color:#4aaf9e;color:#4aaf9e;}
+    .q-map-btn.current{border-color:#4aaf9e;background:rgba(74,175,158,0.2);color:#4aaf9e;}
+    .q-map-btn.answered{background:#56402f;border-color:#4aaf9e;color:#d4c4a8;}
+    .q-map-btn.skipped{border-color:#7a6450;}
+    .map-legend{display:flex;gap:1rem;margin-bottom:1rem;font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;flex-wrap:wrap;}
+    .map-legend span{display:flex;align-items:center;gap:0.3rem;}
+    .map-dot{width:10px;height:10px;border-radius:2px;border:1px solid;}
+
+    /* RESULTS */
+    .results-area{display:none;}
+    .results-area.active{display:block;}
+    .result-header{text-align:center;padding:2rem 1rem;border-bottom:1px solid #2e2018;margin-bottom:2rem;}
+    .result-score{font-family:var(--serif-jp);font-size:4rem;color:#4aaf9e;line-height:1;}
+    .result-score.pass{color:#8fd47a;}
+    .result-score.fail{color:#e87a7a;}
+    .result-pct{font-family:var(--serif-en);font-size:1.2rem;color:#b09878;margin-top:0.5rem;}
+    .result-verdict{font-family:var(--serif-en);font-style:italic;font-size:0.88rem;margin-top:0.5rem;}
+    .result-verdict.pass{color:#8fd47a;}
+    .result-verdict.fail{color:#e87a7a;}
+
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.85rem;margin-bottom:2rem;}
+    .stat-box{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-md);padding:1rem;text-align:center;}
+    .stat-num{font-family:var(--serif-jp);font-size:1.8rem;line-height:1;margin-bottom:0.2rem;}
+    .stat-lbl{font-family:var(--serif-en);font-style:italic;font-size:0.68rem;color:#7a6450;}
+
+    /* BREAKDOWN TABLE */
+    .breakdown-title{font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#4aaf9e;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem;}
+    .breakdown-table{width:100%;border-collapse:collapse;font-size:0.8rem;margin-bottom:2rem;}
+    .breakdown-table th{padding:0.45rem 0.75rem;background:#3d2d20;color:#7a6450;font-family:var(--serif-en);font-style:italic;font-size:0.7rem;text-align:left;font-weight:400;border-bottom:1px solid #2e2018;}
+    .breakdown-table td{padding:0.5rem 0.75rem;border-bottom:1px solid rgba(46,32,24,0.5);color:#d4c4a8;}
+
+    /* MISSED QUESTIONS REVIEW */
+    .review-title{font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#4aaf9e;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1rem;}
+    .review-card{background:#56402f;border:1px solid #2e2018;border-radius:var(--radius-md);padding:1.1rem 1.25rem;margin-bottom:0.75rem;}
+    .review-q{font-family:var(--serif-jp);font-size:0.92rem;color:#f0e6d6;line-height:1.9;margin-bottom:0.5rem;}
+    .review-wrong{font-size:0.8rem;color:#e87a7a;padding:0.3rem 0.6rem;background:rgba(232,122,122,0.08);border-radius:3px;margin-bottom:0.25rem;}
+    .review-correct{font-size:0.8rem;color:#8fd47a;padding:0.3rem 0.6rem;background:rgba(143,212,122,0.08);border-radius:3px;margin-bottom:0.5rem;}
+    .review-exp{font-size:0.78rem;color:#b09878;line-height:1.6;}
+    .review-meta{display:flex;gap:0.5rem;margin-bottom:0.5rem;flex-wrap:wrap;}
+    .rev-badge{font-family:var(--serif-en);font-size:0.62rem;padding:0.1rem 0.4rem;border-radius:3px;}
+    .rev-n4{background:rgba(58,107,46,0.3);color:#8fd47a;}
+    .rev-n3{background:rgba(42,82,128,0.3);color:#7ab4e8;}
+    .rev-n2{background:rgba(122,74,30,0.3);color:#e8b47a;}
+    .rev-n1{background:rgba(122,30,30,0.3);color:#e87a7a;}
+
+    .result-actions{display:flex;gap:0.75rem;justify-content:center;margin:2rem 0;flex-wrap:wrap;}
+    .btn-primary{padding:0.65rem 1.75rem;background:#4aaf9e;border:none;border-radius:var(--radius-md);color:#1a1200;font-family:var(--sans-jp);font-size:0.88rem;font-weight:500;cursor:pointer;transition:background 0.2s;}
+    .btn-primary:hover{background:#6dcebb;}
+    .btn-outline{padding:0.65rem 1.75rem;background:transparent;border:1px solid #4aaf9e;border-radius:var(--radius-md);color:#4aaf9e;font-family:var(--sans-jp);font-size:0.88rem;cursor:pointer;transition:all 0.2s;}
+    .btn-outline:hover{background:rgba(74,175,158,0.15);}
+
+    /* FOOTER */
+    .site-footer{border-top:1px solid #2e2018;background:#3d2d20;padding:1.25rem 0;margin-top:2rem;}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;padding:0 2rem;flex-wrap:wrap;gap:1rem;}
+    .footer-jp{font-family:var(--serif-jp);font-size:0.8rem;color:#b09878;}
+    .footer-en{font-family:var(--serif-en);font-style:italic;font-size:0.7rem;color:#7a6450;}
+
+    ruby{display:inline-flex;flex-direction:column-reverse;align-items:center;vertical-align:bottom;line-height:1;}
+    ruby rt{font-family:'Noto Sans JP',sans-serif;font-size:0.55em;color:#e8d8c0;text-align:center;line-height:1.5;user-select:none;}
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="jp"><ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span>
+      <span class="en">Personal Japanese Study</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a></li>
+      <li><a href="vocabulary.html"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a></li>
+      <li><a href="kanji.html"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a></li>
+      <li><a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
+      <li><a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a></li>
+      <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="mocktest.html" class="active"><span class="jp"><ruby>模擬<rt>もぎ</rt></ruby></span><span class="en">Mock Test</span></a></li>
+      <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
+      <li><a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a></li>
+      <li><a href="glossary.html"><span class="jp"><ruby>一<rt>いち</rt></ruby><ruby>覧<rt>らん</rt></ruby></span><span class="en">Glossary</span></a></li>
+    </ul>
+    <div class="nav-controls">
+      <div class="font-controls">
+        <button class="font-btn" id="font-sm" onclick="setFont('sm')">A−</button>
+        <button class="font-btn active" id="font-md" onclick="setFont('md')">A</button>
+        <button class="font-btn" id="font-lg" onclick="setFont('lg')">A+</button>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☀</button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<nav id="mobile-nav" class="mobile-nav">
+  <a href="grammar.html"><span class="jp"><ruby>文<rt>ぶん</rt></ruby><ruby>法<rt>ぽう</rt></ruby></span><span class="en">Grammar</span></a>
+  <a href="vocabulary.html"><span class="jp"><ruby>語<rt>ご</rt></ruby><ruby>彙<rt>い</rt></ruby></span><span class="en">Vocabulary</span></a>
+  <a href="kanji.html"><span class="jp"><ruby>漢<rt>かん</rt></ruby><ruby>字<rt>じ</rt></ruby></span><span class="en">Kanji</span></a>
+  <a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a>
+  <a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a>
+  <a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a>
+  <a href="mocktest.html" class="active"><span class="jp"><ruby>模擬<rt>もぎ</rt></ruby></span><span class="en">Mock Test</span></a>
+  <a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a>
+  <a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a>
+  <a href="glossary.html"><span class="jp"><ruby>一<rt>いち</rt></ruby><ruby>覧<rt>らん</rt></ruby></span><span class="en">Glossary</span></a>
+</nav>
+
+<div class="container">
+  <!-- SETUP -->
+  <div id="setup-view">
+    <div class="page-header">
+      <div class="jp-title"><ruby>模擬<rt>もぎ</rt></ruby><ruby>試験<rt>しけん</rt></ruby></div>
+      <div class="en-title">JLPT Mock Test</div>
+      <p class="desc">Timed, closed-book practice. No hints, no explanations during the test. Results and full review shown at the end.</p>
+    </div>
+
+    <div class="setup-card">
+      <div class="setup-title">Configure your test</div>
+
+      <span class="opt-label">Level</span>
+      <div class="option-row" id="level-opts">
+        <button class="sel-btn sel" data-level="mixed">Mixed N4–N1</button>
+        <button class="sel-btn badge-n4" data-level="n4">N4</button>
+        <button class="sel-btn badge-n3" data-level="n3">N3</button>
+        <button class="sel-btn badge-n2" data-level="n2">N2</button>
+        <button class="sel-btn badge-n1" data-level="n1">N1</button>
+      </div>
+
+      <span class="opt-label">Question types</span>
+      <div class="option-row" id="type-opts">
+        <button class="sel-btn sel" data-type="mixed">All types</button>
+        <button class="sel-btn" data-type="grammar">文法 Grammar</button>
+        <button class="sel-btn" data-type="vocabulary">語彙 Vocabulary</button>
+        <button class="sel-btn" data-type="kanji">漢字 Kanji</button>
+      </div>
+
+      <span class="opt-label">Number of questions</span>
+      <div class="option-row" id="count-opts">
+        <button class="sel-btn" data-count="20">20</button>
+        <button class="sel-btn sel" data-count="35">35</button>
+        <button class="sel-btn" data-count="50">50</button>
+        <button class="sel-btn" data-count="100">100</button>
+      </div>
+
+      <span class="opt-label">Time limit</span>
+      <div class="option-row" id="time-opts">
+        <button class="sel-btn" data-time="20">20 min</button>
+        <button class="sel-btn sel" data-time="35">35 min</button>
+        <button class="sel-btn" data-time="60">60 min</button>
+        <button class="sel-btn" data-time="0">No limit</button>
+      </div>
+
+      <div class="info-box" id="test-info">
+        <strong>35 questions · 35 minutes · 1 min per question</strong><br>
+        No hints or explanations during the test. Questions can be skipped and revisited. Score revealed only at the end.
+      </div>
+
+      <button class="start-test-btn" onclick="startTest()">
+        試験開始 — Begin Test
+      </button>
+    </div>
+  </div>
+
+  <!-- TEST -->
+  <div class="test-area" id="test-view">
+    <div class="timer-bar-wrap">
+      <div class="timer-bar-track"><div class="timer-bar-fill" id="timer-bar" style="width:100%"></div></div>
+    </div>
+    <div class="test-status">
+      <div class="timer-display" id="timer-display">35:00</div>
+      <div class="q-counter" id="q-counter">Q 1 / 35</div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <button class="end-test-btn" onclick="confirmEndTest()">End Test</button>
+    </div>
+
+    <!-- QUESTION MAP -->
+    <div class="map-legend">
+      <span><span class="map-dot" style="background:rgba(74,175,158,0.2);border-color:#4aaf9e;"></span> Answered</span>
+      <span><span class="map-dot" style="background:#3d2d20;border-color:#4aaf9e;"></span> Current</span>
+      <span><span class="map-dot" style="background:#3d2d20;border-color:#7a6450;"></span> Not answered</span>
+    </div>
+    <div class="q-map" id="q-map"></div>
+
+    <!-- QUESTION -->
+    <div class="q-card" id="q-card">
+      <span class="q-type-badge" id="q-type-badge"></span>
+      <div class="q-passage" id="q-passage" style="display:none;"></div>
+      <div class="q-text" id="q-text"></div>
+      <div class="opts" id="q-opts"></div>
+    </div>
+
+    <div class="q-nav">
+      <button class="nav-btn" onclick="navigate(-1)" id="prev-btn">← Prev</button>
+      <button class="nav-btn" onclick="skipQuestion()">Skip</button>
+      <button class="nav-btn primary" onclick="navigate(1)" id="next-btn">Next →</button>
+      <span class="skip-indicator" id="unanswered-count"></span>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-area" id="results-view">
+    <div class="result-header">
+      <div class="result-score" id="result-score">—</div>
+      <div class="result-pct" id="result-pct"></div>
+      <div class="result-verdict" id="result-verdict"></div>
+    </div>
+
+    <div class="stats-grid" id="stats-grid"></div>
+
+    <div class="breakdown-title">Score by category</div>
+    <table class="breakdown-table" id="breakdown-table">
+      <thead><tr>
+        <th>Category</th><th>Correct</th><th>Total</th><th>Accuracy</th>
+      </tr></thead>
+      <tbody id="breakdown-body"></tbody>
+    </table>
+
+    <div class="result-actions">
+      <button class="btn-primary" onclick="retakeTest()">Retake Test</button>
+      <button class="btn-outline" onclick="backToSetup()">New Test</button>
+      <a href="quiz.html" style="display:inline-flex;align-items:center;padding:0.65rem 1.75rem;background:transparent;border:1px solid #7a6450;border-radius:var(--radius-md);color:#7a6450;text-decoration:none;font-family:var(--sans-jp);font-size:0.88rem;transition:all 0.2s;" onmouseover="this.style.borderColor='#4aaf9e';this.style.color='#4aaf9e'" onmouseout="this.style.borderColor='#7a6450';this.style.color='#7a6450'">Practice Quiz →</a>
+    </div>
+
+    <div class="review-title" id="review-title"></div>
+    <div id="review-list"></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <p class="footer-jp"><ruby>模擬<rt>もぎ</rt></ruby><ruby>試験<rt>しけん</rt></ruby> — <ruby>日<rt>に</rt></ruby><ruby>本<rt>ほん</rt></ruby><ruby>語<rt>ご</rt></ruby><ruby>学<rt>がく</rt></ruby><ruby>習<rt>しゅう</rt></ruby></p>
+      <p class="footer-en">JLPT Mock Test · N4 → N1</p>
+    </div>
+    <a href="index.html" style="font-family:var(--serif-en);font-style:italic;font-size:0.78rem;color:#7a6450;text-decoration:none;">← Home</a>
+  </div>
+</footer>
+
+<script src="quiz-bank.js"></script>
+<script>
+// ── Config State ──────────────────────────────────────────────
+let cfg = { level:'mixed', type:'mixed', count:35, time:35 };
+
+function setupOpts(groupId, key) {
+  document.getElementById(groupId).querySelectorAll('.sel-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById(groupId).querySelectorAll('.sel-btn').forEach(b => b.classList.remove('sel'));
+      btn.classList.add('sel');
+      cfg[key] = key === 'count' || key === 'time' ? parseInt(btn.dataset[key]) : btn.dataset[key];
+      updateInfoBox();
+    });
+  });
+}
+setupOpts('level-opts', 'level');
+setupOpts('type-opts',  'type');
+setupOpts('count-opts', 'count');
+setupOpts('time-opts',  'time');
+
+function updateInfoBox() {
+  const timeStr = cfg.time === 0 ? 'No time limit' : cfg.time + ' minutes';
+  const mpp = cfg.time === 0 ? '' : ' · ' + (cfg.time / cfg.count).toFixed(1) + ' min per question';
+  document.getElementById('test-info').innerHTML =
+    `<strong>${cfg.count} questions · ${timeStr}${mpp}</strong><br>
+    No hints or explanations during the test. Questions can be skipped and revisited. Score revealed only at the end.`;
+}
+
+// ── Test State ────────────────────────────────────────────────
+let questions = [];
+let answers   = {};  // index → chosen option letter or null
+let currentQ  = 0;
+let timerInterval = null;
+let secondsLeft   = 0;
+let totalSeconds  = 0;
+let testStartTime = null;
+let testCfg = {};   // snapshot of cfg at start
+
+// ── Build question set ────────────────────────────────────────
+function buildQuestions() {
+  let pool = [...quizBank];
+  if (testCfg.level !== 'mixed') pool = pool.filter(q => q.level === testCfg.level);
+  if (testCfg.type  !== 'mixed') pool = pool.filter(q => q.type  === testCfg.type);
+
+  // Shuffle
+  pool.sort(() => Math.random() - 0.5);
+
+  // For mixed type, balance across types
+  if (testCfg.type === 'mixed') {
+    const types = ['grammar','vocabulary','kanji'];
+    const buckets = {};
+    types.forEach(t => { buckets[t] = pool.filter(q => q.type === t); });
+    const perType = Math.floor(testCfg.count / types.length);
+    const remainder = testCfg.count % types.length;
+    const picked = [];
+    types.forEach((t, i) => {
+      picked.push(...buckets[t].slice(0, perType + (i < remainder ? 1 : 0)));
+    });
+    // Fill shortfall
+    if (picked.length < testCfg.count) {
+      const pickedIds = new Set(picked.map(q => q.id));
+      picked.push(...pool.filter(q => !pickedIds.has(q.id)).slice(0, testCfg.count - picked.length));
+    }
+    return picked.sort(() => Math.random() - 0.5).slice(0, testCfg.count);
+  }
+  return pool.slice(0, testCfg.count);
+}
+
+// ── Start test ────────────────────────────────────────────────
+function startTest() {
+  testCfg = { ...cfg };
+  questions = buildQuestions();
+  if (questions.length === 0) {
+    alert('No questions found for this combination. Try different settings.');
+    return;
+  }
+
+  answers = {};
+  currentQ = 0;
+  testStartTime = Date.now();
+
+  // Switch views
+  document.getElementById('setup-view').style.display  = 'none';
+  document.getElementById('test-view').classList.add('active');
+  document.getElementById('results-view').classList.remove('active');
+
+  // Start timer
+  if (testCfg.time > 0) {
+    totalSeconds = testCfg.time * 60;
+    secondsLeft  = totalSeconds;
+    startTimer();
+  } else {
+    document.getElementById('timer-display').textContent = '∞';
+    document.getElementById('timer-bar').style.display = 'none';
+  }
+
+  buildQuestionMap();
+  showQuestion(0);
+}
+
+// ── Timer ─────────────────────────────────────────────────────
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    updateTimerDisplay();
+    if (secondsLeft <= 0) {
+      clearInterval(timerInterval);
+      finishTest();
+    }
+  }, 1000);
+  updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(secondsLeft / 60);
+  const s = secondsLeft % 60;
+  const str = m + ':' + String(s).padStart(2, '0');
+  const el = document.getElementById('timer-display');
+  const bar = document.getElementById('timer-bar');
+  el.textContent = str;
+
+  const pct = totalSeconds > 0 ? (secondsLeft / totalSeconds * 100) : 100;
+  if (bar) bar.style.width = pct + '%';
+
+  const warningPct = 25;
+  const dangerPct  = 10;
+  const pctLeft = pct;
+
+  el.className = 'timer-display';
+  if (bar) bar.className = 'timer-bar-fill';
+  if (pctLeft <= dangerPct) {
+    el.classList.add('danger');
+    if (bar) bar.classList.add('danger');
+  } else if (pctLeft <= warningPct) {
+    el.classList.add('warning');
+    if (bar) bar.classList.add('warning');
+  }
+}
+
+// ── Question map ──────────────────────────────────────────────
+function buildQuestionMap() {
+  const map = document.getElementById('q-map');
+  map.innerHTML = '';
+  questions.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'q-map-btn';
+    btn.textContent = i + 1;
+    btn.onclick = () => showQuestion(i);
+    map.appendChild(btn);
+  });
+}
+
+function updateQuestionMap() {
+  const btns = document.getElementById('q-map').children;
+  questions.forEach((_, i) => {
+    const btn = btns[i];
+    if (!btn) return;
+    btn.className = 'q-map-btn';
+    if (i === currentQ) btn.classList.add('current');
+    else if (answers[i] !== undefined) btn.classList.add('answered');
+  });
+}
+
+// ── Show question ─────────────────────────────────────────────
+function showQuestion(idx) {
+  currentQ = idx;
+  const q = questions[idx];
+
+  // Update status
+  document.getElementById('q-counter').textContent = `Q ${idx + 1} / ${questions.length}`;
+  const pct = (idx / questions.length * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  // Unanswered count
+  const unanswered = questions.length - Object.keys(answers).length;
+  document.getElementById('unanswered-count').textContent =
+    unanswered > 0 ? `${unanswered} unanswered` : 'All answered ✓';
+
+  // Nav buttons
+  document.getElementById('prev-btn').disabled = idx === 0;
+  document.getElementById('next-btn').textContent = idx === questions.length - 1 ? 'Finish →' : 'Next →';
+  document.getElementById('next-btn').onclick = idx === questions.length - 1
+    ? confirmEndTest : () => navigate(1);
+
+  // Type badge
+  const typeLabels = { grammar:'文法 Grammar', vocabulary:'語彙 Vocabulary', kanji:'漢字 Kanji', reading:'読解 Reading' };
+  const levelColors = { n4:'#8fd47a', n3:'#7ab4e8', n2:'#e8b47a', n1:'#e87a7a' };
+  document.getElementById('q-type-badge').innerHTML =
+    `<span style="color:${levelColors[q.level]}">${q.level.toUpperCase()}</span> · ${typeLabels[q.type] || q.type}`;
+
+  // Passage (reading type)
+  const passageEl = document.getElementById('q-passage');
+  if (q.passage) {
+    passageEl.textContent = q.passage;
+    passageEl.style.display = 'block';
+  } else {
+    passageEl.style.display = 'none';
+  }
+
+  // Question text
+  document.getElementById('q-text').textContent = q.question;
+
+  // Options
+  const optsEl = document.getElementById('q-opts');
+  optsEl.innerHTML = '';
+  q.options.forEach(opt => {
+    const letter = opt.charAt(0);
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.textContent = opt;
+    if (answers[idx] === letter) btn.classList.add('selected');
+    btn.onclick = () => selectAnswer(idx, letter, btn);
+    optsEl.appendChild(btn);
+  });
+
+  updateQuestionMap();
+}
+
+// ── Select answer ─────────────────────────────────────────────
+function selectAnswer(qIdx, letter, btnEl) {
+  answers[qIdx] = letter;
+  // Update button styles
+  document.getElementById('q-opts').querySelectorAll('.opt-btn').forEach(b => {
+    b.classList.remove('selected');
+  });
+  btnEl.classList.add('selected');
+  updateQuestionMap();
+
+  // Unanswered count
+  const unanswered = questions.length - Object.keys(answers).length;
+  document.getElementById('unanswered-count').textContent =
+    unanswered > 0 ? `${unanswered} unanswered` : 'All answered ✓';
+}
+
+// ── Navigation ────────────────────────────────────────────────
+function navigate(dir) {
+  const next = currentQ + dir;
+  if (next >= 0 && next < questions.length) showQuestion(next);
+}
+
+function skipQuestion() {
+  navigate(1);
+}
+
+function confirmEndTest() {
+  const unanswered = questions.length - Object.keys(answers).length;
+  if (unanswered > 0) {
+    if (!confirm(`You have ${unanswered} unanswered question${unanswered > 1 ? 's' : ''}. End the test now?`)) return;
+  }
+  finishTest();
+}
+
+// ── Finish & Results ──────────────────────────────────────────
+function finishTest() {
+  clearInterval(timerInterval);
+  const elapsed = Math.round((Date.now() - testStartTime) / 1000);
+
+  // Calculate results
+  let correct = 0;
+  const missed = [];
+  const breakdown = {};
+
+  questions.forEach((q, i) => {
+    const key = q.level + '-' + q.type;
+    if (!breakdown[key]) breakdown[key] = { level: q.level, type: q.type, correct: 0, total: 0 };
+    breakdown[key].total++;
+
+    const userAns = answers[i];
+    const isCorrect = userAns === q.answer;
+    if (isCorrect) {
+      correct++;
+      breakdown[key].correct++;
+    } else {
+      missed.push({ q, userAns, idx: i });
+    }
+  });
+
+  const total = questions.length;
+  const pct = Math.round(correct / total * 100);
+  const pass = pct >= 60;
+
+  // Save to history
+  const history = JSON.parse(localStorage.getItem('quizHistory') || '[]');
+  history.push({
+    date: new Date().toISOString(),
+    type: 'mocktest',
+    level: testCfg.level,
+    qtype: testCfg.type,
+    correct,
+    total,
+    timeTaken: elapsed,
+    timeLimit: testCfg.time * 60,
+    passed: pass
+  });
+  localStorage.setItem('quizHistory', JSON.stringify(history));
+
+  // Save missed to mistake log
+  const mistakes = JSON.parse(localStorage.getItem('mistakeLog') || '[]');
+  const newMistakes = missed.map(({ q, userAns }) => ({
+    date: new Date().toISOString(),
+    question: q.question,
+    type: q.type,
+    level: q.level,
+    selected: userAns ? q.options.find(o => o.startsWith(userAns + '. ')) || userAns : '（skipped）',
+    answer: q.options.find(o => o.startsWith(q.answer + '. ')) || q.answer,
+    explanation: q.explanation
+  }));
+  localStorage.setItem('mistakeLog', JSON.stringify([...mistakes, ...newMistakes].slice(-500)));
+
+  // Switch to results view
+  document.getElementById('test-view').classList.remove('active');
+  document.getElementById('results-view').classList.add('active');
+
+  // Score display
+  const scoreEl = document.getElementById('result-score');
+  scoreEl.textContent = `${correct} / ${total}`;
+  scoreEl.className = 'result-score ' + (pass ? 'pass' : 'fail');
+
+  document.getElementById('result-pct').textContent = pct + '% accuracy';
+  const verdictEl = document.getElementById('result-verdict');
+  verdictEl.className = 'result-verdict ' + (pass ? 'pass' : 'fail');
+  verdictEl.textContent = pass
+    ? '合格圏内 — Above passing threshold (60%)'
+    : '不合格圏 — Below passing threshold (60%)';
+
+  // Stats
+  const mins = Math.floor(elapsed / 60);
+  const secs = elapsed % 60;
+  const timeStr = mins + ':' + String(secs).padStart(2, '0');
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat-box"><div class="stat-num" style="color:#8fd47a">${correct}</div><div class="stat-lbl">Correct</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:#e87a7a">${total - correct}</div><div class="stat-lbl">Wrong / Skipped</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:#4aaf9e">${pct}%</div><div class="stat-lbl">Accuracy</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:#b09878">${timeStr}</div><div class="stat-lbl">Time taken</div></div>
+  `;
+
+  // Breakdown by level/type
+  const typeLabels = { grammar:'文法', vocabulary:'語彙', kanji:'漢字', reading:'読解' };
+  const tbody = document.getElementById('breakdown-body');
+  tbody.innerHTML = '';
+  const levelColors = { n4:'#8fd47a', n3:'#7ab4e8', n2:'#e8b47a', n1:'#e87a7a' };
+
+  Object.values(breakdown)
+    .sort((a,b) => a.level.localeCompare(b.level) || a.type.localeCompare(b.type))
+    .forEach(row => {
+      const acc = Math.round(row.correct / row.total * 100);
+      tbody.innerHTML += `
+        <tr>
+          <td><span style="color:${levelColors[row.level]}">${row.level.toUpperCase()}</span> ${typeLabels[row.type] || row.type}</td>
+          <td style="color:#8fd47a">${row.correct}</td>
+          <td>${row.total}</td>
+          <td style="color:${acc >= 60 ? '#8fd47a' : '#e87a7a'}">${acc}%</td>
+        </tr>`;
+    });
+
+  // Missed questions review
+  const reviewTitle = document.getElementById('review-title');
+  const reviewList = document.getElementById('review-list');
+
+  if (missed.length === 0) {
+    reviewTitle.textContent = 'Perfect score — no mistakes!';
+    reviewList.innerHTML = '';
+  } else {
+    reviewTitle.textContent = `${missed.length} missed question${missed.length > 1 ? 's' : ''} — review below`;
+    reviewList.innerHTML = missed.map(({ q, userAns }) => {
+      const userOpt = userAns ? q.options.find(o => o.startsWith(userAns + '. ')) || userAns : '（skipped）';
+      const corrOpt = q.options.find(o => o.startsWith(q.answer + '. ')) || q.answer;
+      return `
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rev-badge rev-${q.level}">${q.level.toUpperCase()}</span>
+            <span class="rev-badge" style="background:#3d2d20;color:#7a6450;">${typeLabels[q.type] || q.type}</span>
+          </div>
+          <div class="review-q">${q.question}</div>
+          <div class="review-wrong">✗ You answered: ${userOpt}</div>
+          <div class="review-correct">✓ Correct: ${corrOpt}</div>
+          <div class="review-exp">${q.explanation}</div>
+        </div>`;
+    }).join('');
+  }
+
+  // Scroll to top of results
+  window.scrollTo(0, 0);
+}
+
+// ── Actions ───────────────────────────────────────────────────
+function retakeTest() {
+  document.getElementById('results-view').classList.remove('active');
+  startTest();
+}
+
+function backToSetup() {
+  document.getElementById('results-view').classList.remove('active');
+  document.getElementById('test-view').classList.remove('active');
+  document.getElementById('setup-view').style.display = 'block';
+}
+
+// Warn on page leave during test
+window.addEventListener('beforeunload', e => {
+  if (document.getElementById('test-view').classList.contains('active')) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
+// ── Theme, font, nav ──────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('theme-toggle');
+  const apply = t => {
+    document.documentElement.setAttribute('data-theme', t);
+    btn.textContent = t === 'dark' ? '☀' : '🌙';
+    localStorage.setItem('theme', t);
+  };
+  apply(localStorage.getItem('theme') || 'dark');
+  btn.addEventListener('click', () => apply(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobile-nav');
+  if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileNav.classList.toggle('open'); });
+    document.addEventListener('click', e => {
+      if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+        hamburger.classList.remove('open'); mobileNav.classList.remove('open');
+      }
+    });
+  }
+
+  const fontSizes = { sm:'17px', md:'19px', lg:'22px' };
+  const sf = localStorage.getItem('fontSize') || 'md';
+  document.documentElement.style.fontSize = fontSizes[sf];
+  document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+  const fb = document.getElementById('font-' + sf);
+  if (fb) fb.classList.add('active');
+
+  updateInfoBox();
+});
+
+function setFont(size) {
+  const fontSizes = { sm:'17px', md:'19px', lg:'22px' };
+  document.documentElement.style.fontSize = fontSizes[size];
+  localStorage.setItem('fontSize', size);
+  document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+  const b = document.getElementById('font-' + size);
+  if (b) b.classList.add('active');
+}
+</script>
+</body>
+</html>

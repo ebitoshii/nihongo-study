@@ -188,6 +188,7 @@
       <li><a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
       <li><a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a></li>
       <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="mocktest.html"><span class="jp"><ruby>模擬<rt>もぎ</rt></ruby></span><span class="en">Mock Test</span></a></li>
       <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
       <li><a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a></li>
       <li><a href="flashcards.html" class="active"><span class="jp">カード</span><span class="en">Flashcards</span></a></li>
@@ -212,6 +213,7 @@
   <a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a>
   <a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a>
   <a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a>
+  <a href="mocktest.html"><span class="jp"><ruby>模擬<rt>もぎ</rt></ruby></span><span class="en">Mock Test</span></a>
   <a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a>
   <a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a>
   <a href="flashcards.html" class="active"><span class="jp">カード</span><span class="en">Flashcards</span></a>
@@ -337,7 +339,7 @@
   </div>
 </footer>
 
-<script src="quiz-bank.js"></script>
+<script src="shared-data.js"></script>
 <script src="voicevox.js"></script>
 <script>
 // ── Settings ──────────────────────────────────────────────────
@@ -369,14 +371,10 @@ let deck = [], idx = 0, flipped = false;
 let stats = { easy:0, good:0, again:0 };
 let againCards = [];
 
-// ── Build deck from vocab data ─────────────────────────────────
+// ── Build deck from shared data ───────────────────────────────
 function buildDeck() {
-  // Vocab data is embedded inline below
-  let pool = vocabData;
-  if (cfg.content === 'kanji') pool = kanjiData;
+  let pool = cfg.content === 'kanji' ? sharedKanjiData : sharedVocabData;
   if (cfg.level !== 'mixed') pool = pool.filter(c => c.level === cfg.level);
-
-  // Shuffle
   const shuffled = [...pool].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, cfg.count);
 }
@@ -416,26 +414,35 @@ function showCard() {
     el.textContent = card.level.toUpperCase();
   });
 
+  // Determine display fields based on content type
+  const isKanji = cfg.content === 'kanji';
+  const frontWord = isKanji ? card.char : card.word;
+  const frontSub  = isKanji ? (card.on ? 'On: ' + card.on : '') : (card.pos || '');
+  const backReading = isKanji ? (card.kun ? 'Kun: ' + card.kun : card.on || '') : (card.reading || '');
+  const backMeaning = card.meaning || '';
+  const backExJp = card.example_jp || '';
+  const backExEn = card.example_en || '';
+
   // Front
   if (cfg.front === 'word') {
-    document.getElementById('front-main').textContent = card.word || card.char;
-    document.getElementById('front-sub').textContent  = card.pos || card.on || '';
+    document.getElementById('front-main').textContent = frontWord;
+    document.getElementById('front-sub').textContent  = frontSub;
   } else {
-    document.getElementById('front-main').textContent = card.meaning;
-    document.getElementById('front-sub').textContent  = card.pos || '';
+    document.getElementById('front-main').textContent = backMeaning;
+    document.getElementById('front-sub').textContent  = frontSub;
   }
 
   // Back
   if (cfg.front === 'word') {
-    document.getElementById('back-reading').textContent  = card.reading || '';
-    document.getElementById('back-meaning').textContent  = card.meaning || '';
-    document.getElementById('back-example-jp').textContent = card.example_jp || card.compounds?.[0]?.word || '';
-    document.getElementById('back-example-en').textContent = card.example_en || card.compounds?.[0]?.mean || '';
+    document.getElementById('back-reading').textContent    = backReading;
+    document.getElementById('back-meaning').textContent    = backMeaning;
+    document.getElementById('back-example-jp').textContent = backExJp;
+    document.getElementById('back-example-en').textContent = backExEn;
   } else {
-    document.getElementById('back-reading').textContent  = card.word || card.char || '';
-    document.getElementById('back-meaning').textContent  = card.reading || '';
-    document.getElementById('back-example-jp').textContent = card.example_jp || '';
-    document.getElementById('back-example-en').textContent = card.example_en || '';
+    document.getElementById('back-reading').textContent    = frontWord;
+    document.getElementById('back-meaning').textContent    = backReading;
+    document.getElementById('back-example-jp').textContent = backExJp;
+    document.getElementById('back-example-en').textContent = backExEn;
   }
 }
 
@@ -467,6 +474,11 @@ function endSession() {
   document.getElementById('end-good').textContent  = stats.good;
   document.getElementById('end-again').textContent = stats.again;
   document.getElementById('session-end').classList.add('visible');
+
+  // Track session
+  const correct = stats.easy + stats.good;
+  const total   = stats.easy + stats.good + stats.again;
+  trackSession('flashcard', cfg.level, correct, total);
 }
 
 function restartSession() {
@@ -498,53 +510,38 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') skipCard();
 });
 
-// ── Vocab & Kanji data (loaded from external scripts) ─────────
-// vocabData and kanjiData are built from the page data
-let vocabData = [];
-let kanjiData = [];
+// Data loaded from shared-data.js (sharedVocabData, sharedKanjiData)
 
-// Build from quizBank questions — extract unique vocab
-(function buildData() {
-  // We'll source from the quiz bank for vocab
-  // and supplement with inline compact data
-  const seen = new Set();
-  quizBank.filter(q => q.type === 'vocabulary').forEach(q => {
-    // Extract word from question text
-    const m = q.question.match(/「([^」]+)」/);
-    if (m && !seen.has(m[1])) {
-      seen.add(m[1]);
-      vocabData.push({
-        level: q.level,
-        word: m[1],
-        reading: '',
-        meaning: q.explanation.split(' means ')[1]?.split('.')[0] || q.explanation.split(' = ')[1]?.split(' ')[0] || '',
-        pos: '',
-        example_jp: q.question,
-        example_en: q.explanation
-      });
-    }
-  });
 
-  // Also source kanji from quiz bank
-  const seenK = new Set();
-  quizBank.filter(q => q.type === 'kanji').forEach(q => {
-    const m = q.question.match(/「([^」]+)」/);
-    if (m && !seenK.has(m[1])) {
-      seenK.add(m[1]);
-      const reading = q.options.find(o => o.startsWith('A. '))?.replace('A. ','') || '';
-      kanjiData.push({
-        level: q.level,
-        word: m[1],
-        char: m[1],
-        reading: q.answer === 'A' ? reading : '',
-        meaning: q.explanation.split('(')[1]?.replace(')','').trim() || '',
-        pos: 'kanji',
-        example_jp: q.question,
-        example_en: q.explanation
-      });
-    }
+// ── Track session ─────────────────────────────────────────────
+function trackSession(type, level, correct, total) {
+  const history = JSON.parse(localStorage.getItem('quizHistory') || '[]');
+  history.push({
+    date:    new Date().toISOString(),
+    type,
+    level:   level || 'mixed',
+    qtype:   type,
+    correct: correct || 0,
+    total:   total || 0
   });
-})();
+  localStorage.setItem('quizHistory', JSON.stringify(history));
+  // Update streak
+  const today = new Date().toISOString().split('T')[0];
+  const last  = localStorage.getItem('lastStudyDate');
+  let streak  = parseInt(localStorage.getItem('studyStreak') || '0');
+  if (last !== today) {
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+    streak = last === yesterday ? streak + 1 : 1;
+    localStorage.setItem('studyStreak', streak);
+    localStorage.setItem('lastStudyDate', today);
+  }
+  // Mark schedule day
+  try {
+    const done = new Set(JSON.parse(localStorage.getItem('scheduleDone') || '[]'));
+    done.add(today);
+    localStorage.setItem('scheduleDone', JSON.stringify([...done]));
+  } catch(e) {}
+}
 
 // ── Theme, font, hamburger ────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {

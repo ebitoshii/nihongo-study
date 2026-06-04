@@ -184,6 +184,7 @@
       <li><a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
       <li><a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a></li>
       <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="mocktest.html"><span class="jp"><ruby>模擬<rt>もぎ</rt></ruby></span><span class="en">Mock Test</span></a></li>
       <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
       <li><a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a></li>
       <li><a href="flashcards.html"><span class="jp">カード</span><span class="en">Flashcards</span></a></li>
@@ -209,6 +210,7 @@
   <a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a>
   <a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a>
   <a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a>
+  <a href="mocktest.html"><span class="jp"><ruby>模擬<rt>もぎ</rt></ruby></span><span class="en">Mock Test</span></a>
   <a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a>
   <a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a>
   <a href="flashcards.html"><span class="jp">カード</span><span class="en">Flashcards</span></a>
@@ -324,7 +326,7 @@
   </div>
 </footer>
 
-<script src="quiz-bank.js"></script>
+<script src="shared-data.js"></script>
 <script>
 // ── Config ────────────────────────────────────────────────────
 let cfg = { type:'reading', content:'vocab', level:'mixed', count:20 };
@@ -348,37 +350,37 @@ setupOpts('count-opts',   'count');
 let deck = [], idx = 0, answered = false;
 let stats = { correct:0, wrong:0 };
 
-// ── Build deck ────────────────────────────────────────────────
+// ── Build deck from shared data ───────────────────────────────
 function buildDeck() {
-  // Source from quiz bank kanji/vocab questions
-  let pool = quizBank.filter(q => q.type === (cfg.content === 'kanji' ? 'kanji' : 'vocabulary'));
-  if (cfg.level !== 'mixed') pool = pool.filter(q => q.level === cfg.level);
+  let pool;
+  if (cfg.content === 'kanji') {
+    pool = sharedKanjiData.map(k => ({
+      level:   k.level,
+      word:    k.char,
+      reading: k.kun ? k.kun.split('・')[0].replace(/（[^）]*）/g, '') : (k.on ? k.on.split('、')[0] : ''),
+      meaning: k.meaning,
+      hint:    (k.kun || k.on || '').charAt(0)
+    }));
+  } else {
+    pool = sharedVocabData.map(v => ({
+      level:   v.level,
+      word:    v.word,
+      reading: v.reading,
+      meaning: v.meaning,
+      hint:    v.reading.charAt(0)
+    }));
+  }
 
-  // Convert to practice items
-  const items = pool.map(q => {
-    const wordMatch = q.question.match(/「([^」]+)」/);
-    const word = wordMatch ? wordMatch[1] : q.question;
+  if (cfg.level !== 'mixed') pool = pool.filter(i => i.level === cfg.level);
 
-    if (cfg.content === 'kanji') {
-      // For kanji: answer is the correct reading from options
-      const correctOpt = q.options.find(o => o.startsWith(q.answer + '. '));
-      const reading = correctOpt ? correctOpt.replace(/^[A-D]\. /, '') : '';
-      const meaning = q.explanation.match(/\(([^)]+)\)$/)?.[1] || '';
-      return { level:q.level, word, reading, meaning, hint: reading.charAt(0) };
-    } else {
-      // For vocab: answer is the meaning
-      const meaning = q.explanation.split(' means ')[1]?.split('.')[0]
-        || q.explanation.split(' = ')[1]?.split(' ')[0]
-        || '';
-      // Reading not reliably available from quiz bank for vocab — use meaning as answer for "meaning" mode
-      return { level:q.level, word, reading:'', meaning, hint: meaning.split(',')[0].split(' ')[0] };
-    }
-  }).filter(i => {
-    if (cfg.type === 'reading') return i.reading.length > 0;
-    return i.meaning.length > 0;
+  // Filter by practice type
+  pool = pool.filter(i => {
+    if (cfg.type === 'reading') return i.reading && i.reading.length > 0;
+    return i.meaning && i.meaning.length > 0;
   });
 
-  return [...items].sort(() => Math.random() - 0.5).slice(0, cfg.count);
+  if (pool.length === 0) return [];
+  return [...pool].sort(() => Math.random() - 0.5).slice(0, cfg.count);
 }
 
 // ── Start ─────────────────────────────────────────────────────
@@ -436,7 +438,12 @@ function showQuestion() {
 
 function showHint() {
   const item = deck[idx];
-  const hint = cfg.type === 'reading' ? item.reading.charAt(0) + '...' : item.meaning.split(' ')[0] + '...';
+  let hint = '';
+  if (cfg.type === 'reading') {
+    hint = item.reading ? item.reading.charAt(0) + '...' : '—';
+  } else {
+    hint = item.meaning ? item.meaning.split(',')[0].split(' ').slice(0,2).join(' ') + '...' : '—';
+  }
   const el = document.getElementById('hint-text');
   el.textContent = `Hint: ${hint}`;
   el.style.display = 'block';
@@ -445,7 +452,8 @@ function showHint() {
 function normalise(s) {
   return s.trim().toLowerCase()
     .replace(/\s+/g, ' ')
-    .replace(/[、。！？]/g, '');
+    .replace(/[、。！？・（）()]/g, '')
+    .replace(/[ァ-ン]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x60)); // katakana→hiragana
 }
 
 function checkAnswer() {
@@ -509,6 +517,9 @@ function endSession() {
   document.getElementById('end-wrong').textContent   = stats.wrong;
   document.getElementById('end-pct').textContent     = pct + '%';
   document.getElementById('session-end').classList.add('visible');
+
+  // Track session
+  trackSession('writing', cfg.level, stats.correct, total);
 }
 
 function backToSetup() {

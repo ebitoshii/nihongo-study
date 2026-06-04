@@ -267,11 +267,13 @@
       <li><a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
       <li><a href="listening.html" class="active"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a></li>
       <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="mocktest.html"><span class="jp"><ruby>模擬<rt>もぎ</rt></ruby></span><span class="en">Mock Test</span></a></li>
       <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
       <li><a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a></li>
       <li><a href="flashcards.html"><span class="jp">カード</span><span class="en">Flashcards</span></a></li>
       <li><a href="writing.html"><span class="jp"><ruby>書<rt>か</rt></ruby>き</span><span class="en">Writing</span></a></li>
       <li><a href="schedule.html"><span class="jp"><ruby>計<rt>けい</rt></ruby><ruby>画<rt>かく</rt></ruby></span><span class="en">Schedule</span></a></li>
+      <li><a href="glossary.html"><span class="jp"><ruby>一<rt>いち</rt></ruby><ruby>覧<rt>らん</rt></ruby></span><span class="en">Glossary</span></a></li>
     </ul>
   </div>
     <div class="nav-controls">
@@ -293,11 +295,13 @@
     <a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a>
     <a href="listening.html" class="active"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a>
     <a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a>
+    <a href="mocktest.html"><span class="jp"><ruby>模擬<rt>もぎ</rt></ruby></span><span class="en">Mock Test</span></a>
     <a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a>
     <a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a>
     <a href="flashcards.html"><span class="jp">カード</span><span class="en">Flashcards</span></a>
     <a href="writing.html"><span class="jp"><ruby>書<rt>か</rt></ruby>き</span><span class="en">Writing</span></a>
     <a href="schedule.html"><span class="jp"><ruby>計<rt>けい</rt></ruby><ruby>画<rt>かく</rt></ruby></span><span class="en">Schedule</span></a>
+    <a href="glossary.html"><span class="jp"><ruby>一<rt>いち</rt></ruby><ruby>覧<rt>らん</rt></ruby></span><span class="en">Glossary</span></a>
   </nav>
 
 <div class="container">
@@ -1292,6 +1296,236 @@ const listeningData = [
       {q:'「異文化コミュニケーションで誤解が生まれやすい所以」とはどういう意味ですか。', opts:['A. 日本語が難しいから','B. 沈黙が持つ多様な意味を異文化の人が読み取れないことがあるから','C. 日本人が外国語を話せないから','D. 文化的な食べ物の違いから'], answer:'B', explanation:'沈黙が配慮・熟慮・拒絶など複数の意味を持つことを異文化の人が理解できず、誤解が生じやすいと述べています。'},
     ]
   },
+
+// ══════════════════════════════════════════════════════════════
+  //  N1 — NEW SCRIPTS (13–24) — Naturalistic & Implicit
+  // ══════════════════════════════════════════════════════════════
+
+  {
+    id:'n1-l-13', level:'n1',
+    titleJp:'<ruby>読<rt>よ</rt></ruby>まれなかった<ruby>空<rt>くう</rt></ruby><ruby>気<rt>き</rt></ruby>',
+    titleEn:'The Unread Room',
+    scene:'Two colleagues debrief after a difficult client meeting. Listen for what is NOT said directly.',
+    speakers:['A','B'],
+    script:[
+      {speaker:'A', text:'さっきの<ruby>打<rt>う</rt></ruby>ち<ruby>合<rt>あわ</rt></ruby>わせ、いかがでしたか。'},
+      {speaker:'B', text:'そうですね…<ruby>先方<rt>せんぽう</rt></ruby>は<ruby>熱心<rt>ねっしん</rt></ruby>に<ruby>聞<rt>き</rt></ruby>いてくださってはいたんですが。'},
+      {speaker:'A', text:'でも何か、引っかかりましたか。'},
+      {speaker:'B', text:'ご提案の方向性について、再度検討させていただきたい、とおっしゃっていましたし。<ruby>追加<rt>ついか</rt></ruby>の<ruby>資料<rt>しりょう</rt></ruby>も<ruby>ご要望<rt>ごようぼう</rt></ruby>でしたので。'},
+      {speaker:'A', text:'<ruby>正直<rt>しょうじき</rt></ruby>なところ、<ruby>難<rt>むずか</rt></ruby>しそうですね。'},
+      {speaker:'B', text:'<ruby>私<rt>わたし</rt></ruby>もそう<ruby>拝察<rt>はいさつ</rt></ruby>しております。<ruby>次<rt>つぎ</rt></ruby>の<ruby>手<rt>て</rt></ruby>を<ruby>考<rt>かんが</rt></ruby>えた<ruby>方<rt>ほう</rt></ruby>がよいかもしれません。'},
+    ],
+    scriptPlain:'さっきの打ち合わせ、いかがでしたか。そうですね…先方は熱心に聞いてくださってはいたんですが。でも何か、引っかかりましたか。ご提案の方向性について、再度検討させていただきたい、とおっしゃっていましたし。追加の資料もご要望でしたので。正直なところ、難しそうですね。私もそう拝察しております。次の手を考えた方がよいかもしれません。',
+    questions:[
+      {q:'クライアントは実際にどう思っていたと考えられますか。', opts:['A. 提案に非常に満足していた','B. 提案を断る可能性が高い','C. もっと多くのオプションを求めていた','D. すぐに契約したかった'], answer:'B', explanation:'「再度検討したい」「追加資料の要望」は婉曲な断りのサインと読み取れます。二人とも「難しそう」と認識しています。'},
+      {q:'「拝察しております」とはどういう意味ですか。', opts:['A. 完全に同意している','B. 敬意を込めて推察・理解している','C. 不満を表している','D. 驚いている'], answer:'B', explanation:'「拝察」は「察する（推察する）」の謙譲語で、敬意を込めて相手の意向を読み取ることを意味します。'},
+      {q:'Bさんが直接「断られた」と言わない理由は何ですか。', opts:['A. まだ確定していないから','B. 日本語で否定は直接言わないから','C. 日本のビジネス文化では婉曲表現が好まれるから','D. AさんとBさんは仲が悪いから'], answer:'C', explanation:'日本のビジネス場面では否定的な結果も間接的・婉曲的に伝える傾向があります。「再度検討」は典型的な婉曲的断り表現です。'},
+    ]
+  },
+
+  {
+    id:'n1-l-14', level:'n1',
+    titleJp:'<ruby>世代<rt>せだい</rt></ruby>間の<ruby>断<rt>だん</rt></ruby><ruby>絶<rt>ぜつ</rt></ruby>',
+    titleEn:'Generational Gap',
+    scene:'A parent and adult child argue about career choices. Notice the underlying values conflict.',
+    speakers:['Parent (A)','Child (B)'],
+    script:[
+      {speaker:'A', text:'<ruby>大企業<rt>だいきぎょう</rt></ruby>に<ruby>入<rt>はい</rt></ruby>っておけば<ruby>安心<rt>あんしん</rt></ruby>じゃないか。なぜわざわざ<ruby>不安定<rt>ふあんてい</rt></ruby>な<ruby>道<rt>みち</rt></ruby>を<ruby>選<rt>えら</rt></ruby>ぶんだ。'},
+      {speaker:'B', text:'<ruby>安定<rt>あんてい</rt></ruby>だけが<ruby>全<rt>すべ</rt></ruby>てじゃないでしょう。<ruby>自分<rt>じぶん</rt></ruby>の<ruby>可能性<rt>かのうせい</rt></ruby>を<ruby>試<rt>ため</rt></ruby>したいんです。'},
+      {speaker:'A', text:'<ruby>理想<rt>りそう</rt></ruby>は<ruby>分<rt>わ</rt></ruby>かる。でも<ruby>現実<rt>げんじつ</rt></ruby>は<ruby>厳<rt>きび</rt></ruby>しい。<ruby>後悔<rt>こうかい</rt></ruby>しても<ruby>知<rt>し</rt></ruby>らんぞ。'},
+      {speaker:'B', text:'<ruby>後悔<rt>こうかい</rt></ruby>するとしたら、やらなかった<ruby>方<rt>ほう</rt></ruby>だと<ruby>思<rt>おも</rt></ruby>います。<ruby>失敗<rt>しっぱい</rt></ruby>しても、それが<ruby>私<rt>わたし</rt></ruby>の<ruby>経験<rt>けいけん</rt></ruby>になる。'},
+      {speaker:'A', text:'…お前はいつからそんなふうに<ruby>考<rt>かんが</rt></ruby>えるようになったんだ。'},
+      {speaker:'B', text:'<ruby>親父<rt>おやじ</rt></ruby>を<ruby>見<rt>み</rt></ruby>てたからかもしれない。<ruby>自分<rt>じぶん</rt></ruby>の<ruby>仕事<rt>しごと</rt></ruby>を<ruby>誇<rt>ほこ</rt></ruby>りに<ruby>思<rt>おも</rt></ruby>ってるでしょう。'},
+    ],
+    scriptPlain:'大企業に入っておけば安心じゃないか。なぜわざわざ不安定な道を選ぶんだ。安定だけが全てじゃないでしょう。自分の可能性を試したいんです。理想は分かる。でも現実は厳しい。後悔しても知らんぞ。後悔するとしたら、やらなかった方だと思います。失敗しても、それが私の経験になる。…お前はいつからそんなふうに考えるようになったんだ。親父を見てたからかもしれない。自分の仕事を誇りに思ってるでしょう。',
+    questions:[
+      {q:'親の立場の価値観として最も適切なものはどれですか。', opts:['A. 自己実現と挑戦','B. 安定と現実主義','C. 創造性と革新','D. 自由と冒険'], answer:'B', explanation:'「大企業に入れば安心」「現実は厳しい」という発言から、安定・現実主義が親の価値観であることが分かります。'},
+      {q:'子どもの最後の発言「親父を見てたからかもしれない」はどういう意味ですか。', opts:['A. 親の失敗から学んだ','B. 親が仕事に誇りを持っているから自分も誇りある仕事をしたい','C. 親を批判している','D. 親に感謝している'], answer:'B', explanation:'父親が自分の仕事を誇りに思っていることを観察し、自分も誇りを感じられる仕事を選びたいという意味で、逆説的に父親の影響を受けていることを示しています。'},
+      {q:'この会話の核心的な対立は何ですか。', opts:['A. 就職先の具体的な会社の選択','B. 安定を重視する世代観と自己実現を重視する世代観の衝突','C. 親子関係の問題','D. 経済的な問題'], answer:'B', explanation:'表面的には職業選択の議論ですが、本質は安定重視の親世代と自己実現重視の子世代の価値観の違いです。'},
+    ]
+  },
+
+  {
+    id:'n1-l-15', level:'n1',
+    titleJp:'<ruby>会議<rt>かいぎ</rt></ruby>の<ruby>空<rt>くう</rt></ruby><ruby>気<rt>き</rt></ruby>を<ruby>読<rt>よ</rt></ruby>む',
+    titleEn:'Reading the Room in a Meeting',
+    scene:'A philosophy professor lectures on the difference between stated positions and underlying interests in negotiation.',
+    speakers:['Professor'],
+    script:[
+      {speaker:'Professor', text:'<ruby>交渉<rt>こうしょう</rt></ruby>において、<ruby>人々<rt>ひとびと</rt></ruby>が<ruby>主張<rt>しゅちょう</rt></ruby>することと、<ruby>実際<rt>じっさい</rt></ruby>に<ruby>必要<rt>ひつよう</rt></ruby>としていることは<ruby>根本<rt>こんぽん</rt></ruby>的<ruby>に<rt>に</rt></ruby><ruby>異<rt>こと</rt></ruby>なることがある。<ruby>表明<rt>ひょうめい</rt></ruby>された<ruby>立場<rt>たちば</rt></ruby>の<ruby>背後<rt>はいご</rt></ruby>には、<ruby>必<rt>かなら</rt></ruby>ず<ruby>潜在的<rt>せんざいてき</rt></ruby>な<ruby>利害<rt>りがい</rt></ruby>がある。<ruby>優<rt>すぐ</rt></ruby>れた<ruby>交渉者<rt>こうしょうしゃ</rt></ruby>とは、<ruby>相手<rt>あいて</rt></ruby>の<ruby>言葉<rt>ことば</rt></ruby>の<ruby>表面<rt>ひょうめん</rt></ruby>だけでなく、その<ruby>言葉<rt>ことば</rt></ruby>が<ruby>生<rt>う</rt></ruby>まれた<ruby>文脈<rt>ぶんみゃく</rt></ruby>と<ruby>感情<rt>かんじょう</rt></ruby>を<ruby>読<rt>よ</rt></ruby>む<ruby>能力<rt>のうりょく</rt></ruby>を<ruby>持<rt>も</rt></ruby>つ<ruby>人<rt>ひと</rt></ruby>です。<ruby>沈黙<rt>ちんもく</rt></ruby>すら、<ruby>情報<rt>じょうほう</rt></ruby>である。'},
+    ],
+    scriptPlain:'交渉において、人々が主張することと、実際に必要としていることは根本的に異なることがある。表明された立場の背後には、必ず潜在的な利害がある。優れた交渉者とは、相手の言葉の表面だけでなく、その言葉が生まれた文脈と感情を読む能力を持つ人です。沈黙すら、情報である。',
+    questions:[
+      {q:'「表明された立場の背後には潜在的な利害がある」とはどういう意味ですか。', opts:['A. 人々はいつも嘘をついている','B. 人々が言うことと本当に求めていることは違う場合がある','C. 交渉は常に公平ではない','D. 立場を表明することは重要ではない'], answer:'B', explanation:'「立場（position）」と「利害（interest）」を区別する交渉理論の核心で、人が主張することの裏には別の真の欲求があるという意味です。'},
+      {q:'優れた交渉者の特徴として述べられているものはどれですか。', opts:['A. 強く主張できること','B. 妥協できること','C. 言葉の表面だけでなく文脈と感情を読む能力','D. 論理的に話せること'], answer:'C', explanation:'「相手の言葉の表面だけでなく、その言葉が生まれた文脈と感情を読む能力」と述べています。'},
+      {q:'「沈黙すら、情報である」とはどういう意味ですか。', opts:['A. 沈黙は失礼だ','B. 黙っていれば何も伝わらない','C. 返答しないこと自体が何かを示している','D. 沈黙は同意を意味する'], answer:'C', explanation:'「すら」という強調表現により、言葉だけでなく沈黙という「言わないこと」も重要な情報として読み取るべきという主張です。'},
+    ]
+  },
+
+  {
+    id:'n1-l-16', level:'n1',
+    titleJp:'<ruby>現代<rt>げんだい</rt></ruby><ruby>社会<rt>しゃかい</rt></ruby>の<ruby>孤独<rt>こどく</rt></ruby>',
+    titleEn:'Loneliness in Modern Society',
+    scene:'A sociologist discusses the paradox of loneliness in a hyper-connected age.',
+    speakers:['Sociologist'],
+    script:[
+      {speaker:'Sociologist', text:'<ruby>逆説<rt>ぎゃくせつ</rt></ruby>的なことに、<ruby>人類<rt>じんるい</rt></ruby><ruby>史上<rt>しじょう</rt></ruby>最も<ruby>つながった<rt>つながった</rt></ruby><ruby>時代<rt>じだい</rt></ruby>に、<ruby>孤独<rt>こどく</rt></ruby>を<ruby>訴<rt>うった</rt></ruby>える<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えています。SNSの<ruby>繋<rt>つな</rt></ruby>がりは<ruby>量的<rt>りょうてき</rt></ruby>には<ruby>豊富<rt>ほうふ</rt></ruby>だが、<ruby>質的<rt>しつてき</rt></ruby>な<ruby>深<rt>ふか</rt></ruby>さに<ruby>欠<rt>か</rt></ruby>けることが<ruby>多<rt>おお</rt></ruby>い。<ruby>本当<rt>ほんとう</rt></ruby>の<ruby>孤独<rt>こどく</rt></ruby>とは<ruby>物理的<rt>ぶつりてき</rt></ruby>な<ruby>一人<rt>ひとり</rt></ruby>ぼっちではなく、<ruby>理解<rt>りかい</rt></ruby>されないという<ruby>感覚<rt>かんかく</rt></ruby>から<ruby>生<rt>う</rt></ruby>まれます。<ruby>群衆<rt>ぐんしゅう</rt></ruby>の<ruby>中<rt>なか</rt></ruby>にいながら、<ruby>誰<rt>だれ</rt></ruby>にも<ruby>届<rt>とど</rt></ruby>かないという<ruby>感覚<rt>かんかく</rt></ruby>が、<ruby>現代<rt>げんだい</rt></ruby>の<ruby>孤独<rt>こどく</rt></ruby>の<ruby>本質<rt>ほんしつ</rt></ruby>です。'},
+    ],
+    scriptPlain:'逆説的なことに、人類史上最もつながった時代に、孤独を訴える人が増えています。SNSの繋がりは量的には豊富だが、質的な深さに欠けることが多い。本当の孤独とは物理的な一人ぼっちではなく、理解されないという感覚から生まれます。群衆の中にいながら、誰にも届かないという感覚が、現代の孤独の本質です。',
+    questions:[
+      {q:'「逆説的」とはここでどういう意味ですか。', opts:['A. 論理的に正しい','B. 一見矛盾しているが実は真実','C. 科学的に証明されている','D. 昔から言われていること'], answer:'B', explanation:'「最もつながった時代に孤独が増える」という一見矛盾する現象を逆説と表現しています。'},
+      {q:'SNSのつながりの問題として述べられているものはどれですか。', opts:['A. 使用時間が長すぎる','B. 量は多いが質的な深さに欠ける','C. プライバシーが守られない','D. 情報が正確でない'], answer:'B', explanation:'「量的には豊富だが、質的な深さに欠けることが多い」と述べています。'},
+      {q:'現代の孤独の本質として述べられているものはどれですか。', opts:['A. 物理的に一人でいること','B. 友達がいないこと','C. 理解されないという感覚、群衆の中でも誰にも届かない感覚','D. 経済的な困窮'], answer:'C', explanation:'「本当の孤独とは物理的な一人ぼっちではなく、理解されないという感覚」「群衆の中にいながら、誰にも届かないという感覚」と述べています。'},
+    ]
+  },
+
+  {
+    id:'n1-l-17', level:'n1',
+    titleJp:'<ruby>言<rt>い</rt></ruby>わないことの<ruby>意味<rt>いみ</rt></ruby>',
+    titleEn:'The Meaning of What Is Unsaid',
+    scene:'Two old friends reconnect after years apart. One has clearly been through something difficult.',
+    speakers:['A','B'],
+    script:[
+      {speaker:'A', text:'<ruby>久<rt>ひさ</rt></ruby>しぶりだな。<ruby>元気<rt>げんき</rt></ruby>にしてた？'},
+      {speaker:'B', text:'まあ、<ruby>色々<rt>いろいろ</rt></ruby>あったけど。<ruby>元気<rt>げんき</rt></ruby>だよ。'},
+      {speaker:'A', text:'<ruby>色々<rt>いろいろ</rt></ruby>って？'},
+      {speaker:'B', text:'<ruby>話<rt>はな</rt></ruby>すと<ruby>長<rt>なが</rt></ruby>くなるし…<ruby>今日<rt>きょう</rt></ruby>はいいや。'},
+      {speaker:'A', text:'そうか。まあ、<ruby>話<rt>はな</rt></ruby>したくなったら<ruby>いつでも<rt>いつでも</rt></ruby>。'},
+      {speaker:'B', text:'…<ruby>ありがとう<rt>ありがとう</rt></ruby>。それだけで<ruby>十分<rt>じゅうぶん</rt></ruby>だよ。'},
+    ],
+    scriptPlain:'久しぶりだな。元気にしてた？まあ、色々あったけど。元気だよ。色々って？話すと長くなるし…今日はいいや。そうか。まあ、話したくなったらいつでも。…ありがとう。それだけで十分だよ。',
+    questions:[
+      {q:'Bさんの「色々あったけど、元気だよ」からどんなことが推察されますか。', opts:['A. とても幸せに過ごしていた','B. 何か辛いことがあったが、それを深く話したくない','C. 特に何もなかった','D. 旅行に行っていた'], answer:'B', explanation:'「色々あった」と認めながら「話すと長くなるし今日はいいや」と話を避けており、何か困難なことがあったが詳しく話したくないことが読み取れます。'},
+      {q:'Aさんの「話したくなったらいつでも」という言葉の意図はどれですか。', opts:['A. 今すぐ話すよう促している','B. 関心がないことを示している','C. 無理に聞き出さずに、いつでも聞く準備があることを示している','D. 話題を変えようとしている'], answer:'C', explanation:'Bが話を避けたことを受け入れながら、プレッシャーをかけずに「いつでも聞く」という姿勢を示す思いやりのある表現です。'},
+      {q:'Bさんの「それだけで十分だよ」とはどういう意味ですか。', opts:['A. 詳しい話は必要ない','B. いつでも聞くという気持ちだけで、十分支えになる','C. 話は終わりにしたい','D. 助けは必要ない'], answer:'B', explanation:'詳しく話さなくても、「いつでも聞く」という友人の姿勢そのものが支えになるという感謝の言葉です。'},
+    ]
+  },
+
+  {
+    id:'n1-l-18', level:'n1',
+    titleJp:'<ruby>教育<rt>きょういく</rt></ruby>の<ruby>目的<rt>もくてき</rt></ruby>',
+    titleEn:'The Purpose of Education',
+    scene:'A debate between two educators on whether education should produce useful members of society or cultivate independent thinkers.',
+    speakers:['Educator A','Educator B'],
+    script:[
+      {speaker:'Educator A', text:'<ruby>教育<rt>きょういく</rt></ruby>の<ruby>第一<rt>だいいち</rt></ruby>の<ruby>使命<rt>しめい</rt></ruby>は、<ruby>社会<rt>しゃかい</rt></ruby>に<ruby>貢献<rt>こうけん</rt></ruby>できる<ruby>人材<rt>じんざい</rt></ruby>を<ruby>育<rt>そだ</rt></ruby>てることです。<ruby>実学<rt>じつがく</rt></ruby>を<ruby>重視<rt>じゅうし</rt></ruby>し、<ruby>即戦力<rt>そくせんりょく</rt></ruby>となる<ruby>能力<rt>のうりょく</rt></ruby>を<ruby>養<rt>やしな</rt></ruby>う<ruby>必要<rt>ひつよう</rt></ruby>がある。'},
+      {speaker:'Educator B', text:'それは<ruby>教育<rt>きょういく</rt></ruby>を<ruby>手段<rt>しゅだん</rt></ruby>として<ruby>捉<rt>とら</rt></ruby>える<ruby>見方<rt>みかた</rt></ruby>です。<ruby>本来<rt>ほんらい</rt></ruby>の<ruby>教育<rt>きょういく</rt></ruby>とは、<ruby>自<rt>じ</rt></ruby><ruby>ら<rt>ら</rt></ruby><ruby>問<rt>と</rt></ruby>いを<ruby>立<rt>た</rt></ruby>て、<ruby>考<rt>かんが</rt></ruby>え、<ruby>判断<rt>はんだん</rt></ruby>する<ruby>力<rt>ちから</rt></ruby>を<ruby>育<rt>はぐく</rt></ruby>むことではないでしょうか。'},
+      {speaker:'Educator A', text:'<ruby>理想<rt>りそう</rt></ruby>は<ruby>分<rt>わ</rt></ruby>かります。しかし<ruby>現実<rt>げんじつ</rt></ruby>の<ruby>社会<rt>しゃかい</rt></ruby>では、<ruby>使<rt>つか</rt></ruby>えない<ruby>知識<rt>ちしき</rt></ruby>より<ruby>使<rt>つか</rt></ruby>える<ruby>技術<rt>ぎじゅつ</rt></ruby>の<ruby>方<rt>ほう</rt></ruby>が<ruby>価値<rt>かち</rt></ruby>があります。'},
+      {speaker:'Educator B', text:'<ruby>使<rt>つか</rt></ruby>える<ruby>技術<rt>ぎじゅつ</rt></ruby>は<ruby>時代<rt>じだい</rt></ruby>とともに<ruby>変<rt>か</rt></ruby>わる。しかし、<ruby>自<rt>じ</rt></ruby><ruby>ら<rt>ら</rt></ruby><ruby>考<rt>かんが</rt></ruby>える<ruby>力<rt>ちから</rt></ruby>はどんな<ruby>時代<rt>じだい</rt></ruby>にも<ruby>通<rt>つう</rt></ruby>じる。それこそが<ruby>真<rt>しん</rt></ruby>の<ruby>実学<rt>じつがく</rt></ruby>ではないでしょうか。'},
+    ],
+    scriptPlain:'教育の第一の使命は、社会に貢献できる人材を育てることです。実学を重視し、即戦力となる能力を養う必要がある。それは教育を手段として捉える見方です。本来の教育とは、自ら問いを立て、考え、判断する力を育むことではないでしょうか。理想は分かります。しかし現実の社会では、使えない知識より使える技術の方が価値があります。使える技術は時代とともに変わる。しかし、自ら考える力はどんな時代にも通じる。それこそが真の実学ではないでしょうか。',
+    questions:[
+      {q:'Educator Aの教育観として最も適切なものはどれですか。', opts:['A. 批判的思考を最重視する','B. 社会で即戦力となる実用的な能力の育成','C. 哲学的な問いを立てる力の育成','D. 創造性の育成'], answer:'B', explanation:'「社会に貢献できる人材」「即戦力となる能力」「使える技術」を重視する立場です。'},
+      {q:'Educator Bの最後の反論「それこそが真の実学ではないでしょうか」はどういう意味ですか。', opts:['A. 実学は役に立たない','B. 自ら考える力こそ、時代を超えて使える最も実用的な能力だ','C. 技術教育は不要だ','D. 哲学は実用的ではない'], answer:'B', explanation:'「使える技術は時代とともに変わる」のに対し「自ら考える力はどんな時代にも通じる」ので、考える力こそが「真の実学（実用的な学問）」だという逆説的な主張です。'},
+      {q:'二人の論争の核心は何ですか。', opts:['A. 具体的な教科の選択','B. 教育を社会の手段と見るか、人間の自律的成長と見るか','C. 大学教育の費用','D. 教師の役割'], answer:'B', explanation:'教育を「社会への有用性（手段）」として捉えるAと、「自律的な思考力の育成（目的）」として捉えるBの価値観の対立です。'},
+    ]
+  },
+
+  {
+    id:'n1-l-19', level:'n1',
+    titleJp:'<ruby>権力<rt>けんりょく</rt></ruby>の<ruby>腐敗<rt>ふはい</rt></ruby>',
+    titleEn:'The Corruption of Power',
+    scene:'A political historian gives a lecture on the systemic nature of corruption.',
+    speakers:['Historian'],
+    script:[
+      {speaker:'Historian', text:'<ruby>権力<rt>けんりょく</rt></ruby>は<ruby>腐敗<rt>ふはい</rt></ruby>する、という<ruby>命題<rt>めいだい</rt></ruby>は、<ruby>個人<rt>こじん</rt></ruby>の<ruby>道徳<rt>どうとく</rt></ruby>的<ruby>堕落<rt>だらく</rt></ruby>を<ruby>語<rt>かた</rt></ruby>るものではありません。むしろ、<ruby>権力<rt>けんりょく</rt></ruby>の<ruby>構造<rt>こうぞう</rt></ruby>そのものが、<ruby>人<rt>ひと</rt></ruby>を<ruby>変<rt>か</rt></ruby>えるという<ruby>観察<rt>かんさつ</rt></ruby>です。<ruby>監視<rt>かんし</rt></ruby>されず、<ruby>批判<rt>ひはん</rt></ruby>されず、<ruby>責任<rt>せきにん</rt></ruby>を<ruby>問<rt>と</rt></ruby>われない<ruby>環境<rt>かんきょう</rt></ruby>に<ruby>置<rt>お</rt></ruby>かれた<ruby>人間<rt>にんげん</rt></ruby>は、<ruby>善人<rt>ぜんじん</rt></ruby>であっても<ruby>変質<rt>へんしつ</rt></ruby>しうる。だからこそ、<ruby>制度<rt>せいど</rt></ruby>と<ruby>仕組<rt>しく</rt></ruby>みが<ruby>個人<rt>こじん</rt></ruby>の<ruby>徳<rt>とく</rt></ruby>に<ruby>優先<rt>ゆうせん</rt></ruby>しなければならない。'},
+    ],
+    scriptPlain:'権力は腐敗する、という命題は、個人の道徳的堕落を語るものではありません。むしろ、権力の構造そのものが、人を変えるという観察です。監視されず、批判されず、責任を問われない環境に置かれた人間は、善人であっても変質しうる。だからこそ、制度と仕組みが個人の徳に優先しなければならない。',
+    questions:[
+      {q:'「権力は腐敗する」をこの歴史家はどう解釈していますか。', opts:['A. 権力者は元から悪人だ','B. 権力の構造が善人でさえも変えてしまう','C. 腐敗は避けられない悪だ','D. 道徳教育が重要だ'], answer:'B', explanation:'「個人の道徳的堕落を語るものではなく、権力の構造そのものが人を変える」という構造的解釈を示しています。'},
+      {q:'腐敗が起こりやすい環境として述べられているものはどれですか。', opts:['A. 競争が激しい環境','B. 監視・批判・責任が欠如した環境','C. 資金が豊富な環境','D. 多くの人が関わる環境'], answer:'B', explanation:'「監視されず、批判されず、責任を問われない環境」と明示されています。'},
+      {q:'この歴史家の主な主張はどれですか。', opts:['A. 権力者を選ぶ際には道徳的な人を選ぶべき','B. 権力そのものを廃止すべき','C. 個人の徳よりも制度・仕組みが腐敗を防ぐ','D. 腐敗は個人の責任だ'], answer:'C', explanation:'「制度と仕組みが個人の徳に優先しなければならない」が結論です。善人でも構造が変えてしまうため、制度設計が重要だという主張です。'},
+    ]
+  },
+
+  {
+    id:'n1-l-20', level:'n1',
+    titleJp:'<ruby>失<rt>しつ</rt></ruby><ruby>語<rt>ご</rt></ruby>の<ruby>後<rt>のち</rt></ruby>に',
+    titleEn:'After the Words Run Out',
+    scene:'A novelist reflects on the limits of language in capturing human experience.',
+    speakers:['Novelist'],
+    script:[
+      {speaker:'Novelist', text:'<ruby>言語<rt>げんご</rt></ruby>は<ruby>経験<rt>けいけん</rt></ruby>を<ruby>捉<rt>とら</rt></ruby>えるための<ruby>網<rt>あみ</rt></ruby>だが、<ruby>網<rt>あみ</rt></ruby>の<ruby>目<rt>め</rt></ruby>は<ruby>必<rt>かなら</rt></ruby>ず<ruby>粗<rt>あら</rt></ruby>い。<ruby>最<rt>もっと</rt></ruby>も<ruby>深<rt>ふか</rt></ruby>い<ruby>悲<rt>かな</rt></ruby>しみは<ruby>言葉<rt>ことば</rt></ruby>にならない。<ruby>最<rt>もっと</rt></ruby>も<ruby>純粋<rt>じゅんすい</rt></ruby>な<ruby>喜<rt>よろこ</rt></ruby>びも、<ruby>語<rt>かた</rt></ruby>り<ruby>始<rt>はじ</rt></ruby>めた<ruby>瞬間<rt>しゅんかん</rt></ruby>に<ruby>色褪<rt>いろあ</rt></ruby>せる。しかし、だからこそ<ruby>書<rt>か</rt></ruby>き<ruby>続<rt>つづ</rt></ruby>ける。<ruby>届<rt>とど</rt></ruby>かないと<ruby>知<rt>し</rt></ruby>りながら、<ruby>届<rt>とど</rt></ruby>けようとすること。それが<ruby>文学<rt>ぶんがく</rt></ruby>の<ruby>本質<rt>ほんしつ</rt></ruby>ではないかと、<ruby>私<rt>わたし</rt></ruby>は<ruby>思<rt>おも</rt></ruby>っています。'},
+    ],
+    scriptPlain:'言語は経験を捉えるための網だが、網の目は必ず粗い。最も深い悲しみは言葉にならない。最も純粋な喜びも、語り始めた瞬間に色褪せる。しかし、だからこそ書き続ける。届かないと知りながら、届けようとすること。それが文学の本質ではないかと、私は思っています。',
+    questions:[
+      {q:'「言語は網だが、網の目は必ず粗い」とはどういう意味ですか。', opts:['A. 言語は完全に経験を捉えられる','B. 言語は経験を捉えようとするが、必ず取りこぼしがある','C. 言語は不要だ','D. 文学的な表現は正確でない'], answer:'B', explanation:'網は何かを捉えるための道具だが、その目の粗さ（隙間）からこぼれ落ちるものがある、という比喩で言語の限界を表しています。'},
+      {q:'この作家が書き続ける理由はどれですか。', opts:['A. 言語で全てを表現できるから','B. 読者に喜んでもらいたいから','C. 届かないと知りながらも届けようとすることに文学の本質があるから','D. お金のため'], answer:'C', explanation:'「届かないと知りながら、届けようとすること。それが文学の本質」と述べています。'},
+      {q:'最も純粋な喜びが「語り始めた瞬間に色褪せる」とはどういう意味ですか。', opts:['A. 喜びは短命だ','B. 言語化することで経験が変質し、元の感覚を失う','C. 喜びを話すと消える','D. 喜びは主観的だ'], answer:'B', explanation:'経験を言語化する行為そのものが、その生の体験を変質させてしまうという言語の限界を示しています。'},
+    ]
+  },
+
+  {
+    id:'n1-l-21', level:'n1',
+    titleJp:'<ruby>集団<rt>しゅうだん</rt></ruby>の<ruby>圧力<rt>あつりょく</rt></ruby>',
+    titleEn:'Group Pressure',
+    scene:'A social psychologist discusses conformity and why individuals abandon their own judgement.',
+    speakers:['Social Psychologist'],
+    script:[
+      {speaker:'Social Psychologist', text:'アッシュの<ruby>実験<rt>じっけん</rt></ruby>が<ruby>示<rt>しめ</rt></ruby>したように、<ruby>人<rt>にん</rt></ruby><ruby>間<rt>げん</rt></ruby>は<ruby>自分<rt>じぶん</rt></ruby>の<ruby>目<rt>め</rt></ruby>で<ruby>見<rt>み</rt></ruby>た<ruby>事実<rt>じじつ</rt></ruby>よりも、<ruby>集団<rt>しゅうだん</rt></ruby>の<ruby>意見<rt>いけん</rt></ruby>に<ruby>従<rt>したが</rt></ruby>う<ruby>傾向<rt>けいこう</rt></ruby>があります。これは<ruby>弱<rt>よわ</rt></ruby>さではなく、<ruby>社会<rt>しゃかい</rt></ruby>的<ruby>動物<rt>どうぶつ</rt></ruby>としての<ruby>生存<rt>せいぞん</rt></ruby>戦略です。しかし<ruby>現代<rt>げんだい</rt></ruby>社会では、この<ruby>本能<rt>ほんのう</rt></ruby>が<ruby>誤<rt>あやま</rt></ruby>った<ruby>方向<rt>ほうこう</rt></ruby>に<ruby>向<rt>む</rt></ruby>かうこともある。<ruby>同調<rt>どうちょう</rt></ruby>圧力に<ruby>抗<rt>あらが</rt></ruby>う<ruby>力<rt>ちから</rt></ruby>とは、<ruby>孤独<rt>こどく</rt></ruby>を<ruby>恐<rt>おそ</rt></ruby>れない<ruby>力<rt>ちから</rt></ruby>にほかなりません。'},
+    ],
+    scriptPlain:'アッシュの実験が示したように、人間は自分の目で見た事実よりも、集団の意見に従う傾向があります。これは弱さではなく、社会的動物としての生存戦略です。しかし現代社会では、この本能が誤った方向に向かうこともある。同調圧力に抗う力とは、孤独を恐れない力にほかなりません。',
+    questions:[
+      {q:'アッシュの実験が示したことはどれですか。', opts:['A. 人間は論理的な判断をする','B. 人間は自分の目で見た事実より集団の意見に従う傾向がある','C. 社会的動物は孤独を好む','D. 実験は倫理的に問題があった'], answer:'B', explanation:'「自分の目で見た事実よりも、集団の意見に従う傾向」と明示されています。'},
+      {q:'この心理学者は同調傾向をどう評価していますか。', opts:['A. 完全に否定している','B. 弱さであると批判している','C. 社会的動物としての生存戦略として理解した上で、現代では問題になることもあると指摘','D. 必要不可欠だと肯定している'], answer:'C', explanation:'「弱さではなく生存戦略」と理解しつつ、「現代社会では誤った方向に向かうこともある」とバランスのある評価をしています。'},
+      {q:'「同調圧力に抗う力は孤独を恐れない力にほかならない」とはどういう意味ですか。', opts:['A. 孤独が好きな人は同調圧力に強い','B. 集団から外れることへの恐れを克服することが同調圧力への抵抗の本質だ','C. 一人でいれば同調圧力はない','D. 社会から切り離されることが必要だ'], answer:'B', explanation:'集団から孤立することへの恐れが同調の根本原因であるため、その恐れを克服することが同調圧力への真の抵抗だという主張です。「にほかならない」は強い断定表現。'},
+    ]
+  },
+
+  {
+    id:'n1-l-22', level:'n1',
+    titleJp:'<ruby>技術<rt>ぎじゅつ</rt></ruby>の<ruby>中立<rt>ちゅうりつ</rt></ruby><ruby>性<rt>せい</rt></ruby>という<ruby>幻想<rt>げんそう</rt></ruby>',
+    titleEn:'The Illusion of Technological Neutrality',
+    scene:'A technology ethicist argues that technology is never politically or socially neutral.',
+    speakers:['Technology Ethicist'],
+    script:[
+      {speaker:'Technology Ethicist', text:'<ruby>技術<rt>ぎじゅつ</rt></ruby>は<ruby>中立<rt>ちゅうりつ</rt></ruby>だ、という<ruby>神話<rt>しんわ</rt></ruby>は<ruby>根強<rt>ねづよ</rt></ruby>く<ruby>残<rt>のこ</rt></ruby>っています。しかし<ruby>技術<rt>ぎじゅつ</rt></ruby>は<ruby>設計<rt>せっけい</rt></ruby>者の<ruby>価値観<rt>かちかん</rt></ruby>、<ruby>偏見<rt>へんけん</rt></ruby>、<ruby>優先順位<rt>ゆうせんじゅんい</rt></ruby>を<ruby>体現<rt>たいげん</rt></ruby>しています。<ruby>顔認識<rt>かおにんしき</rt></ruby>AIが<ruby>特定<rt>とくてい</rt></ruby>の<ruby>人種<rt>じんしゅ</rt></ruby>に<ruby>対<rt>たい</rt></ruby>して<ruby>精度<rt>せいど</rt></ruby>が<ruby>低<rt>ひく</rt></ruby>いのは<ruby>偶然<rt>ぐうぜん</rt></ruby>ではない。<ruby>均質<rt>きんしつ</rt></ruby>なデータで<ruby>訓練<rt>くんれん</rt></ruby>された<ruby>システム<rt>システム</rt></ruby>は、<ruby>均質<rt>きんしつ</rt></ruby>な<ruby>世界<rt>せかい</rt></ruby>を<ruby>前提<rt>ぜんてい</rt></ruby>とする。<ruby>技術<rt>ぎじゅつ</rt></ruby>の<ruby>問題<rt>もんだい</rt></ruby>は<ruby>技術<rt>ぎじゅつ</rt></ruby>だけでは<ruby>解<rt>と</rt></ruby>けない。それは<ruby>社会<rt>しゃかい</rt></ruby>の<ruby>問題<rt>もんだい</rt></ruby>です。'},
+    ],
+    scriptPlain:'技術は中立だ、という神話は根強く残っています。しかし技術は設計者の価値観、偏見、優先順位を体現しています。顔認識AIが特定の人種に対して精度が低いのは偶然ではない。均質なデータで訓練されたシステムは、均質な世界を前提とする。技術の問題は技術だけでは解けない。それは社会の問題です。',
+    questions:[
+      {q:'顔認識AIの精度の偏りを例として挙げた理由はどれですか。', opts:['A. AIの技術的な限界を示すため','B. 技術が設計者の偏見や前提を反映するという主張の具体例','C. 特定の人種の特徴を説明するため','D. AIの発展を批判するため'], answer:'B', explanation:'「技術は設計者の価値観・偏見を体現する」という主張の具体例として、均質なデータで学習したAIが特定グループに対して精度が低いことを挙げています。'},
+      {q:'「技術の問題は技術だけでは解けない」とはどういう意味ですか。', opts:['A. 技術は役に立たない','B. 技術的問題は社会的・政治的な問題であり、社会全体で取り組む必要がある','C. 技術者だけが解決できる','D. 問題は解決不可能だ'], answer:'B', explanation:'技術の偏りや問題は社会的・文化的・政治的な要因から生まれているため、技術的な修正だけでは根本解決できず社会問題として捉える必要があるという主張です。'},
+      {q:'この倫理学者の核心的な主張はどれですか。', opts:['A. 技術の発展を止めるべきだ','B. AIは危険だ','C. 技術は中立ではなく社会的価値観を体現するため、社会問題として取り組む必要がある','D. 技術者の教育が重要だ'], answer:'C', explanation:'「技術は中立という神話を否定」し「技術は設計者の価値観を体現」し「社会の問題だ」という三段論法的な主張が核心です。'},
+    ]
+  },
+
+  {
+    id:'n1-l-23', level:'n1',
+    titleJp:'<ruby>夢<rt>ゆめ</rt></ruby>と<ruby>現実<rt>げんじつ</rt></ruby>の<ruby>狭間<rt>はざま</rt></ruby>で',
+    titleEn:'Between Dream and Reality',
+    scene:'A conversation between two artists — one who abandoned their dream for stability, one who didn\'t.',
+    speakers:['Artist A (successful)','Artist B (gave up)'],
+    script:[
+      {speaker:'Artist B', text:'<ruby>絵<rt>え</rt></ruby>を<ruby>続<rt>つづ</rt></ruby>けてよかったと<ruby>思<rt>おも</rt></ruby>ってる？'},
+      {speaker:'Artist A', text:'<ruby>思<rt>おも</rt></ruby>ってる。<ruby>苦<rt>くる</rt></ruby>しかったけど。'},
+      {speaker:'Artist B', text:'<ruby>私<rt>わたし</rt></ruby>は<ruby>辞<rt>や</rt></ruby>めた。<ruby>後悔<rt>こうかい</rt></ruby>してないとは<ruby>言<rt>い</rt></ruby>えないけど…<ruby>正解<rt>せいかい</rt></ruby>だったのかどうかも<ruby>分<rt>わ</rt></ruby>からない。'},
+      {speaker:'Artist A', text:'どっちが<ruby>正解<rt>せいかい</rt></ruby>かなんて、<ruby>誰<rt>だれ</rt></ruby>にも<ruby>分<rt>わ</rt></ruby>からないよ。<ruby>続<rt>つづ</rt></ruby>けた<ruby>私<rt>わたし</rt></ruby>にも<ruby>後悔<rt>こうかい</rt></ruby>はある。<ruby>あの頃<rt>あのころ</rt></ruby>もっと<ruby>別<rt>べつ</rt></ruby>の<ruby>生<rt>い</rt></ruby>き<ruby>方<rt>かた</rt></ruby>もあったかもって。'},
+      {speaker:'Artist B', text:'そっか。<ruby>正解<rt>せいかい</rt></ruby>を<ruby>探<rt>さが</rt></ruby>すのをやめたら、<ruby>少<rt>すこ</rt></ruby>し<ruby>楽<rt>らく</rt></ruby>になった気がする。'},
+    ],
+    scriptPlain:'絵を続けてよかったと思ってる？思ってる。苦しかったけど。私は辞めた。後悔してないとは言えないけど…正解だったのかどうかも分からない。どっちが正解かなんて、誰にも分からないよ。続けた私にも後悔はある。あの頃もっと別の生き方もあったかもって。そっか。正解を探すのをやめたら、少し楽になった気がする。',
+    questions:[
+      {q:'Artist Aの「続けた私にも後悔はある」という発言はどういう意味ですか。', opts:['A. 絵を続けたことを後悔している','B. 夢を追い続けた人も、別の可能性への思いがある','C. Bの選択が正しかったと思っている','D. 後悔することは悪いことだ'], answer:'B', explanation:'成功した側も「あの頃もっと別の生き方もあった」と感じており、どちらの選択にも後悔はあり得るという人生の複雑さを示しています。'},
+      {q:'この会話で二人が共有している気づきはどれですか。', opts:['A. 芸術家として成功することが重要だ','B. 人生に絶対的な「正解」はない','C. 夢は諦めるべきではない','D. お金が大切だ'], answer:'B', explanation:'Aの「どっちが正解かなんて誰にも分からない」、Bの「正解を探すのをやめたら楽になった」から、二人とも「正解はない」という認識に至っています。'},
+      {q:'Bさんの「正解を探すのをやめたら少し楽になった」とはどういう意味ですか。', opts:['A. 諦めた','B. 自分の選択を正当化した','C. 唯一の正解があるという考えを手放すことで、心の余裕が生まれた','D. 後悔がなくなった'], answer:'C', explanation:'「正解があるはず」という前提そのものを手放すことで、過去の選択を否定も肯定もせず、それ自体として受け入れられるようになったという心理的解放を示しています。'},
+    ]
+  },
+
+  {
+    id:'n1-l-24', level:'n1',
+    titleJp:'<ruby>科学<rt>かがく</rt></ruby>と<ruby>物語<rt>ものがたり</rt></ruby>',
+    titleEn:'Science and Story',
+    scene:'A science communicator argues that facts alone are insufficient to change minds — narrative is essential.',
+    speakers:['Science Communicator'],
+    script:[
+      {speaker:'Science Communicator', text:'<ruby>気候変動<rt>きこうへんどう</rt></ruby>の<ruby>科学<rt>かがく</rt></ruby>的<ruby>証拠<rt>しょうこ</rt></ruby>は<ruby>揃<rt>そろ</rt></ruby>っています。しかし<ruby>人々<rt>ひとびと</rt></ruby>の<ruby>行動<rt>こうどう</rt></ruby>は<ruby>変<rt>か</rt></ruby>わらない。なぜか？それは<ruby>データ<rt>データ</rt></ruby>が<ruby>心<rt>こころ</rt></ruby>を<ruby>動<rt>うご</rt></ruby>かさないからです。<ruby>人間<rt>にんげん</rt></ruby>は<ruby>物語<rt>ものがたり</rt></ruby>の<ruby>生き物<rt>いきもの</rt></ruby>です。<ruby>統計<rt>とうけい</rt></ruby>は<ruby>記憶<rt>きおく</rt></ruby>に<ruby>残<rt>のこ</rt></ruby>らないが、<ruby>一人<rt>ひとり</rt></ruby>の<ruby>具体的<rt>ぐたいてき</rt></ruby>な<ruby>物語<rt>ものがたり</rt></ruby>は<ruby>残<rt>のこ</rt></ruby>る。<ruby>科学<rt>かがく</rt></ruby>の<ruby>役割<rt>やくわり</rt></ruby>は<ruby>事実<rt>じじつ</rt></ruby>を<ruby>伝<rt>つた</rt></ruby>えることだが、<ruby>変化<rt>へんか</rt></ruby>を<ruby>促<rt>うなが</rt></ruby>すのは<ruby>物語<rt>ものがたり</rt></ruby>です。この<ruby>二<rt>ふた</rt></ruby>つを<ruby>切<rt>き</rt></ruby>り<ruby>離<rt>はな</rt></ruby>すことが、<ruby>科学<rt>かがく</rt></ruby><ruby>コミュニケーション<rt>コミュニケーション</rt></ruby>の<ruby>失敗<rt>しっぱい</rt></ruby>の<ruby>根本<rt>こんぽん</rt></ruby>原因<ruby>です<rt>です</rt></ruby>。'},
+    ],
+    scriptPlain:'気候変動の科学的証拠は揃っています。しかし人々の行動は変わらない。なぜか？それはデータが心を動かさないからです。人間は物語の生き物です。統計は記憶に残らないが、一人の具体的な物語は残る。科学の役割は事実を伝えることだが、変化を促すのは物語です。この二つを切り離すことが、科学コミュニケーションの失敗の根本原因です。',
+    questions:[
+      {q:'科学的証拠があっても人々の行動が変わらない理由として述べているものはどれですか。', opts:['A. 証拠が不十分だから','B. 人々が科学を信頼していないから','C. データは心を動かさない — 人間は物語によって動く','D. 気候変動は深刻ではないから'], answer:'C', explanation:'「データが心を動かさない」「人間は物語の生き物」と述べており、感情に訴える物語がないと行動変容は起きないという主張です。'},
+      {q:'「統計は記憶に残らないが一人の具体的な物語は残る」とはどういう意味ですか。', opts:['A. 統計は信頼できない','B. 個人の具体的な体験談は感情的なつながりを生み、記憶に定着しやすい','C. 物語は科学より重要だ','D. 統計を使わないべきだ'], answer:'B', explanation:'抽象的な数字より具体的な一人の人間の話の方が感情に訴え、記憶・行動変容につながるという認知科学的な知見を示しています。'},
+      {q:'科学コミュニケーションの「根本的な失敗」とは何ですか。', opts:['A. 複雑な言葉を使いすぎること','B. 科学的事実と物語を切り離して伝えること','C. 予算が不足していること','D. メディアの偏向'], answer:'B', explanation:'「科学の事実を伝えること」と「物語で変化を促すこと」を分離して考えることが根本的な失敗だという主張です。両者を統合することが効果的な科学コミュニケーションの鍵です。'},
+    ]
+  },
 ];
 
 // ── State ─────────────────────────────────────────────────────
@@ -1424,10 +1658,19 @@ function resetQuestions(id) {
 }
 
 // ── Toggle card open/closed ───────────────────────────────────
+let listeningSessions = new Set();
 function toggleCard(id) {
   const card = document.getElementById(`card-${id}`);
   if (!card) return;
   const isOpen = card.classList.toggle('open');
+  // Track when a script is opened
+  if (isOpen) {
+    listeningSessions.add(id);
+    if (listeningSessions.size === 1) {
+      // First script opened today — track the session
+      trackListeningSession(1);
+    }
+  }
   // Stop audio when closing
   if (!isOpen && currentPlayId === id) {
     if (typeof window.currentAudio !== 'undefined' && window.currentAudio) {
@@ -1436,6 +1679,35 @@ function toggleCard(id) {
     currentPlayId = null;
     resetPlayButton(id);
   }
+}
+
+
+// ── Track session ─────────────────────────────────────────────
+function trackListeningSession(scriptsCompleted) {
+  const history = JSON.parse(localStorage.getItem('quizHistory') || '[]');
+  history.push({
+    date:    new Date().toISOString(),
+    type:    'listening',
+    level:   'mixed',
+    qtype:   'listening',
+    correct: scriptsCompleted,
+    total:   scriptsCompleted
+  });
+  localStorage.setItem('quizHistory', JSON.stringify(history));
+  const today = new Date().toISOString().split('T')[0];
+  const last  = localStorage.getItem('lastStudyDate');
+  let streak  = parseInt(localStorage.getItem('studyStreak') || '0');
+  if (last !== today) {
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+    streak = last === yesterday ? streak + 1 : 1;
+    localStorage.setItem('studyStreak', streak);
+    localStorage.setItem('lastStudyDate', today);
+  }
+  try {
+    const done = new Set(JSON.parse(localStorage.getItem('scheduleDone') || '[]'));
+    done.add(today);
+    localStorage.setItem('scheduleDone', JSON.stringify([...done]));
+  } catch(e) {}
 }
 
 // ── Filter ────────────────────────────────────────────────────

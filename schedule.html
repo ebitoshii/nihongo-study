@@ -175,6 +175,7 @@
       <li><a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a></li>
       <li><a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a></li>
       <li><a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a></li>
+      <li><a href="mocktest.html"><span class="jp"><ruby>模擬<rt>もぎ</rt></ruby></span><span class="en">Mock Test</span></a></li>
       <li><a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a></li>
       <li><a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a></li>
       <li><a href="flashcards.html"><span class="jp">カード</span><span class="en">Flashcards</span></a></li>
@@ -201,6 +202,7 @@
   <a href="reading.html"><span class="jp"><ruby>読<rt>どっ</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Reading</span></a>
   <a href="listening.html"><span class="jp"><ruby>聴<rt>ちょう</rt></ruby><ruby>解<rt>かい</rt></ruby></span><span class="en">Listening</span></a>
   <a href="quiz.html"><span class="jp"><ruby>練<rt>れん</rt></ruby><ruby>習<rt>しゅう</rt></ruby></span><span class="en">Quiz</span></a>
+  <a href="mocktest.html"><span class="jp"><ruby>模擬<rt>もぎ</rt></ruby></span><span class="en">Mock Test</span></a>
   <a href="progress.html"><span class="jp"><ruby>進<rt>しん</rt></ruby><ruby>捗<rt>ちょく</rt></ruby></span><span class="en">Progress</span></a>
   <a href="mistakes.html"><span class="jp"><ruby>間<rt>ま</rt></ruby><ruby>違<rt>ちが</rt></ruby>い</span><span class="en">Mistakes</span></a>
   <a href="flashcards.html"><span class="jp">カード</span><span class="en">Flashcards</span></a>
@@ -269,6 +271,10 @@
       <div class="stat-box"><div class="stat-num" id="stat-streak">0</div><div class="stat-lbl">current streak</div></div>
       <div class="stat-box"><div class="stat-num" id="stat-best">0</div><div class="stat-lbl">best streak</div></div>
       <div class="stat-box"><div class="stat-num" id="stat-month">0</div><div class="stat-lbl">days this month</div></div>
+      <div class="stat-box" style="grid-column:1/-1;">
+        <div style="font-family:var(--serif-en);font-style:italic;font-size:0.72rem;color:#4aaf9e;margin-bottom:0.3rem;">Session breakdown</div>
+        <div class="stat-lbl" id="stat-type-breakdown" style="font-size:0.75rem;color:#b09878;">—</div>
+      </div>
       <div class="stat-box"><div class="stat-num" id="stat-sessions">0</div><div class="stat-lbl">quiz sessions</div></div>
       <div class="stat-box"><div class="stat-num" id="stat-accuracy">—</div><div class="stat-lbl">quiz accuracy</div></div>
     </div>
@@ -397,6 +403,12 @@ function render() {
   const thisMonth = [...done].filter(d => d.startsWith(t.slice(0,7))).length;
   document.getElementById('stat-month').textContent = thisMonth;
   document.getElementById('stat-sessions').textContent = history.length;
+  // Break down by type
+  const byType = {quiz:0, flashcard:0, writing:0, listening:0};
+  history.forEach(h => { if (byType[h.type] !== undefined) byType[h.type]++; });
+  const typeEl = document.getElementById('stat-type-breakdown');
+  if (typeEl) typeEl.textContent = 
+    `Quiz: ${byType.quiz} · Cards: ${byType.flashcard} · Writing: ${byType.writing} · Listening: ${byType.listening}`;
   if (history.length > 0) {
     const tQ = history.reduce((a,b)=>a+(b.total||0),0);
     const tC = history.reduce((a,b)=>a+(b.correct||0),0);
